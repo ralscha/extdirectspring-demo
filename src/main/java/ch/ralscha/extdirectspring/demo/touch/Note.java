@@ -17,8 +17,10 @@ package ch.ralscha.extdirectspring.demo.touch;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import ch.ralscha.extdirectspring.demo.util.DMYDateDeserializer;
 import ch.ralscha.extdirectspring.demo.util.DMYDateSerializer;
 
 public class Note {
@@ -43,6 +45,7 @@ public class Note {
 		return dateCreated;
 	}
 
+	@JsonDeserialize(using = DMYDateDeserializer.class)
 	public void setDateCreated(Date date) {
 		this.dateCreated = date;
 	}

@@ -1,3 +1,7 @@
+Ext.require([
+    'Ext.direct.*'
+]);
+
 Ext.application({
     name: 'Direct',
     launch: function() {
