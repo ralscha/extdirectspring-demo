@@ -15,7 +15,7 @@
  */
 package ch.ralscha.extdirectspring.demo;
 
-import ch.ralscha.embeddedtc.EmbeddedTomcat;
+import ch.rasc.embeddedtc.EmbeddedTomcat;
 
 public class RunDemoOnTomcat {
 
