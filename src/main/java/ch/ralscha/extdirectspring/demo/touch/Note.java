@@ -17,11 +17,11 @@ package ch.ralscha.extdirectspring.demo.touch;
 
 import java.util.Date;
 
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import ch.ralscha.extdirectspring.demo.util.DMYDateDeserializer;
 import ch.ralscha.extdirectspring.demo.util.DMYDateSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class Note {
 	private Integer id;

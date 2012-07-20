@@ -15,7 +15,7 @@
  */
 package ch.ralscha.extdirectspring.demo.store;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = LabelValueSerializer.class)
 public enum DeliveryTime implements LabelValue {

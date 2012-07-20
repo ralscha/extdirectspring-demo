@@ -18,7 +18,7 @@ package ch.ralscha.extdirectspring.demo.filter;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class Company {
 	private int id;

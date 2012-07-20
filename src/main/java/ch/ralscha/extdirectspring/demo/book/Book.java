@@ -15,7 +15,7 @@
  */
 package ch.ralscha.extdirectspring.demo.book;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /**
  * Contains some data to represent a book. POJO class

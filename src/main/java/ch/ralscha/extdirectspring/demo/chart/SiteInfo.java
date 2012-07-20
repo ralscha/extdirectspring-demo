@@ -15,8 +15,9 @@
  */
 package ch.ralscha.extdirectspring.demo.chart;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.joda.time.LocalDate;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class SiteInfo {
 
