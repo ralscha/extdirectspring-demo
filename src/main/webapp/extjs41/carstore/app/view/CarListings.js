@@ -1,6 +1,5 @@
 Ext.define('carstore.view.CarListings', {
 	extend: 'Ext.container.Viewport',
-	mixins: [ 'Deft.mixin.Controllable', 'Deft.mixin.Injectable' ],
 	inject: [ 'carChart', 'carData' ],
 	controller: 'carstore.controller.CarListingsViewController',
 

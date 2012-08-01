@@ -1,6 +1,5 @@
 Ext.define('carstore.controller.CarListingsViewController', {
 	extend: 'Deft.mvc.ViewController',
-	mixins: [ 'Deft.mixin.Injectable' ],
 	inject: [ 'carChart', 'carData' ],
 
 	control: {
