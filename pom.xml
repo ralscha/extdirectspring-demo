@@ -201,11 +201,11 @@
 			<name>My Repository</name>
 			<url>http://rasc.ch/repository</url>
 		</repository>
-
+     <!-- 
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
-			<url>https://oss.sonatype.org/content/repositories/chralscha-013/</url>
+			<url>https://oss.sonatype.org/content/groups/public</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -213,7 +213,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
+ 	-->
 	</repositories>
 
 	<build>
