@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 
 @Service
 public class SalesAction {
@@ -31,7 +30,7 @@ public class SalesAction {
 	private PivotDataBean dataBean;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "pivot")
-	public List<Sale> load(ExtDirectStoreReadRequest request) {
+	public List<Sale> load() {
 		return dataBean.getSalesData();
 	}
 

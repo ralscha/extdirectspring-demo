@@ -29,11 +29,12 @@ import ch.ralscha.extdirectspring.bean.Field;
 
 import com.google.common.collect.Lists;
 
-public enum DemoUtil {
+public class DemoUtil {
+	private DemoUtil() {
+		// singleton
+	}
 
-	INSTANCE;
-
-	public List<Field> getFields(Class<?> clazz, String... excludeProperties) {
+	public static List<Field> getFields(Class<?> clazz, String... excludeProperties) {
 		List<Field> fields = Lists.newArrayList();
 
 		Set<String> exclude = new HashSet<>();
@@ -57,7 +58,7 @@ public enum DemoUtil {
 		return fields;
 	}
 
-	public DataType getDataType(Class<?> clazz) {
+	public static DataType getDataType(Class<?> clazz) {
 		if (clazz == String.class) {
 			return DataType.STRING;
 		}

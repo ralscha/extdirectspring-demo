@@ -15,10 +15,7 @@
  */
 package ch.ralscha.extdirectspring.demo.touch;
 
-import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +29,7 @@ public class ContactService {
 
 	@ResponseBody
 	@RequestMapping(value = "/postContact", method = RequestMethod.POST)
-	public Map<String, Object> postContact(Locale locale, HttpServletRequest request, Contact contact) {
+	public Map<String, Object> postContact(Contact contact) {
 		System.out.println(contact);
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("success", true);

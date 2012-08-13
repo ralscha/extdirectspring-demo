@@ -25,10 +25,13 @@ import ch.ralscha.extdirectspring.bean.SortInfo;
 
 import com.google.common.collect.Ordering;
 
-public enum PropertyOrderingFactory {
-	INSTANCE;
+public class PropertyOrderingFactory {
 
-	public <T> Ordering<T> createOrdering(String propertyName) {
+	private PropertyOrderingFactory() {
+		// singleton
+	}
+
+	public static <T> Ordering<T> createOrdering(String propertyName) {
 		try {
 			Ordering<T> ordering = new PropertyOrdering<>(propertyName);
 			return ordering;
@@ -37,7 +40,7 @@ public enum PropertyOrderingFactory {
 		}
 	}
 
-	public <T> Ordering<T> createOrdering(String propertyName, SortDirection sortDirection) {
+	public static <T> Ordering<T> createOrdering(String propertyName, SortDirection sortDirection) {
 		try {
 			Ordering<T> ordering = new PropertyOrdering<>(propertyName);
 
@@ -51,7 +54,7 @@ public enum PropertyOrderingFactory {
 		}
 	}
 
-	public <T> Ordering<T> createOrderingFromSorters(Collection<SortInfo> sortInfos) {
+	public static <T> Ordering<T> createOrderingFromSorters(Collection<SortInfo> sortInfos) {
 		Ordering<T> ordering = null;
 
 		if (sortInfos != null) {
@@ -68,7 +71,7 @@ public enum PropertyOrderingFactory {
 		return ordering;
 	}
 
-	public <T> Ordering<T> createOrderingFromGroups(Collection<GroupInfo> groupInfos) {
+	public static <T> Ordering<T> createOrderingFromGroups(Collection<GroupInfo> groupInfos) {
 		Ordering<T> ordering = null;
 
 		if (groupInfos != null) {

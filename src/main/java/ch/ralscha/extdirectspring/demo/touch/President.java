@@ -30,7 +30,7 @@ public class President {
 		this(id, firstName, middleInitial, lastName, null);
 	}
 
-	public President(int id, String firstName, String middleInitial, String lastName, final String imageUrl) {
+	public President(int id, String firstName, String middleInitial, String lastName, String imageUrl) {
 		this.id = id;
 		this.firstName = firstName;
 		this.middleInitial = middleInitial;

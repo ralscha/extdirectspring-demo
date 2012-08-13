@@ -69,7 +69,7 @@ public class TouchTestAction {
 		result.add(new Turnover("Ripped Gym", new BigDecimal("88400")));
 		result.add(new Turnover("Smith Auto Mechanic", new BigDecimal("222980")));
 
-		Ordering<Turnover> ordering = PropertyOrderingFactory.INSTANCE.createOrderingFromSorters(request.getSorters());
+		Ordering<Turnover> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
 		if (ordering != null) {
 			return ordering.sortedCopy(result);
 		}

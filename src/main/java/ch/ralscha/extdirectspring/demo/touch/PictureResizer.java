@@ -37,9 +37,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PictureResizer {
 
 	@RequestMapping(value = "/picresize", method = RequestMethod.GET)
-	public void resize(@RequestParam("url") final String url,
-			@RequestParam(value = "width", required = false) final Integer width,
-			@RequestParam(value = "height", required = false) final Integer height, HttpServletRequest request,
+	public void resize(@RequestParam("url") String url, @RequestParam(value = "width", required = false) Integer width,
+			@RequestParam(value = "height", required = false) Integer height, HttpServletRequest request,
 			final HttpServletResponse response) throws MalformedURLException, IOException {
 
 		File servletTmpDir = (File) request.getServletContext().getAttribute("javax.servlet.context.tempdir");

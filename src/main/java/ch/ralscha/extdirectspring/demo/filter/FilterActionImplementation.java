@@ -35,7 +35,7 @@ public class FilterActionImplementation implements FilterActionInterface {
 
 	@Override
 	public ExtDirectStoreResponse<Company> load(ExtDirectStoreReadRequest request,
-			@RequestParam(required = false) final String dRif) {
+			@RequestParam(required = false) String dRif) {
 
 		List<Company> companies;
 		if (!request.getFilters().isEmpty()) {
@@ -46,7 +46,7 @@ public class FilterActionImplementation implements FilterActionInterface {
 
 		int totalSize = companies.size();
 
-		Ordering<Company> ordering = PropertyOrderingFactory.INSTANCE.createOrderingFromSorters(request.getSorters());
+		Ordering<Company> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
 		if (ordering != null) {
 			companies = ordering.sortedCopy(companies);
 		}

@@ -22,7 +22,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
@@ -52,9 +51,7 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
-	public ExtDirectStoreResponse<Person> loadWithPaging(ExtDirectStoreReadRequest request,
-			@RequestParam(value = "no", defaultValue = "0", required = false) final int no,
-			@RequestParam(required = false) final String name) {
+	public ExtDirectStoreResponse<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
@@ -62,7 +59,7 @@ public class PersonAction {
 		Ordering<Person> ordering = null;
 
 		if (StringUtils.hasText(request.getGroupBy())) {
-			ordering = PropertyOrderingFactory.INSTANCE.createOrdering(request.getGroupBy());
+			ordering = PropertyOrderingFactory.createOrdering(request.getGroupBy());
 			if (ordering != null) {
 				if (request.isDescendingGroupSort()) {
 					ordering = ordering.reverse();
@@ -74,7 +71,7 @@ public class PersonAction {
 		if (!sorters.isEmpty()) {
 			for (SortInfo sortInfo : sorters) {
 
-				Ordering<Person> colOrder = PropertyOrderingFactory.INSTANCE.createOrdering(sortInfo.getProperty());
+				Ordering<Person> colOrder = PropertyOrderingFactory.createOrdering(sortInfo.getProperty());
 				if (colOrder != null) {
 					if (sortInfo.getDirection() == SortDirection.DESCENDING) {
 						colOrder = colOrder.reverse();
@@ -113,8 +110,7 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
-	public ExtDirectStoreResponse<Person> update(@RequestParam(value = "no", defaultValue = "0") final int no,
-			@RequestParam(value = "name", required = false) final String name, List<Person> modifiedPersons) {
+	public ExtDirectStoreResponse<Person> update(List<Person> modifiedPersons) {
 
 		List<Person> updatedRecords = Lists.newArrayList();
 
@@ -158,7 +154,7 @@ public class PersonAction {
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Ordering<Person> ordering = PropertyOrderingFactory.INSTANCE.createOrdering("fullName");
+		Ordering<Person> ordering = PropertyOrderingFactory.createOrdering("fullName");
 		persons = ordering.reverse().sortedCopy(persons);
 
 		if (request.getStart() != null && request.getLimit() != null) {
@@ -203,7 +199,7 @@ public class PersonAction {
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Ordering<Person> ordering = PropertyOrderingFactory.INSTANCE.createOrdering("city");
+		Ordering<Person> ordering = PropertyOrderingFactory.createOrdering("city");
 		persons = ordering.sortedCopy(persons);
 
 		if (request.getStart() != null && request.getLimit() != null) {
@@ -265,7 +261,7 @@ public class PersonAction {
 		if (!sorters.isEmpty()) {
 			for (SortInfo sortInfo : sorters) {
 
-				Ordering<Person> colOrder = PropertyOrderingFactory.INSTANCE.createOrdering(sortInfo.getProperty());
+				Ordering<Person> colOrder = PropertyOrderingFactory.createOrdering(sortInfo.getProperty());
 				if (colOrder != null) {
 					if (sortInfo.getDirection() == SortDirection.DESCENDING) {
 						colOrder = colOrder.reverse();
@@ -279,7 +275,7 @@ public class PersonAction {
 
 			}
 		} else {
-			ordering = PropertyOrderingFactory.INSTANCE.createOrdering("lastName");
+			ordering = PropertyOrderingFactory.createOrdering("lastName");
 		}
 
 		if (ordering != null) {

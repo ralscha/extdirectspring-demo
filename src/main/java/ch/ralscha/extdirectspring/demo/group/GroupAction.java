@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 
 import com.google.common.collect.ImmutableList;
 
@@ -72,17 +71,17 @@ public class GroupAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "total")
-	public List<Task> load(ExtDirectStoreReadRequest request) {
+	public List<Task> load() {
 		return tasks;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "hybrid")
-	public List<Task> loadHybrid(ExtDirectStoreReadRequest request) {
+	public List<Task> loadHybrid() {
 		return tasks;
 	}
 
 	@ExtDirectMethod(group = "hybrid")
-	public Summary updateSummary(String groupValue) {
+	public Summary updateSummary() {
 		Summary summary = new Summary();
 		summary.setDescription("22");
 		summary.setEstimate(new BigDecimal(888));

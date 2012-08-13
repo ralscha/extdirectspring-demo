@@ -30,7 +30,7 @@ public class ExtDirectStorePagingResponse<T> extends ExtDirectStoreResponse<T> {
 		int totalSize = allRecords.size();
 		Collection<T> records = allRecords;
 
-		Ordering<T> ordering = PropertyOrderingFactory.INSTANCE.createOrderingFromSorters(request.getSorters());
+		Ordering<T> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
 		if (ordering != null) {
 			records = ordering.sortedCopy(records);
 		}

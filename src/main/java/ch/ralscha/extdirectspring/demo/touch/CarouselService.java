@@ -50,28 +50,29 @@ public class CarouselService {
 		List<CarouselPicture> pictures = Lists.newArrayList();
 
 		SyndFeedInput input = new SyndFeedInput();
-		SyndFeed feed = input.build(new XmlReader(feedUrl));
+		try (XmlReader reader = new XmlReader(feedUrl)) {
+			SyndFeed feed = input.build(reader);
 
-		@SuppressWarnings("unchecked")
-		List<SyndEntry> entries = feed.getEntries();
-		for (SyndEntry entry : entries) {
-			CarouselPicture pic = new CarouselPicture();
-			pic.setId(entry.getUri());
-			pic.setAuthor(entry.getAuthor());
-			pic.setLink(entry.getLink());
-			pic.setTitle(entry.getTitle());
-			// pic.setContent();
-			Matcher matcher = IMG_PATTERN.matcher(entry.getDescription().getValue());
-			if (matcher.matches()) {
-				String imageUrl = matcher.group(1);
-				if (imageUrl.startsWith("http://apod.nasa.gov/apod/http://")) {
-					imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://", "http://");
+			@SuppressWarnings("unchecked")
+			List<SyndEntry> entries = feed.getEntries();
+			for (SyndEntry entry : entries) {
+				CarouselPicture pic = new CarouselPicture();
+				pic.setId(entry.getUri());
+				pic.setAuthor(entry.getAuthor());
+				pic.setLink(entry.getLink());
+				pic.setTitle(entry.getTitle());
+				// pic.setContent();
+				Matcher matcher = IMG_PATTERN.matcher(entry.getDescription().getValue());
+				if (matcher.matches()) {
+					String imageUrl = matcher.group(1);
+					if (imageUrl.startsWith("http://apod.nasa.gov/apod/http://")) {
+						imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://", "http://");
+					}
+					pic.setImage(request.getContextPath() + "/controller/picresize?url=" + imageUrl);
 				}
-				pic.setImage(request.getContextPath() + "/controller/picresize?url=" + imageUrl);
+				pictures.add(pic);
 			}
-			pictures.add(pic);
 		}
-
 		return pictures;
 	}
 

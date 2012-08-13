@@ -125,10 +125,9 @@ public class RestaurantService {
 				}
 			}
 
-			Ordering<Restaurant> ordering = PropertyOrderingFactory.INSTANCE.createOrderingFromGroups(Lists
+			Ordering<Restaurant> ordering = PropertyOrderingFactory.createOrderingFromGroups(Lists
 					.newArrayList(groupInfo));
-			Ordering<Restaurant> sortOrdering = PropertyOrderingFactory.INSTANCE.createOrderingFromSorters(request
-					.getSorters());
+			Ordering<Restaurant> sortOrdering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
 
 			if (sortOrdering != null) {
 				ordering = ordering.compound(sortOrdering);
@@ -140,8 +139,7 @@ public class RestaurantService {
 		}
 
 		if (!request.getSorters().isEmpty()) {
-			Ordering<Restaurant> ordering = PropertyOrderingFactory.INSTANCE.createOrderingFromSorters(request
-					.getSorters());
+			Ordering<Restaurant> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
 			if (ordering != null) {
 				return ordering.sortedCopy(restaurants);
 			}

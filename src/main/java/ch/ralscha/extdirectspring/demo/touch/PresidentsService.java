@@ -32,7 +32,7 @@ public class PresidentsService {
 		return createTestData();
 	}
 
-	private List<President> createTestData() {
+	private static List<President> createTestData() {
 		List<President> presidents = Lists.newArrayList();
 
 		presidents.add(new President(1, "George", null, "Washington", "georgewashington.png"));
