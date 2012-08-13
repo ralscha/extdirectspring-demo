@@ -17,45 +17,34 @@ package ch.ralscha.extdirectspring.demo.upload;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-import ch.ralscha.extdirectspring.bean.ExtDirectResponseBuilder;
+import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResponse;
 
-@Controller
+@Service
 public class UploadController {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "upload")
-	@RequestMapping(value = "/uploadTest", method = RequestMethod.POST)
-	public void uploadTest(Locale locale, HttpServletRequest request,
-			@RequestParam("fileUpload") final MultipartFile file, HttpServletResponse response) throws IOException {
+	public ExtDirectFormPostResponse uploadTest(@RequestParam("fileUpload") MultipartFile file) throws IOException {
 
-		ExtDirectResponseBuilder builder = new ExtDirectResponseBuilder(request, response);
+		ExtDirectFormPostResponse resp = new ExtDirectFormPostResponse(true);
 
 		if (file != null && !file.isEmpty()) {
-			builder.addResultProperty("fileContents", new String(file.getBytes(), StandardCharsets.ISO_8859_1));
+			resp.addResultProperty("fileContents", new String(file.getBytes(), StandardCharsets.ISO_8859_1));
 		}
-		builder.successful();
-		builder.buildAndWrite();
+		return resp;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "upload4")
-	@RequestMapping(value = "/uploadTest4", method = RequestMethod.POST)
-	public void uploadTest4(Locale locale, HttpServletRequest request,
-			@RequestParam("fileUpload1") final MultipartFile file1,
-			@RequestParam("fileUpload2") final MultipartFile file2, HttpServletResponse response) throws IOException {
+	public ExtDirectFormPostResponse uploadTest4(@RequestParam("fileUpload1") MultipartFile file1,
+			@RequestParam("fileUpload2") MultipartFile file2) throws IOException {
 
-		ExtDirectResponseBuilder builder = new ExtDirectResponseBuilder(request, response);
+		ExtDirectFormPostResponse resp = new ExtDirectFormPostResponse(true);
 
 		if (file1 != null && !file1.isEmpty()) {
 			System.out.println("File1 Name : " + file1.getName());
@@ -68,11 +57,10 @@ public class UploadController {
 
 			String txt = new String(file2.getBytes(), StandardCharsets.ISO_8859_1);
 			System.out.println(txt);
-			builder.addResultProperty("fileContents", txt);
+			resp.addResultProperty("fileContents", txt);
 		}
 
-		builder.successful();
-		builder.buildAndWrite();
+		return resp;
 	}
 
 }
