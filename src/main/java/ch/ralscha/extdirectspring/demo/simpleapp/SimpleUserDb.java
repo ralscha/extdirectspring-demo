@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.PostConstruct;
 
@@ -44,6 +46,8 @@ public class SimpleUserDb {
 
 	private Map<String, User> users;
 
+	private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
+
 	@PostConstruct
 	public void readData() throws IOException {
 		users = Maps.newHashMap();
@@ -57,7 +61,6 @@ public class SimpleUserDb {
 				maxId = Math.max(maxId, Integer.valueOf(u.getId()));
 			}
 		}
-
 	}
 
 	public List<User> getAll() {
@@ -65,18 +68,33 @@ public class SimpleUserDb {
 	}
 
 	public User findUser(String id) {
-		return users.get(id);
+		rwLock.readLock().lock();
+		try {
+			return users.get(id);
+		} finally {
+			rwLock.readLock().unlock();
+		}
 	}
 
 	public void deleteUser(User user) {
-		users.remove(user.getId());
+		rwLock.writeLock().lock();
+		try {
+			users.remove(user.getId());
+		} finally {
+			rwLock.writeLock().unlock();
+		}
 	}
 
 	public User insert(User p) {
-		maxId = maxId + 1;
-		p.setId(String.valueOf(maxId));
-		users.put(String.valueOf(maxId), p);
-		return p;
+		rwLock.writeLock().lock();
+		try {
+			maxId = maxId + 1;
+			p.setId(String.valueOf(maxId));
+			users.put(String.valueOf(maxId), p);
+			return p;
+		} finally {
+			rwLock.writeLock().unlock();
+		}
 	}
 
 }

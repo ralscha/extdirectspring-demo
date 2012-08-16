@@ -1,0 +1,73 @@
+<!doctype html> 
+<html>
+<head>
+    <title>Ext JS Calendar Sample</title>
+    <link rel="stylesheet" href="http://cdn.sencha.com/ext-4.1.1-gpl/resources/css/ext-all.css">
+        <link rel="stylesheet" href="http://rasc.ch/extensible-1.5.1/resources/css/extensible-all.css">
+    <script src="http://cdn.sencha.com/ext-4.1.1-gpl/ext-all.js"></script>
+    <script src="http://rasc.ch/extensible-1.5.1/lib/extensible-all.js"></script>    
+    <script src="../../controller/api-debug.js?group=calendar"></script>
+     
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true,
+            paths: {
+            	"Cal": "cal"
+            }
+        });
+
+        Ext.onReady(function() {
+        	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+        	
+        	var M = Extensible.calendar.data.CalendarMappings;
+        	M.Description.mapping = 'description';
+        	Extensible.calendar.data.CalendarModel.reconfigure();
+        	
+        	M = Extensible.calendar.data.EventMappings;
+        	M.EventId.name = 'id';
+        	
+        	M.CalendarId.name = 'calendarId';
+        	M.CalendarId.mapping = 'calendarId';
+        	
+        	M.Title.name = 'title';
+
+        	M.StartDate.name = 'startDate';
+        	M.StartDate.mapping = 'startDate';
+        	
+        	M.EndDate.name = 'endDate';
+        	M.EndDate.mapping = 'endDate';
+        	
+        	M.RRule.name = 'recurRule';
+        	M.RRule.mapping = 'recurRule';
+        	
+        	M.Location.name = 'location';
+        	M.Location.mapping = 'location';
+        	
+        	M.Notes.name = 'notes';
+        	M.Url.name = 'url';
+        	
+        	M.IsAllDay.name = 'allDay';
+        	M.IsAllDay.mapping = 'allDay';
+        	
+        	M.Reminder.name = 'reminder';
+        	M.Reminder.mapping = 'reminder';                	
+        	Extensible.calendar.data.EventModel.reconfigure();
+        	
+        	var eventStore = Ext.create('Cal.DirectEventStore');
+        	var calendarStore = Ext.create('Cal.DirectCalendarStore');
+        	
+            Ext.create('Extensible.calendar.CalendarPanel', {
+                eventStore: eventStore,
+                calendarStore: calendarStore,
+                renderTo: Ext.getBody(),
+                title: 'Basic Calendar',
+                width: 700,
+                height: 500
+            });
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
