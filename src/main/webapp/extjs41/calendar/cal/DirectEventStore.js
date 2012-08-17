@@ -1,7 +1,7 @@
 Ext.define('Cal.DirectEventStore', {
     extend: 'Ext.data.Store',
     model: 'Extensible.calendar.data.EventModel',
-    autoLoad: true,
+    deferLoad: true,
     
     proxy: {
 		type: 'direct',

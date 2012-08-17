@@ -2,8 +2,11 @@ package ch.ralscha.extdirectspring.demo.calendar;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
@@ -17,8 +20,11 @@ public class CalendarService {
 	private EventDb eventDb;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "calendar")
-	public ImmutableList<Event> read() {
-		return eventDb.getAll();
+	public ImmutableList<Event> read(
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") DateTime startDate,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") DateTime endDate) {
+
+		return eventDb.getEvents(startDate, endDate);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")

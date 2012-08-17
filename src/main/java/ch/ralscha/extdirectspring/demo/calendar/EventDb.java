@@ -22,6 +22,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.PostConstruct;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableList;
@@ -111,8 +112,8 @@ public class EventDb {
 		event.setId(1008);
 		event.setCalendarId(3);
 		event.setTitle("An old event");
-		event.setStartDate(DateTime.now().minusDays(-30).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0));
-		event.setEndDate(DateTime.now().minusDays(-28).withHourOfDay(0).withMinuteOfHour(0).minusSeconds(0));
+		event.setStartDate(DateTime.now().minusDays(30).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0));
+		event.setEndDate(DateTime.now().minusDays(28).withHourOfDay(0).withMinuteOfHour(0).minusSeconds(0));
 		event.setAllDay(true);
 		events.put(event.getId(), event);
 
@@ -120,8 +121,8 @@ public class EventDb {
 		event.setId(1009);
 		event.setCalendarId(2);
 		event.setTitle("Board meeting");
-		event.setStartDate(DateTime.now().minusDays(-2).withHourOfDay(13).withMinuteOfHour(0).withSecondOfMinute(0));
-		event.setEndDate(DateTime.now().minusDays(-2).withHourOfDay(18).withMinuteOfHour(0).minusSeconds(0));
+		event.setStartDate(DateTime.now().minusDays(2).withHourOfDay(13).withMinuteOfHour(0).withSecondOfMinute(0));
+		event.setEndDate(DateTime.now().minusDays(2).withHourOfDay(18).withMinuteOfHour(0).minusSeconds(0));
 		event.setLocation("ABC Inc.");
 		event.setReminder("60");
 		events.put(event.getId(), event);
@@ -130,7 +131,7 @@ public class EventDb {
 		event.setId(1010);
 		event.setCalendarId(3);
 		event.setTitle("Jenny's final exams");
-		event.setStartDate(DateTime.now().minusDays(-2).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0));
+		event.setStartDate(DateTime.now().minusDays(2).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0));
 		event.setEndDate(DateTime.now().plusDays(3).withHourOfDay(0).withMinuteOfHour(0).minusSeconds(0));
 		event.setAllDay(true);
 		events.put(event.getId(), event);
@@ -148,17 +149,24 @@ public class EventDb {
 		maxId = 1011;
 	}
 
-	public ImmutableList<Event> getAll() {
-		return ImmutableList.copyOf(events.values());
-	}
-
-	public Event find(String id) {
+	public ImmutableList<Event> getEvents(DateTime startDate, DateTime endDate) {
 		rwLock.readLock().lock();
 		try {
-			return events.get(id);
+			if (startDate != null && endDate != null) {
+				Interval interval = new Interval(startDate, endDate.plusDays(1));
+				ImmutableList.Builder<Event> foundEvents = ImmutableList.builder();
+				for (Event event : events.values()) {
+					if (interval.overlaps(new Interval(event.getStartDate(), event.getEndDate().plusDays(1)))) {
+						foundEvents.add(event);
+					}
+				}
+				return foundEvents.build();
+			}
+			return ImmutableList.copyOf(events.values());
 		} finally {
 			rwLock.readLock().unlock();
 		}
+
 	}
 
 	public Event update(Event event) {
