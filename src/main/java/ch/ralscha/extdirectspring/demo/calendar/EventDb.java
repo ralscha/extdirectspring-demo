@@ -156,7 +156,7 @@ public class EventDb {
 				Interval interval = new Interval(startDate, endDate.plusDays(1));
 				ImmutableList.Builder<Event> foundEvents = ImmutableList.builder();
 				for (Event event : events.values()) {
-					if (interval.overlaps(new Interval(event.getStartDate(), event.getEndDate().plusDays(1)))) {
+					if (interval.overlaps(new Interval(event.getStartDate(), event.getEndDate().plusDays(1).withTimeAtStartOfDay()))) {
 						foundEvents.add(event);
 					}
 				}
