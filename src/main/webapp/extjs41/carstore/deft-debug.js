@@ -46,6 +46,28 @@ Ext.define('Deft.core.Class', {
       } else {
         data.onClassExtended = onClassExtended;
       }
+    },
+    /**
+    		Returns true if the passed class name is a superclass of the passed Class reference.
+    */
+
+    extendsClass: function(className, currentClass) {
+      try {
+        if (Ext.getClassName(currentClass) === className) {
+          return true;
+        }
+        if (currentClass != null ? currentClass.superclass : void 0) {
+          if (Ext.getClassName(currentClass.superclass) === className) {
+            return true;
+          } else {
+            return Deft.Class.extendsClass(className, Ext.getClass(currentClass.superclass));
+          }
+        } else {
+          return false;
+        }
+      } catch (error) {
+        return false;
+      }
     }
   }
 });
@@ -148,6 +170,7 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
 Ext.define('Deft.event.LiveEventListener', {
   alternateClassName: ['Deft.LiveEventListener'],
+  requires: ['Ext.ComponentQuery'],
   constructor: function(config) {
     var component, components, _i, _len;
     Ext.apply(this, config);
@@ -202,7 +225,7 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
 Ext.define('Deft.event.LiveEventBus', {
   alternateClassName: ['Deft.LiveEventBus'],
-  requires: ['Deft.event.LiveEventListener'],
+  requires: ['Ext.Component', 'Ext.ComponentManager', 'Deft.event.LiveEventListener'],
   singleton: true,
   constructor: function() {
     this.listeners = [];
@@ -308,13 +331,11 @@ Ext.define('Deft.event.LiveEventBus', {
       }
     });
   }
-  Ext.require('Ext.ComponentManager', function() {
-    Ext.Function.interceptAfter(Ext.ComponentManager, 'register', function(component) {
-      Deft.event.LiveEventBus.register(component);
-    });
-    Ext.Function.interceptAfter(Ext.ComponentManager, 'unregister', function(component) {
-      Deft.event.LiveEventBus.unregister(component);
-    });
+  Ext.Function.interceptAfter(Ext.ComponentManager, 'register', function(component) {
+    Deft.event.LiveEventBus.register(component);
+  });
+  Ext.Function.interceptAfter(Ext.ComponentManager, 'unregister', function(component) {
+    Deft.event.LiveEventBus.unregister(component);
   });
 });
 /*
@@ -353,7 +374,7 @@ Ext.define('Deft.ioc.DependencyProvider', {
     		Value to use to resolve this dependency.
     */
 
-    value: null,
+    value: void 0,
     /**
     		Indicates whether this dependency should be resolved as a singleton, or as a transient value for each resolution request.
     */
@@ -429,7 +450,7 @@ Ext.define('Deft.ioc.DependencyProvider', {
   resolve: function(targetInstance) {
     var instance, parameters;
     Deft.Logger.log("Resolving '" + (this.getIdentifier()) + "'.");
-    if (this.getValue() != null) {
+    if (this.getValue() !== void 0) {
       return this.getValue();
     }
     instance = null;
@@ -469,7 +490,7 @@ Used in conjunction with {@link Deft.mixin.Injectable}.
 
 Ext.define('Deft.ioc.Injector', {
   alternateClassName: ['Deft.Injector'],
-  requires: ['Deft.log.Logger', 'Deft.ioc.DependencyProvider'],
+  requires: ['Ext.Component', 'Deft.log.Logger', 'Deft.ioc.DependencyProvider'],
   singleton: true,
   constructor: function() {
     this.providers = {};
@@ -480,7 +501,9 @@ Ext.define('Deft.ioc.Injector', {
   */
 
   configure: function(configuration) {
-    Deft.Logger.log('Configuring injector.');
+    var newProviders;
+    Deft.Logger.log('Configuring the injector.');
+    newProviders = {};
     Ext.Object.each(configuration, function(identifier, config) {
       var provider;
       Deft.Logger.log("Configuring dependency provider for '" + identifier + "'.");
@@ -495,13 +518,22 @@ Ext.define('Deft.ioc.Injector', {
         }, config));
       }
       this.providers[identifier] = provider;
+      newProviders[identifier] = provider;
     }, this);
-    Ext.Object.each(this.providers, function(identifier, provider) {
+    Ext.Object.each(newProviders, function(identifier, provider) {
       if (provider.getEager()) {
         Deft.Logger.log("Eagerly creating '" + (provider.getIdentifier()) + "'.");
         provider.resolve();
       }
     }, this);
+  },
+  /**
+  	Reset the Injector.
+  */
+
+  reset: function() {
+    Deft.Logger.log('Resetting the injector.');
+    this.providers = {};
   },
   /**
   	Indicates whether the Injector can resolve a dependency by the specified identifier with the corresponding object instance or value.
@@ -578,14 +610,12 @@ Ext.define('Deft.ioc.Injector', {
 }, function() {
   if (Ext.getVersion('extjs') != null) {
     if (Ext.getVersion('core').isLessThan('4.1.0')) {
-      Ext.require('Ext.Component', function() {
-        Ext.Component.override({
-          constructor: function(config) {
-            config = Ext.Object.merge({}, config || {}, this.injectConfig || {});
-            delete this.injectConfig;
-            return this.callOverridden([config]);
-          }
-        });
+      Ext.Component.override({
+        constructor: function(config) {
+          config = Ext.Object.merge({}, config || {}, this.injectConfig || {});
+          delete this.injectConfig;
+          return this.callOverridden([config]);
+        }
       });
     } else {
       Ext.define('Deft.InjectableComponent', {
@@ -680,6 +710,218 @@ Copyright (c) 2012 [DeftJS Framework Contributors](http://deftjs.org)
 Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 */
 
+Ext.define('Deft.mvc.Observer', {
+  requires: ['Ext.util.Observable'],
+  statics: {
+    /**
+    		Merges child and parent observers into a single object. This differs from a normal object merge because
+    		a given observer target and event can potentially have multiple handlers declared in different parent or
+    		child classes. It transforms an event handler value into an array of values, and merges the arrays of handlers
+    		from child to parent. This maintains the handlers even if both parent and child classes have handlers for the
+    		same target and event.
+    */
+
+    mergeObserve: function(originalParentObserve, originalChildObserve) {
+      var childEvent, childEvents, childHandler, childHandlerArray, childObserve, childTarget, parentEvent, parentEvents, parentHandler, parentHandlerArray, parentObserve, parentTarget, _ref, _ref1;
+      if (!Ext.isObject(originalParentObserve)) {
+        parentObserve = {};
+      } else {
+        parentObserve = Ext.clone(originalParentObserve);
+      }
+      if (!Ext.isObject(originalChildObserve)) {
+        childObserve = {};
+      } else {
+        childObserve = Ext.clone(originalChildObserve);
+      }
+      for (childTarget in childObserve) {
+        childEvents = childObserve[childTarget];
+        for (childEvent in childEvents) {
+          childHandler = childEvents[childEvent];
+          if (Ext.isString(childHandler)) {
+            childObserve[childTarget][childEvent] = childHandler.replace(' ', '').split(',');
+          }
+          if (!(parentObserve != null ? parentObserve[childTarget] : void 0)) {
+            parentObserve[childTarget] = {};
+          }
+          if (!(parentObserve != null ? (_ref = parentObserve[childTarget]) != null ? _ref[childEvent] : void 0 : void 0)) {
+            parentObserve[childTarget][childEvent] = childObserve[childTarget][childEvent];
+            delete childObserve[childTarget][childEvent];
+          }
+        }
+      }
+      for (parentTarget in parentObserve) {
+        parentEvents = parentObserve[parentTarget];
+        for (parentEvent in parentEvents) {
+          parentHandler = parentEvents[parentEvent];
+          if (Ext.isString(parentHandler)) {
+            parentObserve[parentTarget][parentEvent] = parentHandler.split(',');
+          }
+          if (childObserve != null ? (_ref1 = childObserve[parentTarget]) != null ? _ref1[parentEvent] : void 0 : void 0) {
+            childHandlerArray = childObserve[parentTarget][parentEvent];
+            parentHandlerArray = parentObserve[parentTarget][parentEvent];
+            parentObserve[parentTarget][parentEvent] = Ext.Array.unique(Ext.Array.insert(parentHandlerArray, 0, childHandlerArray));
+          }
+        }
+      }
+      return parentObserve;
+    }
+  },
+  /**
+  	Expects a config object with properties for host, target, and events.
+  */
+
+  constructor: function(config) {
+    var eventName, events, handler, handlerArray, host, references, target, _i, _len;
+    this.listeners = [];
+    host = config != null ? config.host : void 0;
+    target = config != null ? config.target : void 0;
+    events = config != null ? config.events : void 0;
+    if (host && target && (this.isPropertyChain(target) || this.isTargetObservable(host, target))) {
+      for (eventName in events) {
+        handlerArray = events[eventName];
+        if (Ext.isString(handlerArray)) {
+          handlerArray = handlerArray.replace(' ', '').split(',');
+        }
+        for (_i = 0, _len = handlerArray.length; _i < _len; _i++) {
+          handler = handlerArray[_i];
+          references = this.locateReferences(host, target, handler);
+          if (references) {
+            references.target.on(eventName, references.handler, host);
+            this.listeners.push({
+              targetName: target,
+              target: references.target,
+              event: eventName,
+              handler: references.handler,
+              scope: host
+            });
+            Deft.Logger.log("Created observer on '" + target + "' for event '" + eventName + "'.");
+          } else {
+            Deft.Logger.warn("Could not create observer on '" + target + "' for event '" + eventName + "'.");
+          }
+        }
+      }
+    } else {
+      Deft.Logger.warn("Could not create observers on '" + target + "' because '" + target + "' is not an Ext.util.Observable");
+    }
+    return this;
+  },
+  /**
+  	Returns true if the passed host has a target that is Observable.
+  	Checks for an isObservable=true property, observable mixin, or if the class extends Observable.
+  */
+
+  isTargetObservable: function(host, target) {
+    var hostTarget, hostTargetClass, _ref;
+    hostTarget = this.locateTarget(host, target);
+    if (!(hostTarget != null)) {
+      return false;
+    }
+    if ((hostTarget.isObservable != null) || (((_ref = hostTarget.mixins) != null ? _ref.observable : void 0) != null)) {
+      return true;
+    } else {
+      hostTargetClass = Ext.ClassManager.getClass(hostTarget);
+      return Deft.Class.extendsClass('Ext.util.Observable', hostTargetClass) || Deft.Class.extendsClass('Ext.mixin.Observable', hostTargetClass);
+    }
+  },
+  /**
+  	Attempts to locate an observer target given the host object and target property name.
+  	Checks for both host[ target ], and host.getTarget().
+  */
+
+  locateTarget: function(host, target) {
+    var result;
+    if (Ext.isFunction(host['get' + Ext.String.capitalize(target)])) {
+      result = host['get' + Ext.String.capitalize(target)].call(host);
+      return result;
+    } else if ((host != null ? host[target] : void 0) != null) {
+      result = host[target];
+      return result;
+    } else {
+      return null;
+    }
+  },
+  /**
+  	Returns true if the passed target is a string containing a '.', indicating that it is referencing a nested property.
+  */
+
+  isPropertyChain: function(target) {
+    return Ext.isString(target) && target.indexOf('.') > -1;
+  },
+  /**
+  	Given a host object, target property name, and handler, return object references for the final target and handler function.
+  	If necessary, recurse down a property chain to locate the final target object for the event listener.
+  */
+
+  locateReferences: function(host, target, handler) {
+    var handlerHost, propertyChain;
+    handlerHost = host;
+    if (this.isPropertyChain(target)) {
+      propertyChain = this.parsePropertyChain(host, target);
+      if (!propertyChain) {
+        return null;
+      }
+      host = propertyChain.host;
+      target = propertyChain.target;
+    }
+    if (Ext.isFunction(handler)) {
+      return {
+        target: this.locateTarget(host, target),
+        handler: handler
+      };
+    } else if (Ext.isFunction(handlerHost[handler])) {
+      return {
+        target: this.locateTarget(host, target),
+        handler: handlerHost[handler]
+      };
+    } else {
+      return null;
+    }
+  },
+  /**
+  	Given a target property chain and a property host object, recurse down the property chain and return
+  	the final host object from the property chain, and the final object that will accept the event listener.
+  */
+
+  parsePropertyChain: function(host, target) {
+    var propertyChain;
+    if (Ext.isString(target)) {
+      propertyChain = target.split('.');
+    } else if (Ext.isArray(target)) {
+      propertyChain = target;
+    } else {
+      return null;
+    }
+    if (propertyChain.length > 1 && (this.locateTarget(host, propertyChain[0]) != null)) {
+      return this.parsePropertyChain(this.locateTarget(host, propertyChain[0]), propertyChain.slice(1));
+    } else if (this.isTargetObservable(host, propertyChain[0])) {
+      return {
+        host: host,
+        target: propertyChain[0]
+      };
+    } else {
+      return null;
+    }
+  },
+  /**
+  	Iterate through the listeners array and remove each event listener.
+  */
+
+  destroy: function() {
+    var listenerData, _i, _len, _ref;
+    _ref = this.listeners;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      listenerData = _ref[_i];
+      Deft.Logger.log("Removing observer on '" + listenerData.targetName + "' for event '" + listenerData.event + "'.");
+      listenerData.target.un(listenerData.event, listenerData.handler, listenerData.scope);
+    }
+    this.listeners = [];
+  }
+});
+/*
+Copyright (c) 2012 [DeftJS Framework Contributors](http://deftjs.org)
+Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
+*/
+
 Ext.define('Deft.mvc.ComponentSelectorListener', {
   requires: ['Deft.event.LiveEventBus'],
   constructor: function(config) {
@@ -715,7 +957,7 @@ Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 */
 
 Ext.define('Deft.mvc.ComponentSelector', {
-  requires: ['Deft.log.Logger', 'Deft.mvc.ComponentSelectorListener'],
+  requires: ['Ext.ComponentQuery', 'Deft.log.Logger', 'Deft.mvc.ComponentSelectorListener'],
   constructor: function(config) {
     var eventName, fn, listener, options, scope, _ref;
     Ext.apply(this, config);
@@ -822,7 +1064,7 @@ Used in conjunction with {@link Deft.mixin.Controllable}.
 
 Ext.define('Deft.mvc.ViewController', {
   alternateClassName: ['Deft.ViewController'],
-  requires: ['Deft.log.Logger', 'Deft.mvc.ComponentSelector'],
+  requires: ['Deft.log.Logger', 'Deft.mvc.ComponentSelector', 'Deft.mvc.Observer'],
   config: {
     /**
     		View controlled by this ViewController.
@@ -830,14 +1072,24 @@ Ext.define('Deft.mvc.ViewController', {
 
     view: null
   },
+  /**
+  	Observers automatically created and removed by this ViewController.
+  */
+
+  observe: {},
   constructor: function(config) {
+    var initializedConfig;
     if (config == null) {
       config = {};
     }
     if (config.view) {
       this.controlView(config.view);
     }
-    return this.initConfig(config);
+    initializedConfig = this.initConfig(config);
+    if (Ext.Object.getSize(this.observe) > 0) {
+      this.createObservers();
+    }
+    return initializedConfig;
   },
   /**
   	@protected
@@ -888,6 +1140,7 @@ Ext.define('Deft.mvc.ViewController', {
     for (selector in this.registeredComponentSelectors) {
       this.removeComponentSelector(selector);
     }
+    this.removeObservers();
     return true;
   },
   /**
@@ -1067,8 +1320,57 @@ Ext.define('Deft.mvc.ViewController', {
 
   getComponentSelector: function(selector) {
     return this.registeredComponentSelectors[selector];
+  },
+  /**
+  	@protected
+  */
+
+  createObservers: function() {
+    var events, target, _ref;
+    this.registeredObservers = {};
+    _ref = this.observe;
+    for (target in _ref) {
+      events = _ref[target];
+      this.addObserver(target, events);
+    }
+  },
+  addObserver: function(target, events) {
+    var observer;
+    observer = Ext.create('Deft.mvc.Observer', {
+      host: this,
+      target: target,
+      events: events
+    });
+    return this.registeredObservers[target] = observer;
+  },
+  /**
+  	@protected
+  */
+
+  removeObservers: function() {
+    var observer, target, _ref;
+    _ref = this.registeredObservers;
+    for (target in _ref) {
+      observer = _ref[target];
+      observer.destroy();
+      delete this.registeredObservers[target];
+    }
   }
 });
+
+/**
+Preprocessor to handle merging of 'observe' objects on parent and child classes.
+*/
+
+
+Deft.Class.registerPreprocessor('observe', function(Class, data, hooks, callback) {
+  Deft.Class.hookOnClassExtended(data, function(Class, data, hooks) {
+    var _ref;
+    if (Class.superclass && ((_ref = Class.superclass) != null ? _ref.observe : void 0) && Deft.Class.extendsClass('Deft.mvc.ViewController', Class)) {
+      data.observe = Deft.mvc.Observer.mergeObserve(Class.superclass.observe, data.observe);
+    }
+  });
+}, 'before', 'extend');
 /*
 Copyright (c) 2012 [DeftJS Framework Contributors](http://deftjs.org)
 Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
@@ -1081,7 +1383,7 @@ Used in conjunction with {@link Deft.mvc.ViewController}.
 */
 
 Ext.define('Deft.mixin.Controllable', {
-  requires: ['Deft.core.Class', 'Deft.log.Logger'],
+  requires: ['Ext.Container', 'Deft.core.Class', 'Deft.log.Logger'],
   /**
   	@private
   */
@@ -1172,10 +1474,317 @@ Ext.define('Deft.mixin.Controllable', {
 /*
 Copyright (c) 2012 [DeftJS Framework Contributors](http://deftjs.org)
 Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
+
+Promise.when(), all(), any(), map() and reduce() methods adapted from:
+[when.js](https://github.com/cujojs/when)
+Copyright (c) B Cavalier & J Hann
+Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
+*/
+
+Ext.define('Deft.promise.Promise', {
+  alternateClassName: ['Deft.Promise'],
+  statics: {
+    /**
+    		Returns a new {@link Deft.promise.Promise} that:
+    		- resolves immediately for the specified value, or
+    		- resolves, rejects, updates or cancels when the specified {@link Deft.promise.Deferred} or {@link Deft.promise.Promise} is resolved, rejected, updated or cancelled.
+    */
+
+    when: function(promiseOrValue) {
+      var deferred;
+      if (promiseOrValue instanceof Ext.ClassManager.get('Deft.promise.Promise') || promiseOrValue instanceof Ext.ClassManager.get('Deft.promise.Deferred')) {
+        return promiseOrValue.then();
+      } else if (Ext.isObject(promiseOrValue) && Ext.isFunction(promiseOrValue.then)) {
+        deferred = Ext.create('Deft.promise.Deferred');
+        promiseOrValue.then(function(value) {
+          deferred.resolve(value);
+        }, function(error) {
+          deferred.reject(error);
+        });
+        return deferred.then();
+      } else {
+        deferred = Ext.create('Deft.promise.Deferred');
+        deferred.resolve(promiseOrValue);
+        return deferred.then();
+      }
+    },
+    /**
+    		Returns a new {@link Deft.promise.Promise} that will only resolve once all the specified `promisesOrValues` have resolved.
+    		The resolution value will be an Array containing the resolution value of each of the `promisesOrValues`.
+    */
+
+    all: function(promisesOrValues) {
+      return this.when(promisesOrValues).then({
+        success: function(promisesOrValues) {
+          var cancelFunction, canceller, complete, createSuccessFunction, deferred, failureFunction, index, progressFunction, promiseOrValue, rejecter, resolvedCount, resolvedValues, resolver, total, updater, _i, _len;
+          deferred = Ext.create('Deft.promise.Deferred');
+          total = promisesOrValues.length;
+          resolvedValues = new Array(promisesOrValues);
+          resolvedCount = 0;
+          updater = function(progress) {
+            deferred.update(progress);
+          };
+          resolver = function(index, value) {
+            resolvedValues[index] = value;
+            resolvedCount++;
+            if (resolvedCount === total) {
+              complete();
+              deferred.resolve(resolvedValues);
+            }
+          };
+          rejecter = function(error) {
+            complete();
+            deferred.reject(error);
+          };
+          canceller = function(reason) {
+            complete();
+            deferred.cancel(reason);
+          };
+          complete = function() {
+            return updater = resolver = rejecter = canceller = Ext.emptyFn;
+          };
+          createSuccessFunction = function(index) {
+            return function(value) {
+              return resolver(index, value);
+            };
+          };
+          failureFunction = function(value) {
+            return rejecter(value);
+          };
+          progressFunction = function(value) {
+            return updater(value);
+          };
+          cancelFunction = function(value) {
+            return canceller(value);
+          };
+          for (index = _i = 0, _len = promisesOrValues.length; _i < _len; index = ++_i) {
+            promiseOrValue = promisesOrValues[index];
+            if (index in promisesOrValues) {
+              this.when(promiseOrValue).then({
+                success: createSuccessFunction(index),
+                failure: failureFunction,
+                progress: progressFunction,
+                cancel: cancelFunction
+              });
+            }
+          }
+          return deferred.getPromise();
+        },
+        scope: this
+      });
+    },
+    /**
+    		Returns a new {@link Deft.promise.Promise} that will only resolve once any one of the the specified `promisesOrValues` has resolved.
+    		The resolution value will be the resolution value of the triggering `promiseOrValue`.
+    */
+
+    any: function(promisesOrValues) {
+      return this.when(promisesOrValues).then({
+        success: function(promisesOrValues) {
+          var cancelFunction, canceller, complete, deferred, failureFunction, index, progressFunction, promiseOrValue, rejecter, resolver, successFunction, updater, _i, _len;
+          deferred = Ext.create('Deft.promise.Deferred');
+          updater = function(progress) {
+            deferred.update(progress);
+          };
+          resolver = function(value) {
+            complete();
+            deferred.resolve(value);
+          };
+          rejecter = function(error) {
+            complete();
+            deferred.reject(error);
+          };
+          canceller = function(reason) {
+            complete();
+            return deferred.cancel(reason);
+          };
+          complete = function() {
+            return updater = resolver = rejecter = canceller = Ext.emptyFn;
+          };
+          successFunction = function(value) {
+            return resolver(value);
+          };
+          failureFunction = function(value) {
+            return rejecter(value);
+          };
+          progressFunction = function(value) {
+            return updater(value);
+          };
+          cancelFunction = function(value) {
+            return canceller(value);
+          };
+          for (index = _i = 0, _len = promisesOrValues.length; _i < _len; index = ++_i) {
+            promiseOrValue = promisesOrValues[index];
+            if (index in promisesOrValues) {
+              this.when(promiseOrValue).then({
+                success: successFunction,
+                failure: failureFunction,
+                progress: progressFunction,
+                cancel: cancelFunction
+              });
+            }
+          }
+          return deferred.getPromise();
+        },
+        scope: this
+      });
+    },
+    /**
+    		Returns a new function that wraps the specified function and caches the results for previously processed inputs.
+    		Similar to `Deft.util.Function::memoize()`, except it allows input to contain promises and/or values.
+    */
+
+    memoize: function(fn, scope, hashFn) {
+      var memoizedFn;
+      memoizedFn = Deft.util.Function.memoize(fn, scope, hashFn);
+      return Ext.bind(function() {
+        return this.all(Ext.Array.toArray(arguments)).then(function(values) {
+          return memoizedFn.apply(scope, values);
+        });
+      }, this);
+    },
+    /**
+    		Traditional map function, similar to `Array.prototype.map()`, that allows input to contain promises and/or values.
+    		The specified map function may return either a value or a promise.
+    */
+
+    map: function(promisesOrValues, mapFunction) {
+      return this.when(promisesOrValues).then({
+        success: function(promisesOrValues) {
+          var index, promiseOrValue, results, _i, _len;
+          results = new Array(promisesOrValues.length);
+          for (index = _i = 0, _len = promisesOrValues.length; _i < _len; index = ++_i) {
+            promiseOrValue = promisesOrValues[index];
+            if (index in promisesOrValues) {
+              results[index] = this.when(promiseOrValue).then(mapFunction);
+            }
+          }
+          return this.reduce(results, this.reduceIntoArray, results);
+        },
+        scope: this
+      });
+    },
+    /**
+    		Traditional reduce function, similar to `Array.reduce()`, that allows input to contain promises and/or values.
+    */
+
+    reduce: function(promisesOrValues, reduceFunction, initialValue) {
+      var initialValueSpecified;
+      initialValueSpecified = arguments.length === 3;
+      return this.when(promisesOrValues).then({
+        success: function(promisesOrValues) {
+          var reduceArguments, whenFunction;
+          whenFunction = this.when;
+          reduceArguments = [
+            function(previousValueOrPromise, currentValueOrPromise, currentIndex) {
+              return whenFunction(previousValueOrPromise).then(function(previousValue) {
+                return whenFunction(currentValueOrPromise).then(function(currentValue) {
+                  return reduceFunction(previousValue, currentValue, currentIndex, promisesOrValues);
+                });
+              });
+            }
+          ];
+          if (initialValueSpecified) {
+            reduceArguments.push(initialValue);
+          }
+          return this.when(this.reduceArray.apply(promisesOrValues, reduceArguments));
+        },
+        scope: this
+      });
+    },
+    /**
+    		Fallback implementation when Array.reduce is not available.
+    		@private
+    */
+
+    reduceArray: function(reduceFunction, initialValue) {
+      var args, array, index, length, reduced;
+      index = 0;
+      array = Object(this);
+      length = array.length >>> 0;
+      args = arguments;
+      if (args.length <= 1) {
+        while (true) {
+          if (index in array) {
+            reduced = array[index++];
+            break;
+          }
+          if (++index >= length) {
+            throw new TypeError();
+          }
+        }
+      } else {
+        reduced = args[1];
+      }
+      while (index < length) {
+        if (index in array) {
+          reduced = reduceFunction(reduced, array[index], index, array);
+        }
+        index++;
+      }
+      return reduced;
+    },
+    /**
+    		@private
+    */
+
+    reduceIntoArray: function(previousValue, currentValue, currentIndex) {
+      previousValue[currentIndex] = currentValue;
+      return previousValue;
+    }
+  },
+  constructor: function(deferred) {
+    this.deferred = deferred;
+    return this;
+  },
+  /**
+  	Returns a new {@link Deft.promise.Promise} with the specified callbacks registered to be called when this {@link Deft.promise.Promise} is resolved, rejected, updated or cancelled.
+  */
+
+  then: function(callbacks) {
+    return this.deferred.then.apply(this.deferred, arguments);
+  },
+  /**
+  	Returns a new {@link Deft.promise.Promise} with the specified callback registered to be called when this {@link Deft.promise.Promise} is rejected.
+  */
+
+  otherwise: function(callback, scope) {
+    return this.deferred.otherwise.apply(this.deferred, arguments);
+  },
+  /**
+  	Returns a new {@link Deft.promise.Promise} with the specified callback registered to be called when this {@link Deft.promise.Promise} is resolved, rejected or cancelled.
+  */
+
+  always: function(callback, scope) {
+    return this.deferred.always.apply(this.deferred, arguments);
+  },
+  /**
+  	Cancel this {@link Deft.promise.Promise} and notify relevant callbacks.
+  */
+
+  cancel: function(reason) {
+    return this.deferred.cancel(reason);
+  },
+  /**
+  	Get this {@link Deft.promise.Promise}'s current state.
+  */
+
+  getState: function() {
+    return this.deferred.getState();
+  }
+}, function() {
+  if (Array.prototype.reduce != null) {
+    this.reduceArray = Array.prototype.reduce;
+  }
+});
+/*
+Copyright (c) 2012 [DeftJS Framework Contributors](http://deftjs.org)
+Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 */
 
 Ext.define('Deft.promise.Deferred', {
   alternateClassName: ['Deft.Deferred'],
+  requires: ['Deft.promise.Promise'],
   constructor: function() {
     this.state = 'pending';
     this.progress = void 0;
@@ -1391,303 +2000,51 @@ Ext.define('Deft.promise.Deferred', {
 Copyright (c) 2012 [DeftJS Framework Contributors](http://deftjs.org)
 Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
-Promise.when(), all(), any(), map() and reduce() methods adapted from:
+sequence(), parallel(), pipeline() methods adapted from:
 [when.js](https://github.com/cujojs/when)
 Copyright (c) B Cavalier & J Hann
 Open source under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 */
 
-Ext.define('Deft.promise.Promise', {
-  alternateClassName: ['Deft.Promise'],
+Ext.define('Deft.promise.Chain', {
+  alternateClassName: ['Deft.Chain'],
+  requires: ['Deft.promise.Promise'],
   statics: {
     /**
-    		Returns a new {@link Deft.promise.Promise} that:
-    		- resolves immediately for the specified value, or
-    		- resolves, rejects, updates or cancels when the specified {@link Deft.promise.Deferred} or {@link Deft.promise.Promise} is resolved, rejected, updated or cancelled.
+    		Execute an Array (or Deferred/Promise of an Array) of functions sequentially.
+    		The specified functions may optionally return their results as Promises.
+    		Returns a Promise of an Array of results for each function call (in the same order).
     */
 
-    when: function(promiseOrValue) {
-      var deferred;
-      if (promiseOrValue instanceof Ext.ClassManager.get('Deft.promise.Promise') || promiseOrValue instanceof Ext.ClassManager.get('Deft.promise.Deferred')) {
-        return promiseOrValue.then();
-      } else if (Ext.isObject(promiseOrValue) && Ext.isFunction(promiseOrValue.then)) {
-        deferred = Ext.create('Deft.promise.Deferred');
-        promiseOrValue.then(function(value) {
-          deferred.resolve(value);
-        }, function(error) {
-          deferred.reject(error);
+    sequence: function(fns, scope) {
+      return Deft.Promise.reduce(fns, function(results, fn) {
+        return Deft.Promise.when(fn.call(scope)).then(function(result) {
+          results.push(result);
+          return results;
         });
-        return deferred.then();
-      } else {
-        deferred = Ext.create('Deft.promise.Deferred');
-        deferred.resolve(promiseOrValue);
-        return deferred.then();
-      }
+      }, []);
     },
     /**
-    		Returns a new {@link Deft.promise.Promise} that will only resolve once all the specified `promisesOrValues` have resolved.
-    		The resolution value will be an Array containing the resolution value of each of the `promisesOrValues`.
+    		Execute an Array (or Deferred/Promise of an Array) of functions in parallel.
+    		The specified functions may optionally return their results as Promises.
+    		Returns a Promise of an Array of results for each function call (in the same order).
     */
 
-    all: function(promisesOrValues) {
-      return this.when(promisesOrValues).then({
-        success: function(promisesOrValues) {
-          var cancelFunction, canceller, complete, createSuccessFunction, deferred, failureFunction, index, progressFunction, promiseOrValue, rejecter, resolvedCount, resolvedValues, resolver, total, updater, _i, _len;
-          deferred = Ext.create('Deft.promise.Deferred');
-          total = promisesOrValues.length;
-          resolvedValues = new Array(promisesOrValues);
-          resolvedCount = 0;
-          updater = function(progress) {
-            deferred.update(progress);
-          };
-          resolver = function(index, value) {
-            resolvedValues[index] = value;
-            resolvedCount++;
-            if (resolvedCount === total) {
-              complete();
-              deferred.resolve(resolvedValues);
-            }
-          };
-          rejecter = function(error) {
-            complete();
-            deferred.reject(error);
-          };
-          canceller = function(reason) {
-            complete();
-            deferred.cancel(reason);
-          };
-          complete = function() {
-            return updater = resolver = rejecter = canceller = Ext.emptyFn;
-          };
-          createSuccessFunction = function(index) {
-            return function(value) {
-              return resolver(index, value);
-            };
-          };
-          failureFunction = function(value) {
-            return rejecter(value);
-          };
-          progressFunction = function(value) {
-            return updater(value);
-          };
-          cancelFunction = function(value) {
-            return canceller(value);
-          };
-          for (index = _i = 0, _len = promisesOrValues.length; _i < _len; index = ++_i) {
-            promiseOrValue = promisesOrValues[index];
-            if (index in promisesOrValues) {
-              this.when(promiseOrValue).then({
-                success: createSuccessFunction(index),
-                failure: failureFunction,
-                progress: progressFunction,
-                cancel: cancelFunction
-              });
-            }
-          }
-          return deferred.getPromise();
-        },
-        scope: this
+    parallel: function(fns, scope) {
+      return Deft.Promise.map(fns, function(fn) {
+        return fn.call(scope);
       });
     },
     /**
-    		Returns a new {@link Deft.promise.Promise} that will only resolve once any one of the the specified `promisesOrValues` has resolved.
-    		The resolution value will be the resolution value of the triggering `promiseOrValue`.
+    		Execute an Array (or Deferred/Promise of an Array) of functions as a pipeline, where each function's result is passed to the subsequent function as input.
+    		The specified functions may optionally return their results as Promises.
+    		Returns a Promise of the result value for the final function in the pipeline.
     */
 
-    any: function(promisesOrValues) {
-      return this.when(promisesOrValues).then({
-        success: function(promisesOrValues) {
-          var cancelFunction, canceller, complete, deferred, failureFunction, index, progressFunction, promiseOrValue, rejecter, resolver, successFunction, updater, _i, _len;
-          deferred = Ext.create('Deft.promise.Deferred');
-          updater = function(progress) {
-            deferred.update(progress);
-          };
-          resolver = function(value) {
-            complete();
-            deferred.resolve(value);
-          };
-          rejecter = function(error) {
-            complete();
-            deferred.reject(error);
-          };
-          canceller = function(reason) {
-            complete();
-            return deferred.cancel(reason);
-          };
-          complete = function() {
-            return updater = resolver = rejecter = canceller = Ext.emptyFn;
-          };
-          successFunction = function(value) {
-            return resolver(value);
-          };
-          failureFunction = function(value) {
-            return rejecter(value);
-          };
-          progressFunction = function(value) {
-            return updater(value);
-          };
-          cancelFunction = function(value) {
-            return canceller(value);
-          };
-          for (index = _i = 0, _len = promisesOrValues.length; _i < _len; index = ++_i) {
-            promiseOrValue = promisesOrValues[index];
-            if (index in promisesOrValues) {
-              this.when(promiseOrValue).then({
-                success: successFunction,
-                failure: failureFunction,
-                progress: progressFunction,
-                cancel: cancelFunction
-              });
-            }
-          }
-          return deferred.getPromise();
-        },
-        scope: this
-      });
-    },
-    /**
-    		Returns a new function that wraps the specified function and caches the results for previously processed inputs.
-    		Similar to `Deft.util.Function::memoize()`, except it allows input to contain promises and/or values.
-    */
-
-    memoize: function(fn, scope, hashFn) {
-      var memoizedFn;
-      memoizedFn = Deft.util.Function.memoize(fn, scope, hashFn);
-      return Ext.bind(function() {
-        return this.all(Ext.Array.toArray(arguments)).then(function(values) {
-          return memoizedFn.apply(scope, values);
-        });
-      }, this);
-    },
-    /**
-    		Traditional map function, similar to `Array.prototype.map()`, that allows input to contain promises and/or values.
-    		The specified map function may return either a value or a promise.
-    */
-
-    map: function(promisesOrValues, mapFunction) {
-      return this.when(promisesOrValues).then({
-        success: function(promisesOrValues) {
-          var index, promiseOrValue, results, _i, _len;
-          results = new Array(promisesOrValues.length);
-          for (index = _i = 0, _len = promisesOrValues.length; _i < _len; index = ++_i) {
-            promiseOrValue = promisesOrValues[index];
-            if (index in promisesOrValues) {
-              results[index] = this.when(promiseOrValue).then(mapFunction);
-            }
-          }
-          return this.reduce(results, this.reduceIntoArray, results);
-        },
-        scope: this
-      });
-    },
-    /**
-    		Traditional reduce function, similar to `Array.reduce()`, that allows input to contain promises and/or values.
-    */
-
-    reduce: function(promisesOrValues, reduceFunction, initialValue) {
-      return this.when(promisesOrValues).then({
-        success: function(promisesOrValues) {
-          var reduceArguments, whenFunction;
-          whenFunction = this.when;
-          reduceArguments = [
-            function(previousValueOrPromise, currentValueOrPromise, currentIndex) {
-              return whenFunction(previousValueOrPromise).then(function(previousValue) {
-                return whenFunction(currentValueOrPromise).then(function(currentValue) {
-                  return reduceFunction(previousValue, currentValue, currentIndex, promisesOrValues);
-                });
-              });
-            }
-          ];
-          if (arguments.length === 3) {
-            reduceArguments.push(initialValue);
-          }
-          return this.when(this.reduceArray.apply(promisesOrValues, reduceArguments));
-        },
-        scope: this
-      });
-    },
-    /**
-    		Fallback implementation when Array.reduce is not available.
-    		@private
-    */
-
-    reduceArray: function(reduceFunction, initialValue) {
-      var args, array, index, length, reduced;
-      index = 0;
-      array = Object(this);
-      length = array.length >>> 0;
-      args = arguments;
-      if (args.length <= 1) {
-        while (true) {
-          if (index in array) {
-            reduced = array[index++];
-            break;
-          }
-          if (++index >= length) {
-            throw new TypeError();
-          }
-        }
-      } else {
-        reduced = args[1];
-      }
-      while (index < length) {
-        if (index in array) {
-          reduced = reduceFunction(reduced, array[index], index, array);
-        }
-        index++;
-      }
-      return reduced;
-    },
-    /**
-    		@private
-    */
-
-    reduceIntoArray: function(previousValue, currentValue, currentIndex) {
-      previousValue[currentIndex] = currentValue;
-      return previousValue;
+    pipeline: function(fns, scope, initialValue) {
+      return Deft.Promise.reduce(fns, function(value, fn) {
+        return fn.call(scope, value);
+      }, initialValue);
     }
-  },
-  constructor: function(deferred) {
-    this.deferred = deferred;
-    return this;
-  },
-  /**
-  	Returns a new {@link Deft.promise.Promise} with the specified callbacks registered to be called when this {@link Deft.promise.Promise} is resolved, rejected, updated or cancelled.
-  */
-
-  then: function(callbacks) {
-    return this.deferred.then.apply(this.deferred, arguments);
-  },
-  /**
-  	Returns a new {@link Deft.promise.Promise} with the specified callback registered to be called when this {@link Deft.promise.Promise} is rejected.
-  */
-
-  otherwise: function(callback, scope) {
-    return this.deferred.otherwise.apply(this.deferred, arguments);
-  },
-  /**
-  	Returns a new {@link Deft.promise.Promise} with the specified callback registered to be called when this {@link Deft.promise.Promise} is resolved, rejected or cancelled.
-  */
-
-  always: function(callback, scope) {
-    return this.deferred.always.apply(this.deferred, arguments);
-  },
-  /**
-  	Cancel this {@link Deft.promise.Promise} and notify relevant callbacks.
-  */
-
-  cancel: function(reason) {
-    return this.deferred.cancel(reason);
-  },
-  /**
-  	Get this {@link Deft.promise.Promise}'s current state.
-  */
-
-  getState: function() {
-    return this.deferred.getState();
-  }
-}, function() {
-  if (Array.prototype.reduce != null) {
-    this.reduceArray = Array.prototype.reduce;
   }
 });
