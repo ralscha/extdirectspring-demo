@@ -18,12 +18,12 @@ package ch.ralscha.extdirectspring.demo.util;
 import java.util.Collection;
 
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
-public class ExtDirectStorePagingResponse<T> extends ExtDirectStoreResponse<T> {
+public class ExtDirectStorePagingResponse<T> extends ExtDirectStoreReadResult<T> {
 
 	public ExtDirectStorePagingResponse(ExtDirectStoreReadRequest request, Collection<T> allRecords) {
 

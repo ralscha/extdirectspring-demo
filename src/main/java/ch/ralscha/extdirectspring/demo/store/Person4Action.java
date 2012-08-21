@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
 import ch.ralscha.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.Lists;
@@ -44,7 +44,7 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
-	public ExtDirectStoreResponse<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreReadResult<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
@@ -58,7 +58,7 @@ public class Person4Action {
 			persons = persons.subList(request.getStart(), Math.min(totalSize, request.getStart() + request.getLimit()));
 		}
 
-		return new ExtDirectStoreResponse<>(totalSize, persons);
+		return new ExtDirectStoreReadResult<>(totalSize, persons);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")

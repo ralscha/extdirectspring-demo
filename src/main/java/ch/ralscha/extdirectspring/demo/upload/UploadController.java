@@ -24,15 +24,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 
 @Service
 public class UploadController {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "upload")
-	public ExtDirectFormPostResponse uploadTest(@RequestParam("fileUpload") MultipartFile file) throws IOException {
+	public ExtDirectFormPostResult uploadTest(@RequestParam("fileUpload") MultipartFile file) throws IOException {
 
-		ExtDirectFormPostResponse resp = new ExtDirectFormPostResponse(true);
+		ExtDirectFormPostResult resp = new ExtDirectFormPostResult(true);
 
 		if (file != null && !file.isEmpty()) {
 			resp.addResultProperty("fileContents", new String(file.getBytes(), StandardCharsets.ISO_8859_1));
@@ -41,10 +41,10 @@ public class UploadController {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "upload4")
-	public ExtDirectFormPostResponse uploadTest4(@RequestParam("fileUpload1") MultipartFile file1,
+	public ExtDirectFormPostResult uploadTest4(@RequestParam("fileUpload1") MultipartFile file1,
 			@RequestParam("fileUpload2") MultipartFile file2) throws IOException {
 
-		ExtDirectFormPostResponse resp = new ExtDirectFormPostResponse(true);
+		ExtDirectFormPostResult resp = new ExtDirectFormPostResult(true);
 
 		if (file1 != null && !file1.isEmpty()) {
 			System.out.println("File1 Name : " + file1.getName());

@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 
 @Service
 public class Profile {
@@ -70,7 +70,7 @@ public class Profile {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "form")
-	public ExtDirectFormPostResponse updateBasicInfo(@Valid BasicInfo basicInfo, BindingResult result) {
+	public ExtDirectFormPostResult updateBasicInfo(@Valid BasicInfo basicInfo, BindingResult result) {
 
 		if (!result.hasErrors()) {
 			if (basicInfo.getEmail().equals("aaron@extjs.com")) {
@@ -78,6 +78,6 @@ public class Profile {
 			}
 		}
 
-		return new ExtDirectFormPostResponse(result);
+		return new ExtDirectFormPostResult(result);
 	}
 }

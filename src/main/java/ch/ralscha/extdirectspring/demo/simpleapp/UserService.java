@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
 import ch.ralscha.extdirectspring.demo.util.ExtDirectStorePagingResponse;
 
 import com.google.common.collect.Lists;
@@ -35,7 +35,7 @@ public class UserService {
 	private SimpleUserDb userDb;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simpleapp")
-	public ExtDirectStoreResponse<User> load(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreReadResult<User> load(ExtDirectStoreReadRequest request) {
 		List<User> users = userDb.getAll();
 		return new ExtDirectStorePagingResponse<>(request, users);
 	}

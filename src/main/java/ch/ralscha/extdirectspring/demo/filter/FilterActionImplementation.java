@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
 import ch.ralscha.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.Ordering;
@@ -34,7 +34,7 @@ public class FilterActionImplementation implements FilterActionInterface {
 	private CompanyDataBean dataBean;
 
 	@Override
-	public ExtDirectStoreResponse<Company> load(ExtDirectStoreReadRequest request,
+	public ExtDirectStoreReadResult<Company> load(ExtDirectStoreReadRequest request,
 			@RequestParam(required = false) String dRif) {
 
 		List<Company> companies;
@@ -56,7 +56,7 @@ public class FilterActionImplementation implements FilterActionInterface {
 					Math.min(totalSize, request.getStart() + request.getLimit()));
 		}
 
-		return new ExtDirectStoreResponse<>(totalSize, companies);
+		return new ExtDirectStoreReadResult<>(totalSize, companies);
 	}
 
 }

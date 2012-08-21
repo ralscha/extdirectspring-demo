@@ -27,7 +27,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.DataType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreResponse;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
 import ch.ralscha.extdirectspring.bean.Field;
 import ch.ralscha.extdirectspring.bean.MetaData;
 import ch.ralscha.extdirectspring.bean.SortDirection;
@@ -51,7 +51,7 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
-	public ExtDirectStoreResponse<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreReadResult<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
@@ -94,11 +94,11 @@ public class PersonAction {
 			persons = persons.subList(request.getStart(), Math.min(totalSize, request.getStart() + request.getLimit()));
 		}
 
-		return new ExtDirectStoreResponse<>(totalSize, persons);
+		return new ExtDirectStoreReadResult<>(totalSize, persons);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
-	public ExtDirectStoreResponse<Person> create(List<Person> newPersons) {
+	public ExtDirectStoreReadResult<Person> create(List<Person> newPersons) {
 		List<Person> insertedPersons = Lists.newArrayList();
 
 		for (Person newPerson : newPersons) {
@@ -106,11 +106,11 @@ public class PersonAction {
 			insertedPersons.add(newPerson);
 		}
 
-		return new ExtDirectStoreResponse<>(insertedPersons);
+		return new ExtDirectStoreReadResult<>(insertedPersons);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
-	public ExtDirectStoreResponse<Person> update(List<Person> modifiedPersons) {
+	public ExtDirectStoreReadResult<Person> update(List<Person> modifiedPersons) {
 
 		List<Person> updatedRecords = Lists.newArrayList();
 
@@ -122,11 +122,11 @@ public class PersonAction {
 			}
 		}
 
-		return new ExtDirectStoreResponse<>(updatedRecords);
+		return new ExtDirectStoreReadResult<>(updatedRecords);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
-	public ExtDirectStoreResponse<Integer> destroy(List<Integer> destroyIds) {
+	public ExtDirectStoreReadResult<Integer> destroy(List<Integer> destroyIds) {
 		List<Integer> deletedPersonsId = Lists.newArrayList();
 
 		for (Integer id : destroyIds) {
@@ -134,7 +134,7 @@ public class PersonAction {
 			deletedPersonsId.add(id);
 		}
 
-		return new ExtDirectStoreResponse<>(deletedPersonsId);
+		return new ExtDirectStoreReadResult<>(deletedPersonsId);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
@@ -149,7 +149,7 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
-	public ExtDirectStoreResponse<PersonFullName> loadPersonFullName(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreReadResult<PersonFullName> loadPersonFullName(ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
@@ -170,7 +170,7 @@ public class PersonAction {
 			}
 		});
 
-		ExtDirectStoreResponse<PersonFullName> response = new ExtDirectStoreResponse<>(totalSize, personFullNameList);
+		ExtDirectStoreReadResult<PersonFullName> response = new ExtDirectStoreReadResult<>(totalSize, personFullNameList);
 
 		// Send metadata only the first time
 		if (request.getStart() == null) {
@@ -194,7 +194,7 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
-	public ExtDirectStoreResponse<PersonFullNameCity> loadPersonFullNameCity(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreReadResult<PersonFullNameCity> loadPersonFullNameCity(ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
@@ -216,7 +216,7 @@ public class PersonAction {
 					}
 				});
 
-		ExtDirectStoreResponse<PersonFullNameCity> response = new ExtDirectStoreResponse<>(totalSize,
+		ExtDirectStoreReadResult<PersonFullNameCity> response = new ExtDirectStoreReadResult<>(totalSize,
 				personFullNameCityList);
 
 		// Send metadata only the first time
@@ -250,7 +250,7 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
-	public ExtDirectStoreResponse<Person> loadPersonEverything(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreReadResult<Person> loadPersonEverything(ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
@@ -288,7 +288,7 @@ public class PersonAction {
 			persons = persons.subList(0, 60);
 		}
 
-		ExtDirectStoreResponse<Person> response = new ExtDirectStoreResponse<>(totalSize, persons);
+		ExtDirectStoreReadResult<Person> response = new ExtDirectStoreReadResult<>(totalSize, persons);
 
 		// Send metadata only the first time
 		if (request.getStart() == null && request.getSort() == null) {
