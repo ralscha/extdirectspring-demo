@@ -16,8 +16,7 @@
 package ch.ralscha.extdirectspring.demo.calendar;
 
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 
@@ -31,15 +30,13 @@ import com.google.common.collect.Maps;
 @Service
 public class EventDb {
 
-	private int maxId;
+	private AtomicInteger maxId;
 
 	private Map<Integer, Event> events;
 
-	private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
-
 	@PostConstruct
 	public void populateData() {
-		events = Maps.newHashMap();
+		events = Maps.newConcurrentMap();
 
 		Event event = new Event();
 		event.setId(1001);
@@ -146,60 +143,39 @@ public class EventDb {
 		event.setReminder("60");
 		events.put(event.getId(), event);
 
-		maxId = 1011;
+		maxId = new AtomicInteger(1011);
 	}
 
 	public ImmutableList<Event> getEvents(DateTime startDate, DateTime endDate) {
-		rwLock.readLock().lock();
-		try {
-			if (startDate != null && endDate != null) {
-				Interval interval = new Interval(startDate, endDate.plusDays(1));
-				ImmutableList.Builder<Event> foundEvents = ImmutableList.builder();
-				for (Event event : events.values()) {
-					if (interval.overlaps(new Interval(event.getStartDate(), event.getEndDate().plusDays(1).withTimeAtStartOfDay()))) {
-						foundEvents.add(event);
-					}
+		if (startDate != null && endDate != null) {
+			Interval interval = new Interval(startDate, endDate.plusDays(1));
+			ImmutableList.Builder<Event> foundEvents = ImmutableList.builder();
+			for (Event event : events.values()) {
+				if (interval.overlaps(new Interval(event.getStartDate(), event.getEndDate().plusDays(1)
+						.withTimeAtStartOfDay()))) {
+					foundEvents.add(event);
 				}
-				return foundEvents.build();
 			}
-			return ImmutableList.copyOf(events.values());
-		} finally {
-			rwLock.readLock().unlock();
+			return foundEvents.build();
 		}
-
+		return ImmutableList.copyOf(events.values());
 	}
 
 	public Event update(Event event) {
-		rwLock.writeLock().lock();
-		try {
-			event.trimToNull();
-			events.put(event.getId(), event);
-		} finally {
-			rwLock.writeLock().unlock();
-		}
+		event.trimToNull();
+		events.put(event.getId(), event);
 		return event;
 	}
 
 	public void delete(Event event) {
-		rwLock.writeLock().lock();
-		try {
-			events.remove(event.getId());
-		} finally {
-			rwLock.writeLock().unlock();
-		}
+		events.remove(event.getId());
 	}
 
 	public Event insert(Event event) {
-		rwLock.writeLock().lock();
-		try {
-			event.trimToNull();
-			maxId = maxId + 1;
-			event.setId(maxId);
-			events.put(maxId, event);
-			return event;
-		} finally {
-			rwLock.writeLock().unlock();
-		}
+		event.trimToNull();
+		event.setId(maxId.incrementAndGet());
+		events.put(event.getId(), event);
+		return event;
 	}
 
 }
