@@ -170,7 +170,8 @@ public class PersonAction {
 			}
 		});
 
-		ExtDirectStoreReadResult<PersonFullName> response = new ExtDirectStoreReadResult<>(totalSize, personFullNameList);
+		ExtDirectStoreReadResult<PersonFullName> response = new ExtDirectStoreReadResult<>(totalSize,
+				personFullNameList);
 
 		// Send metadata only the first time
 		if (request.getStart() == null) {
