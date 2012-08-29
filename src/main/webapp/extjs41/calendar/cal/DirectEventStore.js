@@ -10,7 +10,7 @@ Ext.define('Cal.DirectEventStore', {
 	        create: calendarService.create,
 	        update: calendarService.update,
 	        destroy: calendarService.destroy
-	      }		
+	    }		
 	}
 
 });
