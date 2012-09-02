@@ -51,13 +51,13 @@ public class BbcService {
 				Map<String, Object> service = (Map<String, Object>) ownership.get("service");
 
 				Event e = new Event();
-				e.setResourceId((String) service.get("key"));
+				e.setResourceId(String.valueOf(service.get("key")));
 				e.setStartDate(DateTime.parse((String) broadcast.get("start")));
 				e.setEndDate(DateTime.parse((String) broadcast.get("end")));
-				e.setText((String) displayTitles.get("title"));
+				e.setText(String.valueOf(displayTitles.get("title")));
 				e.setDuration((Integer) broadcast.get("duration"));
-				e.setId((String) programme.get("pid"));
-				e.setSynopsis((String) programme.get("short_synopsis"));
+				e.setId(String.valueOf(programme.get("pid")));
+				e.setSynopsis(String.valueOf(programme.get("short_synopsis")));
 
 				eBuilder.add(e);
 			}
