@@ -27,6 +27,6 @@ public class RunDemoOnTomcat {
 		skipJars += "jackson*.jar,hibernate*.jar,jboss*.jar,guava*.jar,commons-*.jar,opencsv*.jar,joda*.jar,imgscalr*.jar,";
 		skipJars += "ecj*.jar,rome*.jar,jdom*.jar";
 
-		EmbeddedTomcat.create().skipJars(skipJars).startAndWait();
+		EmbeddedTomcat.create().skipJarsDefaultJarScanner(skipJars).startAndWait();
 	}
 }
