@@ -170,7 +170,7 @@
 		<dependency>
 			<groupId>resources</groupId>
 			<artifactId>sencha-touch-commercial</artifactId>
-			<version>2.0.2</version>
+			<version>2.0.3</version>
 		</dependency>
 
 		<!-- To be able to run Tomcat as a simple class for easier debugging -->
