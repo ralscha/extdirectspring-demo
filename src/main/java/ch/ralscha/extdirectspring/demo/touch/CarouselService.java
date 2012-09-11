@@ -61,7 +61,7 @@ public class CarouselService {
 				pic.setAuthor(entry.getAuthor());
 				pic.setLink(entry.getLink());
 				pic.setTitle(entry.getTitle());
-				// pic.setContent();
+
 				Matcher matcher = IMG_PATTERN.matcher(entry.getDescription().getValue());
 				if (matcher.matches()) {
 					String imageUrl = matcher.group(1);
