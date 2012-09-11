@@ -179,6 +179,7 @@ public class CompanyDataBean {
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
 			switch (comparison) {
@@ -203,6 +204,7 @@ public class CompanyDataBean {
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
 			switch (comparison) {
@@ -230,6 +232,7 @@ public class CompanyDataBean {
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
 			switch (comparison) {
