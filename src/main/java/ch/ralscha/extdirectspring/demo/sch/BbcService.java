@@ -1,9 +1,10 @@
 package ch.ralscha.extdirectspring.demo.sch;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Response;
 
 @Service
 public class BbcService {
+
+	private final static ObjectMapper mapper = new ObjectMapper();
 
 	private final static ImmutableList<Resource> stations = ImmutableList.of(new Resource("radio1", "BBC Radio 1",
 			"http://www.bbc.co.uk/radio1/programmes/schedules/england.json"),
@@ -32,13 +38,21 @@ public class BbcService {
 
 	@SuppressWarnings("unchecked")
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "sch")
-	public ImmutableList<Event> fetchSchedule() throws JsonParseException, JsonMappingException, IOException {
+	public ImmutableList<Event> fetchSchedule() throws JsonParseException, JsonMappingException, IOException,
+			InterruptedException, ExecutionException {
 
 		ImmutableList.Builder<Event> eBuilder = ImmutableList.builder();
 
-		ObjectMapper mapper = new ObjectMapper();
+		List<Future<Response>> responses = Lists.newArrayList();
+
 		for (Resource station : stations) {
-			Map<String, Object> schedules = mapper.readValue(new URL(station.getUrl()), Map.class);
+			AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+			responses.add(asyncHttpClient.prepareGet(station.getUrl()).execute());
+		}
+
+		for (Future<Response> future : responses) {
+
+			Map<String, Object> schedules = mapper.readValue(future.get().getResponseBody(), Map.class);
 			Map<String, Object> schedule = (Map<String, Object>) schedules.get("schedule");
 			Map<String, Object> day = (Map<String, Object>) schedule.get("day");
 			List<Map<String, Object>> broadcasts = (List<Map<String, Object>>) day.get("broadcasts");

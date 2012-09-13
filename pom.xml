@@ -172,6 +172,12 @@
 			<artifactId>sencha-touch-commercial</artifactId>
 			<version>2.0.3</version>
 		</dependency>
+		
+ 		<dependency>
+             <groupId>com.ning</groupId>
+             <artifactId>async-http-client</artifactId>
+             <version>1.7.6</version>
+         </dependency>		
 
 		<!-- To be able to run Tomcat as a simple class for easier debugging -->
 		<dependency>
