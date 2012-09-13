@@ -6,7 +6,7 @@
             "path": "../../touch/sencha-touch-all-debug.js"
         },
         {
-        	"path": "../../controller/api.js?group=touchnote",
+        	"path": "../../api.js?group=touchnote",
         	"update": "delta"
         },        
         {

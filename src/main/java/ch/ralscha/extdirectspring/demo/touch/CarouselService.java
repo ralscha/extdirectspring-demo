@@ -68,7 +68,7 @@ public class CarouselService {
 					if (imageUrl.startsWith("http://apod.nasa.gov/apod/http://")) {
 						imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://", "http://");
 					}
-					pic.setImage(request.getContextPath() + "/controller/picresize?url=" + imageUrl);
+					pic.setImage(request.getContextPath() + "/picresize?url=" + imageUrl);
 				}
 				pictures.add(pic);
 			}

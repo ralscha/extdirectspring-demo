@@ -22,12 +22,15 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "ch.ralscha.extdirectspring" })
-public class SpringConfig {
+public class SpringConfig extends WebMvcConfigurerAdapter {
 
 	/*
 	 * @Bean public ch.ralscha.extdirectspring.controller.Configuration
@@ -36,6 +39,16 @@ public class SpringConfig {
 	 * config.setStreamResponse(true); config.setTimeout(12000);
 	 * config.setMaxRetries(10); config.setEnableBuffer(false); return config; }
 	 */
+
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("index.html");
+	}
 
 	@Bean
 	public MultipartResolver multipartResolver() {

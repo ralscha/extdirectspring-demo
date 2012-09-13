@@ -80,7 +80,7 @@ Ext.application({
                     xtype: 'formpanel',
                     title: 'Contact Us',
                     iconCls: 'user',
-                    url: '../../controller/postContact',
+                    url: '../../postContact',
                     layout: 'vbox',
 
                     items: [
