@@ -42,8 +42,8 @@
 	</scm>
 
 	<properties>
-		<spring.version>3.1.2.RELEASE</spring.version>
-		<slf4j.version>1.7.0</slf4j.version>
+		<spring.version>3.2.0.M2</spring.version>
+		<slf4j.version>1.7.1</slf4j.version>
 		<logback.version>1.0.7</logback.version>
 		<hibernatevalidator.version>4.3.0.Final</hibernatevalidator.version>
 		<eds.version>1.2.1-SNAPSHOT</eds.version>
@@ -63,12 +63,6 @@
 					<groupId>commons-logging</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>2.2.2</version>
 		</dependency>
 
 		<dependency>
@@ -172,12 +166,12 @@
 			<artifactId>sencha-touch-commercial</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		
- 		<dependency>
-             <groupId>com.ning</groupId>
-             <artifactId>async-http-client</artifactId>
-             <version>1.7.6</version>
-         </dependency>		
+
+		<dependency>
+			<groupId>com.ning</groupId>
+			<artifactId>async-http-client</artifactId>
+			<version>1.7.6</version>
+		</dependency>
 
 		<!-- To be able to run Tomcat as a simple class for easier debugging -->
 		<dependency>
@@ -195,9 +189,9 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.6</version>
-		</dependency>		
-		
+			<version>1.7</version>
+		</dependency>
+
 	</dependencies>
 
 	<repositories>
@@ -207,7 +201,7 @@
 			<name>My Repository</name>
 			<url>http://rasc.ch/repository</url>
 		</repository>
-     
+
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -219,7 +213,13 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
- 	
+
+		<repository>
+			<id>repository.springsource.milestone</id>
+			<name>SpringSource Milestone Repository</name>
+			<url>http://repo.springsource.org/milestone</url>
+		</repository>
+
 	</repositories>
 
 	<build>
@@ -228,7 +228,7 @@
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.0-beta-1</version>
+				<version>2.0</version>
 				<configuration>
 					<path>/</path>
 					<port>8080</port>
