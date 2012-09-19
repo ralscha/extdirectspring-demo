@@ -174,7 +174,7 @@ public class PersonAction {
 				personFullNameList);
 
 		// Send metadata only the first time
-		if (request.getStart() == null) {
+		if (request.getStart() == null || request.getStart() == 0) {
 			MetaData metaData = new MetaData();
 
 			metaData.setPagingParameter(0, 100);
@@ -221,7 +221,7 @@ public class PersonAction {
 				personFullNameCityList);
 
 		// Send metadata only the first time
-		if (request.getStart() == null) {
+		if (request.getStart() == null || request.getStart() == 0) {
 			MetaData metaData = new MetaData();
 
 			metaData.setPagingParameter(0, 50);
@@ -292,7 +292,7 @@ public class PersonAction {
 		ExtDirectStoreReadResult<Person> response = new ExtDirectStoreReadResult<>(totalSize, persons);
 
 		// Send metadata only the first time
-		if (request.getStart() == null && request.getSort() == null) {
+		if ((request.getStart() == null || request.getStart() == 0) && request.getSort() == null && request.getSorters().isEmpty()) {
 			MetaData metaData = new MetaData();
 
 			metaData.setPagingParameter(0, 60);
@@ -349,5 +349,4 @@ public class PersonAction {
 		return response;
 
 	}
-
 }
