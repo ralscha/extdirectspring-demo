@@ -6,16 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import ch.ralscha.extdirectspring.generator.ModelGenerator;
+import ch.ralscha.extdirectspring.generator.OutputFormat;
 
 @Controller
-// @RequestMapping("/extjs41/simple")
+@RequestMapping("/extjs41/simple")
 public class ModelController {
 
-	// @RequestMapping("/app/model/User.js")
+	@RequestMapping("/app/model/User.js")
 	public void user(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println(request);
-		// ModelGenerator.writeModel(request, response, User.class,
-		// OutputFormat.EXTJS4);
+		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS4);
 	}
 
 }
