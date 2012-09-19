@@ -17,7 +17,6 @@ public class ModelController {
 
 	@RequestMapping("/app/model/User.js")
 	public void user(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println(request);
 		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS4);
 	}
 
