@@ -5,9 +5,13 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
@@ -22,6 +26,9 @@ public class UserService {
 	private final static Map<Integer, User> userDb = Maps.newConcurrentMap();
 
 	private final static AtomicInteger maxId = new AtomicInteger(4);
+
+	@Autowired
+	private ConversionService conversionService;
 
 	@PostConstruct
 	public void init() {
@@ -103,12 +110,23 @@ public class UserService {
 		}
 	}
 
-	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "bancha")
-	public ExtDirectFormPostResult submit(User user) {
-		user.setId(maxId.incrementAndGet());
-		userDb.put(user.getId(), user);
+	@ExtDirectMethod(value = ExtDirectMethodType.FORM_LOAD, group = "bancha")
+	public User load(int id) {
+		return userDb.get(id);
+	}
 
-		return new ExtDirectFormPostResult(true);
+	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "bancha")
+	public ExtDirectFormPostResult submit(@Valid User user, BindingResult result) {
+		if (!result.hasErrors()) {
+			if (user.getId() > 0) {
+				userDb.put(user.getId(), user);
+			} else {
+				user.setId(maxId.incrementAndGet());
+				userDb.put(user.getId(), user);
+			}
+		}
+		System.out.println(user);
+		return new ExtDirectFormPostResult(result);
 	}
 
 }

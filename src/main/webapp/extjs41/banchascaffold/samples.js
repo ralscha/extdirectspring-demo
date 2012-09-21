@@ -106,7 +106,7 @@ Ext.onReady(function() {
                         // load the form
                         panel.load({
                             params: {
-                                data: { data: { id:1 } }
+                                data: { id:1 }
                             }
                         });
                         
@@ -118,7 +118,7 @@ Ext.onReady(function() {
         }, // eo scaffoldConfig
         
         api: {
-            load    : bancha.remoteStubs.banchaUserService.read,
+            load    : bancha.remoteStubs.banchaUserService.load,
             submit  : bancha.remoteStubs.banchaUserService.submit
         },
         

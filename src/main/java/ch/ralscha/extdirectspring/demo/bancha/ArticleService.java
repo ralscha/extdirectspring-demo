@@ -36,7 +36,7 @@ public class ArticleService {
 			a.setBody("This is the body " + (i + 1));
 			a.setDate(new DateTime(2012, 11, i % 30 + 1, 11, 51, 55));
 			a.setPublished(i % 3 == 0);
-			a.setUserId((i % 4) + 1);
+			a.setUser_id((i % 4) + 1);
 			articleDb.put(a.getId(), a);
 		}
 	}

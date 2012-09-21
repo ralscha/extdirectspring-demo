@@ -52,7 +52,7 @@ Ext.define('Bancha.model.Article', {
 	}, {
 		name: 'date',
 		type: 'date',
-		dateFormat: 'c'
+		dateFormat: 'Y-m-d\\TH:i:s.uP'
 	}, {
 		name: 'body',
 		type: 'string'
@@ -60,7 +60,7 @@ Ext.define('Bancha.model.Article', {
 		name: 'published',
 		type: 'boolean'
 	}, {
-		name: 'userId',
+		name: 'user_id',
 		type: 'int'
 	} ],
 	validations: [ {
@@ -72,7 +72,7 @@ Ext.define('Bancha.model.Article', {
 	} ],
 	belongsTo: {
 		model: 'Bancha.model.User',
-		foreignKey: 'userId'
+		foreignKey: 'user_id'
 	}
 });
 
@@ -81,7 +81,6 @@ Ext.define('Bancha.model.User', {
 	extend: 'Ext.data.Model',
 	proxy: {
 		type: 'direct',
-		batchActions: false,
 		api: {
 			read: bancha.remoteStubs.banchaUserService.read,
 			create: bancha.remoteStubs.banchaUserService.create,
@@ -105,7 +104,7 @@ Ext.define('Bancha.model.User', {
 	}, {
 		name: 'created',
 		type: 'date',
-		dateFormat: 'c'
+		dateFormat: 'Y-m-d\\TH:i:s.uP'
 	}, {
 		name: 'email',
 		type: 'string'
@@ -181,7 +180,6 @@ Ext.define('Bancha.model.Book', {
 	extend: 'Ext.data.Model',
 	proxy: {
 		type: 'direct',
-		batchActions: false,
 		api: {
 			read: bancha.remoteStubs.bookService.read
 		},
@@ -200,7 +198,7 @@ Ext.define('Bancha.model.Book', {
 		name: 'published',
 		type: 'boolean'
 	}, {
-		name: 'userId',
+		name: 'user_id',
 		type: 'int'
 	} ],
 	validations: [ {
@@ -212,6 +210,6 @@ Ext.define('Bancha.model.Book', {
 	} ],
 	belongsTo: {
 		model: 'Bancha.model.User',
-		foreignKey: 'userId'
+		foreignKey: 'user_id'
 	}
 });

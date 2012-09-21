@@ -29,7 +29,7 @@ public class BookService {
 			b.setId(i + 1);
 			b.setTitle("Book " + (i + 1));
 			b.setPublished(i % 3 == 0);
-			b.setUserId((i % 4) + 1);
+			b.setUser_id((i % 4) + 1);
 			bookDb.put(b.getId(), b);
 		}
 	}

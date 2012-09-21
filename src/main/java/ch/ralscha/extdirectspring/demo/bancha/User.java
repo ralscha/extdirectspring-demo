@@ -1,6 +1,8 @@
 package ch.ralscha.extdirectspring.demo.bancha;
 
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import ch.ralscha.extdirectspring.demo.util.ISO8601DateTimeDeserializer;
 import ch.ralscha.extdirectspring.demo.util.ISO8601DateTimeSerializer;
@@ -16,6 +18,7 @@ public class User {
 
 	private String login;
 
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private DateTime created;
 
 	private String email;
@@ -90,6 +93,12 @@ public class User {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", login=" + login + ", created=" + created + ", email=" + email
+				+ ", avatar=" + avatar + ", weight=" + weight + ", height=" + height + "]";
 	}
 
 }
