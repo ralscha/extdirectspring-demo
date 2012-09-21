@@ -17,11 +17,7 @@ package ch.ralscha.extdirectspring.demo.simpleapp;
 
 import ch.ralscha.extdirectspring.generator.Model;
 
-@Model(value = "Simple.model.User", paging = true, 
-       readMethod = "userService.load", 
-       createMethod = "userService.create", 
-       updateMethod = "userService.update", 
-       destroyMethod = "userService.destroy")
+@Model(value = "Simple.model.User", paging = true, readMethod = "userService.load", createMethod = "userService.create", updateMethod = "userService.update", destroyMethod = "userService.destroy")
 public class User {
 	private String id;
 

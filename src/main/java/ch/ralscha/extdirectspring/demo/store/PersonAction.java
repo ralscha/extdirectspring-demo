@@ -292,7 +292,8 @@ public class PersonAction {
 		ExtDirectStoreReadResult<Person> response = new ExtDirectStoreReadResult<>(totalSize, persons);
 
 		// Send metadata only the first time
-		if ((request.getStart() == null || request.getStart() == 0) && request.getSort() == null && request.getSorters().isEmpty()) {
+		if ((request.getStart() == null || request.getStart() == 0) && request.getSort() == null
+				&& request.getSorters().isEmpty()) {
 			MetaData metaData = new MetaData();
 
 			metaData.setPagingParameter(0, 60);

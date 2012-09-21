@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bancha Scaffold - Easy ExtJS 4 Prototyping</title>
+<link rel="stylesheet" type="text/css" href="http://www.rasc.ch/extjs-4.1.2/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="http://www.rasc.ch/extjs-4.1.2/examples/shared/example.css" />
+<style type="text/css">
+  .icon-add { background-image:url(img/icons/add.png) ! important; }
+  .icon-save { background-image:url(img/icons/disk.png) ! important; }
+  .icon-reset { background-image:url(img/icons/arrow_undo.png) ! important; }
+  .icon-upload { background-image:url(img/icons/image_add.png) ! important; }
+  .icon-edit-user { background-image:url(img/icons/user_edit.png) ! important; }
+</style>
+<script src="http://www.rasc.ch/extjs-4.1.2/ext-all.js"></script>
+<script src="../../api-debug.js?group=bancha&actionNs=bancha.remoteStubs&apiNs=Bancha&remotingApiVar=REMOTE_API"></script>
+<script src="bancha-scaffold-production.js"></script>
+<script src="models.js"></script>
+<script src="samples.js"></script>
+<!-- error handling -->
+<script type="text/javascript">
+  // catch every debug exception thrown from either ExtJS or Bancha
+  Ext.Error.handle = function(err) {
+    Ext.Msg.alert('Error', err.msg);
+  };
+</script>
+</head>
+<body>
+  <div id="gridpanel"></div>
+  <div id="paginated-gridpanel"></div>
+  <div id="formpanel"></div>
+  <div id="managementpanel"></div>
+</body>
+</html>
