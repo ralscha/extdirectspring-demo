@@ -70,10 +70,13 @@ Ext.define('Bancha.model.Article', {
 		type: 'numberformat',
 		field: 'userId'
 	} ],
-	belongsTo: {
-		model: 'Bancha.model.User',
-		foreignKey: 'user_id'
-	}
+    associations:[
+        {
+          type:'belongsTo',
+           model:'Bancha.model.User',
+           name:'users'
+        }
+    ]
 });
 
 // define the user model
@@ -169,10 +172,13 @@ Ext.define('Bancha.model.User', {
 		field: 'avatar',
 		extension: [ 'gif', 'jpeg', 'png', 'jpg' ]
 	} ],
-	hasMany: {
-		model: 'Bancha.model.Article',
-		name: 'articles'
-	}
+    associations: [
+        {
+            type: 'hasMany',
+            model: 'Bancha.model.Article',
+            name: 'articles'
+        }
+    ]
 });
 
 // define book model (for management panel)
@@ -208,8 +214,11 @@ Ext.define('Bancha.model.Book', {
 		type: 'numberformat',
 		field: 'userId'
 	} ],
-	belongsTo: {
-		model: 'Bancha.model.User',
-		foreignKey: 'user_id'
-	}
+    associations:[
+        {
+          type:'belongsTo',
+           model:'Bancha.model.User',
+           name:'users'
+        }
+    ]
 });
