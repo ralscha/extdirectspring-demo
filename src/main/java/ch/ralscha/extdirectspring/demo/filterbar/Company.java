@@ -1,10 +1,26 @@
+/**
+ * Copyright 2010-2012 Ralph Schaer <ralphschaer@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ch.ralscha.extdirectspring.demo.filterbar;
 
 import java.math.BigDecimal;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
-import ch.ralscha.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import ch.ralscha.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -20,7 +36,7 @@ public class Company {
 
 	private final BigDecimal pctChange;
 
-	private final DateTime lastChange;
+	private final LocalDate lastChange;
 
 	private final String category;
 
@@ -36,7 +52,7 @@ public class Company {
 		this.price = new BigDecimal(price);
 		this.change = new BigDecimal(change);
 		this.pctChange = new BigDecimal(pctChange);
-		this.lastChange = DateTime.now();
+		this.lastChange = LocalDate.now().plusDays(ThreadLocalRandom.current().nextInt(-10, 10));
 		this.category = category;
 		this.country = country;
 		this.not_delete = not_delete;
@@ -63,8 +79,8 @@ public class Company {
 		return pctChange;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getLastChange() {
+	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
+	public LocalDate getLastChange() {
 		return lastChange;
 	}
 

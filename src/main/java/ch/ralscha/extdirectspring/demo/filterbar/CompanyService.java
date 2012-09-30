@@ -1,6 +1,22 @@
+/**
+ * Copyright 2010-2012 Ralph Schaer <ralphschaer@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ch.ralscha.extdirectspring.demo.filterbar;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +34,7 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.SortDirection;
 import ch.ralscha.extdirectspring.bean.SortInfo;
 import ch.ralscha.extdirectspring.demo.util.PropertyOrderingFactory;
+import ch.ralscha.extdirectspring.filter.Comparison;
 import ch.ralscha.extdirectspring.filter.DateFilter;
 import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.ListFilter;
@@ -141,7 +158,8 @@ public class CompanyService {
 		for (Filter filter : filters) {
 
 			if (filter.getField().equals("id")) {
-				predicates.add(new IdPredicate(((NumericFilter) filter).getValue()));
+				NumericFilter numericFilter = (NumericFilter) filter;
+				predicates.add(new IdPredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("company")) {
 				predicates.add(new CompanyPredicate(((StringFilter) filter).getValue()));
 			} else if (filter.getField().equals("country")) {
@@ -149,39 +167,18 @@ public class CompanyService {
 			} else if (filter.getField().equals("category")) {
 				predicates.add(new CategoryPredicate(((ListFilter) filter).getValue()));
 			} else if (filter.getField().equals("price")) {
-				predicates.add(new PricePredicate(((NumericFilter) filter).getValue()));
+				NumericFilter numericFilter = (NumericFilter) filter;
+				predicates.add(new PricePredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("change")) {
-				predicates.add(new ChangePredicate(((NumericFilter) filter).getValue()));
+				NumericFilter numericFilter = (NumericFilter) filter;
+				predicates.add(new ChangePredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("pctChange")) {
-				predicates.add(new PctChangePredicate(((NumericFilter) filter).getValue()));
+				NumericFilter numericFilter = (NumericFilter) filter;
+				predicates.add(new PctChangePredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("lastChange")) {
-				predicates.add(new LastChangePredicate(((DateFilter) filter).getValue()));
+				DateFilter dateFilter = (DateFilter) filter;
+				predicates.add(new LastChangePredicate(dateFilter.getComparison(), dateFilter.getValue()));
 			}
-			// } else if (filter.getField().equals("visible")) {
-			// predicates.add(new VisiblePredicate(((BooleanFilter)
-			// filter).getValue()));
-			// } else if (filter.getField().equals("id")) {
-			// NumericFilter numericFilter = (NumericFilter) filter;
-			// predicates.add(new IdPredicate(numericFilter.getComparison(),
-			// numericFilter.getValue()));
-			// } else if (filter.getField().equals("price")) {
-			// NumericFilter numericFilter = (NumericFilter) filter;
-			// predicates.add(new PricePredicate(numericFilter.getComparison(),
-			// numericFilter.getValue()));
-			// } else if (filter.getField().equals("size")) {
-			// ListFilter listFilter = (ListFilter) filter;
-			// predicates.add(new SizePredicate(listFilter.getValue()));
-			// } else if (filter.getField().equals("date")) {
-			// DateFilter dateFilter = (DateFilter) filter;
-			// DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-			// try {
-			// Date d = formatter.parse(dateFilter.getValue());
-			// predicates.add(new DatePredicate(dateFilter.getComparison(), d));
-			// } catch (ParseException e) {
-			// // nothing to do
-			// }
-			//
-			// }
 		}
 
 		return predicates;
@@ -189,15 +186,29 @@ public class CompanyService {
 	}
 
 	private static class IdPredicate implements Predicate<Company> {
+		private final Comparison comparison;
+
 		private final Number value;
 
-		IdPredicate(Number value) {
+		IdPredicate(Comparison comparison, Number value) {
+			this.comparison = comparison;
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
-			return company.getId() == value.intValue();
+			switch (comparison) {
+			case EQUAL:
+				return company.getId() == value.intValue();
+			case GREATER_THAN_OR_EQUAL:
+				return company.getId() >= value.intValue();
+			case LESS_THAN_OR_EQUAL:
+				return company.getId() <= value.intValue();
+			case NOT_EQUAL:
+				return company.getId() != value.intValue();
+			}
+			return false;
 		}
 	}
 
@@ -245,56 +256,117 @@ public class CompanyService {
 	}
 
 	private static class PricePredicate implements Predicate<Company> {
+		private final Comparison comparison;
+
 		private final Number value;
 
-		PricePredicate(Number value) {
+		PricePredicate(Comparison comparison, Number value) {
+			this.comparison = comparison;
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
-			return company.getPrice().equals(new BigDecimal(value.toString()));
+			BigDecimal v = new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
+			switch (comparison) {
+			case EQUAL:
+				return company.getPrice().compareTo(v) == 0;
+			case GREATER_THAN_OR_EQUAL:
+				return company.getPrice().compareTo(v) >= 0;
+			case LESS_THAN_OR_EQUAL:
+				return company.getPrice().compareTo(v) <= 0;
+			case NOT_EQUAL:
+				return company.getPrice().compareTo(v) != 0;
+			}
+			return false;
 		}
+
 	}
 
 	private static class ChangePredicate implements Predicate<Company> {
+
+		private final Comparison comparison;
+
 		private final Number value;
 
-		ChangePredicate(Number value) {
+		ChangePredicate(Comparison comparison, Number value) {
+			this.comparison = comparison;
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
-			return company.getChange().equals(new BigDecimal(value.toString()));
+			BigDecimal v = new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
+			switch (comparison) {
+			case EQUAL:
+				return company.getChange().compareTo(v) == 0;
+			case GREATER_THAN_OR_EQUAL:
+				return company.getChange().compareTo(v) >= 0;
+			case LESS_THAN_OR_EQUAL:
+				return company.getChange().compareTo(v) <= 0;
+			case NOT_EQUAL:
+				return company.getChange().compareTo(v) != 0;
+			}
+			return false;
 		}
 	}
 
 	private static class PctChangePredicate implements Predicate<Company> {
+		private final Comparison comparison;
+
 		private final Number value;
 
-		PctChangePredicate(Number value) {
+		PctChangePredicate(Comparison comparison, Number value) {
+			this.comparison = comparison;
 			this.value = value;
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
-			return company.getPctChange().equals(new BigDecimal(value.toString()));
+			BigDecimal v = new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
+			switch (comparison) {
+			case EQUAL:
+				return company.getPctChange().compareTo(v) == 0;
+			case GREATER_THAN_OR_EQUAL:
+				return company.getPctChange().compareTo(v) >= 0;
+			case LESS_THAN_OR_EQUAL:
+				return company.getPctChange().compareTo(v) <= 0;
+			case NOT_EQUAL:
+				return company.getPctChange().compareTo(v) != 0;
+			}
+			return false;
 		}
 	}
 
 	private static class LastChangePredicate implements Predicate<Company> {
 		private final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
+		private final Comparison comparison;
+
 		private final LocalDate value;
 
-		LastChangePredicate(String value) {
+		LastChangePredicate(Comparison comparison, String value) {
+			this.comparison = comparison;
 			this.value = LocalDate.parse(value, formatter);
 		}
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean apply(Company company) {
-			return company.getLastChange().toLocalDate().isEqual(value);
+			switch (comparison) {
+			case EQUAL:
+				return company.getLastChange().compareTo(value) == 0;
+			case GREATER_THAN_OR_EQUAL:
+				return company.getLastChange().compareTo(value) > 0;
+			case LESS_THAN_OR_EQUAL:
+				return company.getLastChange().compareTo(value) < 0;
+			case NOT_EQUAL:
+				return company.getLastChange().compareTo(value) != 0;
+			}
+			return false;
 		}
 	}
 }
