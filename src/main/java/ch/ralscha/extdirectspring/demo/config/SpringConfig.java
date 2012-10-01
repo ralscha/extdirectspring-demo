@@ -73,4 +73,10 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		return new ClassPathResource("/users.csv");
 	}
 
+	@Bean
+	@Lazy
+	public ClassPathResource countries() {
+		return new ClassPathResource("/countries.csv");
+	}
+
 }
