@@ -35,7 +35,6 @@ import com.sun.syndication.io.XmlReader;
 @Service
 public class BlogService {
 
-	@SuppressWarnings("unchecked")
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "blog")
 	public List<Post> getBlogPosts() throws IllegalArgumentException, FeedException, IOException {
 		List<Post> posts = Lists.newArrayList();

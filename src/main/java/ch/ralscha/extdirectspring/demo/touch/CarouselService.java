@@ -53,7 +53,6 @@ public class CarouselService {
 		try (XmlReader reader = new XmlReader(feedUrl)) {
 			SyndFeed feed = input.build(reader);
 
-			@SuppressWarnings("unchecked")
 			List<SyndEntry> entries = feed.getEntries();
 			for (SyndEntry entry : entries) {
 				CarouselPicture pic = new CarouselPicture();

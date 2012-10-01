@@ -51,7 +51,6 @@ public class BbcService {
 		return stations;
 	}
 
-	@SuppressWarnings("unchecked")
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "sch")
 	public ImmutableList<Event> fetchSchedule() throws JsonParseException, JsonMappingException, IOException,
 			InterruptedException, ExecutionException {

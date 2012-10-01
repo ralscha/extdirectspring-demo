@@ -52,7 +52,6 @@ public class ChartService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "live", synchronizeOnSession = true)
 	public List<SiteInfo> getSiteInfo(HttpSession session) {
 
-		@SuppressWarnings("unchecked")
 		List<SiteInfo> siteInfo = (List<SiteInfo>) session.getAttribute("siteInfos");
 		if (siteInfo == null) {
 			siteInfo = Lists.newArrayList();
