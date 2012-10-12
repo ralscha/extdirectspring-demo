@@ -16,7 +16,7 @@ Ext.onReady(function() {
 		}
 	});
 
-	var win = Ext.create('Ext.Window', {
+	Ext.create('Ext.Window', {
 		width: 800,
 		height: 600,
 		hidden: false,

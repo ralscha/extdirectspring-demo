@@ -73,7 +73,7 @@ Ext.onReady(function(){
     Ext.Date.clearTime(start);
     var end = Sch.util.Date.add(start, Sch.util.Date.DAY, 1);
     
-    var container = Ext.create("Ext.Panel", {
+    Ext.create("Ext.Panel", {
         layout : 'border',
         renderTo: "somediv",
         height : 600,

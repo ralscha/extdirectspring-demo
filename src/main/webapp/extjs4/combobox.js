@@ -19,7 +19,7 @@ Ext.onReady(function() {
 		model : 'DeliveryTime'	
 	});
 
-	var simpleCombo = Ext.create('Ext.form.field.ComboBox', {
+	Ext.create('Ext.form.field.ComboBox', {
 	    fieldLabel: 'Select a delivery method',
 	    renderTo: Ext.getBody(),
 	    displayField: 'label',

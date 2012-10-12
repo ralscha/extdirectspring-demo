@@ -18,7 +18,7 @@ Ext.onReady(function() {
 	});
 
 	// create the Tree
-	var tree = Ext.create('Ext.tree.Panel', {
+	Ext.create('Ext.tree.Panel', {
 		store: store,
 		height: 350,
 		width: 600,

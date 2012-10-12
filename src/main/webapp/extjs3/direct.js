@@ -107,7 +107,7 @@ Ext.onReady(function() {
     }
   });
 
-  var p = new Ext.Panel( {
+  new Ext.Panel( {
     title: 'Remote Call Log',
     renderTo: Ext.getBody(),
     frame: true,

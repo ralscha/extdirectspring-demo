@@ -28,7 +28,7 @@ Ext.onReady(function() {
         '<p><b>Link:</b> <a href="{link}" target="_blank">{link}</a></p>', '<p><b>Description:</b> {description}</p>')
   });
 
-  var gridBooks = new Ext.grid.GridPanel( {
+  new Ext.grid.GridPanel( {
     store: directStore,
     cm: new Ext.grid.ColumnModel( {
       defaults: {

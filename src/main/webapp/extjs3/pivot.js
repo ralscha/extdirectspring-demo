@@ -53,7 +53,7 @@ Ext.onReady(function() {
         }
       };
 
-      var pivotGrid = new Ext.grid.PivotGrid({
+      new Ext.grid.PivotGrid({
             title: 'PivotGrid Example',
             width: 1000,
             height: 286,

@@ -54,7 +54,7 @@ Ext.onReady(function() {
 
   var summary = new Ext.ux.grid.GroupSummary();
 
-  var grid = new Ext.grid.EditorGridPanel( {
+  new Ext.grid.EditorGridPanel( {
     store: store,
     columns: [ {
       id: 'description',

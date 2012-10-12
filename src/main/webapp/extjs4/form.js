@@ -114,7 +114,7 @@ Ext.onReady(function(){
         }]
     });
     
-    var accordion = Ext.create('Ext.panel.Panel', {
+    Ext.create('Ext.panel.Panel', {
         layout: 'accordion',
         renderTo: Ext.getBody(),
         title: 'My Profile',

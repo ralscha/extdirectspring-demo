@@ -26,7 +26,7 @@ Ext.onReady(function() {
 		groupHeaderTpl: 'Cuisine: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
 	});
 
-	var grid = Ext.create('Ext.grid.Panel', {
+	Ext.create('Ext.grid.Panel', {
 		renderTo: Ext.getBody(),
 		collapsible: true,
 		iconCls: 'icon-grid',

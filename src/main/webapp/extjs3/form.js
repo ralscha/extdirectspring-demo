@@ -104,7 +104,7 @@ Ext.onReady(function() {
     } ]
   });
 
-  var accordion = new Ext.Panel( {
+  new Ext.Panel( {
     layout: 'accordion',
     layoutConfig: {
       autoWidth: false

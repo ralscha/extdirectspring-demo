@@ -63,7 +63,7 @@ Ext.onReady(function() {
         displayInfo: true
       };
 
-      var grid = new Ext.grid.GridPanel({
+      new Ext.grid.GridPanel({
             renderTo: Ext.getBody(),
             height: 350,
             width: 700,

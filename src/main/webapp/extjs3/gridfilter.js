@@ -158,7 +158,7 @@ Ext.onReady(function() {
     }
   } ]);
 
-  var win = new Ext.Window( {
+  new Ext.Window( {
     title: 'Grid Filters Example',
     height: 400,
     width: 700,

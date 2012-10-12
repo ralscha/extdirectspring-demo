@@ -36,7 +36,7 @@ Ext.onReady(function() {
 		} ]
 	});
 
-	var grid = Ext.create('Ext.grid.Panel', {
+	Ext.create('Ext.grid.Panel', {
 		width: 700,
 		height: 500,
 		title: 'Some random data',
