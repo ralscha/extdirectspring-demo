@@ -12,7 +12,7 @@ Ext.onReady(function() {
 			field.reset();
 		});
 	}
-
+	
 	function doMultiply(field) {
 		testAction.multiply(field.getValue(), function(result, event) {
 			var transaction = event.getTransaction(), content;
@@ -45,7 +45,12 @@ Ext.onReady(function() {
 			}
 		}
 	});
-
+	
+	var es = new EventSource(Ext.app.SSE.poll.sse);
+	es.addEventListener('message', function(event) {
+		updateMain('<i>' + event.data + '</i>');
+	}, false);
+	
 	var main = Ext.create('Ext.panel.Panel', {
 		id: 'logger',
 		title: 'Remote Call Log',

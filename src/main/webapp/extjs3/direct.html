@@ -8,7 +8,12 @@
     
   <script src="http://rasc.ch/ext-3.4.1/adapter/ext/ext-base.js"></script>
   <script src="http://rasc.ch/ext-3.4.1/ext-all.js"></script>
+    
   <script>
+    if (!window.EventSource) {
+    	Ext.Loader.load(['../eventsource.js']);
+    } 
+    
     Ext.BLANK_IMAGE_URL = "http://rasc.ch/ext-3.4.1/resources/images/default/s.gif";                                                    
   </script>
   

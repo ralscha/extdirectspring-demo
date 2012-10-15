@@ -14,7 +14,10 @@ Ext.onReady(function() {
       name: 'Ralph'
     }
   });
-
+  
+  var es = new EventSource(Ext.app.SSE.poll.sse);
+  es.addEventListener('message', sseMessageHandler, false);
+  
   var out = new Ext.form.DisplayField( {
     cls: 'x-form-text',
     id: 'out'
@@ -74,6 +77,10 @@ Ext.onReady(function() {
         pollB.connect();
       }
       b.disable();
+      
+      es = new EventSource(Ext.app.SSE.poll.sse);
+      es.addEventListener('message', sseMessageHandler, false);
+      
       Ext.getCmp('disconnectButton').enable();
     }
   });
@@ -91,7 +98,9 @@ Ext.onReady(function() {
         pollB.disconnect();
       }
       b.disable();
+      es.close();
       Ext.getCmp('connectButton').enable();
+      
     }
   });
 
@@ -129,4 +138,10 @@ Ext.onReady(function() {
       Ext.Direct.getProvider('pollWithParamsProvider').baseParams.no++;
     }
   });
+  
+  function sseMessageHandler(event) {
+	  out.append(String.format('<p><i>{0}</i></p>', event.data));
+      out.el.scroll('down', 100000, true);
+  }
+    
 });

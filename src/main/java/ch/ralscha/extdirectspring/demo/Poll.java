@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.ralscha.extdirectspring.bean.SSEvent;
 
 @Service
 public class Poll {
@@ -40,5 +41,15 @@ public class Poll {
 	public String pollingWithParams(@RequestParam(value = "no") int no, @RequestParam(value = "name") String name,
 			@RequestParam(value = "dummy", defaultValue = "CH") String dummy, HttpServletRequest request) {
 		return request.getRequestURI() + ":  POST PARAMETERS: no=" + no + ", name=" + name + ", dummy=" + dummy;
+	}
+
+	@ExtDirectMethod(value = ExtDirectMethodType.SSE, group = "example")
+	public SSEvent sse() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm:ss");
+		
+		SSEvent event = new SSEvent();
+		event.setRetry(3000);
+		event.setData("Successfully polled with EventSource at: " + formatter.format(new Date()));
+		return event;
 	}
 }
