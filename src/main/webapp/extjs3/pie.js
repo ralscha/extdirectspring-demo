@@ -22,7 +22,7 @@ Ext.onReady(function() {
         margin: [ 50, 150, 60, 80 ]
       },
       title: {
-        text: 'ExtJs Pie',
+        text: 'Ext JS Pie',
         style: {
           margin: '10px 100px 0 0' // center it
         }
