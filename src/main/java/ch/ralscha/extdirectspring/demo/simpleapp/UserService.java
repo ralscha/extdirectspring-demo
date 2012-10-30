@@ -24,9 +24,10 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
-import ch.ralscha.extdirectspring.demo.util.ExtDirectStorePagingResponse;
+import ch.ralscha.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 
 @Service
 public class UserService {
@@ -37,7 +38,21 @@ public class UserService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simpleapp")
 	public ExtDirectStoreReadResult<User> load(ExtDirectStoreReadRequest request) {
 		List<User> users = userDb.getAll();
-		return new ExtDirectStorePagingResponse<>(request, users);
+
+		int totalSize = users.size();
+
+		Ordering<User> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
+		if (ordering != null) {
+			users = ordering.sortedCopy(users);
+		}
+
+		if (request.getPage() != null && request.getLimit() != null) {
+			int start = (request.getPage() - 1) * request.getLimit();
+			int end = Math.min(totalSize, start + request.getLimit());
+			users = Lists.newArrayList(users).subList(start, Math.min(totalSize, end));
+		}
+
+		return new ExtDirectStoreReadResult<>(totalSize, users, true);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")
