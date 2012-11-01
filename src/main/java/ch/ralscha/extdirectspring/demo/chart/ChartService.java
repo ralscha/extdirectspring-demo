@@ -19,6 +19,7 @@ import java.text.DateFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpSession;
 
@@ -76,4 +77,39 @@ public class ChartService {
 
 		return siteInfo;
 	}
+	
+	@ExtDirectMethod(group = "live")
+	public SiteInfo getNextSiteInfo(HttpSession session) {
+		SiteInfo lastSiteInfo = (SiteInfo) session.getAttribute("lastSiteInfo");
+
+		SiteInfo newSiteInfo;
+
+		if (lastSiteInfo == null) {
+			LocalDate ld = new LocalDate(2011, 1, 1);
+			newSiteInfo = new SiteInfo(ld, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1);
+		} else {
+			
+			LocalDate nextDate = lastSiteInfo.getDate().plusDays(1);
+			int nextVisits = Math.min(100,
+					Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-20, 20), 0));
+			int nextViews = Math.min(100, Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-10, 10), 0));
+			int nextVeins = Math.min(100, Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-20, 20), 0));
+
+			newSiteInfo = new SiteInfo(nextDate, nextVisits, nextViews, nextVeins);
+		}
+
+		session.setAttribute("lastSiteInfo", newSiteInfo);
+		return newSiteInfo;
+
+	}
+	
+	@ExtDirectMethod(group = "live")
+	public List<SiteInfo> getFirst10SiteInfos(HttpSession session) {
+		session.removeAttribute("lastSiteInfo");
+		List<SiteInfo> result = Lists.newArrayList();
+		for (int i = 0; i < 10; i++) {
+			result.add(getNextSiteInfo(session));
+		}
+		return result;
+	}	
 }
