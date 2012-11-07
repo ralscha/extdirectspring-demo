@@ -36,7 +36,7 @@ Ext.onReady(function(){
     });    
 
     var carTpl = Ext.create('Ext.XTemplate', 
-        '<img class="carimg" src="http://rasc.ch/Bryntum-2.x-45d-trial/scheduler-2.1.6-trial/examples/charting/{Id}.jpeg" />',
+        '<img class="carimg" src="http://www.bryntum.com/examples/scheduler-latest/examples/charting/{Id}.jpeg" />',
         '<dl class="cardescr">',
             '<dt>{Name}</dt>',
             '<dd>{Seats} seats</dd>',

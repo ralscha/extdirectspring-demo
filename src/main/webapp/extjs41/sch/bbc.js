@@ -94,7 +94,7 @@ Ext.onReady(function () {
             align: 'center', 
             width: 150, 
             dataIndex: 'Name', 
-            tpl: '<img class="station-img" src="http://rasc.ch/Bryntum-2.x-45d-trial/scheduler-2.1.6-trial/examples/bbc/images/{Id}.png" />'
+            tpl: '<img class="station-img" src="http://www.bryntum.com/examples/scheduler-latest/examples/bbc/images/{Id}.png" />'
         }],
         plugins: new Sch.plugin.CurrentTimeLine(),
         viewConfig: { rowLines : false, barMargin: 5 },
