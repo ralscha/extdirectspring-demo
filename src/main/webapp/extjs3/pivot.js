@@ -1,7 +1,8 @@
 Ext.onReady(function() {
 
       Ext.Direct.addProvider(Ext.app.REMOTING_API);
-
+	  var pivotGrid;
+	  
       var saleFields = [{
             name: 'person',
             type: 'string'
@@ -53,7 +54,7 @@ Ext.onReady(function() {
         }
       };
 
-      new Ext.grid.PivotGrid({
+      pivotGrid = new Ext.grid.PivotGrid({
             title: 'PivotGrid Example',
             width: 1000,
             height: 286,
