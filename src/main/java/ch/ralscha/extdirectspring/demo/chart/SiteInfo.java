@@ -15,11 +15,15 @@
  */
 package ch.ralscha.extdirectspring.demo.chart;
 
+import java.io.Serializable;
+
 import org.joda.time.LocalDate;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-public class SiteInfo {
+public class SiteInfo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final LocalDate date;
 
