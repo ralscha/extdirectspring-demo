@@ -46,7 +46,7 @@ public class Poll {
 	@ExtDirectMethod(value = ExtDirectMethodType.SSE, group = "example")
 	public SSEvent sse() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm:ss");
-		
+
 		SSEvent event = new SSEvent();
 		event.setRetry(3000);
 		event.setData("Successfully polled with EventSource at: " + formatter.format(new Date()));

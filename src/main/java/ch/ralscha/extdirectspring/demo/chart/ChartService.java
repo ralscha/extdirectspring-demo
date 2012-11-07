@@ -77,7 +77,7 @@ public class ChartService {
 
 		return siteInfo;
 	}
-	
+
 	@ExtDirectMethod(group = "live")
 	public SiteInfo getNextSiteInfo(HttpSession session) {
 		SiteInfo lastSiteInfo = (SiteInfo) session.getAttribute("lastSiteInfo");
@@ -88,12 +88,14 @@ public class ChartService {
 			LocalDate ld = new LocalDate(2011, 1, 1);
 			newSiteInfo = new SiteInfo(ld, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1);
 		} else {
-			
+
 			LocalDate nextDate = lastSiteInfo.getDate().plusDays(1);
 			int nextVisits = Math.min(100,
 					Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-20, 20), 0));
-			int nextViews = Math.min(100, Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-10, 10), 0));
-			int nextVeins = Math.min(100, Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-20, 20), 0));
+			int nextViews = Math.min(100,
+					Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-10, 10), 0));
+			int nextVeins = Math.min(100,
+					Math.max(lastSiteInfo.getVisits() + ThreadLocalRandom.current().nextInt(-20, 20), 0));
 
 			newSiteInfo = new SiteInfo(nextDate, nextVisits, nextViews, nextVeins);
 		}
@@ -102,7 +104,7 @@ public class ChartService {
 		return newSiteInfo;
 
 	}
-	
+
 	@ExtDirectMethod(group = "live")
 	public List<SiteInfo> getFirst10SiteInfos(HttpSession session) {
 		session.removeAttribute("lastSiteInfo");
@@ -111,5 +113,5 @@ public class ChartService {
 			result.add(getNextSiteInfo(session));
 		}
 		return result;
-	}	
+	}
 }
