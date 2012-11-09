@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ext Direct Form Integration</title>
+<link rel="stylesheet" type="text/css" href="http://www.rasc.ch/extjs-4.1.2/resources/css/ext-all.css" />
+<script src="http://www.rasc.ch/extjs-4.1.2/ext-all.js"></script>
+<script src="../api-debug.js?group=exp"></script>
+<script>
+
+  Ext.onReady(function() {
+    Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+     
+    Ext.define('Test.Book', {
+      extend: 'Ext.data.Model',
+      fields: [{
+        name: 'id',
+        type: 'int'
+      }, {
+        name: 'title',
+        type: 'string'
+      }, {
+        name: 'publisher',
+        type: 'string'
+      }, {
+        name: 'isbn',
+        type: 'string'
+      }, {
+        name: 'publishDate',
+        type: 'date',
+        dateFormat: 'c'
+      }, {
+        name: 'numberOfPages',
+        type: 'int'
+      }, {
+        name: 'read',
+        type: 'boolean'
+      }],
+      associations: [{
+        type: 'hasMany',
+        model: 'Test.Author',
+        name: 'authors'
+      }]      
+    });
+   
+   Ext.define('Test.Author', {
+     extend: 'Ext.data.Model',
+     fields: [{
+        name: 'id',
+        type: 'int'
+      }, {
+       name: 'title',
+       type: 'string'
+     }, {
+       name: 'firstName',
+       type: 'string'
+     }, {
+       name: 'lastName',
+       type: 'string'
+     }]
+   });
+   
+   
+	book = Ext.create('Test.Book', {
+		title: 'Ext JS 4 CookBook',
+		publisher: 'Packt Publishing',
+		isbn: '978-1-849516-86-0',
+		publishDate: '01-01-2012',
+		numberOfPages: 300,
+		read: false
+	}); 
+	
+	console.log('Book', book);
+	
+	var authors = book.authors();	
+	console.log('Authors', authors);
+	
+	
+	authors.add({
+	  title: 'Mr',
+      firstName: 'Andrew',
+      lastName: 'Duncan'
+    }, {
+      title: 'Mr',
+      firstName: 'Stuart',
+      lastName: 'Ashworth'
+    });
+	
+	  
+    var store = Ext.create('Ext.data.Store', {
+      model: 'Test.Book',
+      autoLoad: true,
+      proxy: {
+        type: 'direct',
+        directFn: 'expService.readBooks'
+      }
+    });
+    
+    store.on('load', function() {
+       var record = store.getAt(0);
+       console.log(record);
+       console.log(record.get('title'));
+       var authors = record.getAssociatedData();
+       console.log(authors);
+       var author = record.authors().getAt(0);
+       console.log(author.get('firstName'));
+    });	  
+	  
+  
+  });
+
+
+</script>
+</head>
+<body>
+	<h1>Ext Direct Experiments</h1>
+</body>
+</html>
