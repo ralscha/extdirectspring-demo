@@ -9,7 +9,7 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>ch.ralscha.extdirectspring.demo.config.SpringConfig</param-value>
+		<param-value>ch.rasc.extdirectspring.demo.config.SpringConfig</param-value>
 	</context-param>
 
 	<listener>

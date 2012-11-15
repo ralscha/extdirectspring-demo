@@ -59,9 +59,8 @@
        type: 'string'
      }]
    });
-   
-   
-	book = Ext.create('Test.Book', {
+      
+	var book = Ext.create('Test.Book', {
 		title: 'Ext JS 4 CookBook',
 		publisher: 'Packt Publishing',
 		isbn: '978-1-849516-86-0',
@@ -100,8 +99,10 @@
        var record = store.getAt(0);
        console.log(record);
        console.log(record.get('title'));
+       
        var authors = record.getAssociatedData();
        console.log(authors);
+       
        var author = record.authors().getAt(0);
        console.log(author.get('firstName'));
     });	  

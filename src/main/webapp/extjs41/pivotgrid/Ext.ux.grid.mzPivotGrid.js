@@ -241,7 +241,6 @@ Ext.define('Ext.ux.grid.column.mzPivotColumn', {
     align:          'left',
 
     constructor : function(config){
-        this.width = this.width;
         this.locked = true;
 
         this.callParent(arguments);

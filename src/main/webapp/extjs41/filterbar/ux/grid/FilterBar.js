@@ -351,7 +351,7 @@ Ext.define('Ext.ux.grid.FilterBar', {
 							column.filter.type = (column.filter.allowDecimals ? 'float' : 'int');
 							break;
 						default:
-							column.filter.type = 'string'
+							column.filter.type = 'string';
 					}
 				}
 
