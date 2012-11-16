@@ -13,10 +13,8 @@
      
     Ext.define('Test.Book', {
       extend: 'Ext.data.Model',
+      idProperty: 'isbn',
       fields: [{
-        name: 'id',
-        type: 'int'
-      }, {
         name: 'title',
         type: 'string'
       }, {
@@ -39,14 +37,64 @@
       associations: [{
         type: 'hasMany',
         model: 'Test.Author',
-        name: 'authors'
-      }]      
+        name: 'authors',
+        autoLoad: true,
+        foreignKey: 'book_id',
+        primaryKey: 'isbn'
+      }],
+      proxy:{
+    	type:'direct',
+    	idParam: 'isbn',
+    	directFn: 'expService.readBooks'
+      }
     });
+    
+    Ext.define('Test.BookOne', {
+        extend: 'Ext.data.Model',
+        idProperty: 'isbn',
+        fields: [{
+          name: 'title',
+          type: 'string'
+        }, {
+          name: 'publisher',
+          type: 'string'
+        }, {
+          name: 'isbn',
+          type: 'string'
+        }, {
+          name: 'publishDate',
+          type: 'date',
+          dateFormat: 'c'
+        }, {
+          name: 'numberOfPages',
+          type: 'int'
+        }, {
+          name: 'read',
+          type: 'boolean'
+        }, {
+        	name: 'author_id',
+        	type: 'int'
+        }],
+        associations: [{
+          type: 'hasOne',
+          model: 'Test.Author',
+          primaryKey: 'id2',
+          foreignKey: 'author_id',
+          getterName: 'getAuthor',
+          setterName: 'setAuthor'
+        }],
+        proxy:{
+      	  type:'direct',
+      	  idParam: 'isbn',
+      	  directFn: 'expService.readBooks'
+        }
+      });    
    
    Ext.define('Test.Author', {
      extend: 'Ext.data.Model',
+     idProperty: 'id2',
      fields: [{
-        name: 'id',
+        name: 'id2',
         type: 'int'
       }, {
        name: 'title',
@@ -57,10 +105,70 @@
      }, {
        name: 'lastName',
        type: 'string'
-     }]
+     }, {
+       name: 'book_id',
+       type: 'string'
+     }],
+     associations: [{
+         type: 'belongsTo',
+         model: 'Test.Book',
+         foreignKey: 'book_id',
+         primaryKey: 'isbn',
+         getterName: 'getBook',
+         setterName: 'setBook'
+       }],     
+     proxy:{
+   	   type:'direct',
+   	   idParam: 'id2',
+   	   directFn: 'expService.readAuthors'
+     }     
    });
       
-	var book = Ext.create('Test.Book', {
+   Test.BookOne.load(1, {
+	   scope: this,
+	   success: function(record, operation) {
+	    	console.log('one book: ', record);
+	    	record.getAuthor();
+	   }
+   });
+   
+/*     Test.Book.load(1, {
+	    scope: this,
+	    failure: function(record, operation) {
+	        console.log('failure');
+	    },
+	    success: function(record, operation) {
+	    	console.log('one book: ', record);
+	    	
+			record.authors().on('load', function(store, records) {
+				console.log('authors loaded', records);
+				
+				var a = Ext.create('Test.Author', {
+	    			title: 'NewTitle',
+	    			firstName: 'NewFirstName',
+	    			lastName: 'NewLastName'
+	    		});
+	    		record.authors().add(a);  		
+//				record.authors().sync();
+				console.log('getBook');
+				console.log(a.getBook());
+			});
+	    		
+	    }
+	});  */
+   
+/*    Test.Author.load(1, {
+	    scope: this,
+	    failure: function(record, operation) {
+	        console.log('failure');
+	    },
+	    success: function(record, operation) {
+	    	console.log('one author: ', record);	    	
+	    }
+	}); */
+   
+   
+/* 	var book = Ext.create('Test.Book', {
 		title: 'Ext JS 4 CookBook',
 		publisher: 'Packt Publishing',
 		isbn: '978-1-849516-86-0',
@@ -88,11 +196,7 @@
 	  
     var store = Ext.create('Ext.data.Store', {
       model: 'Test.Book',
-      autoLoad: true,
-      proxy: {
-        type: 'direct',
-        directFn: 'expService.readBooks'
-      }
+      autoLoad: true
     });
     
     store.on('load', function() {
@@ -106,7 +210,7 @@
        var author = record.authors().getAt(0);
        console.log(author.get('firstName'));
     });	  
-	  
+ */	  
   
   });
 
