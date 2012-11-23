@@ -36,6 +36,7 @@ Ext.onReady(function() {
 				text: 'Send',
 				handler: function() {
 					var values = form.getForm().getValues();
+					values.bo = [{id:1,name:'test'},{id:2,name:'test2'}];
 					namedService.showDetails(values, function(value) {
 						Ext.example.msg('Server Response', value);
 					});

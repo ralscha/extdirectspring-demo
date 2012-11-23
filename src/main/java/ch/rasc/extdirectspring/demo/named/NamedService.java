@@ -15,6 +15,8 @@
  */
 package ch.rasc.extdirectspring.demo.named;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -24,7 +26,10 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 public class NamedService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "named")
-	public String showDetails(String firstName, String lastName, int age) {
+	public String showDetails(List<Business> bo, String firstName, String lastName, int age) {
+		for (Business b : bo) {
+			System.out.println(b);
+		}
 		return String.format("Hi %s %s, you are %d years old.", firstName, lastName, age);
 	}
 }
