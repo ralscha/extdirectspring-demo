@@ -42,7 +42,7 @@
 	</scm>
 
 	<properties>
-		<spring.version>3.2.0.RC1</spring.version>
+		<spring.version>3.2.0.RC2</spring.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.7</logback.version>
 		<hibernatevalidator.version>4.3.0.Final</hibernatevalidator.version>
