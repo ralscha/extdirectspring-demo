@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -45,8 +45,8 @@
 		<spring.version>3.2.0.RC2</spring.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.7</logback.version>
-		<hibernatevalidator.version>4.3.0.Final</hibernatevalidator.version>
-		<eds.version>1.2.3-SNAPSHOT</eds.version>
+		<hibernatevalidator.version>4.3.1.Final</hibernatevalidator.version>
+		<eds.version>1.2.3</eds.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
@@ -217,7 +217,7 @@
 			<name>My Repository</name>
 			<url>http://repository.rasc.ch</url>
 		</repository>
-
+<!-- 
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -229,7 +229,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
+ -->
 		<repository>
 			<id>repository.springsource.milestone</id>
 			<name>SpringSource Milestone Repository</name>
