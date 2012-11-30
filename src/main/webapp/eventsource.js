@@ -142,53 +142,12 @@
     }
   };
 
-  function Node() {
-    this.next = null;
-    this.callback = null;
-    this.arg = null;
-  }
-
-  Node.prototype = {
-    next: null,
-    callback: null,
-    arg: null
-  };
-
-  var tail = new Node();
-  var head = tail;
-  var channel = null;
-
-  function onTimeout() {
-    while (head !== tail) {
-      var callback = head.callback;
-      var arg = head.arg;
-      head = head.next;
-      try {
-        callback(arg);
-      } catch (e) {
-        throwError(e);
-      }
-    }
-  }
-
-  // MessageChannel support: IE 10, Opera 11.6x?, Chrome ?, Safari ?
-  if (global.MessageChannel) {
-    channel = new global.MessageChannel();
-    channel.port1.onmessage = onTimeout;
-    channel.port2.postMessage(""); // opt.
-  }
-
   function queue(callback, arg) {
-    tail.callback = callback;
-    tail.arg = arg;
-    if (head === tail) {
-      if (channel !== null) {
-        channel.port2.postMessage("");
-      } else {
-        setTimeout(onTimeout, 0);
-      }
+    try {
+      callback(arg);
+    } catch (e) {
+      throwError(e);
     }
-    tail = tail.next = new Node();
   }
 
   // http://blogs.msdn.com/b/ieinternals/archive/2010/04/06/comet-streaming-in-internet-explorer-with-xmlhttprequest-and-xdomainrequest.aspx?PageIndex=1#comments
@@ -222,6 +181,15 @@
   E.prototype = Event.prototype;
   MessageEvent.prototype = new E();
 
+  function abort(xhr) {
+    xhr.onload = xhr.onerror = xhr.onprogress = xhr.onreadystatechange = empty;
+    xhr.abort();
+  }
+
+  var digits = /^\d+$/;
+  var contentTypeRegExp = /^text\/event\-stream/i;
+  var crlf = /[\r\n]/;
+
   function EventSource(url, options) {
     url = String(url);
 
@@ -250,8 +218,7 @@
     function close() {
       // http://dev.w3.org/html5/eventsource/ The close() method must close the connection, if any; must abort any instances of the fetch algorithm started for this EventSource object; and must set the readyState attribute to CLOSED.
       if (xhr !== null) {
-        xhr.onload = xhr.onerror = xhr.onprogress = xhr.onreadystatechange = empty;
-        xhr.abort();
+        abort(xhr);
         xhr = null;
       }
       if (reconnectTimeout !== 0) {
@@ -286,11 +253,11 @@
     }
 
     function onError() {
-      queue(setConnectingState, new Event("error"));
       if (xhrTimeout !== 0) {
         clearTimeout(xhrTimeout);
         xhrTimeout = 0;
       }
+      queue(setConnectingState, new Event("error"));
     }
 
     function onXHRTimeout() {
@@ -300,8 +267,7 @@
         wasActivity = false;
         xhrTimeout = setTimeout(onXHRTimeout, heartbeatTimeout);
       } else {
-        xhr.onload = xhr.onerror = xhr.onprogress = xhr.onreadystatechange = empty;
-        xhr.abort();
+        abort(xhr);
         onError();
       }
     }
@@ -338,15 +304,15 @@
           // invalid state error when xhr.getResponseHeader called after xhr.abort in Chrome 18
           throwError(error);
         }
-        if (contentType && (/^text\/event\-stream/i).test(contentType)) {
-          queue(setOpenState, new Event("open"));
+        if (contentType && contentTypeRegExp.test(contentType)) {
           opened = true;
           wasActivity = true;
           retry = initialRetry;
+          queue(setOpenState, new Event("open"));
         }
       }
 
-      if (opened) {
+      if (opened && readyState !== CLOSED) {
         var responseText = xhr.responseText || "";
         var part = responseText.slice(charOffset);
         if (part.length > 0) {
@@ -359,7 +325,7 @@
           wasCR = false;
         }
         var i = 0;
-        while ((i = part.search(/[\r\n]/)) !== -1) {
+        while ((i = part.search(crlf)) !== -1) {
           var field = responseBuffer.join("") + part.slice(0, i);
           responseBuffer.length = 0;
           if (part.length > i + 1) {
@@ -388,7 +354,7 @@
             }
 
             if (field === "retry") {
-              if (/^\d+$/.test(value)) {
+              if (digits.test(value)) {
                 initialRetry = delay(value);
                 retry = initialRetry;
                 if (retryLimit < initialRetry) {
@@ -398,7 +364,7 @@
             }
 
             if (field === "heartbeatTimeout") {//!
-              if (/^\d+$/.test(value)) {
+              if (digits.test(value)) {
                 heartbeatTimeout = delay(value);
                 if (xhrTimeout !== 0) {
                   clearTimeout(xhrTimeout);
@@ -408,7 +374,7 @@
             }
 
             if (field === "retryLimit") {//!
-              if (/^\d+$/.test(value)) {
+              if (digits.test(value)) {
                 retryLimit = delay(value);
               }
             }
@@ -434,9 +400,15 @@
           responseBuffer.push(part);
         }
         charOffset = responseText.length;
+      }
+    }
+
+    function onProgress2() {
+      onProgress();
+      if (opened) {
+        var responseText = xhr.responseText || "";
         if (responseText.length > 1024 * 1024) {
-          xhr.onload = xhr.onerror = xhr.onprogress = xhr.onreadystatechange = empty;
-          xhr.abort();
+          abort(xhr);
           onError();
         }
       }
@@ -449,7 +421,7 @@
 
     function onReadyStateChange() {
       if (xhr.readyState === 3) {
-        onProgress();
+        onProgress2();
       }
     }
 
@@ -467,7 +439,7 @@
       // onprogress fires multiple times while readyState === 3
       // onprogress should be setted before calling "open" for Firefox 3.6
       if (xhr.mozAnon === undefined) {// Firefox shows loading indicator
-        xhr.onprogress = onProgress;
+        xhr.onprogress = onProgress2;
       }
 
       // Firefox 3.6
@@ -482,6 +454,8 @@
       dataBuffer.length = 0;
       eventTypeBuffer = "";
       lastEventIdBuffer = lastEventId;//resets to last successful
+      wasCR = false;
+      responseBuffer.length = 0;
 
       // with GET method in FF xhr.onreadystatechange with readyState === 3 does not work + POST = no-cache
       xhr.open("POST", url, true);
@@ -490,9 +464,6 @@
       xhr.withCredentials = withCredentials;
 
       xhr.responseType = "text";
-
-      wasCR = false;
-      responseBuffer.length = 0;
 
       if (xhr.setRequestHeader) { // !XDomainRequest
         // http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html

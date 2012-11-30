@@ -25,13 +25,16 @@ public class Company {
 
 	private final String company;
 
+	@ModelField(convert = "null", defaultValue = "undefined")
 	private final BigDecimal price;
 
+	@ModelField(convert = "null", defaultValue = "undefined")
 	private final BigDecimal change;
 
+	@ModelField(convert = "null", defaultValue = "undefined")
 	private final BigDecimal pctChange;
 
-	@ModelField(dateFormat = "c")
+	@ModelField(dateFormat = "c", defaultValue = "undefined")
 	private final DateTime lastChange;
 
 	@ModelAssociation(value = ModelAssociationType.HAS_MANY, model = History.class, foreignKey = "companyId", autoLoad = true)

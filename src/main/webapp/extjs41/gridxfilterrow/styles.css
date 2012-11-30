@@ -1,0 +1,9 @@
+.xfilter-row {
+	position:absolute !important;	
+}
+
+.xfilter-row input, .filter-input {
+	font-size: 11px !important;
+    background: #FFFFFF url(filter-row-icon.png) no-repeat bottom left !important;
+    padding: 4px 5px 0 16px !important;
+}
