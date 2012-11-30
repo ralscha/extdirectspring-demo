@@ -31,8 +31,8 @@
 	</licenses>
 
 	<issueManagement>
-		<system>Google Code</system>
-		<url>http://code.google.com/p/extdirectspring/issues</url>
+		<system>GitHub</system>
+		<url>https://github.com/ralscha/extdirectspring/issues</url>
 	</issueManagement>
 
 	<scm>
