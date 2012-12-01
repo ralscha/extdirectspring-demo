@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.controller.RouterController;
 import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.ralscha.extdirectspring.generator.ModelGenerator;
@@ -155,7 +154,7 @@ public class AreService {
 		byte[] code = (company + history).getBytes(StandardCharsets.UTF_8);
 
 		response.setContentType("application/javascript");
-		response.setCharacterEncoding(RouterController.UTF8_CHARSET.name());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentLength(code.length);
 
 		@SuppressWarnings("resource")
