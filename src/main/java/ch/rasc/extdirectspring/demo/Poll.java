@@ -15,13 +15,17 @@
  */
 package ch.rasc.extdirectspring.demo;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -46,7 +50,15 @@ public class Poll {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SSE, group = "example")
-	public SSEvent sse(SSEWriter sseWriter) {
+	public SSEvent sse(@RequestHeader("User-Agent") String userAgent, HttpServletResponse response, SSEWriter sseWriter)
+			throws IOException {
+
+		//we have to send 2K bytes of nothing first if the client is IE6-IE9. 
+		//IE10 no longer need this
+		if (isIE(userAgent)) {
+			System.out.println("Write FIX");
+			writeIEHeadersAndPadding(response);
+		}
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm:ss");
 
@@ -69,6 +81,36 @@ public class Poll {
 		event.setRetry(3000);
 		event.setData("LAST: Successfully polled with EventSource at: " + formatter.format(new Date()));
 		return event;
+
+	}
+
+	private static void writeIEHeadersAndPadding(HttpServletResponse response) throws IOException {
+		// If you use Yaffle / EventSource then these two headers are necessary to make it work in IE6-IE9
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+
+		// 2kb padding 
+		byte[] spaces = new byte[2048];
+		Arrays.fill(spaces, (byte) ' ');
+
+		response.getOutputStream().write(':');
+		response.getOutputStream().write(spaces);
+		response.getOutputStream().write('\n');
+		response.getOutputStream().flush();
+	}
+
+	private static boolean isIE(String userAgent) {
+		if (userAgent != null && userAgent.contains("MSIE ")) {
+			String ver = userAgent.substring(userAgent.indexOf("MSIE ") + 5);
+			ver = ver.substring(0, ver.indexOf(";")).trim();
+			
+			int version = Integer.parseInt(ver.substring(0, ver.indexOf(".")));
+			if (version < 10) {
+				return true;
+			}
+		}
+
+		return false;
 
 	}
 
