@@ -4,46 +4,27 @@
  * https://github.com/Yaffle/EventSource/
  */
 
-/*jslint indent: 2, vars: true */
+/*jslint indent: 2, vars: true, plusplus: true */
 /*global setTimeout, clearTimeout, navigator */
 
 (function (global) {
   "use strict";
 
   function Map() {
-    this.data = Object.create ? Object.create(null) : {};
+    this.data = {};
   }
-
-  var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-  var escapeKey = function (key) {
-    return key.slice(0, 1) === "_" ? key + "~" : key;
-  };
 
   Map.prototype = {
     get: function (key) {
-      var k = escapeKey(key);
-      var data = this.data;
-      return hasOwnProperty.call(data, k) ? data[k] : undefined;
+      return this.data[key + "~"];
     },
     set: function (key, value) {
-      this.data[escapeKey(key)] = value;
+      this.data[key + "~"] = value;
     },
     "delete": function (key) {
-      delete this.data[escapeKey(key)];
+      delete this.data[key + "~"];
     }
   };
-
-  function Event(type) {
-    this.type = type;
-    this.eventPhase = 0;
-    this.currentTarget = null;
-    this.target = null;
-  }
-
-  Event.CAPTURING_PHASE = 1;
-  Event.AT_TARGET = 2;
-  Event.BUBBLING_PHASE = 3;
 
   function EventTarget() {
     this.listeners = new Map();
@@ -56,59 +37,41 @@
   }
 
   EventTarget.prototype = {
-    hasListeners: function (type) {
-      return this.listeners.get(String(type)) !== undefined;
-    },
-    invokeEvent: function (event) {
+    dispatchEvent: function (event) {
       var type = String(event.type);
-      var phase = event.eventPhase;
       var listeners = this.listeners;
       var typeListeners = listeners.get(type);
       if (!typeListeners) {
         return;
       }
       var length = typeListeners.length;
-      var i = phase === Event.BUBBLING_PHASE ? 1 : 0;
-      var increment = phase === Event.CAPTURING_PHASE || phase === Event.BUBBLING_PHASE ? 2 : 1;
-      while (i < length) {
-        event.currentTarget = this;
+      var i = -1;
+      while (++i < length) {
         var listener = typeListeners[i];
-        if (listener !== null) {
-          try {
-            listener.call(this, event);
-          } catch (e) {
-            throwError(e);
-          }
+        try {
+          listener.call(this, event);
+        } catch (e) {
+          throwError(e);
         }
-        event.currentTarget = null;
-        i += increment;
       }
     },
-    dispatchEvent: function (event) {
-      event.eventPhase = Event.AT_TARGET;
-      this.invokeEvent(event);
-    },
-    addEventListener: function (type, callback, capture) {
+    addEventListener: function (type, callback) {
       type = String(type);
-      capture = Boolean(capture);
       var listeners = this.listeners;
       var typeListeners = listeners.get(type);
       if (!typeListeners) {
-        listeners.set(type, typeListeners = []); // CAPTURING BUBBLING
+        listeners.set(type, typeListeners = []);
       }
-      var i = typeListeners.length - (capture ? 2 : 1);
-      while (i >= 0) {
+      var i = typeListeners.length;
+      while (--i >= 0) {
         if (typeListeners[i] === callback) {
           return;
         }
-        i -= 2;
       }
-      typeListeners.push(capture ? callback : null);
-      typeListeners.push(capture ? null : callback);
+      typeListeners.push(callback);
     },
-    removeEventListener: function (type, callback, capture) {
+    removeEventListener: function (type, callback) {
       type = String(type);
-      capture = Boolean(capture);
       var listeners = this.listeners;
       var typeListeners = listeners.get(type);
       if (!typeListeners) {
@@ -116,13 +79,11 @@
       }
       var length = typeListeners.length;
       var filtered = [];
-      var i = 0;
-      while (i < length) {
-        if (typeListeners[i + (capture ? 0 : 1)] !== callback) {
+      var i = -1;
+      while (++i < length) {
+        if (typeListeners[i] !== callback) {
           filtered.push(typeListeners[i]);
-          filtered.push(typeListeners[i + 1]);
         }
-        i += 2;
       }
       if (filtered.length === 0) {
         listeners["delete"](type);
@@ -132,36 +93,8 @@
     }
   };
 
-  function queue(callback, arg) {
-    try {
-      callback(arg);
-    } catch (e) {
-      throwError(e);
-    }
-  }
-
-  // http://blogs.msdn.com/b/ieinternals/archive/2010/04/06/comet-streaming-in-internet-explorer-with-xmlhttprequest-and-xdomainrequest.aspx?PageIndex=1#comments
-  // XDomainRequest does not have a binary interface. To use with non-text, first base64 to string.
-  // http://cometdaily.com/2008/page/3/
-
-  var XHR = global.XMLHttpRequest;
-  var xhr2 = Boolean(XHR && global.ProgressEvent && ((new XHR()).withCredentials !== undefined));
-  var Transport = xhr2 ? XHR : global.XDomainRequest;
-  var CONNECTING = 0;
-  var OPEN = 1;
-  var CLOSED = 2;
-  var digits = /^\d+$/;
-  var contentTypeRegExp = /^text\/event\-stream/i;
-  var crlf = /[\r\n]/;
-
-  function empty() {}
-
-  function getDuration(value, def) {
-    if (digits.test(value)) {
-      var n = Number(value);
-      return n < 1 ? 1 : (n > 18000000 ? 18000000 : n);
-    }
-    return def;
+  function Event(type) {
+    this.type = type;
   }
 
   function MessageEvent(type, options) {
@@ -170,199 +103,166 @@
     this.lastEventId = options.lastEventId;
   }
 
-  var E = function () {};
-  E.prototype = Event.prototype;
-  MessageEvent.prototype = new E();
+  MessageEvent.prototype = Event.prototype;
 
-  function abort(xhr) {
-    xhr.onload = xhr.onerror = xhr.onprogress = xhr.onreadystatechange = empty;
-    xhr.abort();
+  var XHR = global.XMLHttpRequest;
+  var XDR = global.XDomainRequest;
+  var xhr2 = Boolean(XHR && ((new XHR()).withCredentials !== undefined));
+  var isXHR = xhr2;
+  var Transport = xhr2 ? XHR : XDR;
+  var WAITING = -1;
+  var CONNECTING = 0;
+  var OPEN = 1;
+  var CLOSED = 2;
+  var contentTypeRegExp = /^text\/event\-stream;?(\s*charset\=utf\-8)?$/i;
+  var webkitBefore535 = /AppleWebKit\/5([0-2][0-9]|3[0-4])[^\d]/.test(navigator.userAgent);
+  var endOfLine = /[\r\n]/;
+
+  function getDuration(value, def) {
+    var n = Number(value);
+    return (n < 1 ? 1 : (n > 18000000 ? 18000000 : n)) || def;
+  }
+
+  function fire(that, property, event) {
+    try {
+      if (typeof that[property] === "function") {
+        that[property](event);
+      }
+    } catch (e) {
+      throwError(e);
+    }
   }
 
   function EventSource(url, options) {
     url = String(url);
 
+    var withCredentials = Boolean(xhr2 && options && options.withCredentials);
+    var initialRetry = getDuration(options ? options.retry : NaN, 1000);
+    var retryLimit = getDuration(options ? options.retryLimit : NaN, 300000);
+    var heartbeatTimeout = getDuration(options ? options.heartbeatTimeout : NaN, 45000);
+    var lastEventId = (options && options.lastEventId && String(options.lastEventId)) || "";
     var that = this;
-    var initialRetry = 1000;
     var retry = initialRetry;
-    var retryLimit = 300000;
-    var heartbeatTimeout = 45000;
     var wasActivity = false;
-    var lastEventId = "";
     var xhr = new Transport();
     var timeout = 0;
-    var withCredentials = Boolean(xhr2 && options && options.withCredentials);
     var charOffset = 0;
-    var opened = false;
+    var currentState = WAITING;
     var dataBuffer = [];
     var lastEventIdBuffer = "";
     var eventTypeBuffer = "";
-    var wasCR = false;
     var responseBuffer = [];
-    var readyState = CONNECTING;
+    var wasCR = false;
+    var progressTimeout = 0;
 
     options = null;
 
     function close() {
-      // http://dev.w3.org/html5/eventsource/ The close() method must close the connection, if any; must abort any instances of the fetch algorithm started for this EventSource object; and must set the readyState attribute to CLOSED.
+      currentState = CLOSED;
       if (xhr !== null) {
-        abort(xhr);
+        xhr.abort();
         xhr = null;
       }
       if (timeout !== 0) {
         clearTimeout(timeout);
         timeout = 0;
       }
-      readyState = CLOSED;
       that.readyState = CLOSED;
     }
 
-    function setConnectingState(event) {
-      if (readyState !== CLOSED) {
-        // setTimeout will wait before previous setTimeout(0) have completed
-        if (retry > retryLimit) {
-          retry = retryLimit;
-        }
-        timeout = setTimeout(openConnection, retry);
-        retry = retry * 2 + 1;
+    function onProgress(isLoadEnd) {
+      var responseText = currentState === OPEN || currentState === CONNECTING ? xhr.responseText || "" : "";
+      var event = null;
 
-        readyState = CONNECTING;
-        that.readyState = CONNECTING;
-        event.target = that;
-        that.dispatchEvent(event);
-        if (typeof that.onerror === "function") {
-          that.onerror(event);
-        }
-      }
-    }
-
-    function onError() {
-      if (timeout !== 0) {
-        clearTimeout(timeout);
-        timeout = 0;
-      }
-      queue(setConnectingState, new Event("error"));
-    }
-
-    function onXHRTimeout() {
-      timeout = 0;
-      onProgress();
-      if (wasActivity) {
-        wasActivity = false;
-        timeout = setTimeout(onXHRTimeout, heartbeatTimeout);
-      } else {
-        abort(xhr);
-        onError();
-      }
-    }
-
-    function setOpenState(event) {
-      if (readyState !== CLOSED) {
-        readyState = OPEN;
-        that.readyState = OPEN;
-        event.target = that;
-        that.dispatchEvent(event);
-        if (typeof that.onopen === "function") {
-          that.onopen(event);
-        }
-      }
-    }
-
-    function dispatchEvent(event) {
-      if (readyState !== CLOSED) {
-        var type = String(event.type);
-        event.target = that;
-        that.dispatchEvent(event);
-        if (type === "message" && typeof that.onmessage === "function") {
-          that.onmessage(event);
-        }
-      }
-    }
-
-    function onProgress() {
-      if (!opened) {
-        var contentType = "";
-        try {
-          contentType = xhr.getResponseHeader ? xhr.getResponseHeader("Content-Type") : xhr.contentType;
-        } catch (error) {
-          // invalid state error when xhr.getResponseHeader called after xhr.abort in Chrome 18
-          throwError(error);
-        }
+      if (currentState === CONNECTING) {
+        // invalid state error when xhr.getResponseHeader called after xhr.abort or before readyState === 2 in Chrome 18
+        var contentType = isXHR ? (responseText !== "" ? xhr.getResponseHeader("Content-Type") : "") : xhr.contentType;
+        //var status = isXHR ? (responseText !== "" ? xhr.status : 0) : 200;
         if (contentType && contentTypeRegExp.test(contentType)) {
-          opened = true;
+          currentState = OPEN;
           wasActivity = true;
           retry = initialRetry;
-          queue(setOpenState, new Event("open"));
+          that.readyState = OPEN;
+          event = new Event("open");
+          that.dispatchEvent(event);
+          fire(that, "onopen", event);
+          if (currentState === CLOSED) {
+            return;
+          }
         }
       }
 
-      if (opened && readyState !== CLOSED) {
-        var responseText = xhr.responseText || "";
+      if (currentState === OPEN) {
         var part = responseText.slice(charOffset);
         if (part.length > 0) {
+          // workaround for Opera issue
+          if (progressTimeout === 0) {
+            progressTimeout = setTimeout(p, 80);
+          }
           wasActivity = true;
         }
-        if (wasCR && part.length > 0) {
-          if (part.slice(0, 1) === "\n") {
-            part = part.slice(1);
-          }
-          wasCR = false;
-        }
         var i = 0;
-        while ((i = part.search(crlf)) !== -1) {
-          var field = responseBuffer.join("") + part.slice(0, i);
-          responseBuffer.length = 0;
-          if (part.length > i + 1) {
-            part = part.slice(i + (part.slice(i, i + 2) === "\r\n" ? 2 : 1));
-          } else {
-            if (part.slice(i, i + 1) === "\r") {
-              wasCR = true;
-            }
-            part = "";
-          }
+        while ((i = part.search(endOfLine)) !== -1) {
+          var line = part.slice(0, i);
+          var oldWasCR = wasCR;
+          wasCR = part.slice(i, i + 1) === "\r";
+          part = part.slice(i + 1);
+          if (!oldWasCR || i !== 0 || wasCR) {
+            responseBuffer.push(line);
+            var field = responseBuffer.join("");
+            responseBuffer.length = 0;
 
-          if (field !== "") {
-            var value = "";
-            var j = field.indexOf(":");
-            if (j !== -1) {
-              value = field.slice(j + (field.slice(j + 1, j + 2) === " " ? 2 : 1));
-              field = field.slice(0, j);
-            }
-
-            if (field === "data") {
-              dataBuffer.push(value);
-            } else if (field === "id") {
-              lastEventIdBuffer = value;
-            } else if (field === "event") {
-              eventTypeBuffer = value;
-            } else if (field === "retry") {
-              initialRetry = getDuration(value, initialRetry);
-              retry = initialRetry;
-              if (retryLimit < initialRetry) {
-                retryLimit = initialRetry;
+            if (field !== "") {
+              var value = "";
+              var j = field.indexOf(":");
+              if (j !== -1) {
+                value = field.slice(j + (field.slice(j + 1, j + 2) === " " ? 2 : 1));
+                field = field.slice(0, j);
               }
-            } else if (field === "retryLimit") {//!
-              retryLimit = getDuration(value, retryLimit);
-            } else if (field === "heartbeatTimeout") {//!
-              heartbeatTimeout = getDuration(value, heartbeatTimeout);
-              if (timeout !== 0) {
-                clearTimeout(timeout);
-                timeout = setTimeout(onXHRTimeout, heartbeatTimeout);
-              }
-            }
 
-          } else {
-            // dispatch the event
-            if (dataBuffer.length !== 0) {
-              lastEventId = lastEventIdBuffer;
-              queue(dispatchEvent, new MessageEvent(eventTypeBuffer || "message", {
-                data: dataBuffer.join("\n"),
-                lastEventId: lastEventIdBuffer
-              }));
+              if (field === "data") {
+                dataBuffer.push(value);
+              } else if (field === "id") {
+                lastEventIdBuffer = value;
+              } else if (field === "event") {
+                eventTypeBuffer = value;
+              } else if (field === "retry") {
+                initialRetry = getDuration(value, initialRetry);
+                retry = initialRetry;
+                if (retryLimit < initialRetry) {
+                  retryLimit = initialRetry;
+                }
+              } else if (field === "retryLimit") {//!
+                retryLimit = getDuration(value, retryLimit);
+              } else if (field === "heartbeatTimeout") {//!
+                heartbeatTimeout = getDuration(value, heartbeatTimeout);
+                if (timeout !== 0) {
+                  clearTimeout(timeout);
+                  timeout = setTimeout(onTimeout, heartbeatTimeout);
+                }
+              }
+
+            } else {
+              // dispatch the event
+              if (dataBuffer.length !== 0) {
+                lastEventId = lastEventIdBuffer;
+                var type = eventTypeBuffer || "message";
+                event = new MessageEvent(type, {
+                  data: dataBuffer.join("\n"),
+                  lastEventId: lastEventIdBuffer
+                });
+                that.dispatchEvent(event);
+                if (type === "message") {
+                  fire(that, "onmessage", event);
+                }
+                if (currentState === CLOSED) {
+                  return;
+                }
+              }
+              // Set the data buffer and the event name buffer to the empty string.
+              dataBuffer.length = 0;
+              eventTypeBuffer = "";
             }
-            // Set the data buffer and the event name buffer to the empty string.
-            dataBuffer.length = 0;
-            eventTypeBuffer = "";
           }
         }
         if (part !== "") {
@@ -370,98 +270,113 @@
         }
         charOffset = responseText.length;
       }
-    }
 
-    function onProgress2() {
-      onProgress();
-      if (opened && readyState !== CLOSED) {
-        var responseText = xhr.responseText || "";
-        if (responseText.length > 1024 * 1024) {
-          abort(xhr);
-          onError();
+      if ((currentState === OPEN || currentState === CONNECTING) &&
+          (isLoadEnd || (charOffset > 1024 * 1024) || (timeout === 0 && !wasActivity))) {
+        currentState = WAITING;
+        xhr.abort();
+        if (timeout !== 0) {
+          clearTimeout(timeout);
+          timeout = 0;
+        }
+        if (retry > retryLimit) {
+          retry = retryLimit;
+        }
+        timeout = setTimeout(onTimeout, retry);
+        retry = retry * 2 + 1;
+
+        that.readyState = CONNECTING;
+        event = new Event("error");
+        that.dispatchEvent(event);
+        fire(that, "onerror", event);
+      } else {
+        if (timeout === 0) {
+          wasActivity = false;
+          timeout = setTimeout(onTimeout, heartbeatTimeout);
         }
       }
     }
 
-    function onLoad() {
-      onProgress();
-      onError();
+    function p() {
+      progressTimeout = 0;
+      onProgress(false);
     }
 
-    function onReadyStateChange() {
-      if (xhr.readyState === 3) {
-        onProgress2();
-      }
+    function onProgress2() {
+      onProgress(false);
     }
 
-    function openConnection() {
+    function onLoadEnd() {
+      onProgress(true);
+    }
+
+    function onTimeout() {
       timeout = 0;
+      if (currentState !== WAITING) {
+        onProgress(false);
+        return;
+      }
       if (navigator.onLine === false) {
         // "online" event is not supported under Web Workers
-        timeout = setTimeout(openConnection, 500);
+        timeout = setTimeout(onTimeout, 500);
+        return;
+      }
+      // loading indicator in Safari, Chrome < 14
+      if (webkitBefore535 && global.document && (global.document.readyState === "loading" || global.document.readyState === "interactive")) {
+        timeout = setTimeout(onTimeout, 100);
         return;
       }
       // XDomainRequest#abort removes onprogress, onerror, onload
 
-      xhr.onload = xhr.onerror = onLoad;
+      xhr.ontimeout = xhr.onload = xhr.onerror = onLoadEnd;
 
       // onprogress fires multiple times while readyState === 3
       // onprogress should be setted before calling "open" for Firefox 3.6
       if (xhr.mozAnon === undefined) {// Firefox shows loading indicator
         xhr.onprogress = onProgress2;
+      } else {
+        // Firefox 3.6
+        xhr.onreadystatechange = onProgress2;
       }
 
-      // Firefox 3.6
-      // onreadystatechange fires more often, than "progress" in Chrome and Firefox
-      xhr.onreadystatechange = onReadyStateChange;
-
       wasActivity = false;
-      timeout = setTimeout(onXHRTimeout, heartbeatTimeout);
+      timeout = setTimeout(onTimeout, heartbeatTimeout);
 
       charOffset = 0;
-      opened = false;
+      currentState = CONNECTING;
       dataBuffer.length = 0;
       eventTypeBuffer = "";
       lastEventIdBuffer = lastEventId;//resets to last successful
-      wasCR = false;
       responseBuffer.length = 0;
+      wasCR = false;
 
-      // with GET method in FF xhr.onreadystatechange with readyState === 3 does not work + POST = no-cache
-      xhr.open("POST", url, true);
+      xhr.open("GET", url + ((url.indexOf("?") === -1 ? "?" : "&") + "lastEventId=" + encodeURIComponent(lastEventId) + "&r=" + String(Math.random() + 1).slice(2)), true);
 
       // withCredentials should be setted after "open" for Safari and Chrome (< 19 ?)
       xhr.withCredentials = withCredentials;
 
       xhr.responseType = "text";
 
-      if (xhr.setRequestHeader) { // !XDomainRequest
-        // http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html
-        // Cache-Control is not a simple header
+      if (isXHR) {
         // Request header field Cache-Control is not allowed by Access-Control-Allow-Headers.
+        // "Cache-control: no-cache" are not honored in Chrome and Firefox
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=428916
         //xhr.setRequestHeader("Cache-Control", "no-cache");
-
-        // Chrome bug:
-        // http://code.google.com/p/chromium/issues/detail?id=71694
-        // If you force Chrome to have a whitelisted content-type, either explicitly with setRequestHeader(), or implicitly by sending a FormData, then no preflight is done.
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.setRequestHeader("Accept", "text/event-stream");
-
         // Request header field Last-Event-ID is not allowed by Access-Control-Allow-Headers.
-        // +setRequestHeader should not be used to avoid preflight requests
-        //if (lastEventId !== "") {
-        //  xhr.setRequestHeader("Last-Event-ID", lastEventId);
-        //}
+        //xhr.setRequestHeader("Last-Event-ID", lastEventId);
       }
-      xhr.send(lastEventId !== "" ? "Last-Event-ID=" + encodeURIComponent(lastEventId) : "");
+
+      xhr.send(null);
     }
 
     EventTarget.call(this);
     this.close = close;
     this.url = url;
-    this.readyState = readyState;
+    this.readyState = CONNECTING;
     this.withCredentials = withCredentials;
 
-    openConnection();
+    onTimeout();
   }
 
   function F() {
@@ -472,9 +387,7 @@
   F.prototype = EventTarget.prototype;
 
   EventSource.prototype = new F();
-  EventSource.CONNECTING = CONNECTING;
-  EventSource.OPEN = OPEN;
-  EventSource.CLOSED = CLOSED;
+  F.call(EventSource);
 
   if (Transport) {
     global.EventSource = EventSource;
