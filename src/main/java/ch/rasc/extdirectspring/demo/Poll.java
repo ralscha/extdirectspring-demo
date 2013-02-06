@@ -53,8 +53,8 @@ public class Poll {
 	public SSEvent sse(@RequestHeader("User-Agent") String userAgent, HttpServletResponse response, SSEWriter sseWriter)
 			throws IOException {
 
-		//we have to send 2K bytes of nothing first if the client is IE6-IE9. 
-		//IE10 no longer need this
+		// we have to send 2K bytes of nothing first if the client is IE6-IE9.
+		// IE10 no longer need this
 		if (isIE(userAgent)) {
 			System.out.println("Write FIX");
 			writeIEHeadersAndPadding(response);
@@ -85,11 +85,12 @@ public class Poll {
 	}
 
 	private static void writeIEHeadersAndPadding(HttpServletResponse response) throws IOException {
-		// If you use Yaffle / EventSource then these two headers are necessary to make it work in IE6-IE9
+		// If you use Yaffle / EventSource then these two headers are necessary
+		// to make it work in IE6-IE9
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 
-		// 2kb padding 
+		// 2kb padding
 		byte[] spaces = new byte[2048];
 		Arrays.fill(spaces, (byte) ' ');
 
@@ -103,7 +104,7 @@ public class Poll {
 		if (userAgent != null && userAgent.contains("MSIE ")) {
 			String ver = userAgent.substring(userAgent.indexOf("MSIE ") + 5);
 			ver = ver.substring(0, ver.indexOf(";")).trim();
-			
+
 			int version = Integer.parseInt(ver.substring(0, ver.indexOf(".")));
 			if (version < 10) {
 				return true;
