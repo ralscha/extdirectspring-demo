@@ -3,7 +3,7 @@
 
     "js": [
         {
-            "path": "http://rasc.ch/sencha-touch-2.1.0-gpl/sencha-touch-all-debug.js"
+            "path": "http://cdn.sencha.com/touch/sencha-touch-2.1.1/sencha-touch-all-debug.js"
         },
         {
         	"path": "../../api.js?group=touchnote",
@@ -17,7 +17,7 @@
 
    "css": [
         {
-            "path": "http://rasc.ch/sencha-touch-2.1.0-gpl/resources/css/sencha-touch.css",
+            "path": "http://cdn.sencha.com/touch/sencha-touch-2.1.1/resources/css/sencha-touch.css",
             "update": "delta"
         },
         {
