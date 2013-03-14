@@ -87,7 +87,7 @@ Ext.onReady(function() {
 				hideLabel: true,
 				itemId: 'multiplyText',
 				xtype: 'numberfield',
-				width: 90,
+				width: 110,
 				emptyText: 'Multiply x 8',
 				listeners: {
 					specialkey: function(field, event) {

@@ -2,13 +2,14 @@ Ext.require([ 'Ext.direct.*', 'Ext.form.*', 'Ext.tip.QuickTipManager', 'Ext.layo
 
 Ext.onReady(function() {
 	/*
-	 * Notice that Direct requests will batch together if they occur within the
-	 * enableBuffer delay period (in milliseconds). Slow the buffering down from
-	 * the default of 10ms to 100ms
+     * Notice that Direct requests will batch together if they occur
+     * within the enableBuffer delay period (in milliseconds).
+     * Slow the buffering down from the default of 10ms to 100ms
 	 */
 	Ext.app.REMOTING_API.enableBuffer = 100;
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 
+    // provide feedback for any errors
 	Ext.tip.QuickTipManager.init();
 
 	var basicInfo = Ext.create('Ext.form.Panel', {
@@ -19,9 +20,9 @@ Ext.onReady(function() {
 		// configs for BasicForm
 		api: {
 			// The server-side method to call for load() requests
-			load: profile.getBasicInfo,
+			load: 'profile.getBasicInfo',
 			// The server-side must mark the submit handler as a 'formHandler'
-			submit: profile.updateBasicInfo
+			submit: 'profile.updateBasicInfo'
 		},
 		paramsAsHash: true,
 		dockedItems: [ {
@@ -109,12 +110,12 @@ Ext.onReady(function() {
 		} ]
 	});
 
-	Ext.create('Ext.panel.Panel', {
+    var accordion = Ext.create('Ext.panel.Panel', {
 		layout: 'accordion',
 		renderTo: Ext.getBody(),
 		title: 'My Profile',
-		width: 300,
-		height: 240,
+        width: Ext.themeName === 'neptune' ? 350 : 300,
+        height: Ext.themeName === 'neptune' ? 300 : 240,
 		items: [ basicInfo, phoneInfo, locationInfo ]
 	});
 

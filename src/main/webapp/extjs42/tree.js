@@ -17,11 +17,12 @@ Ext.onReady(function() {
 		}
 	});
 
+
 	// create the Tree
 	Ext.create('Ext.tree.Panel', {
 		store: store,
-		height: 350,
-		width: 600,
+		height: 500,
+		width: 700,
 		title: 'Tree Sample',
 		rootVisible: false,
 		renderTo: Ext.getBody()

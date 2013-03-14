@@ -116,7 +116,6 @@
   var CLOSED = 2;
   var contentTypeRegExp = /^text\/event\-stream;?(\s*charset\=utf\-8)?$/i;
   var webkitBefore535 = /AppleWebKit\/5([0-2][0-9]|3[0-4])[^\d]/.test(navigator.userAgent);
-  var endOfLine = /[\r\n]/;
 
   function getDuration(value, def) {
     var n = Number(value);
@@ -154,6 +153,7 @@
     var responseBuffer = [];
     var wasCR = false;
     var progressTimeout = 0;
+    var wasAct = false;
 
     options = null;
 
@@ -193,28 +193,33 @@
       }
 
       if (currentState === OPEN) {
-        var part = responseText.slice(charOffset);
-        if (part.length > 0) {
-          // workaround for Opera issue
-          if (progressTimeout === 0) {
-            progressTimeout = setTimeout(p, 80);
-          }
+        if (responseText.length > charOffset) {
+          wasAct = true;
           wasActivity = true;
         }
         var i = 0;
-        while ((i = part.search(endOfLine)) !== -1) {
-          var line = part.slice(0, i);
+        var i1 = responseText.indexOf("\r", charOffset);
+        var i2 = responseText.indexOf("\n", charOffset);
+        while (i1 !== -1 || i2 !== -1) {
+          if (i1 === -1 || (i2 !== -1 && i2 < i1)) {
+            i = i2;
+            i2 = responseText.indexOf("\n", i + 1);
+          } else {
+            i = i1;
+            i1 = responseText.indexOf("\r", i + 1);
+          }
+          var line = responseText.slice(charOffset, i);
           var oldWasCR = wasCR;
-          wasCR = part.slice(i, i + 1) === "\r";
-          part = part.slice(i + 1);
-          if (!oldWasCR || i !== 0 || wasCR) {
+          wasCR = responseText.slice(i, i + 1) === "\r";
+          charOffset = i + 1;
+          if (!oldWasCR || line.length !== 0 || wasCR) {
             responseBuffer.push(line);
             var field = responseBuffer.join("");
             responseBuffer.length = 0;
 
             if (field !== "") {
               var value = "";
-              var j = field.indexOf(":");
+              var j = field.indexOf(":", 0);
               if (j !== -1) {
                 value = field.slice(j + (field.slice(j + 1, j + 2) === " " ? 2 : 1));
                 field = field.slice(0, j);
@@ -265,10 +270,16 @@
             }
           }
         }
-        if (part !== "") {
-          responseBuffer.push(part);
+        if (charOffset !== responseText.length) {
+          responseBuffer.push(responseText.slice(charOffset));
+          charOffset = responseText.length;
         }
-        charOffset = responseText.length;
+      }
+
+      // workaround for Opera issue
+      if (wasAct && progressTimeout === 0) {
+        wasAct = false;
+        progressTimeout = setTimeout(p, 80);
       }
 
       if ((currentState === OPEN || currentState === CONNECTING) &&
@@ -328,7 +339,7 @@
       }
       // XDomainRequest#abort removes onprogress, onerror, onload
 
-      xhr.ontimeout = xhr.onload = xhr.onerror = onLoadEnd;
+      xhr.onload = xhr.onerror = onLoadEnd;
 
       // onprogress fires multiple times while readyState === 3
       // onprogress should be setted before calling "open" for Firefox 3.6
@@ -350,7 +361,7 @@
       responseBuffer.length = 0;
       wasCR = false;
 
-      xhr.open("GET", url + ((url.indexOf("?") === -1 ? "?" : "&") + "lastEventId=" + encodeURIComponent(lastEventId) + "&r=" + String(Math.random() + 1).slice(2)), true);
+      xhr.open("GET", url + ((url.indexOf("?", 0) === -1 ? "?" : "&") + "lastEventId=" + encodeURIComponent(lastEventId) + "&r=" + String(Math.random() + 1).slice(2)), true);
 
       // withCredentials should be setted after "open" for Safari and Chrome (< 19 ?)
       xhr.withCredentials = withCredentials;

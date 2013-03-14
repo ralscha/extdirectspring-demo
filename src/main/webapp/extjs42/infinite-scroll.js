@@ -23,17 +23,18 @@ Ext.onReady(function(){
 
     var store = Ext.create('Ext.data.Store', {
         model: 'Address',
-        pageSize: 40,        
         sorters: [ {
 			property: 'lastName',
 			direction: 'ASC'
 		}],
         autoLoad: true,
-        buffered: true
+        buffered: true,
+        leadingBufferZone: 300,
+        pageSize: 100
     });
 
     var grid = Ext.create('Ext.grid.Panel', {
-        width: 700,
+        width: 800,
         height: 500,
         title: 'Some random data',
         store: store,
@@ -48,27 +49,33 @@ Ext.onReady(function(){
 		}, {
 			text: "Last Name",
 			dataIndex: 'lastName',
-			sortable: true
+			sortable: true,
+			flex: 1
 		}, {
 			text: "First Name",
 			dataIndex: 'firstName',
-			sortable: true
+			sortable: true,
+			flex: 1
 		}, {
 			text: "Street Address",
 			dataIndex: 'street',
-			sortable: true
+			sortable: true,
+			flex: 1
 		}, {
 			text: "City",
 			dataIndex: 'city',
-			sortable: true
+			sortable: true,
+			flex: 1
 		}, {
 			text: "State",
 			dataIndex: 'state',
-			sortable: true
+			sortable: true,
+			width: 85
 		}, {
 			text: "Zip Code",
 			dataIndex: 'zip',
-			sortable: true
+			sortable: true,
+			width: 105
 		} ],
         renderTo: Ext.getBody()
     });
