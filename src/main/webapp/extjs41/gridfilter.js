@@ -43,6 +43,7 @@ Ext.onReady(function() {
 		autoDestroy: true,
 		model: 'Product',
 		autoLoad: false,
+		remoteSort: true,
 		pageSize: 50
 	});
 

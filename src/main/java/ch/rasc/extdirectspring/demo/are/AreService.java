@@ -146,7 +146,7 @@ public class AreService {
 		companyDb = builder.build();
 	}
 
-	@RequestMapping("/extjs41/associationrowexpander/models.js")
+	@RequestMapping({"/extjs42/associationrowexpander/models.js","/extjs41/associationrowexpander/models.js"})
 	public void models(HttpServletResponse response) throws IOException {
 		String company = ModelGenerator.generateJavascript(Company.class, OutputFormat.EXTJS4, false);
 		String history = ModelGenerator.generateJavascript(History.class, OutputFormat.EXTJS4, false);

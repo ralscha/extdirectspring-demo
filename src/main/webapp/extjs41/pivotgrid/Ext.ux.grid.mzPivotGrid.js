@@ -857,7 +857,7 @@ Ext.define('Ext.ux.grid.mzPivotGrid', {
                 property:   dimensions[i].dataIndex,
                 direction:  dimensions[i].direction,
                 root:       'data'
-            })
+            });
         }
         
         tuples.sort(sorters);
