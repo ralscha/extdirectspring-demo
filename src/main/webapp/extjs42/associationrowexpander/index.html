@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ux.grid.plugin.AssociationRowExpander</title>
+<script src="http://cdn.sencha.com/ext/gpl/4.2.0/examples/shared/include-ext.js"></script>
+<script src="http://cdn.sencha.com/ext/gpl/4.2.0/examples/shared/options-toolbar.js"></script>
+<script src="../../api-debug.js?group=are"></script>
+<script>
+Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+</script>
+<script src="models.js"></script>
+<script src="are.js"></script>
+
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+.x-grid-rowbody-loading {
+	background: url(loading.gif) no-repeat;
+	height: 16px;
+	padding-left: 20px;
+}
+
+#hasManyGrid {
+	position: absolute;
+	top: 50px;
+	left: 50px;
+}
+
+#hasManyView {
+	position: absolute;
+	top: 50px;
+	left: 700px;
+}
+
+#belongsTo {
+	position: absolute;
+	top: 400px;
+	left: 50px;
+}
+
+#hasOne {
+	position: absolute;
+	top: 400px;
+	left: 700px;
+}
+</style>
+</head>
+<body>
+	<div id="hasManyGrid">
+		<b>hasMany</b> association with an inner Ext.grid.Panel
+	</div>
+	<div id="hasManyView">
+		<b>hasMany</b> association with an inner Ext.view.View
+	</div>
+	<div id="belongsTo">
+		<b>belongsTo</b> association using an Ext.XTemplate
+	</div>
+	<div id="hasOne">
+		<b>hasOne</b> association using an Ext.XTemplate
+	</div>
+</body>
+</html>
