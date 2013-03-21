@@ -27,7 +27,7 @@ import ch.ralscha.extdirectspring.generator.ModelGenerator;
 import ch.ralscha.extdirectspring.generator.OutputFormat;
 
 @Controller
-@RequestMapping({"/extjs41/simple","/extjs42/simple"})
+@RequestMapping({ "/extjs41/simple", "/extjs42/simple" })
 public class ModelController {
 
 	@RequestMapping("/app/model/User.js")
