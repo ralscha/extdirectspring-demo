@@ -36,7 +36,7 @@ Ext.onReady(function(){
     });    
 
     var carTpl = Ext.create('Ext.XTemplate', 
-        '<img class="carimg" src="http://www.bryntum.com/examples/scheduler-latest/examples/charting/{Id}.jpeg" />',
+        '<img class="carimg" src="http://rasc.ch/bryntum/scheduler-2.2.0-trial/examples/charting/{Id}.jpeg" />',
         '<dl class="cardescr">',
             '<dt>{Name}</dt>',
             '<dd>{Seats} seats</dd>',
@@ -73,31 +73,40 @@ Ext.onReady(function(){
     Ext.Date.clearTime(start);
     var end = Sch.util.Date.add(start, Sch.util.Date.DAY, 1);
     
-    Ext.create("Ext.Panel", {
-        layout : 'border',
+    Ext.create("Ext.Container", {
+        layout : { type : 'hbox', align : 'stretch' },
         renderTo: "somediv",
         height : 600,
         width : 1200,
+        border: false,
         items : [
             scheduler = Ext.create("Sch.panel.SchedulerGrid", {
-                region : 'center',
+                flex : 1,
+                viewConfig : { forceFit : true },
 
                 title : 'Ext JS 4 Charting Demo',
                 viewPreset : 'hourAndDay',
-                eventBarTextField : 'Name',
-
                 startDate: start,
                 endDate: end,
-                
+                eventBarTextField : 'Name',
+
                 onEventCreated : function(ev) { ev.set('Name', 'New booking'); },
+
+                // Setup static columns
                 columns : [
-                    { text : 'Car', width:230, align : 'center', dataIndex : 'Name', sortable : true, xtype : 'templatecolumn', tpl : carTpl}
+                    { text : 'Car', width:170, align : 'center', dataIndex : 'Name', sortable : true, xtype : 'templatecolumn', tpl : carTpl}
                 ],
+
+                // Store holding all the resources
                 resourceStore : resourceStore,
+        
+                // Store holding all the events
                 eventStore: eventStore,
-                rowHeight : 70,
+
+                rowHeight : 50,
                 snapToIncrement : false,
                 barMargin : 4,
+
                 tbar : [
                     {
                         text : 'Previous day',
@@ -143,27 +152,23 @@ Ext.onReady(function(){
                 ]
             }),
             Ext.create('widget.panel', {
-                title : 'Allocated per car (% of total)',
                 region : 'east',
-                width: 400,
+                width: 300,
                 layout: 'fit',
+                border : false,
+                padding : 10,
                 items : {
                     xtype: 'chart',
                     animate: true,
                     store: chartStore,
                     shadow: true,
                     
-                    insetPadding: 20,
+                    insetPadding: 5,
                     theme: 'Base:gradients',
                     series: [{
                         type: 'pie',
                         field: 'usage',
                         donut: true,
-                        highlight: {
-                          segment: {
-                            margin: 20
-                          }
-                        },
                         label: {
                             field: 'name',
                             display: 'rotate',
