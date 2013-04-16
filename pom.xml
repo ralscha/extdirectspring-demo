@@ -45,7 +45,7 @@
 		<spring.version>3.2.2.RELEASE</spring.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.11</logback.version>
-		<hibernatevalidator.version>5.0.0.CR5</hibernatevalidator.version>
+		<hibernatevalidator.version>5.0.0.Final</hibernatevalidator.version>
 		<eds.version>1.3.2</eds.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -160,7 +160,7 @@
 		<dependency>
 			<groupId>com.ning</groupId>
 			<artifactId>async-http-client</artifactId>
-			<version>1.7.12</version>
+			<version>1.7.13</version>
 		</dependency>
 
 		<!-- To be able to run Tomcat as a simple class for easier debugging -->
