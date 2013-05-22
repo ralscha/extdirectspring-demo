@@ -67,6 +67,22 @@ public class SimpleUserDb {
 		return ImmutableList.copyOf(users.values());
 	}
 
+	public List<User> get(String filter) {
+		String lowerCaseFilter = filter.toLowerCase();
+		ImmutableList.Builder<User> builder = ImmutableList.builder();
+		for (User user : users.values()) {
+			if (user.getLastName().toLowerCase().contains(lowerCaseFilter)
+					|| user.getFirstName().toLowerCase().contains(lowerCaseFilter)
+					|| user.getEmail().toLowerCase().contains(lowerCaseFilter)
+					|| user.getCity().toLowerCase().contains(lowerCaseFilter)) {
+				builder.add(user);
+			}
+		}
+
+		return builder.build();
+
+	}
+
 	public User findUser(String id) {
 		rwLock.readLock().lock();
 		try {

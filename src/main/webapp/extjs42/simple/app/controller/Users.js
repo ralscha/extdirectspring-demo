@@ -29,10 +29,26 @@ Ext.define('Simple.controller.Users', {
 			},			
 			'userlist button[action=delete]' : {
 				click : this.deleteUser
+			},
+			'userlist #filterField' : {
+				change: {
+					fn: this.onFilterFieldChange,
+					buffer: 500
+				}
 			}
 		});
 	},
 
+	onFilterFieldChange: function(cmp, newValue) {
+		var myStore = this.getStore('Users');
+		if (newValue) {
+			myStore.clearFilter(true);
+			myStore.filter('filter', newValue);
+		} else {
+			myStore.clearFilter();
+		}
+	},
+	
 	editUser : function(grid, record) {
 		var view = Ext.widget('useredit');
 		view.down('form').loadRecord(record);

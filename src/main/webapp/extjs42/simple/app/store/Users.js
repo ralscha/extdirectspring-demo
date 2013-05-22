@@ -3,6 +3,7 @@ Ext.define('Simple.store.Users', {
     model: 'Simple.model.User',
     autoLoad: true,
     remoteSort: true,
+    remoteFilter: true,
     pageSize : 30,
     autoSync : true,
     sorters: [ {

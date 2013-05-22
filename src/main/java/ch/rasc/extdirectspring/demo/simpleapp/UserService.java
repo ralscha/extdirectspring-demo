@@ -24,6 +24,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.Lists;
@@ -37,7 +38,14 @@ public class UserService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simpleapp")
 	public ExtDirectStoreReadResult<User> load(ExtDirectStoreReadRequest request) {
-		List<User> users = userDb.getAll();
+		
+		StringFilter filter = request.getFirstFilterForField("filter");
+		List<User> users;
+		if (filter == null || filter.getValue().trim().isEmpty()) {
+			users = userDb.getAll();
+		} else {
+			users = userDb.get(filter.getValue());
+		}
 
 		int totalSize = users.size();
 

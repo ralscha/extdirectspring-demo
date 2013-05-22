@@ -41,6 +41,11 @@ Ext.define('Simple.view.user.List', {
 			disabled : true,
 			action : 'delete',
 			iconCls : 'icon-delete'
+		}, '->', {
+			itemId: 'filterField',
+			fieldLabel: 'Filter',
+			labelWidth: 40,
+			xtype: 'textfield'
 		} ]
 	}, {
 		xtype : 'pagingtoolbar',
