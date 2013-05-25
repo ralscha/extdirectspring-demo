@@ -160,7 +160,7 @@
 		<dependency>
 			<groupId>com.ning</groupId>
 			<artifactId>async-http-client</artifactId>
-			<version>1.7.13</version>
+			<version>1.7.16</version>
 		</dependency>
 
 		<!-- To be able to run Tomcat as a simple class for easier debugging -->
@@ -185,12 +185,6 @@
 	</dependencies>
 
 	<repositories>
-
-		<repository>
-			<id>rasc</id>
-			<name>My Repository</name>
-			<url>http://repository.rasc.ch</url>
-		</repository>
 
 		<repository>
 			<id>sonatype</id>
