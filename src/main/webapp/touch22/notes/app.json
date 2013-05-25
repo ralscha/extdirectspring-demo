@@ -3,7 +3,7 @@
 
     "js": [
         {
-            "path": "http://cdn.sencha.io/touch/sencha-touch-2.2.0/sencha-touch-all-debug.js"
+            "path": "http://cdn.sencha.io/touch/sencha-touch-2.2.1/sencha-touch-all-debug.js"
         },
         {
         	"path": "../../api.js?group=touchnote",
@@ -17,7 +17,7 @@
 
    "css": [
         {
-            "path": "http://cdn.sencha.io/touch/sencha-touch-2.2.0/resources/css/sencha-touch.css",
+            "path": "http://cdn.sencha.io/touch/sencha-touch-2.2.1/resources/css/sencha-touch.css",
             "update": "delta"
         },
         {
