@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Big Data</title>
+<link rel="stylesheet" href="http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/example.css" />
+<script src="http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/include-ext.js"></script>
+<script src="http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/options-toolbar.js"></script>
+<script>
+Ext.Loader.setPath('Ext.ux', 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/ux');
+</script>
+<script src="Employee.js"></script>
+<script src="BigDataStore.js"></script>
+<script src="BigDataView.js"></script>
+
+<script src="../../api-debug.js?group=bigdata"></script>
+<script>
+Ext.onReady(function() {    
+	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+	Ext.create('BigDataStore');
+    Ext.create('BigDataView', {	
+    	height: 600,
+		width: '100%',	
+		renderTo: Ext.getBody()
+	});	
+});
+</script>
+</head>
+<body>
+	<h1>Ext Direct Grid Integration</h1>
+	<p>
+    "Directified" version of the <a href="http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-neptune/#big-data-grid">Big Data Example</a>
+    </p>    
+	<p>
+		Source code: <a href="grid.js">grid.js</a>
+	</p>
+</body>
+</html>
