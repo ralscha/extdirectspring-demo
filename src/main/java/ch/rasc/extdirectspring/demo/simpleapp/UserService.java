@@ -38,7 +38,7 @@ public class UserService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simpleapp")
 	public ExtDirectStoreReadResult<User> load(ExtDirectStoreReadRequest request) {
-		
+
 		StringFilter filter = request.getFirstFilterForField("filter");
 		List<User> users;
 		if (filter == null || filter.getValue().trim().isEmpty()) {
