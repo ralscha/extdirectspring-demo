@@ -1,6 +1,6 @@
 Ext.Loader.setConfig({	
 	paths: {
-		'Ext.ux': 'http://cdn.sencha.com/ext/gpl/4.2.0/examples/ux'
+		'Ext.ux': 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/ux'
 	}
 });
 

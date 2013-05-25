@@ -70,7 +70,7 @@ Ext.define('pivot.AggGrid', {
         columns.push({
             xtype: 'actioncolumn',
             width: 30,
-            icon   : 'http://cdn.sencha.com/ext/gpl/4.2.0/examples/shared/icons/fam/delete.gif',
+            icon   : 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/icons/fam/delete.gif',
             scope  : this,
             handler: this.onRemoveDimension,
             tooltip: 'Delete this axis',
@@ -80,7 +80,7 @@ Ext.define('pivot.AggGrid', {
         Ext.applyIf(this, {
             bbar: [{
                 text   : 'Add Dimension',
-                icon   : 'http://cdn.sencha.com/ext/gpl/4.2.0/examples/shared/icons/fam/add.gif',
+                icon   : 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/icons/fam/add.gif',
                 scope  : this,
                 handler: this.onAddDimension
             }],

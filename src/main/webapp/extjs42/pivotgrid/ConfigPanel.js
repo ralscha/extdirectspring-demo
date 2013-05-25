@@ -70,7 +70,7 @@ Ext.define('pivot.ConfigPanel', {
             fbar: {
                 buttonAlign: 'left',
                 items: [{
-                    icon   : 'http://cdn.sencha.com/ext/gpl/4.2.0/examples/shared/icons/fam/accept.png',
+                    icon   : 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/icons/fam/accept.png',
                     text   : 'Update',
                     scope  : this,
                     handler: this.updateGrid

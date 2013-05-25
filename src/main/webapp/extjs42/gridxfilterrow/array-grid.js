@@ -116,7 +116,7 @@ Ext.onReady(function() {
                 width: 50,
                 noxfilter:true,
                 items: [{
-                    icon   : 'http://cdn.sencha.com/ext/gpl/4.2.0/examples/shared/icons/fam/delete.gif',  
+                    icon   : 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/icons/fam/delete.gif',  
                     tooltip: 'Sell stock',
                     handler: function(grid, rowIndex, colIndex) {
                         var rec = store.getAt(rowIndex);
