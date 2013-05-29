@@ -2,14 +2,14 @@ Ext.require([ 'Ext.direct.*', 'Ext.form.*', 'Ext.tip.QuickTipManager', 'Ext.layo
 
 Ext.onReady(function() {
 	/*
-     * Notice that Direct requests will batch together if they occur
-     * within the enableBuffer delay period (in milliseconds).
-     * Slow the buffering down from the default of 10ms to 100ms
+	 * Notice that Direct requests will batch together if they occur within the
+	 * enableBuffer delay period (in milliseconds). Slow the buffering down from
+	 * the default of 10ms to 100ms
 	 */
 	Ext.app.REMOTING_API.enableBuffer = 100;
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 
-    // provide feedback for any errors
+	// provide feedback for any errors
 	Ext.tip.QuickTipManager.init();
 
 	var basicInfo = Ext.create('Ext.form.Panel', {
@@ -33,10 +33,22 @@ Ext.onReady(function() {
 			items: [ '->', {
 				text: 'Submit',
 				handler: function() {
+					console.log('click');
 					basicInfo.getForm().submit({
 						params: {
 							foo: 'bar',
 							uid: 34
+						},
+						success: function(form, action) {
+							console.log(form.isValid());
+							var values = form.getValues();
+							console.log(values);
+						},
+						failure: function(form, action) {
+							form.getFields().findBy(function(field) {
+								var hasActiveError = Ext.isEmpty(field.getActiveError());
+								console.log(field, 'has error: ' +  (hasActiveError ? 'NO' : 'YES'));							
+							});
 						}
 					});
 				}
@@ -110,12 +122,12 @@ Ext.onReady(function() {
 		} ]
 	});
 
-    var accordion = Ext.create('Ext.panel.Panel', {
+	var accordion = Ext.create('Ext.panel.Panel', {
 		layout: 'accordion',
 		renderTo: Ext.getBody(),
 		title: 'My Profile',
-        width: Ext.themeName === 'neptune' ? 350 : 300,
-        height: Ext.themeName === 'neptune' ? 300 : 240,
+		width: Ext.themeName === 'neptune' ? 350 : 300,
+		height: Ext.themeName === 'neptune' ? 300 : 240,
 		items: [ basicInfo, phoneInfo, locationInfo ]
 	});
 
