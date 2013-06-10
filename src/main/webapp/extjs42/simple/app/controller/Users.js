@@ -37,6 +37,17 @@ Ext.define('Simple.controller.Users', {
 				}
 			}
 		});
+		
+	    this.getUsersStore().on({
+	      	load: function(store) {
+	            var currentPage = store.currentPage;
+	            var data = store.data;
+
+	            if (currentPage > 1 && data.length == 0) {
+	                store.previousPage();
+	            }
+	        }
+	    });	    		
 	},
 
 	onFilterFieldChange: function(cmp, newValue) {
