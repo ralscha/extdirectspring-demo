@@ -85,4 +85,9 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 		return new ClassPathResource("/employees.json");
 	}
 
+	@Bean
+	@Lazy
+	public ClassPathResource contacts() {
+		return new ClassPathResource("/contacts.json");
+	}
 }

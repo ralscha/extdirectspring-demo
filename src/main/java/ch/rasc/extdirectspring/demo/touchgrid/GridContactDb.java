@@ -1,0 +1,88 @@
+/**
+ * Copyright 2010-2013 Ralph Schaer <ralphschaer@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package ch.rasc.extdirectspring.demo.touchgrid;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
+
+import ch.rasc.extdirectspring.demo.touch.Note;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
+
+@Service
+public class GridContactDb {
+
+	@Autowired
+	private Resource contacts;
+
+	private Map<Integer, GridContact> gridContactStore;
+		
+	private int totalSize;
+	
+	@PostConstruct
+	public void readData() throws IOException {
+		gridContactStore = Maps.newHashMap();
+		try (InputStream is = contacts.getInputStream()) {
+
+			ObjectMapper om = new ObjectMapper();
+			List<GridContact> ci = om.readValue(is, new TypeReference<List<GridContact>>() {
+				/* nothing_here */
+			});
+
+			for (GridContact contact : ci) {
+				gridContactStore.put(contact.getId(), contact);
+			}
+		}
+		
+		totalSize = gridContactStore.size();
+	}
+
+	public List<GridContact> getAll() {
+		return ImmutableList.copyOf(gridContactStore.values());
+	}
+
+	public int getTotalSize() {
+		return totalSize;
+	}
+
+	public void delete(GridContact contact) {
+		gridContactStore.remove(contact.getId());
+	}
+	
+	
+	public void addOrUpdate(GridContact contact) {
+		if (contact.getId() <= 0) {
+			int id = gridContactStore.size() + 1;
+			contact.setId(id);
+			gridContactStore.put(id, contact);
+		} else {
+			gridContactStore.put(contact.getId(), contact);
+		}
+	}
+
+}
