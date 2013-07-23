@@ -32,54 +32,39 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 
 @Service
-public class GridContactDb {
+public class FriendDb {
 
 	@Autowired
-	private Resource contacts;
+	private Resource friends;
 
-	private Map<Integer, GridContact> gridContactStore;
-		
+	private Map<Integer, Friend> friendStore;
+
 	private int totalSize;
-	
+
 	@PostConstruct
 	public void readData() throws IOException {
-		gridContactStore = Maps.newHashMap();
-		try (InputStream is = contacts.getInputStream()) {
+		friendStore = Maps.newHashMap();
+		try (InputStream is = friends.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
-			List<GridContact> ci = om.readValue(is, new TypeReference<List<GridContact>>() {
+			List<Friend> fs = om.readValue(is, new TypeReference<List<Friend>>() {
 				/* nothing_here */
 			});
 
-			for (GridContact contact : ci) {
-				gridContactStore.put(contact.getId(), contact);
+			for (Friend friend : fs) {
+				friendStore.put(friend.getId(), friend);
 			}
 		}
-		
-		totalSize = gridContactStore.size();
+
+		totalSize = friendStore.size();
 	}
 
-	public List<GridContact> getAll() {
-		return ImmutableList.copyOf(gridContactStore.values());
+	public List<Friend> getAll() {
+		return ImmutableList.copyOf(friendStore.values());
 	}
 
 	public int getTotalSize() {
 		return totalSize;
-	}
-
-	public void delete(GridContact contact) {
-		gridContactStore.remove(contact.getId());
-	}
-	
-	
-	public void addOrUpdate(GridContact contact) {
-		if (contact.getId() <= 0) {
-			int id = gridContactStore.size() + 1;
-			contact.setId(id);
-			gridContactStore.put(id, contact);
-		} else {
-			gridContactStore.put(contact.getId(), contact);
-		}
 	}
 
 }

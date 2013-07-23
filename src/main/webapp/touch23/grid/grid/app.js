@@ -51,15 +51,6 @@ Ext.define("Contact", {
 	}
 });
 
-/**
- * This simple example shows the ability of the Ext.List component.
- * 
- * In this example, it uses a grouped store to show group headers in the list.
- * It also includes an indicator so you can quickly swipe through each of the
- * groups. On top of that it has a disclosure button so you can disclose more
- * information for a list item.
- */
-
 // define the application
 Ext.application({
 
