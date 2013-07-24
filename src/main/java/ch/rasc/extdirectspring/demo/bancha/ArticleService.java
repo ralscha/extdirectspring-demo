@@ -28,9 +28,13 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
 
 @Service
 public class ArticleService {
@@ -57,8 +61,21 @@ public class ArticleService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bancha")
-	public List<Article> read() {
-		return ImmutableList.copyOf(articleDb.values());
+	public ExtDirectStoreReadResult<Article> read(ExtDirectStoreReadRequest request) {
+
+		List<Article> result = ImmutableList.copyOf(articleDb.values());
+
+		Ordering<Article> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
+		if (ordering != null) {
+			result = ordering.sortedCopy(result);
+		}
+
+		if (request.getStart() != null && request.getLimit() != null) {
+			result = result.subList(request.getStart(),
+					Math.min(articleDb.size(), request.getStart() + request.getLimit()));
+		}
+
+		return new ExtDirectStoreReadResult<>(articleDb.size(), result);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")
