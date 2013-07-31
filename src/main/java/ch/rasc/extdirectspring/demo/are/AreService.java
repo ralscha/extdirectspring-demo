@@ -150,7 +150,8 @@ public class AreService {
 	public void models(HttpServletResponse response) throws IOException {
 		String company = ModelGenerator.generateJavascript(Company.class, OutputFormat.EXTJS4, false);
 		String history = ModelGenerator.generateJavascript(History.class, OutputFormat.EXTJS4, false);
-
+		company = company.replace("requires", "uses");
+		history = history.replace("requires", "uses");
 		byte[] code = (company + history).getBytes(StandardCharsets.UTF_8);
 
 		response.setContentType("application/javascript");
