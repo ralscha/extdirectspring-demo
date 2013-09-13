@@ -18,9 +18,9 @@ package ch.rasc.extdirectspring.demo.filter;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 
 public interface FilterActionInterface {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "filter")
-	ExtDirectStoreReadResult<Company> load(ExtDirectStoreReadRequest request, String dRif);
+	ExtDirectStoreResult<Company> load(ExtDirectStoreReadRequest request, String dRif);
 }

@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
 
@@ -37,7 +37,7 @@ public class UserService {
 	private SimpleUserDb userDb;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simpleapp")
-	public ExtDirectStoreReadResult<User> load(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<User> load(ExtDirectStoreReadRequest request) {
 
 		StringFilter filter = request.getFirstFilterForField("filter");
 		List<User> users;
@@ -60,7 +60,7 @@ public class UserService {
 			users = Lists.newArrayList(users).subList(start, Math.min(totalSize, end));
 		}
 
-		return new ExtDirectStoreReadResult<>(totalSize, users, true);
+		return new ExtDirectStoreResult<>(totalSize, users, true);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")

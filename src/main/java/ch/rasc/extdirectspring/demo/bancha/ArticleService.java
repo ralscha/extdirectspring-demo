@@ -29,7 +29,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.ImmutableList;
@@ -61,7 +61,7 @@ public class ArticleService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bancha")
-	public ExtDirectStoreReadResult<Article> read(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<Article> read(ExtDirectStoreReadRequest request) {
 
 		List<Article> result = ImmutableList.copyOf(articleDb.values());
 
@@ -75,7 +75,7 @@ public class ArticleService {
 					Math.min(articleDb.size(), request.getStart() + request.getLimit()));
 		}
 
-		return new ExtDirectStoreReadResult<>(articleDb.size(), result);
+		return new ExtDirectStoreResult<>(articleDb.size(), result);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")

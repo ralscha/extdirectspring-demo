@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
 
 import com.google.common.collect.Ordering;
@@ -35,7 +35,7 @@ public class GridContactService {
 	private GridContactDb gridContactDb;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchgrid")
-	public ExtDirectStoreReadResult<GridContact> read(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<GridContact> read(ExtDirectStoreReadRequest request) {
 
 		List<GridContact> contacts = gridContactDb.getAll();
 		Ordering<GridContact> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
@@ -47,7 +47,7 @@ public class GridContactService {
 		// Math.min(gridContactDb.getTotalSize(), request.getStart() +
 		// request.getLimit()));
 
-		return new ExtDirectStoreReadResult<>(gridContactDb.getTotalSize(), contacts);
+		return new ExtDirectStoreResult<>(gridContactDb.getTotalSize(), contacts);
 
 	}
 

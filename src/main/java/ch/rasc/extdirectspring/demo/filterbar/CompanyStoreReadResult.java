@@ -18,9 +18,9 @@ package ch.rasc.extdirectspring.demo.filterbar;
 import java.util.Collection;
 import java.util.Map;
 
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadResult;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 
-public class CompanyStoreReadResult extends ExtDirectStoreReadResult<Company> {
+public class CompanyStoreReadResult extends ExtDirectStoreResult<Company> {
 
 	private Map<String, Collection<String>> autoStores;
 
