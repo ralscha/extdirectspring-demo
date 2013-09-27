@@ -2,4 +2,4 @@ Sample applications for [ExtDirectSpring](https://github.com/ralscha/extdirectsp
 
 
 The application is online at this address:
-[http://demo.rasc.ch/eds/](http://demo.rasc.ch/eds/)
+http://demo.rasc.ch/eds/
