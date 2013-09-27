@@ -38,9 +38,9 @@ public class GridContactDb {
 	private Resource contacts;
 
 	private Map<Integer, GridContact> gridContactStore;
-		
+
 	private int totalSize;
-	
+
 	@PostConstruct
 	public void readData() throws IOException {
 		gridContactStore = Maps.newHashMap();
@@ -55,7 +55,7 @@ public class GridContactDb {
 				gridContactStore.put(contact.getId(), contact);
 			}
 		}
-		
+
 		totalSize = gridContactStore.size();
 	}
 
@@ -70,8 +70,7 @@ public class GridContactDb {
 	public void delete(GridContact contact) {
 		gridContactStore.remove(contact.getId());
 	}
-	
-	
+
 	public void addOrUpdate(GridContact contact) {
 		if (contact.getId() <= 0) {
 			int id = gridContactStore.size() + 1;
