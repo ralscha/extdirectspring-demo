@@ -68,7 +68,7 @@ Ext.define('pivot.AxisGrid', {
         columns.push({
             xtype: 'actioncolumn',
             width: 30,
-            icon   : 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/icons/fam/delete.gif',
+            icon   : '//extjs.cachefly.net/ext/gpl/4.2.2/examples/shared/icons/fam/delete.gif',
             scope  : this,
             handler: this.onRemoveDimension,
             tooltip: 'Delete this dimension',
@@ -78,7 +78,7 @@ Ext.define('pivot.AxisGrid', {
         Ext.applyIf(this, {
             bbar: [{
                 text   : 'Add Dimension',
-                icon   : 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/shared/icons/fam/add.gif',
+                icon   : '//extjs.cachefly.net/ext/gpl/4.2.2/examples/shared/icons/fam/add.gif',
                 scope  : this,
                 handler: this.onAddDimension
             }],

@@ -1,7 +1,7 @@
 Ext.Loader.setConfig({
 	enabled: true
 });
-Ext.Loader.setPath('Ext.ux', 'http://cdn.sencha.com/ext/gpl/4.2.1/examples/ux');
+Ext.Loader.setPath('Ext.ux', '//extjs.cachefly.net/ext/gpl/4.2.2/examples/ux');
 Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.ux.grid.FiltersFeature', 'Ext.toolbar.Paging' ]);
 
 Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
