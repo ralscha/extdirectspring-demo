@@ -41,7 +41,7 @@ Ext.application({
 
 	launch: function() {
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
-		
+
 		var store = Ext.create('Ext.data.Store', {
 			model: 'Friend',
 			autoLoad: true

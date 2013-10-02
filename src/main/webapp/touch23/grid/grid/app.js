@@ -41,8 +41,8 @@ Ext.define("Contact", {
 			api: {
 				create: 'gridContactService.update',
 				read: 'gridContactService.read',
-			    update: 'gridContactService.update',
-			    destroy: 'gridContactService.destroy'
+				update: 'gridContactService.update',
+				destroy: 'gridContactService.destroy'
 			},
 			reader: {
 				rootProperty: 'records'
@@ -56,18 +56,14 @@ Ext.application({
 
 	// require any components/classes what we will use in our example
 	requires: [ 'Ext.data.Store', 'Ext.grid.Grid', 'Ext.grid.HeaderGroup', 'Ext.grid.plugin.Editable', 'Ext.grid.plugin.ViewOptions',
-			'Ext.grid.plugin.MultiSelection', 'Ext.grid.plugin.PagingToolbar', 'Ext.grid.plugin.ColumnResizing' ],
-
+			'Ext.grid.plugin.MultiSelection', 'Ext.grid.plugin.PagingToolbar', 'Ext.grid.plugin.ColumnResizing', 'Ext.grid.plugin.SummaryRow' ],
 	/**
-	 * The launch method is called when the browser is ready, and the
-	 * application can launch.
+	 * The launch method is called when the browser is ready, and the application can launch.
 	 * 
-	 * Inside our launch method we create the list and show in in the viewport.
-	 * We get the lists configuration using the getListConfiguration method
+	 * Inside our launch method we create the list and show in in the viewport. We get the lists configuration using the getListConfiguration method
 	 * which we defined below.
 	 * 
-	 * If the user is not on a phone, we wrap the list inside a panel which is
-	 * centered on the page.
+	 * If the user is not on a phone, we wrap the list inside a panel which is centered on the page.
 	 */
 	launch: function() {
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
@@ -90,6 +86,8 @@ Ext.application({
 				type: 'gridpagingtoolbar'
 			}, {
 				type: 'gridcolumnresizing'
+			}, {
+				type: 'gridsummaryrow'
 			} ],
 			columns: [ {
 				text: 'Name',
@@ -141,7 +139,7 @@ Ext.application({
 							}
 						}
 
-						return Math.round((femaleCount / ln) * 100) + '% female';
+						return (ln ? Math.round((femaleCount / ln) * 100) : 0) + '% female';
 					}
 				} ]
 			}, {
