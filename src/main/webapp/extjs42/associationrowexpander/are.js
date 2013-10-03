@@ -1,6 +1,6 @@
 Ext.Loader.setConfig({	
 	paths: {
-		'Ext.ux': '//extjs.cachefly.net/ext/gpl/4.2.2/examples/ux'
+		'Ext.ux': '//demo.rasc.ch/resources/ext-4.2.2-gpl/examples/ux'
 	}
 });
 

@@ -70,7 +70,7 @@ Ext.define('pivot.AggGrid', {
         columns.push({
             xtype: 'actioncolumn',
             width: 30,
-            icon   : '//extjs.cachefly.net/ext/gpl/4.2.2/examples/shared/icons/fam/delete.gif',
+            icon   : '//demo.rasc.ch/resources/ext-4.2.2-gpl/examples/shared/icons/fam/delete.gif',
             scope  : this,
             handler: this.onRemoveDimension,
             tooltip: 'Delete this axis',
@@ -80,7 +80,7 @@ Ext.define('pivot.AggGrid', {
         Ext.applyIf(this, {
             bbar: [{
                 text   : 'Add Dimension',
-                icon   : '//extjs.cachefly.net/ext/gpl/4.2.2/examples/shared/icons/fam/add.gif',
+                icon   : '//demo.rasc.ch/resources/ext-4.2.2-gpl/examples/shared/icons/fam/add.gif',
                 scope  : this,
                 handler: this.onAddDimension
             }],
