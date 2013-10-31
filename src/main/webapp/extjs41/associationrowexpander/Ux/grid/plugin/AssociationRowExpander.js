@@ -236,8 +236,6 @@ Ext.define('Ux.grid.plugin.AssociationRowExpander', {
     },
 
     unbindEvents : function(cmp) {
-        var me = this;
-
         cmp.clearListeners();
     },
 

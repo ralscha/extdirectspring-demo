@@ -121,8 +121,6 @@ Ext.define('Ext.ux.grid.xFilterRow', {
 	},
 	
 	moveXFilterHD: function(headerCt, column, fromIdx, toIdx, eOpts) {
-		var me = this;
-
 		// When we move a column from left to right we
 		// need to change the target index
 		if(fromIdx < toIdx) { toIdx--; }
@@ -131,8 +129,6 @@ Ext.define('Ext.ux.grid.xFilterRow', {
 	},
 		
 	resizeXFilterHD: function (headerCt, column, newColumnWidth) {
-		var me = this;
-		
 		// Ajust width
 		if(column.xfilterField) {
 			column.xfilterField.setWidth(newColumnWidth);
@@ -268,8 +264,7 @@ Ext.define('Ext.ux.grid.xFilterRow', {
 		}
 	},
 	
-	onFieldFocus:function(field) {
-		var me 		= this;
+	onFieldFocus:function(field) {		
 		var pos 	= field.getPosition(true);
 		var width	= field.getWidth();
 		var left 	= pos[0];

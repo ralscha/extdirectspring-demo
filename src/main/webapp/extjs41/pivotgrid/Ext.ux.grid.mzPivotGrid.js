@@ -1219,7 +1219,7 @@ Ext.define('Ext.ux.grid.feature.mzPivotSummary', {
     },
 
     collectData: function(records, preppedRecords, startIndex, fullWidth, o) {
-        var me = this, i, j, k, record, filters, data, header,
+        var me = this, i, j, record, filters, data, header,
             leftAxis = me.view.pivotGrid.leftAxis,
             cols = me.view.pivotGrid.countCols,
             headers   = me.view.gridDataColumns || me.view.getGridColumns(),
