@@ -23,10 +23,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.joda.time.DateTime;
 
-import ch.ralscha.extdirectspring.generator.Model;
-import ch.ralscha.extdirectspring.generator.ModelAssociation;
-import ch.ralscha.extdirectspring.generator.ModelAssociationType;
-import ch.ralscha.extdirectspring.generator.ModelField;
+import ch.rasc.extclassgenerator.Model;
+import ch.rasc.extclassgenerator.ModelAssociation;
+import ch.rasc.extclassgenerator.ModelAssociationType;
+import ch.rasc.extclassgenerator.ModelField;
 import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
