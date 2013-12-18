@@ -36,8 +36,8 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-import ch.ralscha.extdirectspring.generator.ModelGenerator;
-import ch.ralscha.extdirectspring.generator.OutputFormat;
+import ch.rasc.extclassgenerator.ModelGenerator;
+import ch.rasc.extclassgenerator.OutputFormat;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

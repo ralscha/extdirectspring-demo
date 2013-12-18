@@ -101,7 +101,7 @@
 		
 		<dependency>
 			<groupId>ch.rasc</groupId>
-			<artifactId>extclassgenerator-annotations</artifactId>
+			<artifactId>extclassgenerator</artifactId>
 			<version>1.0.0</version>
 		</dependency>		
 
