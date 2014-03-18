@@ -51,6 +51,7 @@ public class BbcService {
 		return stations;
 	}
 
+	@SuppressWarnings("unchecked")
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "sch")
 	public ImmutableList<Event> fetchSchedule() throws JsonParseException, JsonMappingException, IOException,
 			InterruptedException, ExecutionException {
@@ -60,8 +61,9 @@ public class BbcService {
 		List<Future<Response>> responses = Lists.newArrayList();
 
 		for (Resource station : stations) {
-			AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-			responses.add(asyncHttpClient.prepareGet(station.getUrl()).execute());
+			try (AsyncHttpClient asyncHttpClient = new AsyncHttpClient()) {
+				responses.add(asyncHttpClient.prepareGet(station.getUrl()).execute());
+			}
 		}
 
 		for (Future<Response> future : responses) {
