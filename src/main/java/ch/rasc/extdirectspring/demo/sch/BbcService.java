@@ -21,6 +21,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.HttpAsyncClients;
+import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +37,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
 
 @Service
 public class BbcService {
@@ -58,39 +61,52 @@ public class BbcService {
 
 		ImmutableList.Builder<Event> eBuilder = ImmutableList.builder();
 
-		List<Future<Response>> responses = Lists.newArrayList();
-
-		for (Resource station : stations) {
-			try (AsyncHttpClient asyncHttpClient = new AsyncHttpClient()) {
-				responses.add(asyncHttpClient.prepareGet(station.getUrl()).execute());
+		List<Future<HttpResponse>> futureResponses = Lists.newArrayList();
+		try (CloseableHttpAsyncClient backend = HttpAsyncClients
+				.custom()
+				.setUserAgent(
+						"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36")
+				.build()) {
+			backend.start();
+			for (Resource station : stations) {
+				HttpGet httpGet = new HttpGet(station.getUrl());
+				Future<HttpResponse> future = backend.execute(httpGet, null);
+				futureResponses.add(future);
+				// try (CloseableHttpResponse response = ) {
+				// String json = EntityUtils.toString(response.getEntity());
+				// responses.add(json);
+				// }
 			}
-		}
 
-		for (Future<Response> future : responses) {
+			for (Future<HttpResponse> future : futureResponses) {
+				HttpResponse response = future.get();
+				String json = EntityUtils.toString(response.getEntity());
+				Map<String, Object> schedules = mapper.readValue(json, Map.class);
+				Map<String, Object> schedule = (Map<String, Object>) schedules.get("schedule");
+				Map<String, Object> day = (Map<String, Object>) schedule.get("day");
+				List<Map<String, Object>> broadcasts = (List<Map<String, Object>>) day.get("broadcasts");
 
-			Map<String, Object> schedules = mapper.readValue(future.get().getResponseBody(), Map.class);
-			Map<String, Object> schedule = (Map<String, Object>) schedules.get("schedule");
-			Map<String, Object> day = (Map<String, Object>) schedule.get("day");
-			List<Map<String, Object>> broadcasts = (List<Map<String, Object>>) day.get("broadcasts");
+				for (Map<String, Object> broadcast : broadcasts) {
 
-			for (Map<String, Object> broadcast : broadcasts) {
+					Map<String, Object> programme = (Map<String, Object>) broadcast.get("programme");
+					Map<String, Object> displayTitles = (Map<String, Object>) programme.get("display_titles");
+					Map<String, Object> ownership = (Map<String, Object>) programme.get("ownership");
+					Map<String, Object> service = (Map<String, Object>) ownership.get("service");
 
-				Map<String, Object> programme = (Map<String, Object>) broadcast.get("programme");
-				Map<String, Object> displayTitles = (Map<String, Object>) programme.get("display_titles");
-				Map<String, Object> ownership = (Map<String, Object>) programme.get("ownership");
-				Map<String, Object> service = (Map<String, Object>) ownership.get("service");
+					Event e = new Event();
+					e.setResourceId(String.valueOf(service.get("key")));
+					e.setStartDate(DateTime.parse((String) broadcast.get("start")));
+					e.setEndDate(DateTime.parse((String) broadcast.get("end")));
+					e.setText(String.valueOf(displayTitles.get("title")));
+					e.setDuration((Integer) broadcast.get("duration"));
+					e.setId(String.valueOf(programme.get("pid")));
+					e.setSynopsis(String.valueOf(programme.get("short_synopsis")));
 
-				Event e = new Event();
-				e.setResourceId(String.valueOf(service.get("key")));
-				e.setStartDate(DateTime.parse((String) broadcast.get("start")));
-				e.setEndDate(DateTime.parse((String) broadcast.get("end")));
-				e.setText(String.valueOf(displayTitles.get("title")));
-				e.setDuration((Integer) broadcast.get("duration"));
-				e.setId(String.valueOf(programme.get("pid")));
-				e.setSynopsis(String.valueOf(programme.get("short_synopsis")));
+					eBuilder.add(e);
+				}
 
-				eBuilder.add(e);
 			}
+
 		}
 
 		return eBuilder.build();
