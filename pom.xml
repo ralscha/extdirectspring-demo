@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.4.0</version>
+	<version>1.4.1</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -42,11 +42,11 @@
 	</scm>
 
 	<properties>
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
 		<slf4j.version>1.7.6</slf4j.version>
 		<logback.version>1.1.1</logback.version>
-		<hibernatevalidator.version>5.0.2.Final</hibernatevalidator.version>
-		<eds.version>1.4.0</eds.version>
+		<hibernatevalidator.version>5.1.0.Final</hibernatevalidator.version>
+		<eds.version>1.4.1</eds.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
@@ -102,7 +102,7 @@
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>extclassgenerator</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 		</dependency>		
 
 		<dependency>
@@ -186,7 +186,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.3</version>
+			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
