@@ -70,7 +70,7 @@ Ext.define('pivot.ConfigPanel', {
             fbar: {
                 buttonAlign: 'left',
                 items: [{
-                    icon   : 'http://www.rasc.ch/extjs-4.1.3/examples/shared/icons/fam/accept.png',
+                    icon   : '//demo.rasc.ch/resources/extjs-4.1.3/examples/shared/icons/fam/accept.png',
                     text   : 'Update',
                     scope  : this,
                     handler: this.updateGrid
