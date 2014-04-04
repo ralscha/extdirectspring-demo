@@ -33,7 +33,6 @@ Ext.onReady(function() {
 			items: [ '->', {
 				text: 'Submit',
 				handler: function() {
-					console.log('click');
 					basicInfo.getForm().submit({
 						params: {
 							foo: 'bar',
