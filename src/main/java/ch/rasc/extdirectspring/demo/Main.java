@@ -13,47 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.rasc.extdirectspring.demo.config;
+package ch.rasc.extdirectspring.demo;
 
+import javax.servlet.MultipartConfigElement;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.MultiPartConfigFactory;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@EnableWebMvc
 @ComponentScan(basePackages = { "ch.ralscha.extdirectspring", "ch.rasc.extdirectspring.demo" })
-public class SpringConfig extends WebMvcConfigurerAdapter {
-
-	/*
-	 * @Bean public ch.rasc.extdirectspring.controller.Configuration edsConfig()
-	 * { ch.rasc.extdirectspring.controller.Configuration config = new
-	 * ch.rasc.extdirectspring.controller.Configuration();
-	 * config.setStreamResponse(true); config.setTimeout(12000);
-	 * config.setMaxRetries(10); config.setEnableBuffer(false); return config; }
-	 */
+@EnableAutoConfiguration
+public class Main extends SpringBootServletInitializer {
 
 	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(Main.class);
 	}
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("index.html");
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(Main.class, args);
 	}
 
 	@Bean
-	public MultipartResolver multipartResolver() {
-		return new StandardServletMultipartResolver();
+	public MultipartConfigElement multipartConfigElement() {
+		MultiPartConfigFactory factory = new MultiPartConfigFactory();
+		factory.setFileSizeThreshold("10MB");
+		factory.setMaxFileSize("100MB");
+		return factory.createMultipartConfig();
 	}
+
+	/*
+	 * @Bean public ch.rasc.extdirectspring.controller.Configuration edsConfig() {
+	 * ch.rasc.extdirectspring.controller.Configuration config = new ch.rasc.extdirectspring.controller.Configuration();
+	 * config.setStreamResponse(true); config.setTimeout(12000); config.setMaxRetries(10);
+	 * config.setEnableBuffer(false); return config; }
+	 */
 
 	@Bean
 	@Lazy
@@ -96,4 +98,5 @@ public class SpringConfig extends WebMvcConfigurerAdapter {
 	public ClassPathResource friends() {
 		return new ClassPathResource("/friends.json");
 	}
+
 }
