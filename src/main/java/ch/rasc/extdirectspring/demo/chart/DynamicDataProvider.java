@@ -15,6 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.chart;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -22,13 +23,14 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 
-import com.google.common.collect.ImmutableMap;
-
 @Service
 public class DynamicDataProvider {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "newData", group = "dynamic")
 	public Map<String, Double> newData() {
-		return new ImmutableMap.Builder<String, Double>().put("x", Math.random()).put("y", Math.random()).build();
+		Map<String, Double> result = new HashMap<>();
+		result.put("x", Math.random());
+		result.put("y", Math.random());
+		return result;
 	}
 }

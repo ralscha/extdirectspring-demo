@@ -15,17 +15,17 @@
  */
 package ch.rasc.extdirectspring.demo.util;
 
+import java.util.Comparator;
+
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
-import com.google.common.collect.Ordering;
-
-public class PropertyOrdering<T> extends Ordering<T> {
+public class PropertyComparator<T> implements Comparator<T> {
 	private final static SpelExpressionParser parser = new SpelExpressionParser();
 
 	private final Expression readPropertyExpression;
 
-	public PropertyOrdering(String property) {
+	public PropertyComparator(String property) {
 		this.readPropertyExpression = parser.parseExpression(property);
 	}
 
@@ -45,6 +45,10 @@ public class PropertyOrdering<T> extends Ordering<T> {
 			return 1;
 		}
 
+		if (left instanceof String) {
+			return ((String) left).compareToIgnoreCase((String)right);
+		}
+		
 		return ((Comparable<Object>) left).compareTo(right);
 	}
 

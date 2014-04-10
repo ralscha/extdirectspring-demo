@@ -16,15 +16,21 @@
 package ch.rasc.extdirectspring.demo.group;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.ImmutableList;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
+import ch.ralscha.extdirectspring.bean.GroupInfo;
+import ch.ralscha.extdirectspring.bean.SortInfo;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class GroupAction {
@@ -32,51 +38,86 @@ public class GroupAction {
 	private static List<Task> tasks;
 
 	static {
-		ImmutableList.Builder<Task> builder = new ImmutableList.Builder<>();
+		List<Task> builder = new ArrayList<>();
 		builder.add(new Task(100, "Ext Forms: Field Anchoring", 112, "Integrate 2.0 Forms with 2.0 Layouts",
-				new BigDecimal(6), new BigDecimal(150), 2010, 6, 24));
+				new BigDecimal(6), new BigDecimal(150), 2010, 7, 24));
 		builder.add(new Task(100, "Ext Forms: Field Anchoring", 113, "Implement AnchorLayout", new BigDecimal(4),
-				new BigDecimal(150), 2010, 6, 25));
+				new BigDecimal(150), 2010, 7, 25));
 		builder.add(new Task(100, "Ext Forms: Field Anchoring", 114, "Add support for multiple types of anchors",
-				new BigDecimal(4), new BigDecimal(150), 2010, 6, 27));
+				new BigDecimal(4), new BigDecimal(150), 2010, 7, 27));
 		builder.add(new Task(100, "Ext Forms: Field Anchoring", 115, "Testing and debugging", new BigDecimal(8),
-				new BigDecimal(0), 2010, 6, 29));
+				new BigDecimal(0), 2010, 7, 29));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 101, "Add required rendering 'hooks' to GridView",
-				new BigDecimal(6), new BigDecimal(100), 2010, 7, 1));
+				new BigDecimal(6), new BigDecimal(100), 2010, 8, 1));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 102,
-				"Extend GridView and override rendering functions", new BigDecimal(6), new BigDecimal(100), 2010, 7, 3));
+				"Extend GridView and override rendering functions", new BigDecimal(6), new BigDecimal(100), 2010, 8, 3));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 103, "Extend Store with grouping functionality",
-				new BigDecimal(4), new BigDecimal(100), 2010, 7, 4));
+				new BigDecimal(4), new BigDecimal(100), 2010, 8, 4));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 121, "Default CSS Styling", new BigDecimal(2),
-				new BigDecimal(100), 2010, 7, 5));
+				new BigDecimal(100), 2010, 8, 5));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 104, "Testing and debugging", new BigDecimal(6),
-				new BigDecimal(100), 2010, 7, 6));
+				new BigDecimal(100), 2010, 8, 6));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 105, "Ext Grid plugin integration", new BigDecimal(4),
-				new BigDecimal(125), 2010, 7, 1));
+				new BigDecimal(125), 2010, 8, 1));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 106, "Summary creation during rendering phase",
-				new BigDecimal(4), new BigDecimal(125), 2010, 7, 2));
+				new BigDecimal(4), new BigDecimal(125), 2010, 8, 2));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 107, "Dynamic summary updates in editor grids",
-				new BigDecimal(6), new BigDecimal(125), 2010, 7, 5));
+				new BigDecimal(6), new BigDecimal(125), 2010, 8, 5));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 108, "Remote summary integration", new BigDecimal(4),
-				new BigDecimal(125), 2010, 7, 5));
+				new BigDecimal(125), 2010, 8, 5));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 109, "Summary renderers and calculators",
-				new BigDecimal(4), new BigDecimal(125), 2010, 7, 6));
+				new BigDecimal(4), new BigDecimal(125), 2010, 8, 6));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 110, "Integrate summaries with GroupingView",
-				new BigDecimal(10), new BigDecimal(125), 2010, 7, 11));
+				new BigDecimal(10), new BigDecimal(125), 2010, 8, 11));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 111, "Testing and debugging", new BigDecimal(8),
-				new BigDecimal(125), 2010, 7, 15));
+				new BigDecimal(125), 2010, 8, 15));
 
-		tasks = builder.build();
+		tasks = Collections.unmodifiableList(builder);
 
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "total")
-	public List<Task> load() {
-		return tasks;
+	public List<Task> load(ExtDirectStoreReadRequest request) {
+		return sort(request);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "hybrid")
-	public List<Task> loadHybrid() {
+	public List<Task> loadHybrid(ExtDirectStoreReadRequest request) {
+		return sort(request);
+	}
+
+	private static List<Task> sort(ExtDirectStoreReadRequest request) {
+		Comparator<Task> comparator = null;
+		
+		if (!request.getGroups().isEmpty()) {
+			GroupInfo groupInfo = request.getGroups().iterator().next();
+	
+			if (!request.getSorters().isEmpty()) {
+				for (SortInfo sortInfo : request.getSorters()) {
+					if (groupInfo.getProperty().equals(sortInfo.getProperty())) {
+						groupInfo = new GroupInfo(groupInfo.getProperty(), sortInfo.getDirection());
+					}
+				}
+			}
+	
+			comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections
+					.singletonList(groupInfo));
+		}		
+		
+		Comparator<Task> sortComparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+
+		if (sortComparator != null) {
+			if (comparator != null) {
+				comparator = comparator.thenComparing(sortComparator);
+			} else {
+				comparator = sortComparator;
+			}
+		}
+
+		if (comparator != null) {
+			return tasks.stream().sorted(comparator).collect(Collectors.toList());
+		}
+
 		return tasks;
 	}
 
@@ -86,7 +127,7 @@ public class GroupAction {
 		summary.setDescription("22");
 		summary.setEstimate(new BigDecimal(888));
 		summary.setRate(new BigDecimal(999));
-		summary.setDue(new Date());
+		summary.setDue(LocalDate.now());
 		summary.setCost(new BigDecimal(8));
 		return summary;
 	}

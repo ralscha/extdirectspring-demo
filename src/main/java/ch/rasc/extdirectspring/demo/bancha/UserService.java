@@ -15,14 +15,18 @@
  */
 package ch.rasc.extdirectspring.demo.bancha;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -32,13 +36,10 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-
 @Service("banchaUserService")
 public class UserService {
 
-	private final static Map<Integer, User> userDb = Maps.newConcurrentMap();
+	private final static Map<Integer, User> userDb = new ConcurrentHashMap<>();
 
 	private final static AtomicInteger maxId = new AtomicInteger(4);
 
@@ -52,7 +53,7 @@ public class UserService {
 		user.setId(1);
 		user.setName("Joe");
 		user.setLogin("joe");
-		user.setCreated(new DateTime(2012, 7, 28, 8, 54, 20));
+		user.setCreated(LocalDateTime.of(2012, 7, 28, 8, 54, 20));
 		user.setEmail("joe@test.com");
 		user.setAvatar("joe.png");
 		user.setWeight(76);
@@ -63,7 +64,7 @@ public class UserService {
 		user.setId(2);
 		user.setName("Dan");
 		user.setLogin("dan");
-		user.setCreated(new DateTime(2012, 7, 29, 11, 5, 20));
+		user.setCreated(LocalDateTime.of(2012, 7, 29, 11, 5, 20));
 		user.setEmail("dan@test.com");
 		user.setAvatar("dan.png");
 		user.setWeight(70);
@@ -74,7 +75,7 @@ public class UserService {
 		user.setId(3);
 		user.setName("Ralph");
 		user.setLogin("ralph");
-		user.setCreated(new DateTime(2012, 7, 30, 16, 11, 44));
+		user.setCreated(LocalDateTime.of(2012, 7, 30, 16, 11, 44));
 		user.setEmail("ralph@test.com");
 		user.setAvatar("ralph.png");
 		user.setWeight(72);
@@ -85,7 +86,7 @@ public class UserService {
 		user.setId(4);
 		user.setName("Nils");
 		user.setLogin("nils");
-		user.setCreated(new DateTime(2012, 7, 31, 18, 0, 1));
+		user.setCreated(LocalDateTime.of(2012, 7, 31, 18, 0, 1));
 		user.setEmail("nils@test.com");
 		user.setAvatar("nils.png");
 		user.setWeight(82);
@@ -95,19 +96,19 @@ public class UserService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bancha")
-	public List<User> read() {
-		return ImmutableList.copyOf(userDb.values());
+	public Collection<User> read() {
+		return userDb.values();
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")
 	public List<User> create(List<User> newUsers) {
-		ImmutableList.Builder<User> result = ImmutableList.builder();
+		List<User> result = new ArrayList<>();
 		for (User user : newUsers) {
 			user.setId(maxId.incrementAndGet());
 			userDb.put(user.getId(), user);
 			result.add(user);
 		}
-		return result.build();
+		return Collections.unmodifiableList(result);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")

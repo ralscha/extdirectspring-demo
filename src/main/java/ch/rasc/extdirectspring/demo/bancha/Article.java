@@ -15,10 +15,10 @@
  */
 package ch.rasc.extdirectspring.demo.bancha;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeDeserializer;
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -31,7 +31,7 @@ public class Article {
 
 	private String body;
 
-	private DateTime date;
+	private LocalDateTime date;
 
 	private boolean published;
 
@@ -61,13 +61,13 @@ public class Article {
 		this.body = body;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getDate() {
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	@JsonDeserialize(using = ISO8601DateTimeDeserializer.class)
-	public void setDate(DateTime date) {
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

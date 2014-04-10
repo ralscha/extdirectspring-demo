@@ -15,8 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.simple;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,7 +28,7 @@ public class SimpleMethodProvider {
 
 	@ExtDirectMethod(group = "simple")
 	public String method1() {
-		return DateFormat.getDateTimeInstance().format(new Date());
+		return LocalDateTime.now().toString();
 	}
 
 	@ExtDirectMethod(group = "simple")

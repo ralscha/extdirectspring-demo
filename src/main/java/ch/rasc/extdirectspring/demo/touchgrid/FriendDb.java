@@ -17,6 +17,8 @@ package ch.rasc.extdirectspring.demo.touchgrid;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +30,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 
 @Service
 public class FriendDb {
@@ -43,7 +43,7 @@ public class FriendDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		friendStore = Maps.newHashMap();
+		friendStore = new HashMap<>();
 		try (InputStream is = friends.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
@@ -59,8 +59,8 @@ public class FriendDb {
 		totalSize = friendStore.size();
 	}
 
-	public List<Friend> getAll() {
-		return ImmutableList.copyOf(friendStore.values());
+	public Collection<Friend> getAll() {
+		return friendStore.values();
 	}
 
 	public int getTotalSize() {

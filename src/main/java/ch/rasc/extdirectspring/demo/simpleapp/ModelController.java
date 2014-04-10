@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ch.rasc.extclassgenerator.ModelGenerator;
 import ch.rasc.extclassgenerator.OutputFormat;
 
-
 @Controller
 @RequestMapping({ "/extjs41/simple", "/extjs42/simple" })
 public class ModelController {

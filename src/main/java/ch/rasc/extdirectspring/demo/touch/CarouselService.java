@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.touch;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +29,6 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 
-import com.google.common.collect.Lists;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
@@ -47,7 +47,7 @@ public class CarouselService {
 			FeedException, IOException {
 
 		URL feedUrl = new URL(RSS_URL);
-		List<CarouselPicture> pictures = Lists.newArrayList();
+		List<CarouselPicture> pictures = new ArrayList<>();
 
 		SyndFeedInput input = new SyndFeedInput();
 		try (XmlReader reader = new XmlReader(feedUrl)) {

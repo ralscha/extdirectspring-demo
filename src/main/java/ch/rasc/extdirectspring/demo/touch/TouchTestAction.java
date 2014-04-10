@@ -16,19 +16,19 @@
 package ch.rasc.extdirectspring.demo.touch;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class TouchTestAction {
@@ -46,11 +46,11 @@ public class TouchTestAction {
 		return message;
 	}
 
+	private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
+
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message", group = "touchdirect")
 	public String handleMessagePoll() {
-		Date now = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm:ss");
-		return "Successfully polled at: " + formatter.format(now);
+		return "Successfully polled at: " + LocalDateTime.now().format(formatter);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "touchdirect")
@@ -60,7 +60,7 @@ public class TouchTestAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchdirect")
 	public List<Turnover> getGrid(ExtDirectStoreReadRequest request) {
-		List<Turnover> result = Lists.newArrayList();
+		List<Turnover> result = new ArrayList<>();
 
 		result.add(new Turnover("ABC Accounting", new BigDecimal("50000")));
 		result.add(new Turnover("Ezy Video Rental", new BigDecimal("106300")));
@@ -69,9 +69,9 @@ public class TouchTestAction {
 		result.add(new Turnover("Ripped Gym", new BigDecimal("88400")));
 		result.add(new Turnover("Smith Auto Mechanic", new BigDecimal("222980")));
 
-		Ordering<Turnover> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			return ordering.sortedCopy(result);
+		Comparator<Turnover> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		if (comparator != null) {
+			return result.stream().sorted(comparator).collect(Collectors.toList());
 		}
 
 		return result;

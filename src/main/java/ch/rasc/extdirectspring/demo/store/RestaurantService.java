@@ -15,7 +15,11 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -24,11 +28,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.GroupInfo;
 import ch.ralscha.extdirectspring.bean.SortInfo;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class RestaurantService {
@@ -36,7 +36,7 @@ public class RestaurantService {
 
 	static {
 
-		ImmutableList.Builder<Restaurant> builder = new ImmutableList.Builder<>();
+		List<Restaurant> builder = new ArrayList<>();
 
 		builder.add(new Restaurant("Cheesecake Factory", "American"));
 		builder.add(new Restaurant("University Cafe", "American"));
@@ -107,7 +107,7 @@ public class RestaurantService {
 		builder.add(new Restaurant("Cafe Epi", "French"));
 		builder.add(new Restaurant("Tai Pan", "Chinese"));
 
-		restaurants = builder.build();
+		restaurants = Collections.unmodifiableList(builder);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "grouping")
@@ -125,23 +125,25 @@ public class RestaurantService {
 				}
 			}
 
-			Ordering<Restaurant> ordering = PropertyOrderingFactory.createOrderingFromGroups(Lists
-					.newArrayList(groupInfo));
-			Ordering<Restaurant> sortOrdering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
+			Comparator<Restaurant> comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections
+					.singletonList(groupInfo));
+			Comparator<Restaurant> sortComparator = PropertyComparatorFactory.createComparatorFromSorters(request
+					.getSorters());
 
-			if (sortOrdering != null) {
-				ordering = ordering.compound(sortOrdering);
+			if (sortComparator != null) {
+				comparator = comparator.thenComparing(sortComparator);
 			}
 
-			if (ordering != null) {
-				return ordering.sortedCopy(restaurants);
+			if (comparator != null) {
+				return restaurants.stream().sorted(comparator).collect(Collectors.toList());
 			}
 		}
 
 		if (!request.getSorters().isEmpty()) {
-			Ordering<Restaurant> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-			if (ordering != null) {
-				return ordering.sortedCopy(restaurants);
+			Comparator<Restaurant> comparator = PropertyComparatorFactory.createComparatorFromSorters(request
+					.getSorters());
+			if (comparator != null) {
+				return restaurants.stream().sorted(comparator).collect(Collectors.toList());
 			}
 		}
 

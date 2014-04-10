@@ -16,7 +16,9 @@
 package ch.rasc.extdirectspring.demo.group;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+
+import ch.rasc.extdirectspring.demo.util.MDYLocalDateSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -28,7 +30,7 @@ public class Summary {
 
 	private BigDecimal rate;
 
-	private Date due;
+	private LocalDate due;
 
 	private BigDecimal cost;
 
@@ -56,12 +58,12 @@ public class Summary {
 		this.rate = rate;
 	}
 
-	@JsonSerialize(using = MDYDateSerializer.class)
-	public Date getDue() {
+	@JsonSerialize(using = MDYLocalDateSerializer.class)
+	public LocalDate getDue() {
 		return due;
 	}
 
-	public void setDue(Date due) {
+	public void setDue(LocalDate due) {
 		this.due = due;
 	}
 

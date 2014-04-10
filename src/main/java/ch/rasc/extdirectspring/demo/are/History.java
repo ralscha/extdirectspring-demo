@@ -15,15 +15,14 @@
  */
 package ch.rasc.extdirectspring.demo.are;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.joda.time.DateTime;
 
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelAssociation;
 import ch.rasc.extclassgenerator.ModelAssociationType;
 import ch.rasc.extclassgenerator.ModelField;
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,7 +32,7 @@ public class History {
 	private final String id = UUID.randomUUID().toString();
 
 	@ModelField(dateFormat = "c")
-	private final DateTime date;
+	private final LocalDateTime date;
 
 	private final String text;
 
@@ -47,7 +46,7 @@ public class History {
 	@ModelAssociation(value = ModelAssociationType.HAS_ONE, foreignKey = "companyId")
 	private Company companyOne;
 
-	public History(Company company, DateTime date, String text) {
+	public History(Company company, LocalDateTime date, String text) {
 		this.company = company;
 		this.companyId = company.getCoId();
 		this.date = date;
@@ -58,8 +57,8 @@ public class History {
 		return id;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getDate() {
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	public LocalDateTime getDate() {
 		return date;
 	}
 

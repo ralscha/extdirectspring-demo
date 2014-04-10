@@ -18,15 +18,17 @@ package ch.rasc.extdirectspring.demo.touch;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,11 +44,16 @@ public class PictureResizer {
 			final HttpServletResponse response) throws MalformedURLException, IOException {
 
 		File servletTmpDir = (File) request.getServletContext().getAttribute("javax.servlet.context.tempdir");
+		File picturesDir = new File(servletTmpDir, "pictures");
+		picturesDir.mkdirs();
+
 		String sha = org.apache.commons.codec.digest.DigestUtils.sha256Hex(url);
-		File pictureFile = new File(servletTmpDir, "pictures/" + sha);
+		File pictureFile = new File(picturesDir, sha);
 
 		if (!pictureFile.exists()) {
-			FileUtils.copyURLToFile(new URL(url), pictureFile);
+			try (InputStream input = new URL(url).openStream()) {
+				Files.copy(input, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			}
 		}
 
 		try (OutputStream out = response.getOutputStream()) {
@@ -63,13 +70,14 @@ public class PictureResizer {
 					File tempFile = File.createTempFile("resized", format);
 					tempFile.deleteOnExit();
 					ImageIO.write(resizedImage, format, tempFile);
-					FileUtils.copyFile(tempFile, out);
+
+					Files.copy(tempFile.toPath(), out);
 					tempFile.delete();
 				} else {
-					FileUtils.copyFile(pictureFile, out);
+					Files.copy(pictureFile.toPath(), out);
 				}
 			} else {
-				FileUtils.copyFile(pictureFile, out);
+				Files.copy(pictureFile.toPath(), out);
 			}
 		}
 

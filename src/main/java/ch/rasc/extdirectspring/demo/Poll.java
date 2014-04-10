@@ -16,9 +16,9 @@
 package ch.rasc.extdirectspring.demo;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,12 +35,11 @@ import ch.ralscha.extdirectspring.controller.SSEWriter;
 
 @Service
 public class Poll {
+	private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message", group = "example")
 	public String handleMessagePoll() {
-		Date now = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm:ss");
-		return "Successfully polled at: " + formatter.format(now);
+		return "Successfully polled at: " + LocalDateTime.now().format(formatter);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "pollWithParams", group = "example")
@@ -60,12 +59,10 @@ public class Poll {
 			writeIEHeadersAndPadding(response);
 		}
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm:ss");
-
 		for (int i = 0; i < 20; i++) {
 
 			try {
-				sseWriter.write("Successfully polled with EventSource at: " + formatter.format(new Date()));
+				sseWriter.write("Successfully polled with EventSource at: " + LocalDateTime.now().format(formatter));
 			} catch (Exception e) {
 				return null;
 			}
@@ -79,7 +76,7 @@ public class Poll {
 
 		SSEvent event = new SSEvent();
 		event.setRetry(3000);
-		event.setData("LAST: Successfully polled with EventSource at: " + formatter.format(new Date()));
+		event.setData("LAST: Successfully polled with EventSource at: " + LocalDateTime.now().format(formatter));
 		return event;
 
 	}

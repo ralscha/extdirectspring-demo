@@ -16,9 +16,9 @@
 package ch.rasc.extdirectspring.demo.group;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+
+import ch.rasc.extdirectspring.demo.util.MDYLocalDateSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -36,7 +36,7 @@ public class Task {
 
 	private BigDecimal rate;
 
-	private Date due;
+	private LocalDate due;
 
 	public Task(int projectId, String project, int taskId, String description, BigDecimal estimate, BigDecimal rate,
 			int dueYear, int dueMonth, int dueDay) {
@@ -47,9 +47,7 @@ public class Task {
 		this.description = description;
 		this.estimate = estimate;
 		this.rate = rate;
-
-		Calendar cal = new GregorianCalendar(dueYear, dueMonth, dueDay);
-		this.due = cal.getTime();
+		this.due = LocalDate.of(dueYear, dueMonth, dueDay);
 	}
 
 	public int getProjectId() {
@@ -100,12 +98,12 @@ public class Task {
 		this.rate = rate;
 	}
 
-	@JsonSerialize(using = MDYDateSerializer.class)
-	public Date getDue() {
+	@JsonSerialize(using = MDYLocalDateSerializer.class)
+	public LocalDate getDue() {
 		return due;
 	}
 
-	public void setDue(Date due) {
+	public void setDue(LocalDate due) {
 		this.due = due;
 	}
 

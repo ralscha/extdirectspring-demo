@@ -21,15 +21,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -45,13 +45,7 @@ import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.ListFilter;
 import ch.ralscha.extdirectspring.filter.NumericFilter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import ch.rasc.extdirectspring.demo.util.Constants;
 
 @Service
 public class CompanyDataBean {
@@ -65,7 +59,7 @@ public class CompanyDataBean {
 	public void readData() throws IOException {
 		Random rand = new Random();
 
-		companies = Maps.newHashMap();
+		companies = new HashMap<>();
 		try (InputStream is = randomdata.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				CSVReader reader = new CSVReader(br, '|')) {
@@ -76,8 +70,7 @@ public class CompanyDataBean {
 				company.setId(Integer.parseInt(nextLine[0]));
 				company.setCompany(nextLine[2]);
 
-				company.setDate(new GregorianCalendar(rand.nextInt(50) + 1950, rand.nextInt(12), rand.nextInt(28))
-						.getTime());
+				company.setDate(LocalDate.of(rand.nextInt(55) + 1950, rand.nextInt(12) + 1, rand.nextInt(27) + 1));
 				company.setPrice(new BigDecimal(rand.nextFloat() * 100).setScale(2, RoundingMode.HALF_EVEN));
 				company.setSize(SizeEnum.values()[rand.nextInt(4)]);
 				company.setVisible(rand.nextBoolean());
@@ -87,86 +80,38 @@ public class CompanyDataBean {
 		}
 	}
 
-	public List<Company> findAllCompanies() {
-		return ImmutableList.copyOf(companies.values());
+	public Collection<Company> findAllCompanies() {
+		return Collections.unmodifiableCollection(companies.values());
 	}
 
 	public List<Company> findCompanies(Collection<Filter> filters) {
 
-		List<Predicate<Company>> predicates = Lists.newArrayList();
+		Predicate<Company> predicates = c -> true;
 		for (Filter filter : filters) {
 			if (filter.getField().equals("company")) {
-				predicates.add(new CompanyPredicate(((StringFilter) filter).getValue()));
+				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
+				predicates = predicates.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			} else if (filter.getField().equals("visible")) {
-				predicates.add(new VisiblePredicate(((BooleanFilter) filter).getValue()));
+				boolean flag = ((BooleanFilter) filter).getValue();
+				predicates = predicates.and(c -> c.isVisible() == flag);
 			} else if (filter.getField().equals("id")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates.add(new IdPredicate(numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new IdPredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("price")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates.add(new PricePredicate(numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates
+						.and(new PricePredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("size")) {
 				ListFilter listFilter = (ListFilter) filter;
-				predicates.add(new SizePredicate(listFilter.getValue()));
+				predicates = predicates.and(c -> listFilter.getValue().contains(c.getSize().getLabel()));
 			} else if (filter.getField().equals("date")) {
 				DateFilter dateFilter = (DateFilter) filter;
-				DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-				try {
-					Date d = formatter.parse(dateFilter.getValue());
-					predicates.add(new DatePredicate(dateFilter.getComparison(), d));
-				} catch (ParseException e) {
-					// nothing to do
-				}
-
+				LocalDate ld = LocalDate.parse(dateFilter.getValue(), Constants.MMddYYYY_FORMATTER);
+				predicates = predicates.and(new DatePredicate(dateFilter.getComparison(), ld));
 			}
 		}
 
-		Iterable<Company> filtered = Iterables.filter(companies.values(), Predicates.and(predicates));
-		return ImmutableList.copyOf(filtered);
-
-	}
-
-	private static class CompanyPredicate implements Predicate<Company> {
-
-		private final String value;
-
-		CompanyPredicate(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getCompany().toLowerCase().startsWith(value.trim().toLowerCase());
-		}
-
-	}
-
-	private static class VisiblePredicate implements Predicate<Company> {
-		private final boolean flag;
-
-		VisiblePredicate(boolean flag) {
-			this.flag = flag;
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.isVisible() == flag;
-		}
-
-	}
-
-	private static class SizePredicate implements Predicate<Company> {
-		private final List<String> values;
-
-		SizePredicate(List<String> values) {
-			this.values = values;
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return values.contains(company.getSize().getLabel());
-		}
-
+		return companies.values().stream().filter(predicates).collect(Collectors.toList());
 	}
 
 	private static class IdPredicate implements Predicate<Company> {
@@ -181,7 +126,7 @@ public class CompanyDataBean {
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			switch (comparison) {
 			case EQUAL:
 				return company.getId() == value.intValue();
@@ -206,7 +151,7 @@ public class CompanyDataBean {
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			switch (comparison) {
 			case EQUAL:
 				return company.getPrice().compareTo(
@@ -225,16 +170,16 @@ public class CompanyDataBean {
 	private static class DatePredicate implements Predicate<Company> {
 		private final Comparison comparison;
 
-		private final Date value;
+		private final LocalDate value;
 
-		DatePredicate(Comparison comparison, Date value) {
+		DatePredicate(Comparison comparison, LocalDate value) {
 			this.comparison = comparison;
 			this.value = value;
 		}
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			switch (comparison) {
 			case EQUAL:
 				return company.getDate().compareTo(value) == 0;

@@ -16,9 +16,8 @@
 package ch.rasc.extdirectspring.demo.filterbar;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.joda.time.LocalDate;
 
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 

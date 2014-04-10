@@ -15,12 +15,12 @@
  */
 package ch.rasc.extdirectspring.demo.bancha;
 
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+import java.time.LocalDateTime;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeDeserializer;
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,8 +33,8 @@ public class User {
 
 	private String login;
 
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private DateTime created;
+	@DateTimeFormat
+	private LocalDateTime created;
 
 	private String email;
 
@@ -68,13 +68,13 @@ public class User {
 		this.login = login;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getCreated() {
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	public LocalDateTime getCreated() {
 		return created;
 	}
 
-	@JsonDeserialize(using = ISO8601DateTimeDeserializer.class)
-	public void setCreated(DateTime created) {
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 

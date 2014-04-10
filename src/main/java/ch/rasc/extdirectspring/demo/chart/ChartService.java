@@ -16,20 +16,21 @@
 package ch.rasc.extdirectspring.demo.chart;
 
 import java.text.DateFormatSymbols;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.Lists;
 
 @Service
 public class ChartService {
@@ -38,16 +39,8 @@ public class ChartService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "area")
 	public List<AreaData> getAreaData() {
-
-		List<AreaData> result = Lists.newArrayList();
-
 		String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
-
-		for (String month : months) {
-			result.add(new AreaData(month));
-		}
-
-		return result;
+		return Arrays.stream(months).map(AreaData::new).collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -56,10 +49,10 @@ public class ChartService {
 
 		List<SiteInfo> siteInfo = (List<SiteInfo>) session.getAttribute("siteInfos");
 		if (siteInfo == null) {
-			siteInfo = Lists.newArrayList();
+			siteInfo = new ArrayList<>();
 			session.setAttribute("siteInfos", siteInfo);
 
-			LocalDate ld = new LocalDate(2011, 1, 1);
+			LocalDate ld = LocalDate.of(2011, 1, 1);
 			siteInfo.add(new SiteInfo(ld, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1));
 		} else {
 			SiteInfo lastSiteInfo = siteInfo.get(siteInfo.size() - 1);
@@ -86,7 +79,7 @@ public class ChartService {
 		SiteInfo newSiteInfo;
 
 		if (lastSiteInfo == null) {
-			LocalDate ld = new LocalDate(2011, 1, 1);
+			LocalDate ld = LocalDate.of(2011, 1, 1);
 			newSiteInfo = new SiteInfo(ld, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1);
 		} else {
 
@@ -109,7 +102,7 @@ public class ChartService {
 	@ExtDirectMethod(group = "live")
 	public List<SiteInfo> getFirst10SiteInfos(HttpSession session) {
 		session.removeAttribute("lastSiteInfo");
-		List<SiteInfo> result = Lists.newArrayList();
+		List<SiteInfo> result = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			result.add(getNextSiteInfo(session));
 		}

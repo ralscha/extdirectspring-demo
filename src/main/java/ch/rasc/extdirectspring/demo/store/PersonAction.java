@@ -15,9 +15,12 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,13 +34,7 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.bean.Field;
 import ch.ralscha.extdirectspring.bean.MetaData;
 import ch.ralscha.extdirectspring.bean.SortDirection;
-import ch.ralscha.extdirectspring.bean.SortInfo;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class PersonAction {
@@ -47,7 +44,7 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public List<Person> load(ExtDirectStoreReadRequest request) {
-		return dataBean.findPersons(request.getQuery());
+		return dataBean.findPersons(request.getQuery()).stream().collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
@@ -56,50 +53,44 @@ public class PersonAction {
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
 
-		Ordering<Person> ordering = null;
+		Comparator<Person> comparator = null;
 
 		if (StringUtils.hasText(request.getGroupBy())) {
-			ordering = PropertyOrderingFactory.createOrdering(request.getGroupBy());
-			if (ordering != null) {
+			comparator = PropertyComparatorFactory.createComparator(request.getGroupBy());
+			if (comparator != null) {
 				if (request.isDescendingGroupSort()) {
-					ordering = ordering.reverse();
+					comparator = comparator.reversed();
 				}
 			}
 		}
 
-		Collection<SortInfo> sorters = request.getSorters();
-		if (!sorters.isEmpty()) {
-			for (SortInfo sortInfo : sorters) {
+		Stream<Person> personsStream = persons.stream();
 
-				Ordering<Person> colOrder = PropertyOrderingFactory.createOrdering(sortInfo.getProperty());
-				if (colOrder != null) {
-					if (sortInfo.getDirection() == SortDirection.DESCENDING) {
-						colOrder = colOrder.reverse();
-					}
-					if (ordering == null) {
-						ordering = colOrder;
-					} else {
-						ordering = ordering.compound(colOrder);
-					}
-				}
-
+		Comparator<Person> comparatorFromSorters = PropertyComparatorFactory.createComparatorFromSorters(request
+				.getSorters());
+		
+		if (comparatorFromSorters != null) {
+			if (comparator == null) {
+				comparator = comparatorFromSorters;
+			} else {
+				comparator = comparator.thenComparing(comparatorFromSorters);
 			}
 		}
-
-		if (ordering != null) {
-			persons = ordering.sortedCopy(persons);
+		
+		if (comparator != null) {
+			personsStream = personsStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			persons = persons.subList(request.getStart(), Math.min(totalSize, request.getStart() + request.getLimit()));
+			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, persons);
+		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
 	public ExtDirectStoreResult<Person> create(List<Person> newPersons) {
-		List<Person> insertedPersons = Lists.newArrayList();
+		List<Person> insertedPersons = new ArrayList<>();
 
 		for (Person newPerson : newPersons) {
 			dataBean.insert(newPerson);
@@ -112,7 +103,7 @@ public class PersonAction {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
 	public ExtDirectStoreResult<Person> update(List<Person> modifiedPersons) {
 
-		List<Person> updatedRecords = Lists.newArrayList();
+		List<Person> updatedRecords = new ArrayList<>();
 
 		for (Person modifiedPerson : modifiedPersons) {
 			Person p = dataBean.findPerson(modifiedPerson.getId());
@@ -127,7 +118,7 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
 	public ExtDirectStoreResult<Integer> destroy(List<Integer> destroyIds) {
-		List<Integer> deletedPersonsId = Lists.newArrayList();
+		List<Integer> deletedPersonsId = new ArrayList<>();
 
 		for (Integer id : destroyIds) {
 			dataBean.deletePerson(id);
@@ -139,13 +130,7 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public Set<State> getStates() {
-		List<Person> persons = dataBean.findPersons(null);
-		Set<State> states = Sets.newTreeSet();
-		for (Person person : persons) {
-			states.add(new State(person.getState()));
-		}
-
-		return states;
+		return dataBean.findPersons(null).stream().map(p -> new State(p.getState())).collect(Collectors.toSet());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
@@ -154,21 +139,15 @@ public class PersonAction {
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Ordering<Person> ordering = PropertyOrderingFactory.createOrdering("fullName");
-		persons = ordering.reverse().sortedCopy(persons);
+		Stream<Person> personsStream = persons.stream().sorted(Comparator.comparing(Person::getFullName).reversed());
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			persons = persons.subList(request.getStart(), Math.min(totalSize, request.getStart() + request.getLimit()));
+			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
 		} else {
-			persons = persons.subList(0, 100);
+			personsStream = personsStream.limit(100);
 		}
 
-		List<PersonFullName> personFullNameList = Lists.transform(persons, new Function<Person, PersonFullName>() {
-			@Override
-			public PersonFullName apply(Person person) {
-				return new PersonFullName(person);
-			}
-		});
+		List<PersonFullName> personFullNameList = personsStream.map(PersonFullName::new).collect(Collectors.toList());
 
 		ExtDirectStoreResult<PersonFullName> response = new ExtDirectStoreResult<>(totalSize, personFullNameList);
 
@@ -199,25 +178,16 @@ public class PersonAction {
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Ordering<Person> ordering = PropertyOrderingFactory.createOrdering("city");
-		persons = ordering.sortedCopy(persons);
+		Stream<Person> personsStream = persons.stream().sorted(Comparator.comparing(Person::getCity));
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			persons = persons.subList(request.getStart(), Math.min(totalSize, request.getStart() + request.getLimit()));
+			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
 		} else {
-			persons = persons.subList(0, 50);
+			personsStream = personsStream.limit(50);
 		}
 
-		List<PersonFullNameCity> personFullNameCityList = Lists.transform(persons,
-				new Function<Person, PersonFullNameCity>() {
-					@Override
-					public PersonFullNameCity apply(Person person) {
-						return new PersonFullNameCity(person);
-					}
-				});
-
-		ExtDirectStoreResult<PersonFullNameCity> response = new ExtDirectStoreResult<>(totalSize,
-				personFullNameCityList);
+		ExtDirectStoreResult<PersonFullNameCity> response = new ExtDirectStoreResult<>(totalSize, personsStream.map(
+				PersonFullNameCity::new).collect(Collectors.toList()));
 
 		// Send metadata only the first time
 		if (request.getStart() == null || request.getStart() == 0) {
@@ -255,40 +225,27 @@ public class PersonAction {
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
 
-		Ordering<Person> ordering = null;
-
-		Collection<SortInfo> sorters = request.getSorters();
-		if (!sorters.isEmpty()) {
-			for (SortInfo sortInfo : sorters) {
-
-				Ordering<Person> colOrder = PropertyOrderingFactory.createOrdering(sortInfo.getProperty());
-				if (colOrder != null) {
-					if (sortInfo.getDirection() == SortDirection.DESCENDING) {
-						colOrder = colOrder.reverse();
-					}
-					if (ordering == null) {
-						ordering = colOrder;
-					} else {
-						ordering = ordering.compound(colOrder);
-					}
-				}
-
-			}
+		Comparator<Person> comparator;
+		if (!request.getSorters().isEmpty()) {
+			comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
 		} else {
-			ordering = PropertyOrderingFactory.createOrdering("lastName");
+			comparator = Comparator.comparing(Person::getLastName);
 		}
 
-		if (ordering != null) {
-			persons = ordering.sortedCopy(persons);
+		Stream<Person> personsStream = persons.stream();
+
+		if (comparator != null) {
+			personsStream = personsStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			persons = persons.subList(request.getStart(), Math.min(totalSize, request.getStart() + request.getLimit()));
+			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
 		} else {
-			persons = persons.subList(0, 60);
+			personsStream = personsStream.limit(60);
 		}
 
-		ExtDirectStoreResult<Person> response = new ExtDirectStoreResult<>(totalSize, persons);
+		ExtDirectStoreResult<Person> response = new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors
+				.toList()));
 
 		// Send metadata only the first time
 		if ((request.getStart() == null || request.getStart() == 0) && request.getSort() == null

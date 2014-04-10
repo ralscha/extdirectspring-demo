@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.rasc.extdirectspring.demo.filter;
+package ch.rasc.extdirectspring.demo.util;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-public class MyDateSerializer extends JsonSerializer<Date> {
-	@Override
-	public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+public class DMYLocalDateSerializer extends JsonSerializer<LocalDate> {
 
-		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		jgen.writeString(formatter.format(value.getTime()));
+	@Override
+	public void serialize(LocalDate value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+			JsonProcessingException {
+		jgen.writeString(value.format(Constants.ddMMYYYY_FORMATTER));
 	}
 }

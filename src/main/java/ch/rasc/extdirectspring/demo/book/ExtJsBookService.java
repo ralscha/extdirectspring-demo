@@ -15,14 +15,14 @@
  */
 package ch.rasc.extdirectspring.demo.book;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.ImmutableList;
 
 @Service
 public class ExtJsBookService {
@@ -32,10 +32,10 @@ public class ExtJsBookService {
 		return BOOKS;
 	}
 
-	private static final ImmutableList<Book> BOOKS;
+	private static final List<Book> BOOKS;
 
 	static {
-		ImmutableList.Builder<Book> builder = new ImmutableList.Builder<>();
+		List<Book> builder = new ArrayList<>();
 
 		Book book = new Book();
 		book.setId(1);
@@ -78,7 +78,7 @@ public class ExtJsBookService {
 		book.setDescription(descr);
 		builder.add(book);
 
-		BOOKS = builder.build();
+		BOOKS = Collections.unmodifiableList(builder);
 	}
 
 }

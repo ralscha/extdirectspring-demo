@@ -15,14 +15,13 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.common.collect.Maps;
 
 @Controller
 public class ContactService {
@@ -31,8 +30,7 @@ public class ContactService {
 	@RequestMapping(value = "/postContact", method = RequestMethod.POST)
 	public Map<String, Object> postContact(Contact contact) {
 		System.out.println(contact);
-		Map<String, Object> result = Maps.newHashMap();
-		result.put("success", true);
-		return result;
+
+		return Collections.singletonMap("success", true);
 	}
 }

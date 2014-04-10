@@ -15,20 +15,23 @@
  */
 package ch.rasc.extdirectspring.demo.simpleapp;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class UserService {
@@ -40,32 +43,33 @@ public class UserService {
 	public ExtDirectStoreResult<User> load(ExtDirectStoreReadRequest request) {
 
 		StringFilter filter = request.getFirstFilterForField("filter");
-		List<User> users;
-		if (filter == null || filter.getValue().trim().isEmpty()) {
-			users = userDb.getAll();
+		Stream<User> usersStream;	
+		int totalSize;
+		if (filter == null || StringUtils.isEmpty(filter.getValue())) {
+			Collection<User> users = userDb.getAll();
+			totalSize = users.size();
+			usersStream = users.stream();
 		} else {
-			users = userDb.get(filter.getValue());
+			List<User> users = userDb.filter(filter.getValue());
+			totalSize = users.size();
+			usersStream = users.stream();
 		}
 
-		int totalSize = users.size();
-
-		Ordering<User> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			users = ordering.sortedCopy(users);
+		Comparator<User> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		if (comparator != null) {
+			usersStream = usersStream.sorted(comparator);
 		}
 
 		if (request.getPage() != null && request.getLimit() != null) {
-			int start = (request.getPage() - 1) * request.getLimit();
-			int end = Math.min(totalSize, start + request.getLimit());
-			users = Lists.newArrayList(users).subList(start, Math.min(totalSize, end));
+			usersStream = usersStream.skip(request.getStart()).limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, users, true);
+		return new ExtDirectStoreResult<>(totalSize, usersStream.collect(Collectors.toList()), true);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")
 	public List<User> create(List<User> newUsers) {
-		List<User> insertedUsers = Lists.newArrayList();
+		List<User> insertedUsers = new ArrayList<>();
 
 		for (User newUser : newUsers) {
 			userDb.insert(newUser);
@@ -77,7 +81,7 @@ public class UserService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")
 	public List<User> update(List<User> modifiedUsers) {
-		List<User> updatedRecords = Lists.newArrayList();
+		List<User> updatedRecords = new ArrayList<>();
 		for (User modifiedUser : modifiedUsers) {
 			User u = userDb.findUser(modifiedUser.getId());
 			if (u != null) {

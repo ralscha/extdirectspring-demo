@@ -15,25 +15,26 @@
  */
 package ch.rasc.extdirectspring.demo.grid;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class TurnoverService {
 
-	private final ImmutableList<Company> companies;
+	private final List<Company> companies;
 
 	public TurnoverService() {
-		ImmutableList.Builder<Company> builder = new ImmutableList.Builder<>();
+		List<Company> builder = new ArrayList<>();
 
 		builder.add(new Company("ABC Accounting", 50000));
 		builder.add(new Company("Ezy Video Rental", 106300));
@@ -42,15 +43,15 @@ public class TurnoverService {
 		builder.add(new Company("Ripped Gym", 88400));
 		builder.add(new Company("Smith Auto Mechanic", 222980));
 
-		companies = builder.build();
+		companies = Collections.unmodifiableList(builder);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "turnover")
 	public List<Company> getTurnovers(ExtDirectStoreReadRequest request) {
 
-		Ordering<Company> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			return ordering.sortedCopy(companies);
+		Comparator<Company> comparator = PropertyComparatorFactory.createComparatorFromSorters((request.getSorters()));
+		if (comparator != null) {
+			return companies.stream().sorted(comparator).collect(Collectors.toList());
 		}
 
 		return companies;

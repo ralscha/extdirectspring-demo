@@ -17,48 +17,44 @@ package ch.rasc.extdirectspring.demo.filterbar;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.ralscha.extdirectspring.bean.SortDirection;
-import ch.ralscha.extdirectspring.bean.SortInfo;
 import ch.ralscha.extdirectspring.filter.Comparison;
 import ch.ralscha.extdirectspring.filter.DateFilter;
 import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.ListFilter;
 import ch.ralscha.extdirectspring.filter.NumericFilter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class CompanyService {
 
-	private final static ImmutableList<Company> companies;
+	private final static List<Company> companies;
 
 	private final static Map<String, Collection<String>> autoStore;
 
 	static {
-		ImmutableList.Builder<Company> builder = ImmutableList.builder();
+		List<Company> builder = new ArrayList<>();
 		builder.add(new Company(1, "3m Co", "71.72", "0.02", "0.03", "Category 1", "Country 1", 0));
 		builder.add(new Company(2, "Alcoa Inc", "29.01", "0.42", "1.47", "Category 2", "Country 10", 0));
 		builder.add(new Company(3, "Altria Group Inc", "83.81", "0.28", "0.34", "Category 3", "Country 9", 0));
@@ -93,12 +89,12 @@ public class CompanyService {
 		builder.add(new Company(27, "United Technologies Corporation", "63.26", "0.55", "0.88", "Category 5", null, 0));
 		builder.add(new Company(28, "Verizon Communications", "35.57", "0.39", "1.11", "Category 6", "Country 0", 0));
 		builder.add(new Company(29, "Wal-Mart Stores, Inc.", "45.45", "0.73", "1.63", "Category 1", "Country 1", 0));
-		companies = builder.build();
+		companies = Collections.unmodifiableList(builder);
 
-		autoStore = Maps.newHashMap();
+		autoStore = new HashMap<>();
 
-		SortedSet<String> countries = Sets.newTreeSet();
-		SortedSet<String> categories = Sets.newTreeSet();
+		SortedSet<String> countries = new TreeSet<>();
+		SortedSet<String> categories = new TreeSet<>();
 		for (Company company : companies) {
 			if (company.getCountry() != null) {
 				countries.add(company.getCountry());
@@ -119,65 +115,51 @@ public class CompanyService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "company")
 	public CompanyStoreReadResult read(ExtDirectStoreReadRequest request) {
 
-		Ordering<Company> ordering = getOrdering(request);
-		List<Predicate<Company>> predicates = getPredicates(request.getFilters());
+		Comparator<Company> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Predicate<Company> predicates = getPredicates(request.getFilters());
 
-		Collection<Company> resultCompanies = Collections2.filter(companies, Predicates.and(predicates));
-		if (ordering != null) {
-			resultCompanies = ordering.sortedCopy(resultCompanies);
+		Stream<Company> resultCompanies = companies.stream().filter(predicates);
+		if (comparator != null) {
+			resultCompanies = resultCompanies.sorted(comparator);
 		}
 
-		CompanyStoreReadResult result = new CompanyStoreReadResult(resultCompanies);
+		CompanyStoreReadResult result = new CompanyStoreReadResult(resultCompanies.collect(Collectors.toList()));
 		result.setAutoStores(autoStore);
 
 		return result;
 	}
 
-	private static Ordering<Company> getOrdering(ExtDirectStoreReadRequest request) {
-		Ordering<Company> ordering = null;
-		for (SortInfo sortInfo : request.getSorters()) {
+	public Predicate<Company> getPredicates(Collection<Filter> filters) {
 
-			Ordering<Company> colOrder = PropertyOrderingFactory.createOrdering(sortInfo.getProperty());
-			if (colOrder != null) {
-				if (sortInfo.getDirection() == SortDirection.DESCENDING) {
-					colOrder = colOrder.reverse();
-				}
-				if (ordering == null) {
-					ordering = colOrder;
-				} else {
-					ordering = ordering.compound(colOrder);
-				}
-			}
-		}
-		return ordering;
-	}
+		Predicate<Company> predicates = c -> true;
 
-	public List<Predicate<Company>> getPredicates(Collection<Filter> filters) {
-
-		List<Predicate<Company>> predicates = Lists.newArrayList();
 		for (Filter filter : filters) {
 
 			if (filter.getField().equals("id")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates.add(new IdPredicate(numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new IdPredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("company")) {
-				predicates.add(new CompanyPredicate(((StringFilter) filter).getValue()));
+				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
+				predicates = predicates.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			} else if (filter.getField().equals("country")) {
-				predicates.add(new CountryPredicate(((ListFilter) filter).getValue()));
+				predicates = predicates.and(new CountryPredicate(((ListFilter) filter).getValue()));
 			} else if (filter.getField().equals("category")) {
-				predicates.add(new CategoryPredicate(((ListFilter) filter).getValue()));
+				predicates = predicates.and(new CategoryPredicate(((ListFilter) filter).getValue()));
 			} else if (filter.getField().equals("price")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates.add(new PricePredicate(numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates
+						.and(new PricePredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("change")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates.add(new ChangePredicate(numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates
+						.and(new ChangePredicate(numericFilter.getComparison(), numericFilter.getValue()));
 			} else if (filter.getField().equals("pctChange")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates.add(new PctChangePredicate(numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new PctChangePredicate(numericFilter.getComparison(), numericFilter
+						.getValue()));
 			} else if (filter.getField().equals("lastChange")) {
 				DateFilter dateFilter = (DateFilter) filter;
-				predicates.add(new LastChangePredicate(dateFilter.getComparison(), dateFilter.getValue()));
+				predicates = predicates.and(new LastChangePredicate(dateFilter.getComparison(), dateFilter.getValue()));
 			}
 		}
 
@@ -197,7 +179,7 @@ public class CompanyService {
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			switch (comparison) {
 			case EQUAL:
 				return company.getId() == value.intValue();
@@ -212,31 +194,18 @@ public class CompanyService {
 		}
 	}
 
-	private static class CompanyPredicate implements Predicate<Company> {
-		private final String value;
-
-		CompanyPredicate(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getCompany().toLowerCase().startsWith(value.trim().toLowerCase());
-		}
-	}
-
 	private static class CountryPredicate implements Predicate<Company> {
 		private static final String empty = "###NULL###";
 
 		private final Set<String> values;
 
 		CountryPredicate(List<String> values) {
-			this.values = Sets.newHashSet(values);
+			this.values = new HashSet<>(values);
 		}
 
 		@Override
-		public boolean apply(Company company) {
-			return (company.getCountry() == null && values.contains(empty)) || values.contains(company.getCountry());
+		public boolean test(Company company) {
+			return company.getCountry() == null && values.contains(empty) || values.contains(company.getCountry());
 		}
 	}
 
@@ -246,12 +215,12 @@ public class CompanyService {
 		private final Set<String> values;
 
 		CategoryPredicate(List<String> values) {
-			this.values = Sets.newHashSet(values);
+			this.values = new HashSet<>(values);
 		}
 
 		@Override
-		public boolean apply(Company company) {
-			return (company.getCategory() == null && values.contains(empty)) || values.contains(company.getCategory());
+		public boolean test(Company company) {
+			return company.getCategory() == null && values.contains(empty) || values.contains(company.getCategory());
 		}
 	}
 
@@ -267,7 +236,7 @@ public class CompanyService {
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			BigDecimal v = new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
 			switch (comparison) {
 			case EQUAL:
@@ -297,7 +266,7 @@ public class CompanyService {
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			BigDecimal v = new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
 			switch (comparison) {
 			case EQUAL:
@@ -325,7 +294,7 @@ public class CompanyService {
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			BigDecimal v = new BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_UP);
 			switch (comparison) {
 			case EQUAL:
@@ -342,20 +311,18 @@ public class CompanyService {
 	}
 
 	private static class LastChangePredicate implements Predicate<Company> {
-		private final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-
 		private final Comparison comparison;
 
 		private final LocalDate value;
 
 		LastChangePredicate(Comparison comparison, String value) {
 			this.comparison = comparison;
-			this.value = LocalDate.parse(value, formatter);
+			this.value = LocalDate.parse(value);
 		}
 
 		@SuppressWarnings("incomplete-switch")
 		@Override
-		public boolean apply(Company company) {
+		public boolean test(Company company) {
 			switch (comparison) {
 			case EQUAL:
 				return company.getLastChange().compareTo(value) == 0;

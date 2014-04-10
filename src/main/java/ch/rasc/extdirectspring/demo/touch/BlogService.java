@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.touch;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 
-import com.google.common.collect.Lists;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -37,7 +37,7 @@ public class BlogService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "blog")
 	public List<Post> getBlogPosts() throws IllegalArgumentException, FeedException, IOException {
-		List<Post> posts = Lists.newArrayList();
+		List<Post> posts = new ArrayList<>();
 
 		URL feedUrl = new URL("http://feeds.feedburner.com/SenchaBlog");
 

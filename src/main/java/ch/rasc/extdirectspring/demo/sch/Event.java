@@ -15,10 +15,10 @@
  */
 package ch.rasc.extdirectspring.demo.sch;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeDeserializer;
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,14 +35,14 @@ public class Event {
 	private String name;
 
 	@JsonProperty("StartDate")
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	@JsonDeserialize(using = ISO8601DateTimeDeserializer.class)
-	private DateTime startDate;
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	private LocalDateTime startDate;
 
 	@JsonProperty("EndDate")
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	@JsonDeserialize(using = ISO8601DateTimeDeserializer.class)
-	private DateTime endDate;
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	private LocalDateTime endDate;
 
 	@JsonProperty("ResourceId")
 	private String resourceId;
@@ -75,19 +75,19 @@ public class Event {
 		this.name = name;
 	}
 
-	public DateTime getStartDate() {
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(DateTime startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
-	public DateTime getEndDate() {
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(DateTime endDate) {
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 

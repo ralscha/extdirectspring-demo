@@ -19,14 +19,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,51 +40,38 @@ import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extclassgenerator.ModelGenerator;
 import ch.rasc.extclassgenerator.OutputFormat;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
+import ch.rasc.extdirectspring.demo.util.Constants;
 
 @Controller
 public class AreService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are")
-	public ImmutableCollection<Company> read(@RequestParam(required = false) String coId,
-			ExtDirectStoreReadRequest edsRequest) {
+	public Collection<Company> read(@RequestParam(required = false) String coId, ExtDirectStoreReadRequest edsRequest) {
 		if (coId != null) {
-			return ImmutableList.of(companyDb.get(coId));
+			return Collections.singleton(companyDb.get(coId));
 		}
 
 		if (!edsRequest.getFilters().isEmpty()) {
-			List<Predicate<Company>> predicates = getPredicates(edsRequest.getFilters());
-			return ImmutableList.copyOf(Collections2.filter(companyDb.values(), Predicates.and(predicates)));
+			return companyDb.values().stream().filter(getPredicates(edsRequest.getFilters()))
+					.collect(Collectors.toList());
 		}
 
 		return companyDb.values();
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are")
-	public ImmutableCollection<History> historyRead(ExtDirectStoreReadRequest request) {
+	public Collection<History> historyRead(ExtDirectStoreReadRequest request) {
 		StringFilter filter = request.getFirstFilterForField("companyId");
 		if (filter != null) {
-			return ImmutableList.copyOf(companyDb.get(filter.getValue()).getHistory());
+			return companyDb.get(filter.getValue()).getHistory();
 		}
 
-		ImmutableList.Builder<History> allHistory = ImmutableList.builder();
-		for (Company company : companyDb.values()) {
-			allHistory.addAll(company.getHistory());
-		}
-
-		return allHistory.build();
+		return companyDb.values().stream().flatMap(c -> c.getHistory().stream()).collect(Collectors.toList());
 	}
 
-	private static ImmutableMap<String, Company> companyDb;
+	private static Map<String, Company> companyDb;
 	{
-		ImmutableMap.Builder<String, Company> builder = ImmutableMap.builder();
+		Map<String, Company> builder = new HashMap<>();
 
 		Company c = new Company("3m Co");
 		builder.put(c.getCoId(), c);
@@ -143,7 +132,7 @@ public class AreService {
 		c = new Company("Wal-Mart Stores, Inc.");
 		builder.put(c.getCoId(), c);
 
-		companyDb = builder.build();
+		companyDb = Collections.unmodifiableMap(builder);
 	}
 
 	@RequestMapping({ "/extjs42/associationrowexpander/models.js", "/extjs41/associationrowexpander/models.js" })
@@ -161,100 +150,33 @@ public class AreService {
 		out.write(code);
 	}
 
-	public List<Predicate<Company>> getPredicates(Collection<Filter> filters) {
+	public Predicate<Company> getPredicates(Collection<Filter> filters) {
 
-		List<Predicate<Company>> predicates = Lists.newArrayList();
+		Predicate<Company> predicates = c -> true;
+
 		for (Filter filter : filters) {
 
+			String value = ((StringFilter) filter).getValue().trim().toLowerCase();
 			if (filter.getField().equals("company")) {
-				predicates.add(new CompanyPredicate(((StringFilter) filter).getValue()));
+				predicates = predicates.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			} else if (filter.getField().equals("price")) {
-				predicates.add(new PricePredicate(((StringFilter) filter).getValue()));
+				predicates = predicates.and(c -> c.getPrice().compareTo(new BigDecimal(value)) == 0);
 			} else if (filter.getField().equals("change")) {
-				predicates.add(new ChangePredicate(((StringFilter) filter).getValue()));
+				predicates = predicates.and(c -> c.getChange().compareTo(new BigDecimal(value)) == 0);
 			} else if (filter.getField().equals("pctChange")) {
-				predicates.add(new PctChangePredicate(((StringFilter) filter).getValue()));
+				predicates = predicates.and(c -> c.getPctChange().compareTo(new BigDecimal(value)) == 0);
 			} else if (filter.getField().equals("lastChange")) {
-				predicates.add(new LastChangePredicate(((StringFilter) filter).getValue()));
+				LocalDate localDateValue;
+				if (value.length() > 10) {
+					localDateValue = LocalDate.parse(value.substring(0, 10));
+				} else {
+					localDateValue = LocalDate.parse(value, Constants.MMddYYYY_FORMATTER);
+				}
+				predicates = predicates.and(c -> c.getLastChange().toLocalDate().compareTo(localDateValue) == 0);
 			}
 		}
 
 		return predicates;
-
 	}
 
-	private static class CompanyPredicate implements Predicate<Company> {
-		private final String value;
-
-		CompanyPredicate(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getCompany().toLowerCase().startsWith(value.trim().toLowerCase());
-		}
-	}
-
-	private static class PricePredicate implements Predicate<Company> {
-		private final BigDecimal value;
-
-		PricePredicate(String value) {
-			this.value = new BigDecimal(value);
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getPrice().compareTo(value) == 0;
-		}
-
-	}
-
-	private static class ChangePredicate implements Predicate<Company> {
-
-		private final BigDecimal value;
-
-		ChangePredicate(String value) {
-			this.value = new BigDecimal(value);
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getChange().compareTo(value) == 0;
-		}
-	}
-
-	private static class PctChangePredicate implements Predicate<Company> {
-		private final BigDecimal value;
-
-		PctChangePredicate(String value) {
-			this.value = new BigDecimal(value);
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getPctChange().compareTo(value) == 0;
-		}
-	}
-
-	private static class LastChangePredicate implements Predicate<Company> {
-		private final DateTimeFormatter formatter1 = DateTimeFormat.forPattern("MM/dd/yyyy");
-
-		private final DateTimeFormatter formatter2 = DateTimeFormat.forPattern("yyy-MM-dd");
-
-		private final LocalDate value;
-
-		LastChangePredicate(String value) {
-			if (value.length() > 10) {
-				this.value = LocalDate.parse(value.substring(0, 10), formatter2);
-			} else {
-				this.value = LocalDate.parse(value, formatter1);
-			}
-		}
-
-		@Override
-		public boolean apply(Company company) {
-			return company.getLastChange().toLocalDate().compareTo(value) == 0;
-		}
-	}
 }

@@ -15,7 +15,11 @@
  */
 package ch.rasc.extdirectspring.demo.bigdata;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +27,7 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class EmployeeService {
@@ -37,19 +38,19 @@ public class EmployeeService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bigdata")
 	public List<Employee> read(ExtDirectStoreReadRequest request) {
 
-		List<Employee> employees;
-		employees = employeeDb.getAll();
-		Ordering<Employee> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			employees = ordering.sortedCopy(employees);
+		Stream<Employee> employees = employeeDb.getAll();
+		Comparator<Employee> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		if (comparator != null) {
+			employees = employees.sorted(comparator);
 		}
-		return employees;
+
+		return employees.collect(Collectors.toList());
 
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bigdata")
 	public List<Employee> update(List<Employee> modifiedEmployees) {
-		List<Employee> updatedRecords = Lists.newArrayList();
+		List<Employee> updatedRecords = new ArrayList<>();
 		for (Employee modifiedEmployee : modifiedEmployees) {
 			Employee e = employeeDb.findEmployee(modifiedEmployee.getEmployeeNo());
 			if (e != null) {

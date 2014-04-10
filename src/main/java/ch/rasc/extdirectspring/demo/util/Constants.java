@@ -15,21 +15,15 @@
  */
 package ch.rasc.extdirectspring.demo.util;
 
-import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
-import org.joda.time.DateTime;
+public enum Constants {
+	INSTANCE;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+	public final static DateTimeFormatter YYYYMMDD_FORMATTER = DateTimeFormatter.ofPattern("uuuuMMdd");
 
-public class ISO8601DateTimeSerializer extends JsonSerializer<DateTime> {
+	public final static DateTimeFormatter MMddYYYY_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/uuuu");
 
-	@Override
-	public void serialize(DateTime value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+	public final static DateTimeFormatter ddMMYYYY_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.uuuu");
 
-		jgen.writeString(value.toString());
-	}
 }

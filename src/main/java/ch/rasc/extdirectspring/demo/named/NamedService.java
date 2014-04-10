@@ -27,9 +27,7 @@ public class NamedService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "named")
 	public String showDetails(List<Business> bo, String firstName, String lastName, int age) {
-		for (Business b : bo) {
-			System.out.println(b);
-		}
+		bo.stream().forEach(System.out::println);
 		return String.format("Hi %s %s, you are %d years old.", firstName, lastName, age);
 	}
 }

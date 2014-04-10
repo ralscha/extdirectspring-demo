@@ -15,6 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.chart;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -23,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.ImmutableList;
 
 @Service
 public class ReportService {
@@ -35,11 +34,10 @@ public class ReportService {
 	public List<SeasonData> getSeasonData(@RequestParam(defaultValue = "50") int minRandomValue,
 			@RequestParam(value = "maxRandomValue", defaultValue = "250") int maxRandomValue) {
 
-		return new ImmutableList.Builder<SeasonData>()
-				.add(new SeasonData("Summer", randomGenerator.nextInt(maxRandomValue - minRandomValue) + minRandomValue))
-				.add(new SeasonData("Fall", randomGenerator.nextInt(maxRandomValue - minRandomValue) + minRandomValue))
-				.add(new SeasonData("Winter", randomGenerator.nextInt(maxRandomValue - minRandomValue) + minRandomValue))
-				.add(new SeasonData("Spring", randomGenerator.nextInt(maxRandomValue - minRandomValue) + minRandomValue))
-				.build();
+		return Arrays.asList(new SeasonData("Summer", randomGenerator.nextInt(maxRandomValue - minRandomValue)
+				+ minRandomValue), new SeasonData("Fall", randomGenerator.nextInt(maxRandomValue - minRandomValue)
+				+ minRandomValue), new SeasonData("Winter", randomGenerator.nextInt(maxRandomValue - minRandomValue)
+				+ minRandomValue), new SeasonData("Spring", randomGenerator.nextInt(maxRandomValue - minRandomValue)
+				+ minRandomValue));
 	}
 }

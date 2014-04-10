@@ -17,8 +17,10 @@ package ch.rasc.extdirectspring.demo.bigdata;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
@@ -28,8 +30,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 
 @Service
 public class EmployeeDb {
@@ -41,7 +41,7 @@ public class EmployeeDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		employeesStore = Maps.newHashMap();
+		employeesStore = new HashMap<>();
 		try (InputStream is = employees.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
@@ -55,8 +55,8 @@ public class EmployeeDb {
 		}
 	}
 
-	public List<Employee> getAll() {
-		return ImmutableList.copyOf(employeesStore.values());
+	public Stream<Employee> getAll() {
+		return employeesStore.values().stream();
 	}
 
 	public Employee findEmployee(String employeeNo) {

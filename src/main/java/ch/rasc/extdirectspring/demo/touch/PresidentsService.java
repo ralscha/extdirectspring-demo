@@ -15,14 +15,13 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.Lists;
 
 @Service
 public class PresidentsService {
@@ -33,7 +32,7 @@ public class PresidentsService {
 	}
 
 	private static List<President> createTestData() {
-		List<President> presidents = Lists.newArrayList();
+		List<President> presidents = new ArrayList<>();
 
 		presidents.add(new President(1, "George", null, "Washington", "georgewashington.png"));
 		presidents.add(new President(2, "John", null, "Adams", "johnadams.png"));

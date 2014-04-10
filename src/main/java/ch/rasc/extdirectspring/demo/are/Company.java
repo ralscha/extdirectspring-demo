@@ -17,21 +17,20 @@ package ch.rasc.extdirectspring.demo.are;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.joda.time.DateTime;
 
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelAssociation;
 import ch.rasc.extclassgenerator.ModelAssociationType;
 import ch.rasc.extclassgenerator.ModelField;
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 
 @Model(value = "Are.Company", readMethod = "areService.read", idProperty = "coId")
 public class Company {
@@ -50,11 +49,11 @@ public class Company {
 	private final BigDecimal pctChange;
 
 	@ModelField(dateFormat = "c", defaultValue = "undefined")
-	private final DateTime lastChange;
+	private final LocalDateTime lastChange;
 
 	@ModelAssociation(value = ModelAssociationType.HAS_MANY, model = History.class, foreignKey = "companyId", autoLoad = true)
 	@JsonIgnore
-	private final List<History> history = Lists.newArrayList();
+	private final List<History> history = new ArrayList<>();
 
 	public Company(String company) {
 		this.company = company;
@@ -63,10 +62,10 @@ public class Company {
 		this.price = new BigDecimal(rnd.nextDouble(10, 90)).setScale(2, RoundingMode.HALF_DOWN);
 		this.change = new BigDecimal(rnd.nextDouble(0.1, 2.9)).setScale(2, RoundingMode.HALF_DOWN);
 		this.pctChange = new BigDecimal(rnd.nextDouble(0.1, 9.9)).setScale(2, RoundingMode.HALF_DOWN);
-		this.lastChange = DateTime.now().minusSeconds(rnd.nextInt(86400));
+		this.lastChange = LocalDateTime.now().minusSeconds(rnd.nextInt(86400));
 
-		addHistory(new History(this, DateTime.now().minusSeconds(rnd.nextInt(3600)), "Test"));
-		addHistory(new History(this, DateTime.now().minusSeconds(rnd.nextInt(86400)), "Initial"));
+		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(3600)), "Test"));
+		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(86400)), "Initial"));
 
 	}
 
@@ -90,8 +89,8 @@ public class Company {
 		return pctChange;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getLastChange() {
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	public LocalDateTime getLastChange() {
 		return lastChange;
 	}
 

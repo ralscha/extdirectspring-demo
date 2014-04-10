@@ -15,10 +15,9 @@
  */
 package ch.rasc.extdirectspring.demo.exp;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.joda.time.LocalDate;
 
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 

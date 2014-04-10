@@ -15,9 +15,13 @@
  */
 package ch.rasc.extdirectspring.demo.calendar;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
@@ -26,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 
-import com.google.common.collect.ImmutableList;
-
 @Service
 public class CalendarService {
 
@@ -35,33 +37,21 @@ public class CalendarService {
 	private EventDb eventDb;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "calendar")
-	public ImmutableList<Event> read(
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") DateTime startDate,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") DateTime endDate) {
+	public Collection<Event> read(
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
 		return eventDb.getEvents(startDate, endDate);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")
-	public ImmutableList<Event> create(List<Event> events) {
-		ImmutableList.Builder<Event> result = ImmutableList.builder();
-
-		for (Event event : events) {
-			result.add(eventDb.insert(event));
-		}
-
-		return result.build();
+	public List<Event> create(List<Event> events) {
+		return events.stream().map(e -> eventDb.insert(e)).collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")
-	public ImmutableList<Event> update(List<Event> events) {
-		ImmutableList.Builder<Event> result = ImmutableList.builder();
-
-		for (Event event : events) {
-			result.add(eventDb.update(event));
-		}
-
-		return result.build();
+	public List<Event> update(List<Event> events) {
+		return events.stream().map(e -> eventDb.update(e)).collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")
@@ -72,15 +62,15 @@ public class CalendarService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "calendar")
-	public ImmutableList<Calendar> readCalendars() {
+	public List<Calendar> readCalendars() {
 
-		ImmutableList.Builder<Calendar> builder = ImmutableList.builder();
+		List<Calendar> builder = new ArrayList<>();
 
 		builder.add(new Calendar(1, "Home", 2));
 		builder.add(new Calendar(2, "Work", 22));
 		builder.add(new Calendar(3, "School", 7));
 
-		return builder.build();
+		return Collections.unmodifiableList(builder);
 	}
 
 }

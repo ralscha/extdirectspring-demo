@@ -15,8 +15,9 @@
  */
 package ch.rasc.extdirectspring.demo.bancha;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 
@@ -26,16 +27,13 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-
 @Service
 public class BookService {
 
 	@Autowired
 	private UserService userService;
 
-	private final static Map<Integer, Book> bookDb = Maps.newConcurrentMap();
+	private final static Map<Integer, Book> bookDb = new ConcurrentHashMap<>();
 
 	@PostConstruct
 	public void init() {
@@ -44,14 +42,14 @@ public class BookService {
 			b.setId(i + 1);
 			b.setTitle("Book " + (i + 1));
 			b.setPublished(i % 3 == 0);
-			b.setUser_id((i % 4) + 1);
+			b.setUser_id(i % 4 + 1);
 			bookDb.put(b.getId(), b);
 		}
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bancha")
-	public List<Book> read() {
-		return ImmutableList.copyOf(bookDb.values());
+	public Collection<Book> read() {
+		return bookDb.values();
 	}
 
 }

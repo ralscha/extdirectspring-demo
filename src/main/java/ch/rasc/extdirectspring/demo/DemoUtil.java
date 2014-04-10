@@ -16,6 +16,7 @@
 package ch.rasc.extdirectspring.demo;
 
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -27,15 +28,13 @@ import org.springframework.util.StringUtils;
 import ch.ralscha.extdirectspring.bean.DataType;
 import ch.ralscha.extdirectspring.bean.Field;
 
-import com.google.common.collect.Lists;
-
 public class DemoUtil {
 	private DemoUtil() {
 		// singleton
 	}
 
 	public static List<Field> getFields(Class<?> clazz, String... excludeProperties) {
-		List<Field> fields = Lists.newArrayList();
+		List<Field> fields = new ArrayList<>();
 
 		Set<String> exclude = new HashSet<>();
 

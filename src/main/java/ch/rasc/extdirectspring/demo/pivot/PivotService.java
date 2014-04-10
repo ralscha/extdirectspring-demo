@@ -19,13 +19,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.PostConstruct;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -33,9 +36,6 @@ import org.springframework.stereotype.Service;
 import au.com.bytecode.opencsv.CSVReader;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 @Service
 public class PivotService {
@@ -47,7 +47,7 @@ public class PivotService {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+		Map<String, String> builder = new HashMap<>();
 
 		try (InputStream is = countries.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -60,14 +60,15 @@ public class PivotService {
 			}
 		}
 
-		countriesMap = builder.build();
+		countriesMap = Collections.unmodifiableMap(builder);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "pivot")
 	public List<Economy> getEconomiesData() {
-		int currentYear = DateTime.now().getYear();
+		int currentYear = LocalDateTime.now().getYear();
 
-		ImmutableList.Builder<Economy> builder = ImmutableList.builder();
+		List<Economy> builder = new ArrayList<>();
+
 		for (String economy : countriesMap.keySet()) {
 
 			for (int i = 0; i < ThreadLocalRandom.current().nextInt(1, 3); i++) {
@@ -79,7 +80,7 @@ public class PivotService {
 			}
 
 		}
-		return builder.build();
+		return Collections.unmodifiableList(builder);
 	}
 
 }

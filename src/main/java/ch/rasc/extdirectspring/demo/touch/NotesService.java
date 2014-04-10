@@ -15,6 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class NotesService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchnote")
-	public List<Note> readNotes() {
+	public Collection<Note> readNotes() {
 		return notesDb.readAll();
 	}
 

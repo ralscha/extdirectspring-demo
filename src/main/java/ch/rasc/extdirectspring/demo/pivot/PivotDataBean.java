@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -28,8 +30,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import au.com.bytecode.opencsv.CSVReader;
-
-import com.google.common.collect.ImmutableList;
 
 @Service
 public class PivotDataBean {
@@ -41,7 +41,7 @@ public class PivotDataBean {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		ImmutableList.Builder<Sale> builder = ImmutableList.builder();
+		List<Sale> builder = new ArrayList<>();
 
 		try (InputStream is = pivotdata.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -52,7 +52,7 @@ public class PivotDataBean {
 			}
 		}
 
-		sales = builder.build();
+		sales = Collections.unmodifiableList(builder);
 	}
 
 	public List<Sale> getSalesData() {

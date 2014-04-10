@@ -19,22 +19,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import au.com.bytecode.opencsv.CSVReader;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 
 @Service
 public class RandomDataBean {
@@ -48,9 +47,9 @@ public class RandomDataBean {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		persons = Maps.newHashMap();
+		persons = new HashMap<>();
 		try (InputStream is = randomdata.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is, Charsets.UTF_8.name()));
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
@@ -63,18 +62,13 @@ public class RandomDataBean {
 	}
 
 	public List<Person> findPersons(final String query) {
-		if (query != null && !query.trim().isEmpty()) {
-			Iterable<Person> filtered = Iterables.filter(persons.values(), new Predicate<Person>() {
-
-				@Override
-				public boolean apply(Person input) {
-					return input.getLastName().toLowerCase().startsWith(query.toLowerCase());
-				}
-			});
-			return ImmutableList.copyOf(filtered);
+		if (StringUtils.hasText(query)) {
+			String lowerCaseQuery = query.toLowerCase();
+			return persons.values().stream().filter(p -> p.getLastName().toLowerCase().startsWith(lowerCaseQuery))
+					.collect(Collectors.toList());
 		}
 
-		return ImmutableList.copyOf(persons.values());
+		return new ArrayList<>(persons.values());
 	}
 
 	public Person findPerson(String id) {
@@ -94,6 +88,10 @@ public class RandomDataBean {
 		p.setId(String.valueOf(maxId));
 		persons.put(maxId, p);
 		return p;
+	}
+
+	public int totalSize() {
+		return persons.size();
 	}
 
 }

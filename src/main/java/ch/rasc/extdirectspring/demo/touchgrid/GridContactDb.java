@@ -17,8 +17,10 @@ package ch.rasc.extdirectspring.demo.touchgrid;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
@@ -28,8 +30,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 
 @Service
 public class GridContactDb {
@@ -43,7 +43,7 @@ public class GridContactDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		gridContactStore = Maps.newHashMap();
+		gridContactStore = new HashMap<>();
 		try (InputStream is = contacts.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
@@ -59,8 +59,8 @@ public class GridContactDb {
 		totalSize = gridContactStore.size();
 	}
 
-	public List<GridContact> getAll() {
-		return ImmutableList.copyOf(gridContactStore.values());
+	public Stream<GridContact> getAll() {
+		return gridContactStore.values().stream();
 	}
 
 	public int getTotalSize() {

@@ -15,16 +15,14 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 
-import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.ImmutableList;
 
 @Service
 public class NotesDb {
@@ -50,27 +48,25 @@ public class NotesDb {
 	@PostConstruct
 	public void addTestData() {
 		Note n = new Note();
-		n.setDateCreated(LocalDate.now().toDate());
+		n.setDateCreated(LocalDate.now());
 		n.setTitle("Test Note");
 		n.setNarrative("This is a simple test note");
 		addOrUpdate(n);
 
 		n = new Note();
-		n.setDateCreated(LocalDate.now().plusDays(1).toDate());
+		n.setDateCreated(LocalDate.now().plusDays(1));
 		n.setTitle("Test Note 2 ");
 		n.setNarrative("This is a second test note");
 		addOrUpdate(n);
 
 		n = new Note();
-		n.setDateCreated(LocalDate.now().plusDays(2).toDate());
+		n.setDateCreated(LocalDate.now().plusDays(2));
 		n.setTitle("Test Note 3 ");
 		n.setNarrative("This is a third test note");
 		addOrUpdate(n);
 	}
 
-	public List<Note> readAll() {
-		ImmutableList.Builder<Note> builder = ImmutableList.builder();
-		builder.addAll(map.values());
-		return builder.build();
+	public Collection<Note> readAll() {
+		return map.values();
 	}
 }

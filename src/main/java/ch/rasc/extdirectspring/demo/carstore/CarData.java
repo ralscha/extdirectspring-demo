@@ -15,9 +15,8 @@
  */
 package ch.rasc.extdirectspring.demo.carstore;
 
+import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.ImmutableList;
 
 public class CarData {
 
@@ -31,7 +30,7 @@ public class CarData {
 
 	private final String img;
 
-	private final ImmutableList<Quality> quality;
+	private final List<Quality> quality;
 
 	public CarData(String manufacturer, String model, int price, String wiki, String img, Quality... quality) {
 		this.manufacturer = manufacturer;
@@ -39,7 +38,7 @@ public class CarData {
 		this.price = price;
 		this.wiki = wiki;
 		this.img = img;
-		this.quality = ImmutableList.copyOf(quality);
+		this.quality = Arrays.asList(quality);
 	}
 
 	public String getManufacturer() {

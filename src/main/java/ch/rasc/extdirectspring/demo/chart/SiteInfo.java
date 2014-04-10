@@ -16,8 +16,9 @@
 package ch.rasc.extdirectspring.demo.chart;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-import org.joda.time.LocalDate;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -40,7 +41,7 @@ public class SiteInfo implements Serializable {
 		this.veins = veins;
 	}
 
-	@JsonSerialize(using = MyLocalDateSerializer.class)
+	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
 	public LocalDate getDate() {
 		return date;
 	}

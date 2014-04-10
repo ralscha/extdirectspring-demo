@@ -16,8 +16,7 @@
 package ch.rasc.extdirectspring.demo.bigdata;
 
 import java.math.BigDecimal;
-
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 import ch.rasc.extdirectspring.demo.util.YMDLocalDateDeserializer;
 import ch.rasc.extdirectspring.demo.util.YMDLocalDateSerializer;

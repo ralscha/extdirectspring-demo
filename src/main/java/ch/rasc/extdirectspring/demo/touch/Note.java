@@ -15,10 +15,10 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import ch.rasc.extdirectspring.demo.util.DMYDateDeserializer;
-import ch.rasc.extdirectspring.demo.util.DMYDateSerializer;
+import ch.rasc.extdirectspring.demo.util.DMYLocalDateDeserializer;
+import ch.rasc.extdirectspring.demo.util.DMYLocalDateSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Note {
 	private Integer id;
 
-	private Date dateCreated;
+	private LocalDate dateCreated;
 
 	private String title;
 
@@ -40,13 +40,13 @@ public class Note {
 		this.id = id;
 	}
 
-	@JsonSerialize(using = DMYDateSerializer.class)
-	public Date getDateCreated() {
+	@JsonSerialize(using = DMYLocalDateSerializer.class)
+	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
 
-	@JsonDeserialize(using = DMYDateDeserializer.class)
-	public void setDateCreated(Date date) {
+	@JsonDeserialize(using = DMYLocalDateDeserializer.class)
+	public void setDateCreated(LocalDate date) {
 		this.dateCreated = date;
 	}
 

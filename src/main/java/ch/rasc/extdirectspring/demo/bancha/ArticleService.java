@@ -15,13 +15,18 @@
  */
 package ch.rasc.extdirectspring.demo.bancha;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +35,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class ArticleService {
@@ -42,7 +43,7 @@ public class ArticleService {
 	@Autowired
 	private UserService userService;
 
-	private final static Map<Integer, Article> articleDb = Maps.newConcurrentMap();
+	private final static Map<Integer, Article> articleDb = new ConcurrentHashMap<>();
 
 	private final static AtomicInteger maxId = new AtomicInteger(35);
 
@@ -53,9 +54,9 @@ public class ArticleService {
 			a.setId(i + 1);
 			a.setTitle("Title " + (i + 1));
 			a.setBody("This is the body " + (i + 1));
-			a.setDate(new DateTime(2012, 11, i % 30 + 1, 11, 51, 55));
+			a.setDate(LocalDateTime.of(2012, 11, i % 30 + 1, 11, 51, 55));
 			a.setPublished(i % 3 == 0);
-			a.setUser_id((i % 4) + 1);
+			a.setUser_id(i % 4 + 1);
 			articleDb.put(a.getId(), a);
 		}
 	}
@@ -63,30 +64,30 @@ public class ArticleService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bancha")
 	public ExtDirectStoreResult<Article> read(ExtDirectStoreReadRequest request) {
 
-		List<Article> result = ImmutableList.copyOf(articleDb.values());
+		Collection<Article> result = articleDb.values();
+		int totalSize = result.size();
 
-		Ordering<Article> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			result = ordering.sortedCopy(result);
+		Stream<Article> resultStream = result.stream();
+
+		Comparator<Article> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		if (comparator != null) {
+			resultStream = resultStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			result = result.subList(request.getStart(),
-					Math.min(articleDb.size(), request.getStart() + request.getLimit()));
+			resultStream = resultStream.skip(request.getStart()).limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(articleDb.size(), result);
+		return new ExtDirectStoreResult<>(totalSize, resultStream.collect(Collectors.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")
 	public List<Article> create(List<Article> newArticles) {
-		ImmutableList.Builder<Article> result = ImmutableList.builder();
-		for (Article article : newArticles) {
-			article.setId(maxId.incrementAndGet());
-			articleDb.put(article.getId(), article);
-			result.add(article);
-		}
-		return result.build();
+		return newArticles.stream().map(a -> {
+			a.setId(maxId.incrementAndGet());
+			articleDb.put(a.getId(), a);
+			return a;
+		}).collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")

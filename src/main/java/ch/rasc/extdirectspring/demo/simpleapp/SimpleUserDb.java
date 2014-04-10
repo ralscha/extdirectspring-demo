@@ -19,10 +19,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -32,27 +34,21 @@ import org.springframework.stereotype.Service;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-
 @Service
 public class SimpleUserDb {
 
 	@Autowired
 	private Resource userdata;
 
-	private int maxId;
+	private volatile int maxId;
 
 	private Map<String, User> users;
 
-	private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
-
 	@PostConstruct
 	public void readData() throws IOException {
-		users = Maps.newHashMap();
+		users = new ConcurrentHashMap<>();
 		try (InputStream is = userdata.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is, Charsets.UTF_8.name()));
+				BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
@@ -63,54 +59,36 @@ public class SimpleUserDb {
 		}
 	}
 
-	public List<User> getAll() {
-		return ImmutableList.copyOf(users.values());
+	public Collection<User> getAll() {
+		return users.values();
 	}
 
-	public List<User> get(String filter) {
+	public List<User> filter(String filter) {
 		String lowerCaseFilter = filter.toLowerCase();
-		ImmutableList.Builder<User> builder = ImmutableList.builder();
-		for (User user : users.values()) {
-			if (user.getLastName().toLowerCase().contains(lowerCaseFilter)
-					|| user.getFirstName().toLowerCase().contains(lowerCaseFilter)
-					|| user.getEmail().toLowerCase().contains(lowerCaseFilter)
-					|| user.getCity().toLowerCase().contains(lowerCaseFilter)) {
-				builder.add(user);
-			}
-		}
 
-		return builder.build();
+		return users
+				.values()
+				.stream()
+				.filter(user -> user.getLastName().toLowerCase().contains(lowerCaseFilter)
+						|| user.getFirstName().toLowerCase().contains(lowerCaseFilter)
+						|| user.getEmail().toLowerCase().contains(lowerCaseFilter)
+						|| user.getCity().toLowerCase().contains(lowerCaseFilter)).collect(Collectors.toList());
 
 	}
 
 	public User findUser(String id) {
-		rwLock.readLock().lock();
-		try {
-			return users.get(id);
-		} finally {
-			rwLock.readLock().unlock();
-		}
+		return users.get(id);
 	}
 
 	public void deleteUser(User user) {
-		rwLock.writeLock().lock();
-		try {
-			users.remove(user.getId());
-		} finally {
-			rwLock.writeLock().unlock();
-		}
+		users.remove(user.getId());
 	}
 
 	public User insert(User p) {
-		rwLock.writeLock().lock();
-		try {
-			maxId = maxId + 1;
-			p.setId(String.valueOf(maxId));
-			users.put(String.valueOf(maxId), p);
-			return p;
-		} finally {
-			rwLock.writeLock().unlock();
-		}
+		maxId = maxId + 1;
+		p.setId(String.valueOf(maxId));
+		users.put(String.valueOf(maxId), p);
+		return p;
 	}
 
 }

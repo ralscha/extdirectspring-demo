@@ -15,7 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 public class State implements Comparable<State> {
 
@@ -44,7 +44,7 @@ public class State implements Comparable<State> {
 			return false;
 		}
 		State other = (State) o;
-		return Objects.equal(state, other.getState());
+		return Objects.equals(state, other.getState());
 	}
 
 	@Override

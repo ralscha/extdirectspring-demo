@@ -15,7 +15,10 @@
  */
 package ch.rasc.extdirectspring.demo.touchgrid;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +27,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class GridContactService {
@@ -37,18 +38,15 @@ public class GridContactService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchgrid")
 	public ExtDirectStoreResult<GridContact> read(ExtDirectStoreReadRequest request) {
 
-		List<GridContact> contacts = gridContactDb.getAll();
-		Ordering<GridContact> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			contacts = ordering.sortedCopy(contacts);
+		Stream<GridContact> contacts = gridContactDb.getAll();
+		Comparator<GridContact> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
+		if (comparator != null) {
+			contacts = contacts.sorted(comparator);
 		}
 
-		// contacts = contacts.subList(request.getStart(),
-		// Math.min(gridContactDb.getTotalSize(), request.getStart() +
-		// request.getLimit()));
-
-		return new ExtDirectStoreResult<>(gridContactDb.getTotalSize(), contacts);
-
+		List<GridContact> result = contacts.collect(Collectors.toList());
+		return new ExtDirectStoreResult<>(result.size(), result);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "touchgrid")

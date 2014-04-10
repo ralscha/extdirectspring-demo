@@ -15,11 +15,10 @@
  */
 package ch.rasc.extdirectspring.demo.calendar;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeDeserializer;
-import ch.rasc.extdirectspring.demo.util.ISO8601DateTimeSerializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -35,9 +34,9 @@ public class Event {
 
 	private String title;
 
-	private DateTime startDate;
+	private LocalDateTime startDate;
 
-	private DateTime endDate;
+	private LocalDateTime endDate;
 
 	private String location;
 
@@ -52,12 +51,23 @@ public class Event {
 	private String reminder;
 
 	public void trimToNull() {
-		StringUtils.trimToNull(title);
-		StringUtils.trimToNull(location);
-		StringUtils.trimToNull(notes);
-		StringUtils.trimToNull(url);
-		StringUtils.trimToNull(recurRule);
-		StringUtils.trimToNull(reminder);
+		title = trimToNull(title);
+		location = trimToNull(location);
+		notes = trimToNull(notes);
+		url = trimToNull(url);
+		recurRule = trimToNull(recurRule);
+		reminder = trimToNull(reminder);
+	}
+
+	private final static String trimToNull(String s) {
+		String cs = s;
+		if (cs != null) {
+			cs = cs.trim();
+			if (cs.isEmpty()) {
+				cs = null;
+			}
+		}
+		return cs;
 	}
 
 	public int getId() {
@@ -84,23 +94,23 @@ public class Event {
 		this.title = title;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getStartDate() {
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
 
-	@JsonDeserialize(using = ISO8601DateTimeDeserializer.class)
-	public void setStartDate(DateTime startDate) {
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
-	@JsonSerialize(using = ISO8601DateTimeSerializer.class)
-	public DateTime getEndDate() {
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
-	@JsonDeserialize(using = ISO8601DateTimeDeserializer.class)
-	public void setEndDate(DateTime endDate) {
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 

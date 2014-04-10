@@ -15,7 +15,11 @@
  */
 package ch.rasc.extdirectspring.demo.filter;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
-import ch.rasc.extdirectspring.demo.util.PropertyOrderingFactory;
-
-import com.google.common.collect.Ordering;
+import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class FilterActionImplementation implements FilterActionInterface {
@@ -37,26 +39,29 @@ public class FilterActionImplementation implements FilterActionInterface {
 	public ExtDirectStoreResult<Company> load(ExtDirectStoreReadRequest request,
 			@RequestParam(required = false) String dRif) {
 
-		List<Company> companies;
+		Stream<Company> companiesStream;
+		int totalSize;
+
 		if (!request.getFilters().isEmpty()) {
-			companies = dataBean.findCompanies(request.getFilters());
+			List<Company> companies = dataBean.findCompanies(request.getFilters());
+			totalSize = companies.size();
+			companiesStream = companies.stream();
 		} else {
-			companies = dataBean.findAllCompanies();
+			Collection<Company> companies = dataBean.findAllCompanies();
+			totalSize = companies.size();
+			companiesStream = companies.stream();
 		}
 
-		int totalSize = companies.size();
-
-		Ordering<Company> ordering = PropertyOrderingFactory.createOrderingFromSorters(request.getSorters());
-		if (ordering != null) {
-			companies = ordering.sortedCopy(companies);
+		Comparator<Company> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		if (comparator != null) {
+			companiesStream = companiesStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			companies = companies.subList(request.getStart(),
-					Math.min(totalSize, request.getStart() + request.getLimit()));
+			companiesStream = companiesStream.skip(request.getStart()).limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, companies);
+		return new ExtDirectStoreResult<>(totalSize, companiesStream.collect(Collectors.toList()));
 	}
 
 }

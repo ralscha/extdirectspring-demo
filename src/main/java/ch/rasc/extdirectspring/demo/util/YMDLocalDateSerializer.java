@@ -16,8 +16,7 @@
 package ch.rasc.extdirectspring.demo.util;
 
 import java.io.IOException;
-
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,6 +29,6 @@ public class YMDLocalDateSerializer extends JsonSerializer<LocalDate> {
 	public void serialize(LocalDate value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
 			JsonProcessingException {
 
-		jgen.writeString(value.toString("yyyyMMdd"));
+		jgen.writeString(value.format(Constants.YYYYMMDD_FORMATTER));
 	}
 }

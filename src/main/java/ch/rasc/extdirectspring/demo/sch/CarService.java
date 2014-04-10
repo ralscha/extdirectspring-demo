@@ -15,83 +15,85 @@
  */
 package ch.rasc.extdirectspring.demo.sch;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.google.common.collect.ImmutableList;
 
 @Service(value = "schCarService")
 public class CarService {
 
 	private final static AtomicInteger maxId = new AtomicInteger(7);
 
-	private final static ImmutableList<Car> cars = ImmutableList.of(new Car("c1", "BMW #1", 4), new Car("c2", "BMW #2",
-			4), new Car("c3", "BMW #3", 2), new Car("c4", "BMW #4", 2), new Car("c5", "BMW #5", 2), new Car("c6",
-			"BMW #6", 4));
+	private final static List<Car> cars = Arrays.asList(new Car("c1", "BMW #1", 4), new Car("c2", "BMW #2", 4),
+			new Car("c3", "BMW #3", 2), new Car("c4", "BMW #4", 2), new Car("c5", "BMW #5", 2), new Car("c6", "BMW #6",
+					4));
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "sch")
-	public ImmutableList<Car> readCars() {
+	public List<Car> readCars() {
 		return cars;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "sch")
-	public ImmutableList<Event> readEvents() {
-		ImmutableList.Builder<Event> eBuilder = ImmutableList.builder();
+	public List<Event> readEvents() {
+		List<Event> eBuilder = new ArrayList<>();
 
 		Event e = new Event();
 		e.setId("1");
 		e.setResourceId("c1");
 		e.setName("Mike");
-		e.setStartDate(DateTime.now().withTime(9, 45, 0, 0));
-		e.setEndDate(DateTime.now().withTime(11, 0, 0, 0));
+		e.setStartDate(LocalDateTime.now().withHour(9).withMinute(45).withSecond(0));
+		e.setEndDate(LocalDateTime.now().withHour(11).withMinute(0).withSecond(0));
 		eBuilder.add(e);
 
 		e = new Event();
 		e.setId("2");
 		e.setResourceId("c2");
 		e.setName("Linda");
-		e.setStartDate(DateTime.now().withTime(10, 15, 0, 0));
-		e.setEndDate(DateTime.now().withTime(12, 0, 0, 0));
+		e.setStartDate(LocalDateTime.now().withHour(10).withMinute(15).withSecond(0));
+		e.setEndDate(LocalDateTime.now().withHour(12).withMinute(0).withSecond(0));
 		eBuilder.add(e);
 
 		e = new Event();
 		e.setId("3");
 		e.setResourceId("c3");
 		e.setName("Don");
-		e.setStartDate(DateTime.now().withTime(13, 0, 0, 0));
-		e.setEndDate(DateTime.now().withTime(15, 0, 0, 0));
+		e.setStartDate(LocalDateTime.now().withHour(13).withMinute(0).withSecond(0));
+		e.setEndDate(LocalDateTime.now().withHour(15).withMinute(0).withSecond(0));
 		eBuilder.add(e);
 
 		e = new Event();
 		e.setId("4");
 		e.setResourceId("c4");
 		e.setName("Karen");
-		e.setStartDate(DateTime.now().withTime(16, 0, 0, 0));
-		e.setEndDate(DateTime.now().withTime(18, 0, 0, 0));
+		e.setStartDate(LocalDateTime.now().withHour(16).withMinute(0).withSecond(0));
+		e.setEndDate(LocalDateTime.now().withHour(18).withMinute(0).withSecond(0));
 		eBuilder.add(e);
 
 		e = new Event();
 		e.setId("5");
 		e.setResourceId("c5");
 		e.setName("Doug");
-		e.setStartDate(DateTime.now().withTime(12, 0, 0, 0));
-		e.setEndDate(DateTime.now().withTime(13, 0, 0, 0));
+		e.setStartDate(LocalDateTime.now().withHour(12).withMinute(0).withSecond(0));
+		e.setEndDate(LocalDateTime.now().withHour(13).withMinute(0).withSecond(0));
 		eBuilder.add(e);
 
 		e = new Event();
 		e.setId("6");
 		e.setResourceId("c6");
 		e.setName("Peter");
-		e.setStartDate(DateTime.now().withTime(14, 0, 0, 0));
-		e.setEndDate(DateTime.now().withTime(16, 0, 0, 0));
+		e.setStartDate(LocalDateTime.now().withHour(14).withMinute(0).withSecond(0));
+		e.setEndDate(LocalDateTime.now().withHour(16).withMinute(0).withSecond(0));
 		eBuilder.add(e);
 
-		return eBuilder.build();
+		return Collections.unmodifiableList(eBuilder);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "sch")

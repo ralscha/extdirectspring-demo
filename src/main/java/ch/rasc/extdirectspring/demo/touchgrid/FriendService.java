@@ -15,7 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.touchgrid;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class FriendService {
 	private FriendDb friendDb;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchgrid")
-	public List<Friend> read() {
+	public Collection<Friend> read() {
 		return friendDb.getAll();
 	}
 

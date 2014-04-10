@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ch.rasc.extdirectspring.demo.group;
+package ch.rasc.extdirectspring.demo.util;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
-public class MDYDateSerializer extends JsonSerializer<Date> {
+public class ISO8601LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+
 	@Override
-	public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+	public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
 			JsonProcessingException {
-
-		DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-		jgen.writeString(formatter.format(value.getTime()));
+		return ZonedDateTime.parse(jp.getText()).toLocalDateTime();
 	}
 }
