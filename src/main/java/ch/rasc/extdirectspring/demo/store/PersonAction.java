@@ -68,7 +68,7 @@ public class PersonAction {
 
 		Comparator<Person> comparatorFromSorters = PropertyComparatorFactory.createComparatorFromSorters(request
 				.getSorters());
-		
+
 		if (comparatorFromSorters != null) {
 			if (comparator == null) {
 				comparator = comparatorFromSorters;
@@ -76,7 +76,7 @@ public class PersonAction {
 				comparator = comparator.thenComparing(comparatorFromSorters);
 			}
 		}
-		
+
 		if (comparator != null) {
 			personsStream = personsStream.sorted(comparator);
 		}

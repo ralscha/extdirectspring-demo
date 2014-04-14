@@ -88,10 +88,10 @@ public class GroupAction {
 
 	private static List<Task> sort(ExtDirectStoreReadRequest request) {
 		Comparator<Task> comparator = null;
-		
+
 		if (!request.getGroups().isEmpty()) {
 			GroupInfo groupInfo = request.getGroups().iterator().next();
-	
+
 			if (!request.getSorters().isEmpty()) {
 				for (SortInfo sortInfo : request.getSorters()) {
 					if (groupInfo.getProperty().equals(sortInfo.getProperty())) {
@@ -99,11 +99,10 @@ public class GroupAction {
 					}
 				}
 			}
-	
-			comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections
-					.singletonList(groupInfo));
-		}		
-		
+
+			comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections.singletonList(groupInfo));
+		}
+
 		Comparator<Task> sortComparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
 
 		if (sortComparator != null) {

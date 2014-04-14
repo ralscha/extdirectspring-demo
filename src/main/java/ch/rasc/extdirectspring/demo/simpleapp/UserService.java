@@ -43,7 +43,7 @@ public class UserService {
 	public ExtDirectStoreResult<User> load(ExtDirectStoreReadRequest request) {
 
 		StringFilter filter = request.getFirstFilterForField("filter");
-		Stream<User> usersStream;	
+		Stream<User> usersStream;
 		int totalSize;
 		if (filter == null || StringUtils.isEmpty(filter.getValue())) {
 			Collection<User> users = userDb.getAll();

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /**
  * Contains some data to represent a book. POJO class
- * 
+ *
  * @author Loiane Groner http://loianegroner.com
  */
 @JsonAutoDetect

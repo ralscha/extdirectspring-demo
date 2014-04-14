@@ -49,7 +49,7 @@ public class TurnoverService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "turnover")
 	public List<Company> getTurnovers(ExtDirectStoreReadRequest request) {
 
-		Comparator<Company> comparator = PropertyComparatorFactory.createComparatorFromSorters((request.getSorters()));
+		Comparator<Company> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			return companies.stream().sorted(comparator).collect(Collectors.toList());
 		}
