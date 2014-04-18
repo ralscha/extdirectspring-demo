@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2013 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2014 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public class NamedService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "named")
 	public String showDetails(List<Business> bo, String firstName, String lastName, int age) {
-		bo.stream().forEach(System.out::println);
+		bo.forEach(System.out::println);
 		return String.format("Hi %s %s, you are %d years old.", firstName, lastName, age);
 	}
 }

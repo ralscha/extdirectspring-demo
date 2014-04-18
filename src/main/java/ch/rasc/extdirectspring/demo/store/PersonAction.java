@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2013 Ralph Schaer <ralphschaer@gmail.com>
+ * Copyright 2010-2014 Ralph Schaer <ralphschaer@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public List<Person> load(ExtDirectStoreReadRequest request) {
-		return dataBean.findPersons(request.getQuery()).stream().collect(Collectors.toList());
+		return dataBean.findPersons(request.getQuery());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
