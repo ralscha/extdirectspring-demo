@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -62,44 +63,43 @@ public class BbcService {
 			backend.start();
 
 			return stations.stream().map(station -> backend.execute(new HttpGet(station.getUrl()), null))
-					.map(BbcService::fetchEvent).collect(Collectors.toList());
-
+					.flatMap(BbcService::deserializeJson).map(BbcService::createEventObject)
+					.collect(Collectors.toList());
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
-	private static Event fetchEvent(Future<HttpResponse> futureResponse) {
+	private static Stream<Map<String, Object>> deserializeJson(Future<HttpResponse> futureResponse) {
 		try {
 			HttpResponse response = futureResponse.get();
 			String json = EntityUtils.toString(response.getEntity());
 			Map<String, Object> schedules = mapper.readValue(json, Map.class);
 			Map<String, Object> schedule = (Map<String, Object>) schedules.get("schedule");
 			Map<String, Object> day = (Map<String, Object>) schedule.get("day");
-			List<Map<String, Object>> broadcasts = (List<Map<String, Object>>) day.get("broadcasts");
-
-			for (Map<String, Object> broadcast : broadcasts) {
-
-				Map<String, Object> programme = (Map<String, Object>) broadcast.get("programme");
-				Map<String, Object> displayTitles = (Map<String, Object>) programme.get("display_titles");
-				Map<String, Object> ownership = (Map<String, Object>) programme.get("ownership");
-				Map<String, Object> service = (Map<String, Object>) ownership.get("service");
-
-				Event event = new Event();
-				event.setResourceId(String.valueOf(service.get("key")));
-				event.setStartDate(ZonedDateTime.parse((String) broadcast.get("start")).toLocalDateTime());
-				event.setEndDate(ZonedDateTime.parse((String) broadcast.get("end")).toLocalDateTime());
-				event.setText(String.valueOf(displayTitles.get("title")));
-				event.setDuration((Integer) broadcast.get("duration"));
-				event.setId(String.valueOf(programme.get("pid")));
-				event.setSynopsis(String.valueOf(programme.get("short_synopsis")));
-
-				return event;
-			}
+			return ((List<Map<String, Object>>) day.get("broadcasts")).stream();
 		} catch (ParseException | InterruptedException | ExecutionException | IOException e) {
 			throw new RuntimeException(e);
 		}
-		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static Event createEventObject(Map<String, Object> broadcast) {
+		Map<String, Object> programme = (Map<String, Object>) broadcast.get("programme");
+		Map<String, Object> displayTitles = (Map<String, Object>) programme.get("display_titles");
+		Map<String, Object> ownership = (Map<String, Object>) programme.get("ownership");
+		Map<String, Object> service = (Map<String, Object>) ownership.get("service");
+
+		Event event = new Event();
+		event.setResourceId(String.valueOf(service.get("key")));
+		event.setStartDate(ZonedDateTime.parse((String) broadcast.get("start")).toLocalDateTime());
+		event.setEndDate(ZonedDateTime.parse((String) broadcast.get("end")).toLocalDateTime());
+		event.setText(String.valueOf(displayTitles.get("title")));
+		event.setDuration((Integer) broadcast.get("duration"));
+		event.setId(String.valueOf(programme.get("pid")));
+		event.setSynopsis(String.valueOf(programme.get("short_synopsis")));
+
+		return event;
+
 	}
 
 }
