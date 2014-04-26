@@ -15,12 +15,9 @@
  */
 package ch.rasc.extdirectspring.demo;
 
-import javax.servlet.MultipartConfigElement;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.embedded.MultiPartConfigFactory;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -42,20 +39,17 @@ public class Main extends SpringBootServletInitializer {
 		SpringApplication.run(Main.class, args);
 	}
 
-	@Bean
-	public MultipartConfigElement multipartConfigElement() {
-		MultiPartConfigFactory factory = new MultiPartConfigFactory();
-		factory.setFileSizeThreshold("10MB");
-		factory.setMaxFileSize("100MB");
-		return factory.createMultipartConfig();
-	}
-
 	/*
-	 * @Bean public ch.rasc.extdirectspring.controller.Configuration edsConfig() {
-	 * ch.rasc.extdirectspring.controller.Configuration config = new ch.rasc.extdirectspring.controller.Configuration();
-	 * config.setStreamResponse(true); config.setTimeout(12000); config.setMaxRetries(10);
-	 * config.setEnableBuffer(false); return config; }
-	 */
+	@Bean
+	public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
+		ch.ralscha.extdirectspring.controller.Configuration config = new ch.ralscha.extdirectspring.controller.Configuration();
+		config.setStreamResponse(true);
+		config.setTimeout(12000);
+		config.setMaxRetries(10);
+		config.setEnableBuffer(false);
+		return config;
+	}
+	*/
 
 	@Bean
 	@Lazy

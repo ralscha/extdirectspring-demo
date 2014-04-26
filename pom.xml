@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.0.1.RELEASE</version>
+		<version>1.1.0.BUILD-SNAPSHOT</version>
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -48,34 +48,33 @@
 	</scm>
 
 	<properties>
-	    <java.version>1.8</java.version>
-		<slf4j.version>1.7.7</slf4j.version>
-		<logback.version>1.1.2</logback.version>
+		<java.version>1.8</java.version>
 		<tomcat.version>8.0.5</tomcat.version>
+		<h2.version>1.4.177</h2.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 	</properties>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>	
-	
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>		
-	
+		</dependency>
+
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
 			<version>1.4.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>extclassgenerator</artifactId>
@@ -85,7 +84,6 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.0.Final</version>
 		</dependency>
 
 		<dependency>
@@ -109,7 +107,6 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpasyncclient</artifactId>
-			<version>4.0.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -134,7 +131,27 @@
 			</releases>
 		</repository>
 
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
 	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
 
@@ -157,11 +174,11 @@
 						<email>ralphschaer@gmail.com</email>
 					</properties>
 					<excludes>
-					    <exclude>**/*.md</exclude>
+						<exclude>**/*.md</exclude>
 						<exclude>**/*.csv</exclude>
 						<exclude>**/*.psd</exclude>
 						<exclude>**/*.xml</exclude>
-						<exclude>**/*.json</exclude>						
+						<exclude>**/*.json</exclude>
 						<exclude>**/extjs/**</exclude>
 						<exclude>**/webapp/**</exclude>
 						<exclude>**/*.launch</exclude>
