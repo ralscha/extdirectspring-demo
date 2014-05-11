@@ -180,7 +180,7 @@
 						<exclude>**/*.xml</exclude>
 						<exclude>**/*.json</exclude>
 						<exclude>**/extjs/**</exclude>
-						<exclude>**/webapp/**</exclude>
+						<exclude>**/static/**</exclude>
 						<exclude>**/*.launch</exclude>
 						<exclude>**/*.gitignore</exclude>
 					</excludes>
