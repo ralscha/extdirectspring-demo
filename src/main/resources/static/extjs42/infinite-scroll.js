@@ -18,7 +18,7 @@ Ext.onReady(function(){
 			reader: {
 				root: 'records'
 			}
-		},
+		}
 	});
 
     var store = Ext.create('Ext.data.Store', {
