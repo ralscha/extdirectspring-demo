@@ -1,9 +1,15 @@
-Ext.require([ 'Ext.direct.*', 'Ext.form.*', 'Ext.tip.QuickTipManager', 'Ext.layout.container.Accordion' ]);
+Ext.require([
+    'Ext.direct.*',
+    'Ext.form.*',
+    'Ext.tip.QuickTipManager',
+    'Ext.layout.container.Accordion'
+]);
 
 Ext.onReady(function() {
 	/*
-	 * Notice that Direct requests will batch together if they occur within the enableBuffer delay period (in milliseconds). Slow the buffering down
-	 * from the default of 10ms to 100ms
+     * Notice that Direct requests will batch together if they occur
+     * within the enableBuffer delay period (in milliseconds).
+     * Slow the buffering down from the default of 10ms to 100ms
 	 */
 	Ext.app.REMOTING_API.enableBuffer = 100;
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
@@ -62,6 +68,7 @@ Ext.onReady(function() {
 		}, {
 			fieldLabel: 'Email',
 			msgTarget: 'side',
+            vtype:'email',
 			name: 'email'
 		}, {
 			fieldLabel: 'Company',
@@ -121,17 +128,13 @@ Ext.onReady(function() {
 	});
 
 	// Adjust Panel dimensions for different themes
-	var themeWidth = 300, themeHeight = 230;
+    var themeWidth = 300,
+        themeHeight = 230;
 
 	switch (Ext.themeName) {
 	case 'neptune': {
 		themeWidth = 350;
 		themeHeight = 300;
-		break;
-	}
-	case 'access': {
-		themeWidth = 350;
-		themeHeight = 250;
 		break;
 	}
 	case 'crisp':

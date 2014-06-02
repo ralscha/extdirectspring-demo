@@ -12,7 +12,7 @@ Ext.onReady(function() {
 			reader: {
 				rootProperty: 'records'
 			}
-		},
+		}
 	});
 
 	var store = Ext.create('Ext.data.BufferedStore', {
