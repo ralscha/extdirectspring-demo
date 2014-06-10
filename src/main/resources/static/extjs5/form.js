@@ -138,6 +138,7 @@ Ext.onReady(function() {
 		break;
 	}
 	case 'crisp':
+	case 'crisp-touch':
 	case 'neptune-touch': {
 		themeWidth = 350;
 		themeHeight = 380;
