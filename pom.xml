@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.1.0.RC1</version>
+		<version>1.1.0.RELEASE</version>
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -51,6 +51,8 @@
 		<java.version>1.8</java.version>
 		<tomcat.version>8.0.8</tomcat.version>
 		<h2.version>1.4.178</h2.version>
+		<jackson.version>2.4.0</jackson.version>
+		<httpclient.version>4.3.4</httpclient.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
@@ -102,19 +104,12 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpasyncclient</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 	</dependencies>
-
-	<repositories>
-
+    
 	<!--
+	<repositories>	
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -126,7 +121,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-	-->
+
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -135,7 +130,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+	
 	</repositories>
 
 	<pluginRepositories>
@@ -148,7 +143,8 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
+    -->
+	
 	<build>
 
 		<plugins>
