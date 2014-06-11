@@ -70,7 +70,8 @@ public class Profile {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "form")
-	public ExtDirectFormPostResult updateBasicInfo(@Valid BasicInfo basicInfo, BindingResult result) {
+	public ExtDirectFormPostResult updateBasicInfo(@Valid BasicInfo basicInfo,
+			BindingResult result) {
 
 		if (!result.hasErrors()) {
 			if (basicInfo.getEmail().equals("aaron@extjs.com")) {

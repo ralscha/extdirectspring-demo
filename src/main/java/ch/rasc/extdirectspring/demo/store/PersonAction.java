@@ -66,13 +66,14 @@ public class PersonAction {
 
 		Stream<Person> personsStream = persons.stream();
 
-		Comparator<Person> comparatorFromSorters = PropertyComparatorFactory.createComparatorFromSorters(request
-				.getSorters());
+		Comparator<Person> comparatorFromSorters = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 
 		if (comparatorFromSorters != null) {
 			if (comparator == null) {
 				comparator = comparatorFromSorters;
-			} else {
+			}
+			else {
 				comparator = comparator.thenComparing(comparatorFromSorters);
 			}
 		}
@@ -82,10 +83,12 @@ public class PersonAction {
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
+			personsStream = personsStream.skip(request.getStart()).limit(
+					request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors.toList()));
+		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors
+				.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
@@ -130,26 +133,33 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public Set<State> getStates() {
-		return dataBean.findPersons(null).stream().map(p -> new State(p.getState())).collect(Collectors.toSet());
+		return dataBean.findPersons(null).stream().map(p -> new State(p.getState()))
+				.collect(Collectors.toSet());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
-	public ExtDirectStoreResult<PersonFullName> loadPersonFullName(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<PersonFullName> loadPersonFullName(
+			ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Stream<Person> personsStream = persons.stream().sorted(Comparator.comparing(Person::getFullName).reversed());
+		Stream<Person> personsStream = persons.stream().sorted(
+				Comparator.comparing(Person::getFullName).reversed());
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
-		} else {
+			personsStream = personsStream.skip(request.getStart()).limit(
+					request.getLimit());
+		}
+		else {
 			personsStream = personsStream.limit(100);
 		}
 
-		List<PersonFullName> personFullNameList = personsStream.map(PersonFullName::new).collect(Collectors.toList());
+		List<PersonFullName> personFullNameList = personsStream.map(PersonFullName::new)
+				.collect(Collectors.toList());
 
-		ExtDirectStoreResult<PersonFullName> response = new ExtDirectStoreResult<>(totalSize, personFullNameList);
+		ExtDirectStoreResult<PersonFullName> response = new ExtDirectStoreResult<>(
+				totalSize, personFullNameList);
 
 		// Send metadata only the first time
 		if (request.getStart() == null || request.getStart() == 0) {
@@ -173,21 +183,26 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
-	public ExtDirectStoreResult<PersonFullNameCity> loadPersonFullNameCity(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<PersonFullNameCity> loadPersonFullNameCity(
+			ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Stream<Person> personsStream = persons.stream().sorted(Comparator.comparing(Person::getCity));
+		Stream<Person> personsStream = persons.stream().sorted(
+				Comparator.comparing(Person::getCity));
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
-		} else {
+			personsStream = personsStream.skip(request.getStart()).limit(
+					request.getLimit());
+		}
+		else {
 			personsStream = personsStream.limit(50);
 		}
 
-		ExtDirectStoreResult<PersonFullNameCity> response = new ExtDirectStoreResult<>(totalSize, personsStream.map(
-				PersonFullNameCity::new).collect(Collectors.toList()));
+		ExtDirectStoreResult<PersonFullNameCity> response = new ExtDirectStoreResult<>(
+				totalSize, personsStream.map(PersonFullNameCity::new).collect(
+						Collectors.toList()));
 
 		// Send metadata only the first time
 		if (request.getStart() == null || request.getStart() == 0) {
@@ -220,15 +235,18 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "metadata")
-	public ExtDirectStoreResult<Person> loadPersonEverything(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<Person> loadPersonEverything(
+			ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
 
 		Comparator<Person> comparator;
 		if (!request.getSorters().isEmpty()) {
-			comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
-		} else {
+			comparator = PropertyComparatorFactory.createComparatorFromSorters(request
+					.getSorters());
+		}
+		else {
 			comparator = Comparator.comparing(Person::getLastName);
 		}
 
@@ -239,17 +257,19 @@ public class PersonAction {
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
-		} else {
+			personsStream = personsStream.skip(request.getStart()).limit(
+					request.getLimit());
+		}
+		else {
 			personsStream = personsStream.limit(60);
 		}
 
-		ExtDirectStoreResult<Person> response = new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors
-				.toList()));
+		ExtDirectStoreResult<Person> response = new ExtDirectStoreResult<>(totalSize,
+				personsStream.collect(Collectors.toList()));
 
 		// Send metadata only the first time
-		if ((request.getStart() == null || request.getStart() == 0) && request.getSort() == null
-				&& request.getSorters().isEmpty()) {
+		if ((request.getStart() == null || request.getStart() == 0)
+				&& request.getSort() == null && request.getSorters().isEmpty()) {
 			MetaData metaData = new MetaData();
 
 			metaData.setPagingParameter(0, 60);

@@ -31,12 +31,14 @@ public enum PropertyComparatorFactory {
 	public static <T> Comparator<T> createComparator(String propertyName) {
 		try {
 			return new PropertyComparator<>(propertyName);
-		} catch (ParseException e) {
+		}
+		catch (ParseException e) {
 			return null;
 		}
 	}
 
-	public static <T> Comparator<T> createComparator(String propertyName, SortDirection sortDirection) {
+	public static <T> Comparator<T> createComparator(String propertyName,
+			SortDirection sortDirection) {
 		try {
 			Comparator<T> comparator = new PropertyComparator<>(propertyName);
 
@@ -45,18 +47,22 @@ public enum PropertyComparatorFactory {
 			}
 
 			return comparator;
-		} catch (ParseException e) {
+		}
+		catch (ParseException e) {
 			return null;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> Comparator<T> createComparatorFromSorters(Collection<SortInfo> sortInfos) {
+	public static <T> Comparator<T> createComparatorFromSorters(
+			Collection<SortInfo> sortInfos) {
 		Comparator<T> comparator = null;
 
 		if (sortInfos != null) {
-			comparator = sortInfos.stream()
-					.map(a -> (Comparator<T>) createComparator(a.getProperty(), a.getDirection()))
+			comparator = sortInfos
+					.stream()
+					.map(a -> (Comparator<T>) createComparator(a.getProperty(),
+							a.getDirection()))
 					.reduce(comparator, (a, b) -> a != null ? a.thenComparing(b) : b);
 		}
 
@@ -64,12 +70,15 @@ public enum PropertyComparatorFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> Comparator<T> createComparatorFromGroups(Collection<GroupInfo> groupInfos) {
+	public static <T> Comparator<T> createComparatorFromGroups(
+			Collection<GroupInfo> groupInfos) {
 		Comparator<T> comparator = null;
 
 		if (groupInfos != null) {
-			comparator = groupInfos.stream()
-					.map(a -> (Comparator<T>) createComparator(a.getProperty(), a.getDirection()))
+			comparator = groupInfos
+					.stream()
+					.map(a -> (Comparator<T>) createComparator(a.getProperty(),
+							a.getDirection()))
 					.reduce(comparator, (a, b) -> a != null ? a.thenComparing(b) : b);
 		}
 

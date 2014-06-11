@@ -46,13 +46,15 @@ import ch.rasc.extdirectspring.demo.util.Constants;
 public class AreService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are")
-	public Collection<Company> read(@RequestParam(required = false) String coId, ExtDirectStoreReadRequest edsRequest) {
+	public Collection<Company> read(@RequestParam(required = false) String coId,
+			ExtDirectStoreReadRequest edsRequest) {
 		if (coId != null) {
 			return Collections.singleton(companyDb.get(coId));
 		}
 
 		if (!edsRequest.getFilters().isEmpty()) {
-			return companyDb.values().stream().filter(getPredicates(edsRequest.getFilters()))
+			return companyDb.values().stream()
+					.filter(getPredicates(edsRequest.getFilters()))
 					.collect(Collectors.toList());
 		}
 
@@ -66,7 +68,8 @@ public class AreService {
 			return companyDb.get(filter.getValue()).getHistory();
 		}
 
-		return companyDb.values().stream().flatMap(c -> c.getHistory().stream()).collect(Collectors.toList());
+		return companyDb.values().stream().flatMap(c -> c.getHistory().stream())
+				.collect(Collectors.toList());
 	}
 
 	private static Map<String, Company> companyDb;
@@ -135,10 +138,13 @@ public class AreService {
 		companyDb = Collections.unmodifiableMap(builder);
 	}
 
-	@RequestMapping({ "/extjs42/associationrowexpander/models.js", "/extjs41/associationrowexpander/models.js" })
+	@RequestMapping({ "/extjs42/associationrowexpander/models.js",
+			"/extjs41/associationrowexpander/models.js" })
 	public void models(HttpServletResponse response) throws IOException {
-		String company = ModelGenerator.generateJavascript(Company.class, OutputFormat.EXTJS4, false);
-		String history = ModelGenerator.generateJavascript(History.class, OutputFormat.EXTJS4, false);
+		String company = ModelGenerator.generateJavascript(Company.class,
+				OutputFormat.EXTJS4, false);
+		String history = ModelGenerator.generateJavascript(History.class,
+				OutputFormat.EXTJS4, false);
 		byte[] code = (company + history).getBytes(StandardCharsets.UTF_8);
 
 		response.setContentType("application/javascript");
@@ -158,21 +164,31 @@ public class AreService {
 
 			String value = ((StringFilter) filter).getValue().trim().toLowerCase();
 			if (filter.getField().equals("company")) {
-				predicates = predicates.and(c -> c.getCompany().toLowerCase().startsWith(value));
-			} else if (filter.getField().equals("price")) {
-				predicates = predicates.and(c -> c.getPrice().compareTo(new BigDecimal(value)) == 0);
-			} else if (filter.getField().equals("change")) {
-				predicates = predicates.and(c -> c.getChange().compareTo(new BigDecimal(value)) == 0);
-			} else if (filter.getField().equals("pctChange")) {
-				predicates = predicates.and(c -> c.getPctChange().compareTo(new BigDecimal(value)) == 0);
-			} else if (filter.getField().equals("lastChange")) {
+				predicates = predicates.and(c -> c.getCompany().toLowerCase()
+						.startsWith(value));
+			}
+			else if (filter.getField().equals("price")) {
+				predicates = predicates.and(c -> c.getPrice().compareTo(
+						new BigDecimal(value)) == 0);
+			}
+			else if (filter.getField().equals("change")) {
+				predicates = predicates.and(c -> c.getChange().compareTo(
+						new BigDecimal(value)) == 0);
+			}
+			else if (filter.getField().equals("pctChange")) {
+				predicates = predicates.and(c -> c.getPctChange().compareTo(
+						new BigDecimal(value)) == 0);
+			}
+			else if (filter.getField().equals("lastChange")) {
 				LocalDate localDateValue;
 				if (value.length() > 10) {
 					localDateValue = LocalDate.parse(value.substring(0, 10));
-				} else {
+				}
+				else {
 					localDateValue = LocalDate.parse(value, Constants.MMddYYYY_FORMATTER);
 				}
-				predicates = predicates.and(c -> c.getLastChange().toLocalDate().compareTo(localDateValue) == 0);
+				predicates = predicates.and(c -> c.getLastChange().toLocalDate()
+						.compareTo(localDateValue) == 0);
 			}
 		}
 

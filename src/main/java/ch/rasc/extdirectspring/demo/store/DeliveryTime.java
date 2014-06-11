@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize(using = LabelValueSerializer.class)
 public enum DeliveryTime implements LabelValue {
 
-	BeginningOfMonth("Beginning of Month"), BeginningToMiddleOfMonth("Beginning to Middle of Month"), MiddleOfMonth(
-			"Middle of Month"), MiddleToEndOfMonth("Middle to End of Month"), EndOfMonth("End of Month"), Unknown(
-			"Unknown");
+	BeginningOfMonth("Beginning of Month"), BeginningToMiddleOfMonth(
+			"Beginning to Middle of Month"), MiddleOfMonth("Middle of Month"), MiddleToEndOfMonth(
+			"Middle to End of Month"), EndOfMonth("End of Month"), Unknown("Unknown");
 
 	private String label;
 

@@ -149,9 +149,10 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", resourceId=" + resourceId + ", resizable=" + resizable + ", draggable=" + draggable + ", cls="
-				+ cls + ", text=" + text + ", duration=" + duration + ", synopsis=" + synopsis + "]";
+		return "Event [id=" + id + ", name=" + name + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", resourceId=" + resourceId + ", resizable="
+				+ resizable + ", draggable=" + draggable + ", cls=" + cls + ", text="
+				+ text + ", duration=" + duration + ", synopsis=" + synopsis + "]";
 	}
 
 }

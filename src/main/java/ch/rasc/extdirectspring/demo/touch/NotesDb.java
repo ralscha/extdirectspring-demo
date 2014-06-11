@@ -36,7 +36,8 @@ public class NotesDb {
 			int id = lastId.incrementAndGet();
 			note.setId(id);
 			map.put(id, note);
-		} else {
+		}
+		else {
 			map.put(note.getId(), note);
 		}
 	}

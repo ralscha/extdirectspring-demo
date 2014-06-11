@@ -50,21 +50,25 @@ public class Person4Action {
 		int totalSize = persons.size();
 
 		Stream<Person> personsStream = persons.stream();
-		Comparator<Person> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<Person> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			personsStream = personsStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(request.getLimit());
+			personsStream = personsStream.skip(request.getStart()).limit(
+					request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors.toList()));
+		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors
+				.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
 	public List<Person> create(List<Person> newPersons) {
-		return newPersons.stream().map(p -> dataBean.insert(p)).collect(Collectors.toList());
+		return newPersons.stream().map(p -> dataBean.insert(p))
+				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
@@ -90,7 +94,8 @@ public class Person4Action {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
 	public Set<State> getStates() {
-		return dataBean.findPersons(null).stream().map(Person::getState).map(State::new).collect(Collectors.toSet());
+		return dataBean.findPersons(null).stream().map(Person::getState).map(State::new)
+				.collect(Collectors.toSet());
 	}
 
 }

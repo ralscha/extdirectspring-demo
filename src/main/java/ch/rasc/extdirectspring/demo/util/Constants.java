@@ -20,10 +20,13 @@ import java.time.format.DateTimeFormatter;
 public enum Constants {
 	INSTANCE;
 
-	public final static DateTimeFormatter YYYYMMDD_FORMATTER = DateTimeFormatter.ofPattern("uuuuMMdd");
+	public final static DateTimeFormatter YYYYMMDD_FORMATTER = DateTimeFormatter
+			.ofPattern("uuuuMMdd");
 
-	public final static DateTimeFormatter MMddYYYY_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/uuuu");
+	public final static DateTimeFormatter MMddYYYY_FORMATTER = DateTimeFormatter
+			.ofPattern("MM/dd/uuuu");
 
-	public final static DateTimeFormatter ddMMYYYY_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.uuuu");
+	public final static DateTimeFormatter ddMMYYYY_FORMATTER = DateTimeFormatter
+			.ofPattern("dd.MM.uuuu");
 
 }

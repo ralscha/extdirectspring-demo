@@ -120,30 +120,33 @@ public class RestaurantService {
 			if (!request.getSorters().isEmpty()) {
 				for (SortInfo sortInfo : request.getSorters()) {
 					if (groupInfo.getProperty().equals(sortInfo.getProperty())) {
-						groupInfo = new GroupInfo(groupInfo.getProperty(), sortInfo.getDirection());
+						groupInfo = new GroupInfo(groupInfo.getProperty(),
+								sortInfo.getDirection());
 					}
 				}
 			}
 
-			Comparator<Restaurant> comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections
-					.singletonList(groupInfo));
-			Comparator<Restaurant> sortComparator = PropertyComparatorFactory.createComparatorFromSorters(request
-					.getSorters());
+			Comparator<Restaurant> comparator = PropertyComparatorFactory
+					.createComparatorFromGroups(Collections.singletonList(groupInfo));
+			Comparator<Restaurant> sortComparator = PropertyComparatorFactory
+					.createComparatorFromSorters(request.getSorters());
 
 			if (sortComparator != null) {
 				comparator = comparator.thenComparing(sortComparator);
 			}
 
 			if (comparator != null) {
-				return restaurants.stream().sorted(comparator).collect(Collectors.toList());
+				return restaurants.stream().sorted(comparator)
+						.collect(Collectors.toList());
 			}
 		}
 
 		if (!request.getSorters().isEmpty()) {
-			Comparator<Restaurant> comparator = PropertyComparatorFactory.createComparatorFromSorters(request
-					.getSorters());
+			Comparator<Restaurant> comparator = PropertyComparatorFactory
+					.createComparatorFromSorters(request.getSorters());
 			if (comparator != null) {
-				return restaurants.stream().sorted(comparator).collect(Collectors.toList());
+				return restaurants.stream().sorted(comparator)
+						.collect(Collectors.toList());
 			}
 		}
 

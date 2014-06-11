@@ -40,11 +40,12 @@ public class CarouselService {
 
 	private static final String RSS_URL = "http://www.acme.com/jef/apod/rss.xml?num=20";
 
-	private static Pattern IMG_PATTERN = Pattern.compile(".*img src=\"([^\"]+)\".*", Pattern.DOTALL);
+	private static Pattern IMG_PATTERN = Pattern.compile(".*img src=\"([^\"]+)\".*",
+			Pattern.DOTALL);
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchcarousel")
-	public List<CarouselPicture> readPictures(HttpServletRequest request) throws IllegalArgumentException,
-			FeedException, IOException {
+	public List<CarouselPicture> readPictures(HttpServletRequest request)
+			throws IllegalArgumentException, FeedException, IOException {
 
 		URL feedUrl = new URL(RSS_URL);
 		List<CarouselPicture> pictures = new ArrayList<>();
@@ -65,7 +66,8 @@ public class CarouselService {
 				if (matcher.matches()) {
 					String imageUrl = matcher.group(1);
 					if (imageUrl.startsWith("http://apod.nasa.gov/apod/http://")) {
-						imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://", "http://");
+						imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://",
+								"http://");
 					}
 					pic.setImage(request.getContextPath() + "/picresize?url=" + imageUrl);
 				}

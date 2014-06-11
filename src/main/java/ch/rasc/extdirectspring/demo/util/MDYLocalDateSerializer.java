@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class MDYLocalDateSerializer extends JsonSerializer<LocalDate> {
 	@Override
-	public void serialize(LocalDate value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+	public void serialize(LocalDate value, JsonGenerator jgen, SerializerProvider provider)
+			throws IOException, JsonProcessingException {
 
 		jgen.writeString(value.format(Constants.MMddYYYY_FORMATTER));
 	}

@@ -39,7 +39,8 @@ public class EmployeeService {
 	public List<Employee> read(ExtDirectStoreReadRequest request) {
 
 		Stream<Employee> employees = employeeDb.getAll();
-		Comparator<Employee> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<Employee> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			employees = employees.sorted(comparator);
 		}

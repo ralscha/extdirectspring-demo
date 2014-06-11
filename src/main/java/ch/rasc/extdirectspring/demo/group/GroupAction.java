@@ -39,38 +39,52 @@ public class GroupAction {
 
 	static {
 		List<Task> builder = new ArrayList<>();
-		builder.add(new Task(100, "Ext Forms: Field Anchoring", 112, "Integrate 2.0 Forms with 2.0 Layouts",
-				new BigDecimal(6), new BigDecimal(150), 2010, 7, 24));
-		builder.add(new Task(100, "Ext Forms: Field Anchoring", 113, "Implement AnchorLayout", new BigDecimal(4),
-				new BigDecimal(150), 2010, 7, 25));
-		builder.add(new Task(100, "Ext Forms: Field Anchoring", 114, "Add support for multiple types of anchors",
-				new BigDecimal(4), new BigDecimal(150), 2010, 7, 27));
-		builder.add(new Task(100, "Ext Forms: Field Anchoring", 115, "Testing and debugging", new BigDecimal(8),
-				new BigDecimal(0), 2010, 7, 29));
-		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 101, "Add required rendering 'hooks' to GridView",
-				new BigDecimal(6), new BigDecimal(100), 2010, 8, 1));
+		builder.add(new Task(100, "Ext Forms: Field Anchoring", 112,
+				"Integrate 2.0 Forms with 2.0 Layouts", new BigDecimal(6),
+				new BigDecimal(150), 2010, 7, 24));
+		builder.add(new Task(100, "Ext Forms: Field Anchoring", 113,
+				"Implement AnchorLayout", new BigDecimal(4), new BigDecimal(150), 2010,
+				7, 25));
+		builder.add(new Task(100, "Ext Forms: Field Anchoring", 114,
+				"Add support for multiple types of anchors", new BigDecimal(4),
+				new BigDecimal(150), 2010, 7, 27));
+		builder.add(new Task(100, "Ext Forms: Field Anchoring", 115,
+				"Testing and debugging", new BigDecimal(8), new BigDecimal(0), 2010, 7,
+				29));
+		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 101,
+				"Add required rendering 'hooks' to GridView", new BigDecimal(6),
+				new BigDecimal(100), 2010, 8, 1));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 102,
-				"Extend GridView and override rendering functions", new BigDecimal(6), new BigDecimal(100), 2010, 8, 3));
-		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 103, "Extend Store with grouping functionality",
-				new BigDecimal(4), new BigDecimal(100), 2010, 8, 4));
-		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 121, "Default CSS Styling", new BigDecimal(2),
-				new BigDecimal(100), 2010, 8, 5));
-		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 104, "Testing and debugging", new BigDecimal(6),
-				new BigDecimal(100), 2010, 8, 6));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 105, "Ext Grid plugin integration", new BigDecimal(4),
-				new BigDecimal(125), 2010, 8, 1));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 106, "Summary creation during rendering phase",
-				new BigDecimal(4), new BigDecimal(125), 2010, 8, 2));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 107, "Dynamic summary updates in editor grids",
-				new BigDecimal(6), new BigDecimal(125), 2010, 8, 5));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 108, "Remote summary integration", new BigDecimal(4),
+				"Extend GridView and override rendering functions", new BigDecimal(6),
+				new BigDecimal(100), 2010, 8, 3));
+		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 103,
+				"Extend Store with grouping functionality", new BigDecimal(4),
+				new BigDecimal(100), 2010, 8, 4));
+		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 121,
+				"Default CSS Styling", new BigDecimal(2), new BigDecimal(100), 2010, 8, 5));
+		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 104,
+				"Testing and debugging", new BigDecimal(6), new BigDecimal(100), 2010, 8,
+				6));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 105,
+				"Ext Grid plugin integration", new BigDecimal(4), new BigDecimal(125),
+				2010, 8, 1));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 106,
+				"Summary creation during rendering phase", new BigDecimal(4),
+				new BigDecimal(125), 2010, 8, 2));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 107,
+				"Dynamic summary updates in editor grids", new BigDecimal(6),
 				new BigDecimal(125), 2010, 8, 5));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 109, "Summary renderers and calculators",
-				new BigDecimal(4), new BigDecimal(125), 2010, 8, 6));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 110, "Integrate summaries with GroupingView",
-				new BigDecimal(10), new BigDecimal(125), 2010, 8, 11));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 111, "Testing and debugging", new BigDecimal(8),
-				new BigDecimal(125), 2010, 8, 15));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 108,
+				"Remote summary integration", new BigDecimal(4), new BigDecimal(125),
+				2010, 8, 5));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 109,
+				"Summary renderers and calculators", new BigDecimal(4), new BigDecimal(
+						125), 2010, 8, 6));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 110,
+				"Integrate summaries with GroupingView", new BigDecimal(10),
+				new BigDecimal(125), 2010, 8, 11));
+		builder.add(new Task(102, "Ext Grid: Summary Rows", 111, "Testing and debugging",
+				new BigDecimal(8), new BigDecimal(125), 2010, 8, 15));
 
 		tasks = Collections.unmodifiableList(builder);
 
@@ -95,20 +109,24 @@ public class GroupAction {
 			if (!request.getSorters().isEmpty()) {
 				for (SortInfo sortInfo : request.getSorters()) {
 					if (groupInfo.getProperty().equals(sortInfo.getProperty())) {
-						groupInfo = new GroupInfo(groupInfo.getProperty(), sortInfo.getDirection());
+						groupInfo = new GroupInfo(groupInfo.getProperty(),
+								sortInfo.getDirection());
 					}
 				}
 			}
 
-			comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections.singletonList(groupInfo));
+			comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections
+					.singletonList(groupInfo));
 		}
 
-		Comparator<Task> sortComparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<Task> sortComparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 
 		if (sortComparator != null) {
 			if (comparator != null) {
 				comparator = comparator.thenComparing(sortComparator);
-			} else {
+			}
+			else {
 				comparator = sortComparator;
 			}
 		}

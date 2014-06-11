@@ -26,7 +26,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-@ComponentScan(basePackages = { "ch.ralscha.extdirectspring", "ch.rasc.extdirectspring.demo" })
+@ComponentScan(basePackages = { "ch.ralscha.extdirectspring",
+		"ch.rasc.extdirectspring.demo" })
 @EnableAutoConfiguration
 public class Main extends SpringBootServletInitializer {
 
@@ -40,16 +41,12 @@ public class Main extends SpringBootServletInitializer {
 	}
 
 	/*
-	@Bean
-	public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
-		ch.ralscha.extdirectspring.controller.Configuration config = new ch.ralscha.extdirectspring.controller.Configuration();
-		config.setStreamResponse(true);
-		config.setTimeout(12000);
-		config.setMaxRetries(10);
-		config.setEnableBuffer(false);
-		return config;
-	}
-	*/
+	 * @Bean public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
+	 * ch.ralscha.extdirectspring.controller.Configuration config = new
+	 * ch.ralscha.extdirectspring.controller.Configuration();
+	 * config.setStreamResponse(true); config.setTimeout(12000); config.setMaxRetries(10);
+	 * config.setEnableBuffer(false); return config; }
+	 */
 
 	@Bean
 	@Lazy

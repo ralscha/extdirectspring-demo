@@ -32,7 +32,8 @@ public class CarData {
 
 	private final List<Quality> quality;
 
-	public CarData(String manufacturer, String model, int price, String wiki, String img, Quality... quality) {
+	public CarData(String manufacturer, String model, int price, String wiki, String img,
+			Quality... quality) {
 		this.manufacturer = manufacturer;
 		this.model = model;
 		this.price = price;

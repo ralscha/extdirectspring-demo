@@ -30,7 +30,8 @@ import ch.rasc.extdirectspring.demo.form.BasicInfo;
 public class ProfileService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_LOAD, group = "touchdirect")
-	public BasicInfo getBasicInfo(@RequestParam(value = "uid", required = false) String uid) {
+	public BasicInfo getBasicInfo(
+			@RequestParam(value = "uid", required = false) String uid) {
 		System.out.println("UID: " + uid);
 		BasicInfo basicInfo = new BasicInfo();
 		basicInfo.setFoo(uid);
@@ -41,7 +42,8 @@ public class ProfileService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "touchdirect")
-	public ExtDirectFormPostResult updateBasicInfo(@Valid BasicInfo basicInfo, BindingResult result) {
+	public ExtDirectFormPostResult updateBasicInfo(@Valid BasicInfo basicInfo,
+			BindingResult result) {
 
 		System.out.println(basicInfo);
 

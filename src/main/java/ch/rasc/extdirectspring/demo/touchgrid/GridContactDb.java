@@ -47,9 +47,10 @@ public class GridContactDb {
 		try (InputStream is = contacts.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
-			List<GridContact> ci = om.readValue(is, new TypeReference<List<GridContact>>() {
-				/* nothing_here */
-			});
+			List<GridContact> ci = om.readValue(is,
+					new TypeReference<List<GridContact>>() {
+						/* nothing_here */
+					});
 
 			for (GridContact contact : ci) {
 				gridContactStore.put(contact.getId(), contact);
@@ -76,7 +77,8 @@ public class GridContactDb {
 			int id = gridContactStore.size() + 1;
 			contact.setId(id);
 			gridContactStore.put(id, contact);
-		} else {
+		}
+		else {
 			gridContactStore.put(contact.getId(), contact);
 		}
 	}

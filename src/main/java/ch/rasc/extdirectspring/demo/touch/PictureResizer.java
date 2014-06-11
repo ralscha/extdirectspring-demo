@@ -39,11 +39,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PictureResizer {
 
 	@RequestMapping(value = "/picresize", method = RequestMethod.GET)
-	public void resize(@RequestParam("url") String url, @RequestParam(value = "width", required = false) Integer width,
-			@RequestParam(value = "height", required = false) Integer height, HttpServletRequest request,
-			final HttpServletResponse response) throws MalformedURLException, IOException {
+	public void resize(@RequestParam("url") String url,
+			@RequestParam(value = "width", required = false) Integer width,
+			@RequestParam(value = "height", required = false) Integer height,
+			HttpServletRequest request, final HttpServletResponse response)
+			throws MalformedURLException, IOException {
 
-		File servletTmpDir = (File) request.getServletContext().getAttribute("javax.servlet.context.tempdir");
+		File servletTmpDir = (File) request.getServletContext().getAttribute(
+				"javax.servlet.context.tempdir");
 		File picturesDir = new File(servletTmpDir, "pictures");
 		picturesDir.mkdirs();
 
@@ -52,7 +55,8 @@ public class PictureResizer {
 
 		if (!pictureFile.exists()) {
 			try (InputStream input = new URL(url).openStream()) {
-				Files.copy(input, pictureFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(input, pictureFile.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
 
@@ -61,8 +65,9 @@ public class PictureResizer {
 			if (width != null && height != null) {
 				BufferedImage image = ImageIO.read(pictureFile);
 				if (image.getWidth() > width || image.getHeight() > height) {
-					BufferedImage resizedImage = Scalr.resize(image, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC,
-							width, height, Scalr.OP_ANTIALIAS);
+					BufferedImage resizedImage = Scalr.resize(image,
+							Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, width, height,
+							Scalr.OP_ANTIALIAS);
 
 					int pos = url.lastIndexOf(".");
 					String format = url.substring(pos + 1).toUpperCase();
@@ -73,10 +78,12 @@ public class PictureResizer {
 
 					Files.copy(tempFile.toPath(), out);
 					tempFile.delete();
-				} else {
+				}
+				else {
 					Files.copy(pictureFile.toPath(), out);
 				}
-			} else {
+			}
+			else {
 				Files.copy(pictureFile.toPath(), out);
 			}
 		}

@@ -48,7 +48,8 @@ public class DemoUtil {
 				if (!exclude.contains(descriptor.getName())) {
 					Field field = new Field(descriptor.getName());
 					field.setType(getDataType(descriptor.getPropertyType()));
-					field.addCustomProperty("header", StringUtils.capitalize(descriptor.getName()));
+					field.addCustomProperty("header",
+							StringUtils.capitalize(descriptor.getName()));
 					fields.add(field);
 				}
 			}

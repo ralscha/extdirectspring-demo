@@ -49,13 +49,15 @@ public class UserService {
 			Collection<User> users = userDb.getAll();
 			totalSize = users.size();
 			usersStream = users.stream();
-		} else {
+		}
+		else {
 			List<User> users = userDb.filter(filter.getValue());
 			totalSize = users.size();
 			usersStream = users.stream();
 		}
 
-		Comparator<User> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<User> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			usersStream = usersStream.sorted(comparator);
 		}
@@ -64,7 +66,8 @@ public class UserService {
 			usersStream = usersStream.skip(request.getStart()).limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, usersStream.collect(Collectors.toList()), true);
+		return new ExtDirectStoreResult<>(totalSize, usersStream.collect(Collectors
+				.toList()), true);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")

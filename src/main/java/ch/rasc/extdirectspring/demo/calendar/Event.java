@@ -164,9 +164,10 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", calendarId=" + calendarId + ", title=" + title + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", location=" + location + ", notes=" + notes + ", url=" + url
-				+ ", recurRule=" + recurRule + ", allDay=" + allDay + ", reminder=" + reminder + "]";
+		return "Event [id=" + id + ", calendarId=" + calendarId + ", title=" + title
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", location="
+				+ location + ", notes=" + notes + ", url=" + url + ", recurRule="
+				+ recurRule + ", allDay=" + allDay + ", reminder=" + reminder + "]";
 	}
 
 }

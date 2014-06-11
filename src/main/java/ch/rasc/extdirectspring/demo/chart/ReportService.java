@@ -31,13 +31,22 @@ public class ReportService {
 	private final Random randomGenerator = new Random();
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "pie")
-	public List<SeasonData> getSeasonData(@RequestParam(defaultValue = "50") int minRandomValue,
+	public List<SeasonData> getSeasonData(
+			@RequestParam(defaultValue = "50") int minRandomValue,
 			@RequestParam(value = "maxRandomValue", defaultValue = "250") int maxRandomValue) {
 
-		return Arrays.asList(new SeasonData("Summer", randomGenerator.nextInt(maxRandomValue - minRandomValue)
-				+ minRandomValue), new SeasonData("Fall", randomGenerator.nextInt(maxRandomValue - minRandomValue)
-				+ minRandomValue), new SeasonData("Winter", randomGenerator.nextInt(maxRandomValue - minRandomValue)
-				+ minRandomValue), new SeasonData("Spring", randomGenerator.nextInt(maxRandomValue - minRandomValue)
-				+ minRandomValue));
+		return Arrays.asList(
+				new SeasonData("Summer", randomGenerator.nextInt(maxRandomValue
+						- minRandomValue)
+						+ minRandomValue),
+				new SeasonData("Fall", randomGenerator.nextInt(maxRandomValue
+						- minRandomValue)
+						+ minRandomValue),
+				new SeasonData("Winter", randomGenerator.nextInt(maxRandomValue
+						- minRandomValue)
+						+ minRandomValue),
+				new SeasonData("Spring", randomGenerator.nextInt(maxRandomValue
+						- minRandomValue)
+						+ minRandomValue));
 	}
 }

@@ -64,7 +64,8 @@ public class BasicInfo {
 
 	@Override
 	public String toString() {
-		return "BasicInfo [company=" + company + ", email=" + email + ", foo=" + foo + ", name=" + name + "]";
+		return "BasicInfo [company=" + company + ", email=" + email + ", foo=" + foo
+				+ ", name=" + name + "]";
 	}
 
 }

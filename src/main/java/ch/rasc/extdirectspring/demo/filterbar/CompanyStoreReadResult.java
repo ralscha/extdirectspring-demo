@@ -40,7 +40,8 @@ public class CompanyStoreReadResult extends ExtDirectStoreResult<Company> {
 		super(record);
 	}
 
-	public CompanyStoreReadResult(Integer total, Collection<Company> records, Boolean success) {
+	public CompanyStoreReadResult(Integer total, Collection<Company> records,
+			Boolean success) {
 		super(total, records, success);
 	}
 

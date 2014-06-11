@@ -26,8 +26,8 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 public class YMDLocalDateDeserializer extends JsonDeserializer<LocalDate> {
 
 	@Override
-	public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
-			JsonProcessingException {
+	public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt)
+			throws IOException, JsonProcessingException {
 		return LocalDate.parse(jp.getText(), Constants.YYYYMMDD_FORMATTER);
 	}
 }

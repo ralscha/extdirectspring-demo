@@ -34,7 +34,8 @@ public class PresidentsService {
 	private static List<President> createTestData() {
 		List<President> presidents = new ArrayList<>();
 
-		presidents.add(new President(1, "George", null, "Washington", "georgewashington.png"));
+		presidents.add(new President(1, "George", null, "Washington",
+				"georgewashington.png"));
 		presidents.add(new President(2, "John", null, "Adams", "johnadams.png"));
 		presidents.add(new President(3, "Thomas", null, "Jefferson"));
 		presidents.add(new President(4, "James", null, "Madison"));
@@ -48,7 +49,8 @@ public class PresidentsService {
 		presidents.add(new President(12, "Zachary", null, "Taylor"));
 		presidents.add(new President(13, "Millard", null, "Fillmore"));
 		presidents.add(new President(14, "Franklin", null, "Pierce"));
-		presidents.add(new President(15, "James", null, "Buchanan", "15jp_header_sm.jpg"));
+		presidents
+				.add(new President(15, "James", null, "Buchanan", "15jp_header_sm.jpg"));
 		presidents.add(new President(16, "Abraham", null, "Lincoln"));
 		presidents.add(new President(17, "Andrew", null, "Johnson"));
 		presidents.add(new President(18, "Ulysses", "S", "Grant"));

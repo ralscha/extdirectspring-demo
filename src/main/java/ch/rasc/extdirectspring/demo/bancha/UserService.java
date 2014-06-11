@@ -136,7 +136,8 @@ public class UserService {
 		if (!result.hasErrors()) {
 			if (user.getId() > 0) {
 				userDb.put(user.getId(), user);
-			} else {
+			}
+			else {
 				user.setId(maxId.incrementAndGet());
 				userDb.put(user.getId(), user);
 			}

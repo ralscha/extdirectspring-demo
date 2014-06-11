@@ -46,22 +46,26 @@ public class FilterActionImplementation implements FilterActionInterface {
 			List<Company> companies = dataBean.findCompanies(request.getFilters());
 			totalSize = companies.size();
 			companiesStream = companies.stream();
-		} else {
+		}
+		else {
 			Collection<Company> companies = dataBean.findAllCompanies();
 			totalSize = companies.size();
 			companiesStream = companies.stream();
 		}
 
-		Comparator<Company> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<Company> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			companiesStream = companiesStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			companiesStream = companiesStream.skip(request.getStart()).limit(request.getLimit());
+			companiesStream = companiesStream.skip(request.getStart()).limit(
+					request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, companiesStream.collect(Collectors.toList()));
+		return new ExtDirectStoreResult<>(totalSize, companiesStream.collect(Collectors
+				.toList()));
 	}
 
 }

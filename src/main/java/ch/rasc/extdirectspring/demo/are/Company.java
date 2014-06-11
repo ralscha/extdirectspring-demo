@@ -59,13 +59,18 @@ public class Company {
 		this.company = company;
 
 		ThreadLocalRandom rnd = ThreadLocalRandom.current();
-		this.price = new BigDecimal(rnd.nextDouble(10, 90)).setScale(2, RoundingMode.HALF_DOWN);
-		this.change = new BigDecimal(rnd.nextDouble(0.1, 2.9)).setScale(2, RoundingMode.HALF_DOWN);
-		this.pctChange = new BigDecimal(rnd.nextDouble(0.1, 9.9)).setScale(2, RoundingMode.HALF_DOWN);
+		this.price = new BigDecimal(rnd.nextDouble(10, 90)).setScale(2,
+				RoundingMode.HALF_DOWN);
+		this.change = new BigDecimal(rnd.nextDouble(0.1, 2.9)).setScale(2,
+				RoundingMode.HALF_DOWN);
+		this.pctChange = new BigDecimal(rnd.nextDouble(0.1, 9.9)).setScale(2,
+				RoundingMode.HALF_DOWN);
 		this.lastChange = LocalDateTime.now().minusSeconds(rnd.nextInt(86400));
 
-		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(3600)), "Test"));
-		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(86400)), "Initial"));
+		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(3600)),
+				"Test"));
+		addHistory(new History(this,
+				LocalDateTime.now().minusSeconds(rnd.nextInt(86400)), "Initial"));
 
 	}
 

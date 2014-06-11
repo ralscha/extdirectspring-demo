@@ -26,7 +26,8 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 public class NamedService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "named")
-	public String showDetails(List<Business> bo, String firstName, String lastName, int age) {
+	public String showDetails(List<Business> bo, String firstName, String lastName,
+			int age) {
 		bo.forEach(System.out::println);
 		return String.format("Hi %s %s, you are %d years old.", firstName, lastName, age);
 	}

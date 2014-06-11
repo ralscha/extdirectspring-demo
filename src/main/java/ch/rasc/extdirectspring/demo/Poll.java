@@ -35,7 +35,8 @@ import ch.ralscha.extdirectspring.controller.SSEWriter;
 
 @Service
 public class Poll {
-	private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
+	private final static DateTimeFormatter formatter = DateTimeFormatter
+			.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message", group = "example")
 	public String handleMessagePoll() {
@@ -43,14 +44,17 @@ public class Poll {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "pollWithParams", group = "example")
-	public String pollingWithParams(@RequestParam(value = "no") int no, @RequestParam(value = "name") String name,
-			@RequestParam(value = "dummy", defaultValue = "CH") String dummy, HttpServletRequest request) {
-		return request.getRequestURI() + ":  POST PARAMETERS: no=" + no + ", name=" + name + ", dummy=" + dummy;
+	public String pollingWithParams(@RequestParam(value = "no") int no,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "dummy", defaultValue = "CH") String dummy,
+			HttpServletRequest request) {
+		return request.getRequestURI() + ":  POST PARAMETERS: no=" + no + ", name="
+				+ name + ", dummy=" + dummy;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SSE, group = "example")
-	public SSEvent sse(@RequestHeader("User-Agent") String userAgent, HttpServletResponse response, SSEWriter sseWriter)
-			throws IOException {
+	public SSEvent sse(@RequestHeader("User-Agent") String userAgent,
+			HttpServletResponse response, SSEWriter sseWriter) throws IOException {
 
 		// we have to send 2K bytes of nothing first if the client is IE6-IE9.
 		// IE10 no longer need this
@@ -62,26 +66,31 @@ public class Poll {
 		for (int i = 0; i < 20; i++) {
 
 			try {
-				sseWriter.write("Successfully polled with EventSource at: " + LocalDateTime.now().format(formatter));
-			} catch (Exception e) {
+				sseWriter.write("Successfully polled with EventSource at: "
+						+ LocalDateTime.now().format(formatter));
+			}
+			catch (Exception e) {
 				return null;
 			}
 
 			try {
 				TimeUnit.SECONDS.sleep(3);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				return null;
 			}
 		}
 
 		SSEvent event = new SSEvent();
 		event.setRetry(3000);
-		event.setData("LAST: Successfully polled with EventSource at: " + LocalDateTime.now().format(formatter));
+		event.setData("LAST: Successfully polled with EventSource at: "
+				+ LocalDateTime.now().format(formatter));
 		return event;
 
 	}
 
-	private static void writeIEHeadersAndPadding(HttpServletResponse response) throws IOException {
+	private static void writeIEHeadersAndPadding(HttpServletResponse response)
+			throws IOException {
 		// If you use Yaffle / EventSource then these two headers are necessary
 		// to make it work in IE6-IE9
 		response.setHeader("Cache-Control", "no-cache");

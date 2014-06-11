@@ -24,8 +24,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class SizeSerializer extends JsonSerializer<SizeEnum> {
 	@Override
-	public void serialize(SizeEnum value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+	public void serialize(SizeEnum value, JsonGenerator jgen, SerializerProvider provider)
+			throws IOException, JsonProcessingException {
 
 		jgen.writeString(value.getLabel());
 	}

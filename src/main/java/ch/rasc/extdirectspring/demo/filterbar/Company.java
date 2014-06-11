@@ -43,15 +43,16 @@ public class Company {
 
 	private final int not_delete;
 
-	public Company(int id, String company, String price, String change, String pctChange, String category,
-			String country, int not_delete) {
+	public Company(int id, String company, String price, String change, String pctChange,
+			String category, String country, int not_delete) {
 
 		this.id = id;
 		this.company = company;
 		this.price = new BigDecimal(price);
 		this.change = new BigDecimal(change);
 		this.pctChange = new BigDecimal(pctChange);
-		this.lastChange = LocalDate.now().plusDays(ThreadLocalRandom.current().nextInt(-10, 10));
+		this.lastChange = LocalDate.now().plusDays(
+				ThreadLocalRandom.current().nextInt(-10, 10));
 		this.category = category;
 		this.country = country;
 		this.not_delete = not_delete;

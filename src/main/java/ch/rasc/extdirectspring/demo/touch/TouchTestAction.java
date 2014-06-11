@@ -46,7 +46,8 @@ public class TouchTestAction {
 		return message;
 	}
 
-	private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
+	private final static DateTimeFormatter formatter = DateTimeFormatter
+			.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message", group = "touchdirect")
 	public String handleMessagePoll() {
@@ -69,7 +70,8 @@ public class TouchTestAction {
 		result.add(new Turnover("Ripped Gym", new BigDecimal("88400")));
 		result.add(new Turnover("Smith Auto Mechanic", new BigDecimal("222980")));
 
-		Comparator<Turnover> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<Turnover> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			return result.stream().sorted(comparator).collect(Collectors.toList());
 		}

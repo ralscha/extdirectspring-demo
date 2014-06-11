@@ -30,18 +30,21 @@ import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 public class UploadController {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "upload")
-	public ExtDirectFormPostResult uploadTest(@RequestParam("fileUpload") MultipartFile file) throws IOException {
+	public ExtDirectFormPostResult uploadTest(
+			@RequestParam("fileUpload") MultipartFile file) throws IOException {
 
 		ExtDirectFormPostResult resp = new ExtDirectFormPostResult(true);
 
 		if (file != null && !file.isEmpty()) {
-			resp.addResultProperty("fileContents", new String(file.getBytes(), StandardCharsets.ISO_8859_1));
+			resp.addResultProperty("fileContents", new String(file.getBytes(),
+					StandardCharsets.ISO_8859_1));
 		}
 		return resp;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "upload4")
-	public ExtDirectFormPostResult uploadTest4(@RequestParam("fileUpload1") MultipartFile file1,
+	public ExtDirectFormPostResult uploadTest4(
+			@RequestParam("fileUpload1") MultipartFile file1,
 			@RequestParam("fileUpload2") MultipartFile file2) throws IOException {
 
 		ExtDirectFormPostResult resp = new ExtDirectFormPostResult(true);

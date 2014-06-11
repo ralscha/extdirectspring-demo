@@ -69,16 +69,19 @@ public class ArticleService {
 
 		Stream<Article> resultStream = result.stream();
 
-		Comparator<Article> comparator = PropertyComparatorFactory.createComparatorFromSorters(request.getSorters());
+		Comparator<Article> comparator = PropertyComparatorFactory
+				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
 			resultStream = resultStream.sorted(comparator);
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			resultStream = resultStream.skip(request.getStart()).limit(request.getLimit());
+			resultStream = resultStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, resultStream.collect(Collectors.toList()));
+		return new ExtDirectStoreResult<>(totalSize, resultStream.collect(Collectors
+				.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")

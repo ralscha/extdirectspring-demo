@@ -31,7 +31,8 @@ import ch.rasc.extclassgenerator.OutputFormat;
 public class ModelController {
 
 	@RequestMapping("/app/model/User.js")
-	public void user(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void user(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS4);
 	}
 

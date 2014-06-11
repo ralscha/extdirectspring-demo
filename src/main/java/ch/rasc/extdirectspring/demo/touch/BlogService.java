@@ -36,7 +36,8 @@ import com.sun.syndication.io.XmlReader;
 public class BlogService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "blog")
-	public List<Post> getBlogPosts() throws IllegalArgumentException, FeedException, IOException {
+	public List<Post> getBlogPosts() throws IllegalArgumentException, FeedException,
+			IOException {
 		List<Post> posts = new ArrayList<>();
 
 		URL feedUrl = new URL("http://feeds.feedburner.com/SenchaBlog");
@@ -51,7 +52,8 @@ public class BlogService {
 				Post post = new Post();
 				post.setTitle(entry.getTitle());
 				post.setLeaf(true);
-				post.setContent(((SyndContentImpl) entry.getContents().iterator().next()).getValue());
+				post.setContent(((SyndContentImpl) entry.getContents().iterator().next())
+						.getValue());
 				posts.add(post);
 			}
 		}
