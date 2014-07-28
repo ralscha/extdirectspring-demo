@@ -10,10 +10,6 @@ Ext.define('BigDataView', {
 		clicksToMoveEditor: 1,
 		autoCancel: false
 	}
-	/*
-	 * , TODO: row expander { ptype: 'rowexpander', rowBodyTpl : new
-	 * Ext.XTemplate( '<img src="{avatar}">' ) }
-	 */
 	],
 	features: [ {
 		ftype: 'groupingsummary',
@@ -184,17 +180,10 @@ Ext.define('BigDataView', {
 		} ]
 	}, {
 		text: 'Rating',
-		width: 70,
+		width: 140,
 		sortable: true,
 		dataIndex: 'rating',
-		groupable: false,
-		filter: {
-
-		},
-		editor: {
-			xtype: 'numberfield',
-			decimalPrecision: 0
-		}
+		groupable: false
 	}, {
 		text: 'Salary',
 		width: 110,

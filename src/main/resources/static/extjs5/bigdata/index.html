@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Big Data</title>
+<link rel="stylesheet" href="//demo.rasc.ch/resources/ext-5.0.1.1197/build/examples/shared/example.css" />
+<script src="//demo.rasc.ch/resources/ext-5.0.1.1197/build/examples/shared/include-ext.js"></script>
+<script src="//demo.rasc.ch/resources/ext-5.0.1.1197/build/examples/shared/options-toolbar.js"></script
+<script src="Employee.js"></script>
+<script src="BigDataController.js"></script>
+<script src="BigDataStore.js"></script>
+<script src="BigDataView.js"></script>
+
+<script src="../../api-debug.js?group=bigdata"></script>
+<script>
+Ext.onReady(function() {    
+	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+	Ext.create('BigDataStore');
+    Ext.create('BigDataView', {	
+    	height: 600,
+		width: '100%',	
+		renderTo: Ext.getBody()
+	});	
+});
+</script>
+</head>
+<body>
+	<h1>Ext Direct Grid Integration</h1>
+	<p>
+    "Directified" version of the <a href="http://dev.sencha.com/ext/5.0.0/examples/kitchensink/#big-data-grid">Big Data Example</a>
+    </p>    
+	<p>
+		Source code: <a href="grid.js">grid.js</a>
+	</p>
+</body>
+</html>

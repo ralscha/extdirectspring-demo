@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Employee {
 	private String employeeNo;
 
-	private int rating;
+	private int[] rating;
 
 	private BigDecimal salary;
 
@@ -64,11 +64,11 @@ public class Employee {
 		this.employeeNo = employeeNo;
 	}
 
-	public int getRating() {
+	public int[] getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(int[] rating) {
 		this.rating = rating;
 	}
 

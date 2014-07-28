@@ -3,8 +3,7 @@ Ext.define('Employee', {
 	fields: [ {
 		name: 'employeeNo'
 	}, {
-		name: 'rating',
-		type: 'int'
+		name: 'rating'
 	}, {
 		name: 'salary',
 		type: 'float'
