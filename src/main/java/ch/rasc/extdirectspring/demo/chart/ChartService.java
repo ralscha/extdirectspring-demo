@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
@@ -40,7 +41,7 @@ public class ChartService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "area")
 	public List<AreaData> getAreaData() {
 		String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
-		return Arrays.stream(months).map(AreaData::new).collect(Collectors.toList());
+		return Arrays.stream(months).filter(StringUtils::hasText).map(AreaData::new).collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unchecked")

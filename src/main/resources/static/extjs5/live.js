@@ -34,20 +34,7 @@ Ext.onReady(function () {
             store: store,
             animation: {
             	easing: 'backOut',
-            	duration: 900
-            	/*
-            	 * linear The default easing type
-backIn
-backOut
-bounceIn
-bounceOut
-ease
-easeIn
-easeOut
-easeInOut
-elasticIn
-elasticOut
-            	 */
+            	duration: 700
             },            
             axes: [{
                 type: 'numeric',
