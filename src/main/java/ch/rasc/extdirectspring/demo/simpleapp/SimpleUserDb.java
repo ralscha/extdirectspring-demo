@@ -55,7 +55,7 @@ public class SimpleUserDb {
 			while ((nextLine = reader.readNext()) != null) {
 				User u = new User(nextLine);
 				users.put(u.getId(), u);
-				maxId = Math.max(maxId, Integer.valueOf(u.getId()));
+				maxId = Math.max(maxId, Integer.parseInt(u.getId()));
 			}
 		}
 	}

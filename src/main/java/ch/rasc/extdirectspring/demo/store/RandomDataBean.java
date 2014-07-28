@@ -56,7 +56,7 @@ public class RandomDataBean {
 			while ((nextLine = reader.readNext()) != null) {
 				Person p = new Person(nextLine);
 				persons.put(Integer.valueOf(p.getId()), p);
-				maxId = Math.max(maxId, Integer.valueOf(p.getId()));
+				maxId = Math.max(maxId, Integer.parseInt(p.getId()));
 			}
 		}
 

@@ -31,6 +31,6 @@ public class ContactService {
 	public Map<String, Object> postContact(Contact contact) {
 		System.out.println(contact);
 
-		return Collections.singletonMap("success", true);
+		return Collections.singletonMap("success", Boolean.TRUE);
 	}
 }
