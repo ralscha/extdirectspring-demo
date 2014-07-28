@@ -13,9 +13,8 @@ Ext.data.validations.range = function(config, value) {
 
 	if ((min && numericValue < min) || (max && numericValue > max)) {
 		return false;
-	} else {
-		return true;
 	}
+	return true;
 
 };
 
