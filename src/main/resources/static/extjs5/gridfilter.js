@@ -41,16 +41,6 @@ Ext.onReady(function() {
 		pageSize: 50
 	});
 
-	var filters = {
-		ftype: 'filters',
-		encode: true,
-		local: false,
-		filters: [ {
-			type: 'boolean',
-			dataIndex: 'visible'
-		} ]
-	};
-
 	var createColumns = function() {
 
 		var columns = [ {
@@ -84,7 +74,12 @@ Ext.onReady(function() {
 			renderer: Ext.util.Format.dateRenderer('m/d/Y')
 		}, {
 			dataIndex: 'visible',
-			text: 'Visible'
+			text: 'Visible',
+			filter: {
+				type: 'boolean',
+				noText: 'false',
+				yesText: 'true'
+			}
 		} ];
 
 		return columns;
