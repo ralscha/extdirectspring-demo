@@ -5,7 +5,7 @@ Ext.onReady(function () {
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 	
 	var data = [];	
-    var chart,timeAxis;
+    var chart, timeAxis;
 
     var store = Ext.create('Ext.data.JsonStore', {
         fields: ['date', 'visits', 'views', 'veins']
@@ -22,7 +22,7 @@ Ext.onReady(function () {
     		data = data.slice();
     		data.push(result);
             var toDate = timeAxis.toDate,
-                lastDate = Ext.Date.parse(result.date, "Y-m-d");
+                lastDate = Ext.Date.parse(result.date, "Y-m-d"),
                 markerIndex = chart.markerIndex || 0;
             if (+toDate < +lastDate) {
                 markerIndex = 1;

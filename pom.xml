@@ -188,6 +188,10 @@
 								<exclude>ux-validations.js</exclude>
 								<exclude>extjs3/highcharts/excanvas.compiled.js</exclude>
 								<exclude>extjs3/highcharts/Ext.ux.HighChart.js</exclude>
+								<exclude>extjs3/highcharts/adapter-extjs.js</exclude>
+								<exclude>extjs3/highcharts/highcharts.js</exclude>
+								<exclude>extjs42/banchascaffold/bancha-scaffold-production.js</exclude>
+								<exclude>extjs42/pivotgrid</exclude>
 							</excludes>
 
 							<options>
@@ -201,7 +205,8 @@
 								        personAction,salesAction,pivotService,person4Action,bbcService,Sch,schCarService,
 								        treeProvider,uploadController,deliveryTimeService,filterActionImplementation,
 								        presidentsService,notesService,touchTestAction,blogService,profile,sseMessageHandler,
-								        groupAction,carService,testAction,console</predef>
+								        groupAction,carService,testAction,console,reportService,extJsBookService,Example,
+								        myTreeLoader,Deft,restaurantService,namedService,carouselService,bancha</predef>
 							</options>
 						</configuration>
 					</execution>

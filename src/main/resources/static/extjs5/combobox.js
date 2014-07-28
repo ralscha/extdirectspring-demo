@@ -1,4 +1,4 @@
-Ext.require([ 'Ext.data.*', 'Ext.form.*', ]);
+Ext.require([ 'Ext.data.*', 'Ext.form.*' ]);
 
 Ext.onReady(function() {
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
