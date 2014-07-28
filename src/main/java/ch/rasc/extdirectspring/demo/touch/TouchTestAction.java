@@ -49,7 +49,8 @@ public class TouchTestAction {
 	private final static DateTimeFormatter formatter = DateTimeFormatter
 			.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
 
-	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message", group = "touchdirect")
+	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message",
+			group = "touchdirect")
 	public String handleMessagePoll() {
 		return "Successfully polled at: " + LocalDateTime.now().format(formatter);
 	}
