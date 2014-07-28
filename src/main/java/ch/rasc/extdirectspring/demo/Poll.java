@@ -38,16 +38,17 @@ public class Poll {
 	private final static DateTimeFormatter formatter = DateTimeFormatter
 			.ofPattern("uuuu/MM/dd 'at' hh:mm:ss");
 
-	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message", group = "example")
+	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message",
+			group = "example")
 	public String handleMessagePoll() {
 		return "Successfully polled at: " + LocalDateTime.now().format(formatter);
 	}
 
-	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "pollWithParams", group = "example")
-	public String pollingWithParams(@RequestParam(value = "no") int no,
-			@RequestParam(value = "name") String name,
-			@RequestParam(value = "dummy", defaultValue = "CH") String dummy,
-			HttpServletRequest request) {
+	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "pollWithParams",
+			group = "example")
+	public String pollingWithParams(@RequestParam(value = "no") int no, @RequestParam(
+			value = "name") String name, @RequestParam(value = "dummy",
+			defaultValue = "CH") String dummy, HttpServletRequest request) {
 		return request.getRequestURI() + ":  POST PARAMETERS: no=" + no + ", name="
 				+ name + ", dummy=" + dummy;
 	}

@@ -26,7 +26,8 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 @Service
 public class DynamicDataProvider {
 
-	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "newData", group = "dynamic")
+	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "newData",
+			group = "dynamic")
 	public Map<String, Double> newData() {
 		Map<String, Double> result = new HashMap<>();
 		result.put("x", Math.random());

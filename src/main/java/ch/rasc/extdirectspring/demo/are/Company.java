@@ -51,7 +51,8 @@ public class Company {
 	@ModelField(dateFormat = "c", defaultValue = "undefined")
 	private final LocalDateTime lastChange;
 
-	@ModelAssociation(value = ModelAssociationType.HAS_MANY, model = History.class, foreignKey = "companyId", autoLoad = true)
+	@ModelAssociation(value = ModelAssociationType.HAS_MANY, model = History.class,
+			foreignKey = "companyId", autoLoad = true)
 	@JsonIgnore
 	private final List<History> history = new ArrayList<>();
 
