@@ -5,6 +5,10 @@ public class TodoItem {
 	private String text;
 	private boolean complete;
 
+	public TodoItem() {
+		// default constructor
+	}
+
 	public TodoItem(long id, String text, boolean complete) {
 		this.id = id;
 		this.text = text;

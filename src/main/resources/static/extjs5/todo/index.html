@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Todo</title>
+<script src="//demo.rasc.ch/resources/ext-5.0.1.1197/build/examples/shared/include-ext.js"></script>
+<script src="//demo.rasc.ch/resources/ext-5.0.1.1197/build/examples/shared/options-toolbar.js"></script>
+<script src="../../api-debug.js?group=todo"></script>
+<script src="app.js"></script>
+<script>
+function readCookie(name) {
+    name += '=';
+    for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--) {
+        if (!ca[i].indexOf(name)) {
+            return ca[i].replace(name, '');
+        }
+    }
+}
+</script>
+</head>
+<body></body>
+</html>
