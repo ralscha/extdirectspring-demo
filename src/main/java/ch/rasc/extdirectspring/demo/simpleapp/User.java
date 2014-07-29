@@ -15,6 +15,9 @@
  */
 package ch.rasc.extdirectspring.demo.simpleapp;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import ch.rasc.extclassgenerator.Model;
 
 @Model(value = "Simple.model.User", paging = true, readMethod = "userService.load",
@@ -23,10 +26,14 @@ import ch.rasc.extclassgenerator.Model;
 public class User {
 	private String id;
 
+	@NotBlank
 	private String firstName;
 
+	@NotBlank
 	private String lastName;
 
+	@NotBlank
+	@Email
 	private String email;
 
 	private String city;

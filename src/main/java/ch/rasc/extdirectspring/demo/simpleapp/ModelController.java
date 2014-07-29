@@ -23,17 +23,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ch.rasc.extclassgenerator.IncludeValidation;
 import ch.rasc.extclassgenerator.ModelGenerator;
 import ch.rasc.extclassgenerator.OutputFormat;
 
 @Controller
-@RequestMapping({ "/extjs41/simple", "/extjs42/simple" })
 public class ModelController {
 
-	@RequestMapping("/app/model/User.js")
-	public void user(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping({ "/extjs41/simple/app/model/User.js",
+			"/extjs42/simple/app/model/User.js" })
+	public void user4(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS4);
 	}
 
+	@RequestMapping("/extjs5/simple/app/model/User.js")
+	public void user5(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS5, IncludeValidation.BUILTIN, true);
+	}
 }
