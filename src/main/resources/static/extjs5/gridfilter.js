@@ -46,20 +46,24 @@ Ext.onReady(function() {
 		var columns = [ {
 			dataIndex: 'id',
 			text: 'Id',
-			filterable: true,
-			width: 60
+			width: 60,
+			filter: 'number'
 		}, {
 			dataIndex: 'company',
 			text: 'Company',
 			id: 'company',
 			flex: 1,
 			filter: {
-				type: 'string'
-			}
+	            type: 'string',
+	            itemDefaults: {
+	                emptyText: 'Search for...'
+	            }
+	        }
 		}, {
 			dataIndex: 'price',
 			text: 'Price',
-			width: 80
+			width: 80,
+			filter: 'number'
 		}, {
 			dataIndex: 'size',
 			text: 'Size',
