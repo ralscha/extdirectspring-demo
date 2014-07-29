@@ -55,7 +55,7 @@ public class UserService {
 		user.setLogin("joe");
 		user.setCreated(LocalDateTime.of(2012, 7, 28, 8, 54, 20));
 		user.setEmail("joe@test.com");
-		user.setAvatar("joe.png");
+		user.setAvatar(null);
 		user.setWeight(76);
 		user.setHeight(187);
 		userDb.put(1, user);
@@ -66,7 +66,7 @@ public class UserService {
 		user.setLogin("dan");
 		user.setCreated(LocalDateTime.of(2012, 7, 29, 11, 5, 20));
 		user.setEmail("dan@test.com");
-		user.setAvatar("dan.png");
+		user.setAvatar(null);
 		user.setWeight(70);
 		user.setHeight(230);
 		userDb.put(2, user);
@@ -77,7 +77,7 @@ public class UserService {
 		user.setLogin("ralph");
 		user.setCreated(LocalDateTime.of(2012, 7, 30, 16, 11, 44));
 		user.setEmail("ralph@test.com");
-		user.setAvatar("ralph.png");
+		user.setAvatar(null);
 		user.setWeight(72);
 		user.setHeight(180);
 		userDb.put(3, user);
@@ -88,7 +88,7 @@ public class UserService {
 		user.setLogin("nils");
 		user.setCreated(LocalDateTime.of(2012, 7, 31, 18, 0, 1));
 		user.setEmail("nils@test.com");
-		user.setAvatar("nils.png");
+		user.setAvatar(null);
 		user.setWeight(82);
 		user.setHeight(186);
 		userDb.put(4, user);
@@ -133,7 +133,7 @@ public class UserService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "bancha")
 	public ExtDirectFormPostResult submit(@Valid User user, BindingResult result) {
-		if (!result.hasErrors()) {
+		if (!result.hasErrors()) {			
 			if (user.getId() > 0) {
 				userDb.put(user.getId(), user);
 			}
@@ -143,6 +143,7 @@ public class UserService {
 			}
 		}
 		System.out.println(user);
+		user.setAvatar(null);
 		return new ExtDirectFormPostResult(result);
 	}
 

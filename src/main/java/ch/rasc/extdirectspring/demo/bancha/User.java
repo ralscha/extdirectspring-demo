@@ -33,12 +33,14 @@ public class User {
 
 	private String login;
 
-	@DateTimeFormat
+	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime created;
 
 	private String email;
 
-	private String avatar;
+	private Object avatar;
 
 	private int weight;
 
@@ -68,12 +70,10 @@ public class User {
 		this.login = login;
 	}
 
-	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
 	public LocalDateTime getCreated() {
 		return created;
 	}
 
-	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
@@ -86,11 +86,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getAvatar() {
+	public Object getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(String avatar) {
+	public void setAvatar(Object avatar) {
 		this.avatar = avatar;
 	}
 

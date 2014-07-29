@@ -52,7 +52,7 @@ Ext.define('Bancha.model.Article', {
 	}, {
 		name: 'date',
 		type: 'date',
-		dateFormat: 'Y-m-d\\TH:i:s.uP'
+		dateFormat: 'Y-m-d\\TH:i:s'
 	}, {
 		name: 'body',
 		type: 'string'
@@ -107,7 +107,7 @@ Ext.define('Bancha.model.User', {
 	}, {
 		name: 'created',
 		type: 'date',
-		dateFormat: 'Y-m-d\\TH:i:s.uP'
+		dateFormat: 'Y-m-d\\TH:i:s'
 	}, {
 		name: 'email',
 		type: 'string'

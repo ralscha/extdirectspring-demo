@@ -29,6 +29,10 @@ public class ISO8601LocalDateTimeDeserializer extends JsonDeserializer<LocalDate
 	@Override
 	public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt)
 			throws IOException, JsonProcessingException {
-		return ZonedDateTime.parse(jp.getText()).toLocalDateTime();
+
+		if (jp.getText().contains("+")) {
+			return ZonedDateTime.parse(jp.getText()).toLocalDateTime();
+		}
+		return LocalDateTime.parse(jp.getText());
 	}
 }

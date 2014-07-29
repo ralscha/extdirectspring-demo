@@ -85,20 +85,20 @@ public class ArticleService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")
-	public List<Article> create(List<Article> newArticles) {
-		return newArticles.stream().map(a -> {
+	public ExtDirectStoreResult<Article> create(List<Article> newArticles) {
+		return new ExtDirectStoreResult<>(newArticles.stream().map(a -> {
 			a.setId(maxId.incrementAndGet());
 			articleDb.put(a.getId(), a);
 			return a;
-		}).collect(Collectors.toList());
+		}).collect(Collectors.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")
-	public List<Article> update(List<Article> updatedArticles) {
+	public ExtDirectStoreResult<Article> update(List<Article> updatedArticles) {
 		for (Article article : updatedArticles) {
 			articleDb.put(article.getId(), article);
 		}
-		return updatedArticles;
+		return new ExtDirectStoreResult<>(updatedArticles);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")
