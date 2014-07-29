@@ -45,7 +45,14 @@ import ch.rasc.extdirectspring.demo.util.Constants;
 @Controller
 public class AreService {
 
-	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are")
+	static final class WITH_HISTORY_VIEW {
+	};
+
+	static final class WO_HISTORY_VIEW {
+	};
+
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are",
+			jsonView = WO_HISTORY_VIEW.class)
 	public Collection<Company> read(@RequestParam(required = false) String coId,
 			ExtDirectStoreReadRequest edsRequest) {
 		if (coId != null) {
@@ -61,7 +68,16 @@ public class AreService {
 		return companyDb.values();
 	}
 
-	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are")
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are",
+			jsonView = WITH_HISTORY_VIEW.class)
+	public Collection<Company> readWithHistory(
+			@RequestParam(required = false) String coId,
+			ExtDirectStoreReadRequest edsRequest) {
+		return read(coId, edsRequest);
+	}
+
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are",
+			jsonView = WO_HISTORY_VIEW.class)
 	public Collection<History> historyRead(ExtDirectStoreReadRequest request) {
 		StringFilter filter = request.getFirstFilterForField("companyId");
 		if (filter != null) {

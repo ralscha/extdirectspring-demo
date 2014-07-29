@@ -29,7 +29,7 @@ import ch.rasc.extclassgenerator.ModelAssociationType;
 import ch.rasc.extclassgenerator.ModelField;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Model(value = "Are.Company", readMethod = "areService.read", idProperty = "coId")
@@ -53,7 +53,7 @@ public class Company {
 
 	@ModelAssociation(value = ModelAssociationType.HAS_MANY, model = History.class,
 			foreignKey = "companyId", autoLoad = true)
-	@JsonIgnore
+	@JsonView(AreService.WITH_HISTORY_VIEW.class)
 	private final List<History> history = new ArrayList<>();
 
 	public Company(String company) {
