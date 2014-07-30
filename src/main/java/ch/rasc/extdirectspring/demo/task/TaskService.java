@@ -108,8 +108,8 @@ public class TaskService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "task")
-	public List<Task> create(List<Task> newTodos) {
-		return newTodos.stream().peek(t -> {
+	public List<Task> create(List<Task> newTasks) {
+		return newTasks.stream().peek(t -> {
 			maxId.increment();
 			t.setId(maxId.longValue());
 			db.put(t.getId(), t);
@@ -117,14 +117,14 @@ public class TaskService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "task")
-	public List<Task> update(List<Task> updatedTodos) {
-		updatedTodos.forEach(t -> db.put(t.getId(), t));
-		return updatedTodos;
+	public List<Task> update(List<Task> updatedTasks) {
+		updatedTasks.forEach(t -> db.put(t.getId(), t));
+		return updatedTasks;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "task")
-	public void destroy(List<Task> destroyTodos) {
-		destroyTodos.forEach(t -> db.remove(t.getId()));
+	public void destroy(List<Task> destroyTasks) {
+		destroyTasks.forEach(t -> db.remove(t.getId()));
 	}
 
 }
