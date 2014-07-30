@@ -133,7 +133,7 @@ public class UserService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "bancha")
 	public ExtDirectFormPostResult submit(@Valid User user, BindingResult result) {
-		if (!result.hasErrors()) {			
+		if (!result.hasErrors()) {
 			if (user.getId() > 0) {
 				userDb.put(user.getId(), user);
 			}

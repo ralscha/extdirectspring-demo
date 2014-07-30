@@ -40,6 +40,7 @@ public class ModelController {
 	@RequestMapping("/extjs5/simple/app/model/User.js")
 	public void user5(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS5, IncludeValidation.BUILTIN, true);
+		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS5,
+				IncludeValidation.BUILTIN, true);
 	}
 }

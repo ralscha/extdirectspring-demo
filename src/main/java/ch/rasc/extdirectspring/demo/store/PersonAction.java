@@ -268,7 +268,7 @@ public class PersonAction {
 				personsStream.collect(Collectors.toList()));
 
 		// Send metadata only the first time
-		if ((request.getStart() == null || request.getStart() == 0)) {
+		if (request.getStart() == null || request.getStart() == 0) {
 			MetaData metaData = new MetaData();
 
 			metaData.setPagingParameter(0, 60);

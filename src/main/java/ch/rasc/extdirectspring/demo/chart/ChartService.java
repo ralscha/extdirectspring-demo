@@ -41,7 +41,8 @@ public class ChartService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "area")
 	public List<AreaData> getAreaData() {
 		String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
-		return Arrays.stream(months).filter(StringUtils::hasText).map(AreaData::new).collect(Collectors.toList());
+		return Arrays.stream(months).filter(StringUtils::hasText).map(AreaData::new)
+				.collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unchecked")

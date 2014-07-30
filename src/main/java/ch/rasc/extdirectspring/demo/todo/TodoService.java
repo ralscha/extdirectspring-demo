@@ -44,7 +44,8 @@ public class TodoService {
 		Stream<TodoItem> stream = db.values().stream();
 		if (filter != null) {
 			String filterValue = ((StringFilter) filter).getValue();
-			stream = stream.filter(t -> t.getText().toLowerCase().contains(filterValue.toLowerCase()));
+			stream = stream.filter(t -> t.getText().toLowerCase()
+					.contains(filterValue.toLowerCase()));
 		}
 		return stream.sorted(Comparator.comparing(TodoItem::getId).reversed()).collect(
 				Collectors.toList());
