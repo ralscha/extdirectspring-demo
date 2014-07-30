@@ -93,7 +93,7 @@ Ext.define('Todo.view.grid.GridActions', {
 		region: 'east',
 		split: true,
 		bind: {
-			disabled: '{!editTodo}',
+			disabled: '{!editTodo}'
 		},
 		width: 350,
 		bodyPadding: 10,

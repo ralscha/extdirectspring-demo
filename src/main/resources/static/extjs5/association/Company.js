@@ -11,7 +11,7 @@ Ext.define('Company', {
 	}, {
 		name: 'change'
 	}, {
-		name: 'pctChange',
+		name: 'pctChange'
 	}, {
 		name: 'lastChange',
 		type: 'date',

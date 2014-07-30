@@ -67,7 +67,7 @@ Ext.define('Feed.view.FeedController', {
 		var tabs = [];
 		var tabPanel = this.lookupReference('feedTabPanel');
 
-		if (items.length == 1) {
+		if (items.length === 1) {
 			var index = this.getTabByTitle(tabPanel, items[0].data.title.trunc(30));
 			if (index) {
 				tabPanel.setActiveTab(index);
@@ -89,7 +89,7 @@ Ext.define('Feed.view.FeedController', {
 					},
 					tabConfig: {
 						tooltip: item.data.title
-					},
+					}
 				});
 			}
 		}, this);

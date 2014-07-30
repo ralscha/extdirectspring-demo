@@ -3,7 +3,7 @@ Ext.define('Task.view.TaskForm', {
 
 	width: 475,
 	bind: {
-		title: 'Edit Task: {detailTask.title}',
+		title: 'Edit Task: {detailTask.title}'
 	},
 	modal: true,
 	autoShow: true,
@@ -37,7 +37,7 @@ Ext.define('Task.view.TaskForm', {
 			fieldLabel: 'Due Date',
 			labelAlign: 'right',
 			format: 'Y-m-d',
-			bind: '{detailTask.dueDate}',
+			bind: '{detailTask.dueDate}'
 		}, {
 			xtype: 'combobox',
 			fieldLabel: 'Priority',

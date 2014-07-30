@@ -105,13 +105,13 @@ Ext.onReady(function() {
   });
 
   text.on('specialkey', function(t, e) {
-    if (e.getKey() == e.ENTER) {
+    if (e.getKey() === e.ENTER) {
       call.handler();
     }
   });
 
   num.on('specialkey', function(t, e) {
-    if (e.getKey() == e.ENTER) {
+    if (e.getKey() === e.ENTER) {
       multiply.handler();
     }
   });

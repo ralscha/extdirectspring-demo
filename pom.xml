@@ -230,7 +230,8 @@
 									treeProvider,uploadController,deliveryTimeService,filterActionImplementation,
 									presidentsService,notesService,touchTestAction,blogService,profile,sseMessageHandler,
 									groupAction,carService,testAction,console,reportService,extJsBookService,Example,
-									myTreeLoader,Deft,restaurantService,namedService,carouselService,bancha</predef>
+									myTreeLoader,Deft,restaurantService,namedService,carouselService,bancha,Task,taskService,
+									feedService,readCookie,Feed</predef>
 							</options>
 						</configuration>
 					</execution>

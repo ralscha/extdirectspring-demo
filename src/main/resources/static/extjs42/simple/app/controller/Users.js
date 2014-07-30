@@ -43,7 +43,7 @@ Ext.define('Simple.controller.Users', {
 	            var currentPage = store.currentPage;
 	            var data = store.data;
 
-	            if (currentPage > 1 && data.length == 0) {
+	            if (currentPage > 1 && data.length === 0) {
 	                store.previousPage();
 	            }
 	        }

@@ -55,6 +55,7 @@ Ext.define('Todo.view.FormActions', {
                         case Ext.form.action.Action.SERVER_INVALID:
                             Ext.Msg.alert('Failure',
                                 action.result.msg);
+                            break;
                     }
                 }
             });

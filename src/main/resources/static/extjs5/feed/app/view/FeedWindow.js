@@ -38,6 +38,6 @@ Ext.define('Feed.view.FeedWindow', {
 							'Sci/Tech - Google News' ],
 					[ 'http://news.yahoo.com/rss/', 'Yahoo News' ] ]
 		} ]
-	} ],
+	} ]
 
 });

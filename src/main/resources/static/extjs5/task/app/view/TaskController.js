@@ -53,7 +53,7 @@ Ext.define('Task.view.TaskController', {
 
 	deleteTaskConfirm: function(btn) {
 		var me = this;
-		if (btn == 'yes') {
+		if (btn === 'yes') {
 			var store = me.getStore('tasks');
 			var record = me.getViewModel().get('selectedTask');
 			var index = store.indexOf(record);

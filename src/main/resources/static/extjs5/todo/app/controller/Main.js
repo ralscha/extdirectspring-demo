@@ -64,7 +64,7 @@ Ext.define('Todo.controller.Main', {
 
     onInsertBtnClick: function() {
         var store = Ext.getStore('Todo');
-        var record = Ext.create('Todo.model.TodoItem', {text:'New todo action ' + +(store.getCount() +1), complete:0});
+        var record = Ext.create('Todo.model.TodoItem', {text:'New todo action ' + (store.getCount() +1), complete:0});
         record.save({
             callback:function(records, operation, success){
                 if(success){

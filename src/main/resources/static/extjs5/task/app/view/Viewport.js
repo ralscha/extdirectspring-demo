@@ -91,7 +91,7 @@ Ext.define('Task.view.Viewport', {
                     editable: false,
                     displayField: 'priority',
                     bind: {
-                    	store: '{priorities}',
+                    	store: '{priorities}'
                     },
                     valueField: 'priority'
                 }
@@ -132,7 +132,7 @@ Ext.define('Task.view.Viewport', {
                 xtype: 'toolbar',
                 dock: 'top',
                 bind: {
-                	hidden: '{!detailTask}',
+                	hidden: '{!detailTask}'
                 },
                 items: [{
                     xtype: 'button',

@@ -260,7 +260,7 @@ Ext.define('Ext.ux.grid.xFilterRow', {
 	
 	onFieldKeyDown: function(field, e) {
 		var me = this;
-		if(e.getKey() == e.ENTER) {
+		if(e.getKey() === e.ENTER) {
 			me.storeSearch();			
 		}
 	},

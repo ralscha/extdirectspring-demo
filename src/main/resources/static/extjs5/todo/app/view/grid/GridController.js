@@ -37,7 +37,7 @@ Ext.define('Todo.view.grid.GridController', {
 	insertTodo: function() {
 		var store = this.getStore('todos');
 		var record = Ext.create('Todo.model.TodoItem', {
-			text: 'New todo action ' + +(store.getCount() + 1),
+			text: 'New todo action ' + (store.getCount() + 1),
 			complete: false
 		});
 		this.getViewModel().set('editTodo', record);

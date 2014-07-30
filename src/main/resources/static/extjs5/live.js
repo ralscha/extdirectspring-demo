@@ -82,9 +82,6 @@ Ext.onReady(function () {
                     lineWidth: 2
                 },
                 marker: {
-                    radius: 2
-                },
-                marker: {
                     radius: 4
                 }       	
             }]

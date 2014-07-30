@@ -35,7 +35,6 @@ Ext.define('Feed.view.FeedItems', {
 				listeners: {
 					change: 'readingPaneChange'
 				},
-				// changeHandler: 'readingPaneChange',
 				menu: {
 					id: 'reading-menu',
 					items: [ {
@@ -81,7 +80,7 @@ Ext.define('Feed.view.FeedItems', {
 				ptype: 'preview',
 				bodyField: 'description',
 				expanded: true,
-				pluginId: 'preview',
+				pluginId: 'preview'
 			} ]
 		},
 

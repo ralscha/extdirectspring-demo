@@ -10,12 +10,6 @@ Ext.define('Feed.view.FeedItem', {
 		title: '{abbreviatedTitle}'
 	},
 
-	// tabConfig: {
-	// bind: {
-	// tooltip: '{title}'
-	// }
-	// },
-
 	tpl: [ '<div class="post-data">',
 			'<span class="post-date">{pubDate:this.formatDate}</span>',
 			'<h3 class="post-title">{title}</h3>',
@@ -41,7 +35,6 @@ Ext.define('Feed.view.FeedItem', {
 		xtype: 'toolbar',
 		dock: 'top',
 		items: [ {
-			handler: 'openFeedItemInNewTab',
 			text: 'View in new tab',
 			iconCls: 'tab-new',
 			handler: 'viewInNewTab'
