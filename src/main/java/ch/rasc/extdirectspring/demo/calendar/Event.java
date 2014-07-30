@@ -20,12 +20,14 @@ import java.time.LocalDateTime;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Event {
 
 	private int id;
