@@ -16,7 +16,6 @@
 package ch.rasc.extdirectspring.demo.touch;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,16 +23,14 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.rasc.extdirectspring.demo.FeedCache;
 
 import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 @Service
 public class CarouselService {
@@ -43,37 +40,39 @@ public class CarouselService {
 	private static Pattern IMG_PATTERN = Pattern.compile(".*img src=\"([^\"]+)\".*",
 			Pattern.DOTALL);
 
+	private final FeedCache feedCache;
+
+	@Autowired
+	public CarouselService(FeedCache feedCache) {
+		this.feedCache = feedCache;
+		feedCache.add(RSS_URL);
+	}
+
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchcarousel")
 	public List<CarouselPicture> readPictures(HttpServletRequest request)
-			throws IllegalArgumentException, FeedException, IOException {
+			throws IllegalArgumentException, IOException {
 
-		URL feedUrl = new URL(RSS_URL);
 		List<CarouselPicture> pictures = new ArrayList<>();
 
-		SyndFeedInput input = new SyndFeedInput();
-		try (XmlReader reader = new XmlReader(feedUrl)) {
-			SyndFeed feed = input.build(reader);
+		for (SyndEntry entry : feedCache.getFeedInfo(RSS_URL).getSyndFeed().getEntries()) {
+			CarouselPicture pic = new CarouselPicture();
+			pic.setId(entry.getUri());
+			pic.setAuthor(entry.getAuthor());
+			pic.setLink(entry.getLink());
+			pic.setTitle(entry.getTitle());
 
-			List<SyndEntry> entries = feed.getEntries();
-			for (SyndEntry entry : entries) {
-				CarouselPicture pic = new CarouselPicture();
-				pic.setId(entry.getUri());
-				pic.setAuthor(entry.getAuthor());
-				pic.setLink(entry.getLink());
-				pic.setTitle(entry.getTitle());
-
-				Matcher matcher = IMG_PATTERN.matcher(entry.getDescription().getValue());
-				if (matcher.matches()) {
-					String imageUrl = matcher.group(1);
-					if (imageUrl.startsWith("http://apod.nasa.gov/apod/http://")) {
-						imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://",
-								"http://");
-					}
-					pic.setImage(request.getContextPath() + "/picresize?url=" + imageUrl);
+			Matcher matcher = IMG_PATTERN.matcher(entry.getDescription().getValue());
+			if (matcher.matches()) {
+				String imageUrl = matcher.group(1);
+				if (imageUrl.startsWith("http://apod.nasa.gov/apod/http://")) {
+					imageUrl = imageUrl.replace("http://apod.nasa.gov/apod/http://",
+							"http://");
 				}
-				pictures.add(pic);
+				pic.setImage(request.getContextPath() + "/picresize?url=" + imageUrl);
 			}
+			pictures.add(pic);
 		}
+
 		return pictures;
 	}
 

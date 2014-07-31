@@ -6,7 +6,6 @@ Ext.define('Feed.model.Feed', {
 	proxy: {
 		type: 'direct',
 		api: {
-			create: 'feedService.create',
 			read: 'feedService.read',
 			destroy: 'feedService.destroy'
 		}

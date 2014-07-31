@@ -16,47 +16,46 @@
 package ch.rasc.extdirectspring.demo.touch;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.rasc.extdirectspring.demo.FeedCache;
 
 import com.rometools.rome.feed.synd.SyndContentImpl;
 import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 @Service
 public class BlogService {
 
+	private static final String FEED_URL = "http://feeds.feedburner.com/extblog";
+
+	private final FeedCache feedCache;
+
+	@Autowired
+	public BlogService(FeedCache feedCache) {
+		this.feedCache = feedCache;
+		feedCache.add(FEED_URL);
+	}
+
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "blog")
-	public List<Post> getBlogPosts() throws IllegalArgumentException, FeedException,
-			IOException {
+	public List<Post> getBlogPosts() throws IllegalArgumentException, IOException {
 		List<Post> posts = new ArrayList<>();
 
-		URL feedUrl = new URL("http://feeds.feedburner.com/SenchaBlog");
+		for (SyndEntry entry : feedCache.getFeedInfo(FEED_URL).getSyndFeed().getEntries()) {
 
-		SyndFeedInput input = new SyndFeedInput();
-		try (XmlReader reader = new XmlReader(feedUrl)) {
-			SyndFeed feed = input.build(reader);
-
-			List<SyndEntry> entries = feed.getEntries();
-			for (SyndEntry entry : entries) {
-
-				Post post = new Post();
-				post.setTitle(entry.getTitle());
-				post.setLeaf(true);
-				post.setContent(((SyndContentImpl) entry.getContents().iterator().next())
-						.getValue());
-				posts.add(post);
-			}
+			Post post = new Post();
+			post.setTitle(entry.getTitle());
+			post.setLeaf(true);
+			post.setContent(((SyndContentImpl) entry.getContents().iterator().next())
+					.getValue());
+			posts.add(post);
 		}
+
 		return posts;
 
 	}
