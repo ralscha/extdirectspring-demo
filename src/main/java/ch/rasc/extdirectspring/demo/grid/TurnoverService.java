@@ -21,6 +21,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -47,8 +49,9 @@ public class TurnoverService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "turnover")
-	public List<Company> getTurnovers(ExtDirectStoreReadRequest request) {
-
+	public List<Company> getTurnovers(HttpServletResponse response, ExtDirectStoreReadRequest request) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		
 		Comparator<Company> comparator = PropertyComparatorFactory
 				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
