@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.4.1</version>
+	<version>1.4.2</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -56,6 +56,7 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
+		<start-class>ch.rasc.extdirectspring.demo.Main</start-class>
 	</properties>
 
 	<dependencies>
