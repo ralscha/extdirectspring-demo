@@ -32,7 +32,6 @@ Ext.define('Simple.view.user.UserController', {
 	filterChange: function(field, newValue) {
 		var usersStore = this.getStore('userStore');
 		if (newValue) {
-			usersStore.clearFilter(true);
 			usersStore.filter('filter', newValue);
 		}
 		else {

@@ -19,7 +19,6 @@ Ext.define('Todo.view.grid.GridController', {
 		var value = this.lookupReference('filterField').getValue();
 		var store = this.getStore('todos');
 		if (value) {
-			store.clearFilter(true);
 			store.filter('filter', value);
 			this.lookupReference('todoGrid').setSelection(null);
 			this.getViewModel().set('editTodo', false);

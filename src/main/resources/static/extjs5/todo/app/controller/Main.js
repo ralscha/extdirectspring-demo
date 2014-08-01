@@ -51,7 +51,6 @@ Ext.define('Todo.controller.Main', {
             store = Ext.getStore('Todo');
 
         if(value){
-            store.clearFilter(true);
             store.filter('text', value);  
         }
     },
