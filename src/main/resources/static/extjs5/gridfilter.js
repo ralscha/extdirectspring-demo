@@ -24,7 +24,7 @@ Ext.define('Product', {
 		type: 'direct',
 		directFn: filterActionImplementation.load,
 		reader: {
-			root: 'records'
+			rootProperty: 'records'
 		}
 	}
 });
@@ -38,6 +38,7 @@ Ext.onReady(function() {
 		model: 'Product',
 		autoLoad: false,
 		remoteSort: true,
+		remoteFilter: true,
 		pageSize: 50
 	});
 
@@ -72,10 +73,15 @@ Ext.onReady(function() {
 				options: [ 'small', 'medium', 'large', 'extra large' ]
 			}
 		}, {
+			xtype: 'datecolumn',
 			dataIndex: 'date',
 			text: 'Date',
-			filter: true,
-			renderer: Ext.util.Format.dateRenderer('m/d/Y')
+			format: 'Y-m-d',
+			filter: {
+	            type: 'date',
+	            dateFormat: 'm/d/Y',  
+	            active: true
+	        }
 		}, {
 			dataIndex: 'visible',
 			text: 'Visible',

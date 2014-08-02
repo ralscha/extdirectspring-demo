@@ -21,7 +21,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -110,16 +113,27 @@ public class CompanyDataBean {
 						.getComparison(), numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("size")) {
-				ListFilter listFilter = (ListFilter) filter;
+				ListFilter<String> listFilter = (ListFilter) filter;
 				predicates = predicates.and(c -> listFilter.getValue().contains(
 						c.getSize().getLabel()));
 			}
 			else if (filter.getField().equals("date")) {
-				DateFilter dateFilter = (DateFilter) filter;
-				LocalDate ld = LocalDate.parse(dateFilter.getValue(),
-						Constants.MMddYYYY_FORMATTER);
-				predicates = predicates.and(new DatePredicate(dateFilter.getComparison(),
-						ld));
+				LocalDate ld;
+				Comparison comparison;
+				if (filter instanceof DateFilter) {
+					DateFilter dateFilter = (DateFilter) filter;
+					comparison = dateFilter.getComparison();
+					ld = LocalDate.parse(dateFilter.getValue(),
+							Constants.MMddYYYY_FORMATTER);
+				}
+				else {
+					NumericFilter numericFilter = (NumericFilter) filter;
+					comparison = numericFilter.getComparison();
+					ld = LocalDateTime.ofInstant(
+							Instant.ofEpochMilli(numericFilter.getValue().longValue()),
+							ZoneOffset.UTC).toLocalDate();
+				}
+				predicates = predicates.and(new DatePredicate(comparison, ld));
 			}
 		}
 
