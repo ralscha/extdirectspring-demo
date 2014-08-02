@@ -15,10 +15,19 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 
 @Service
 public class DeliveryTimeService {
@@ -26,5 +35,25 @@ public class DeliveryTimeService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
 	public DeliveryTime[] getDeliveryTimes() {
 		return DeliveryTime.values();
+	}
+
+	public List<String> actresses = Arrays.asList("Natalie Portman", "Evangeline Lilly",
+			"Kate Beckinsale", "Keira Knightley", "Zoe Saldana", "Olivia Wilde",
+			"Morena Baccarin", "Olga Kurylenko", "Liv Tyler", "Charlize Theron",
+			"Mila Kunis", "Katie Cassidy", "Rosario Dawson", "Christina Hendricks",
+			"Kristen Bell", "Nicole Kidman", "Michelle Pfeiffer", "Monica Bellucci",
+			"Emmanuelle Vaugier", "Angelina Jolie", "Eva Green", "Cate Blanchett",
+			"Cobie Smulders", "Kelly Reilly", "Yvonne Strahovski", "Marion Cotillard",
+			"Emily Blunt", "Connie Nielsen", "Ni Ni", "Carly Pope");
+
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
+	public List<Map<String, String>> readActresses(ExtDirectStoreReadRequest request) {
+				
+		Stream<String> stream = actresses.stream();
+		if (StringUtils.hasText(request.getQuery())) {
+			stream = stream.filter(a->a.contains(request.getQuery()));
+		}
+		
+		return stream.map(a->Collections.singletonMap("actress", a)).collect(Collectors.toList());
 	}
 }

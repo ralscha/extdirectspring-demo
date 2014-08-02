@@ -18,7 +18,7 @@ Ext.onReady(function() {
 	});
 
 	Ext.create('Ext.form.field.ComboBox', {
-		fieldLabel: 'Select a delivery method',
+		fieldLabel: 'Select a delivery method (queryMode: local)',
 		renderTo: Ext.getBody(),
 		displayField: 'label',
 		valueField: 'value',
@@ -27,6 +27,28 @@ Ext.onReady(function() {
 		store: store,
 		queryMode: 'local',
 		typeAhead: true
+	});
+	
+	
+	var actressStore = Ext.create('Ext.data.Store', {
+		autoFilter: true,
+		fields: ['actress'],
+		pageSize: 0,
+		proxy: {
+			type: 'direct',
+			directFn: deliveryTimeService.readActresses
+		}
+	});
+	
+	Ext.create('Ext.form.field.ComboBox', {
+		fieldLabel: 'Select an actress  (queryMode: remote)',
+		renderTo: Ext.getBody(),
+		displayField: 'actress',
+		valueField: 'actress',
+		width: 500,
+		labelWidth: 130,
+		store: actressStore,
+		queryMode: 'remote'
 	});
 
 });
