@@ -13,7 +13,7 @@ Ext.onReady(function() {
 				destroy: person4Action.destroy
 			},
 			reader: {
-				root: 'records'
+				rootProperty: 'records'
 			},
 		    writer : {
 		        writeAllFields : true
