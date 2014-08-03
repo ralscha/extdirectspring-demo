@@ -48,12 +48,12 @@ public class DeliveryTimeService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
 	public List<Map<String, String>> readActresses(ExtDirectStoreReadRequest request) {
-				
+
 		Stream<String> stream = actresses.stream();
 		if (StringUtils.hasText(request.getQuery())) {
 			stream = stream.filter(a->a.contains(request.getQuery()));
 		}
-		
+
 		return stream.map(a->Collections.singletonMap("actress", a)).collect(Collectors.toList());
 	}
 }
