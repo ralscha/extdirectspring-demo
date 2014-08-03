@@ -26,7 +26,26 @@ Ext.onReady(function() {
 		labelWidth: 130,
 		store: store,
 		queryMode: 'local',
-		typeAhead: true
+		typeAhead: true,
+		listeners: {
+			change: function(cb, newValue) {
+				if (!Ext.isEmpty(newValue)) {
+				   cb.getTrigger('clear').show();
+				} else {
+				   cb.getTrigger('clear').hide();
+				}
+			}
+		},
+		triggers: {
+			clear: {
+				cls: 'x-form-clear-trigger',
+				weight: -1,
+				hidden: true,
+				handler: function(cb) {
+					cb.clearValue();
+				}
+			}
+		}
 	});
 	
 	
