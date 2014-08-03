@@ -157,6 +157,7 @@ public class CompanyService {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Predicate<Company> getPredicates(Collection<Filter> filters) {
 
 		Predicate<Company> predicates = c -> true;
@@ -174,11 +175,11 @@ public class CompanyService {
 						.startsWith(value));
 			}
 			else if (filter.getField().equals("country")) {
-				predicates = predicates.and(new CountryPredicate(((ListFilter) filter)
+				predicates = predicates.and(new CountryPredicate(((ListFilter<String>) filter)
 						.getValue()));
 			}
 			else if (filter.getField().equals("category")) {
-				predicates = predicates.and(new CategoryPredicate(((ListFilter) filter)
+				predicates = predicates.and(new CategoryPredicate(((ListFilter<String>) filter)
 						.getValue()));
 			}
 			else if (filter.getField().equals("price")) {

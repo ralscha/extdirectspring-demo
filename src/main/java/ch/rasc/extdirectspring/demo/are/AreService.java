@@ -46,9 +46,11 @@ import ch.rasc.extdirectspring.demo.util.Constants;
 public class AreService {
 
 	static final class WITH_HISTORY_VIEW {
+		// nothing here
 	}
 
 	static final class WO_HISTORY_VIEW {
+		// nothing here
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "are",

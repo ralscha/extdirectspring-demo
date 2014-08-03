@@ -113,7 +113,8 @@ public class CompanyDataBean {
 						.getComparison(), numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("size")) {
-				ListFilter<String> listFilter = (ListFilter) filter;
+				@SuppressWarnings("unchecked")
+				ListFilter<String> listFilter = (ListFilter<String>) filter;
 				predicates = predicates.and(c -> listFilter.getValue().contains(
 						c.getSize().getLabel()));
 			}
