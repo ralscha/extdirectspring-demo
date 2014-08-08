@@ -255,6 +255,7 @@
 						<exclude>**/static/**</exclude>
 						<exclude>**/*.launch</exclude>
 						<exclude>**/*.gitignore</exclude>
+						<exclude>**/fetcher.properties</exclude>
 					</excludes>
 					<strictCheck>true</strictCheck>
 				</configuration>
