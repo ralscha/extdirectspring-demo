@@ -3,27 +3,57 @@
 <head>
 <meta charset="utf-8">
 <title>Ext Direct with Ext.grid.plugin.SubTable</title>
-<link rel="stylesheet" href="//demo.rasc.ch/resources/ext-5.0.1/build/examples/shared/example.css" />
+<link rel="stylesheet"
+	href="//demo.rasc.ch/resources/ext-5.0.1/build/examples/shared/example.css" />
+<style>
+.x-grid-subtable {
+	border-collapse: collapse;
+}
+
+tr.x-grid-subtable-row {
+	background-color: white;
+}
+
+.x-grid-subtable-header {
+	border: 1px solid #c1c1c1;
+	color: #666;
+	font: bold 13px/15px helvetica, arial, verdana, sans-serif;
+	background-image: none;
+	background-color: #f5f5f5;
+	padding: 6px 15px 6px 15px;
+	text-overflow: ellipsis;
+	text-align: left;
+}
+
+.x-grid-subtable-cell {
+	border-top: 1px solid #ededed;
+	border-right: 1px solid #ededed;
+	border-bottom: 1px solid #ededed;
+	border-left: 1px solid #ededed;
+}
+</style>
 <script src="//demo.rasc.ch/resources/ext-5.0.1/build/examples/shared/include-ext.js"></script>
 <script src="//demo.rasc.ch/resources/ext-5.0.1/build/examples/shared/options-toolbar.js"></script>
 <script src="//demo.rasc.ch/resources/ext-5.0.1/examples/ux/grid/SubTable.js"></script>
 <script src="../../api-debug.js?group=are"></script>
-
 <script src="Company.js"></script>
 <script src="History.js"></script>
 <script src="CustomerGrid.js"></script>
 
 <script>
-Ext.onReady(function() {
-	Ext.create('CustomerGrid', {renderTo: Ext.getBody()});
-});
+	Ext.onReady(function() {
+		Ext.create('CustomerGrid', {
+			renderTo: Ext.getBody()
+		});
+	});
 </script>
 
 </head>
 <body>
 	<h1>Ext Direct with Ext.grid.plugin.SubTable</h1>
 	<p>
-		Source code: <a href="association.js">association.js</a>
+		Source code: <a href="Company.js">Company.js</a>&nbsp;<a
+			href="CustomerGrid.js">CustomerGrid.js</a>&nbsp;<a href="History.js">History.js</a>
 	</p>
 </body>
 </html>
