@@ -9,7 +9,7 @@ Ext.define('Todo.model.TodoItem', {
 		proxy: {
 			type: 'direct',
 			enablePagingParams: false,
-			directFn: 'todoService.read',
+			directFn: 'todoService.read'
 		}
 	}
 });
