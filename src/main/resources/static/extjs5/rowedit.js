@@ -110,7 +110,8 @@ Ext.onReady(function() {
 				});
 
 				store.insert(0, r);
-				rowEditing.startEdit(0, 0);
+				grid.getView().focusNode(r);
+				rowEditing.startEdit(r, 0);
 			}
 		}, {
 			itemId: 'removePerson',
@@ -135,6 +136,11 @@ Ext.onReady(function() {
 		listeners: {
 			'selectionchange': function(view, records) {
 				grid.down('#removePerson').setDisabled(!records.length);
+			},
+			canceledit: function(editor, context, eOpts) {
+				if (context.record.phantom) {
+					store.remove(context.record);
+				}
 			}
 		}
 	});
