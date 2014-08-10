@@ -26,9 +26,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import ch.ralscha.extdirectspring.ExtDirectSpring;
+
 @Configuration
-@ComponentScan(basePackages = { "ch.ralscha.extdirectspring",
-		"ch.rasc.extdirectspring.demo" })
+@ComponentScan(basePackageClasses = { ExtDirectSpring.class, Main.class })
 @EnableAutoConfiguration
 @EnableScheduling
 public class Main extends SpringBootServletInitializer {
