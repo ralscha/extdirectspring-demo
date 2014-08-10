@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Session</title>
+<script src="//demo.rasc.ch/resources/ext-5.0.1-gpl/build/examples/shared/include-ext.js"></script>
+<script src="//demo.rasc.ch/resources/ext-5.0.1-gpl/build/examples/shared/options-toolbar.js"></script>
+<script src="../../api-debug.js?group=session"></script>
+
+<script>
+Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+</script>
+
+<script src="PhoneNumber.js"></script>
+<script src="Customer.js"></script>
+<script src="Order.js"></script>
+<script src="ChildSessionModel.js"></script>
+<script src="ChildSessionController.js"></script>
+<script src="ChildSessionForm.js"></script>
+<script src="ChildSession.js"></script>
+
+<script>
+Ext.onReady(function() {
+    new ChildSession({
+    	height: 600,
+		width: '600',	
+		renderTo: Ext.getBody()
+	});	
+});
+</script>
+
+</head>
+<body></body>
+</html>
