@@ -30,20 +30,20 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 public class SimpleTaskService {
 
 	private final Map<Integer, Task> DB = new ConcurrentHashMap<>();
-	private final  AtomicInteger MAX_ID = new AtomicInteger(1);
+	private final AtomicInteger MAX_ID = new AtomicInteger(1);
 
 	private String defaultReminderTime = "8:00 AM";
-	
+
 	@ExtDirectMethod(group = "simple-task")
 	public void saveDefaultReminderTime(String value) {
 		defaultReminderTime = value;
 	}
-	
+
 	@ExtDirectMethod(group = "simple-task")
 	public String readDefaultReminderTime() {
 		return defaultReminderTime;
-	}	
-	
+	}
+
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simple-task")
 	public Collection<Task> read() {
 		return DB.values();

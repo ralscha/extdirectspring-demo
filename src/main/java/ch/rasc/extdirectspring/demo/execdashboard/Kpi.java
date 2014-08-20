@@ -30,8 +30,8 @@ public class Kpi {
 		id = (Integer) line.get(0);
 		category = (String) line.get(1);
 		name = (String) line.get(2);
-		data1 = (BigDecimal)line.get(3);
-		data2 = (BigDecimal)line.get(4);
+		data1 = (BigDecimal) line.get(3);
+		data2 = (BigDecimal) line.get(4);
 
 	}
 

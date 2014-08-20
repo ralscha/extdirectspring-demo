@@ -50,7 +50,7 @@ public class ListService {
 			parents.put(item.getId(), item);
 
 			if (item.getParentId() == 0) {
-				roots.add(item);				
+				roots.add(item);
 			}
 			else {
 				ListItem parent = parents.get(item.getParentId());

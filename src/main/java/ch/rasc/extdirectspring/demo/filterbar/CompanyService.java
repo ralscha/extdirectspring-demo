@@ -175,12 +175,12 @@ public class CompanyService {
 						.startsWith(value));
 			}
 			else if (filter.getField().equals("country")) {
-				predicates = predicates.and(new CountryPredicate(((ListFilter<String>) filter)
-						.getValue()));
+				predicates = predicates.and(new CountryPredicate(
+						((ListFilter<String>) filter).getValue()));
 			}
 			else if (filter.getField().equals("category")) {
-				predicates = predicates.and(new CategoryPredicate(((ListFilter<String>) filter)
-						.getValue()));
+				predicates = predicates.and(new CategoryPredicate(
+						((ListFilter<String>) filter).getValue()));
 			}
 			else if (filter.getField().equals("price")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
