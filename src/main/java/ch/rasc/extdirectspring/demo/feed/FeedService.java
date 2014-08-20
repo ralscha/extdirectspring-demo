@@ -38,6 +38,10 @@ import com.rometools.rome.feed.synd.SyndFeed;
 @Service
 public class FeedService {
 
+	public static final String SENCHA_FORUM_EXT5_QA = "http://www.sencha.com/forum/external.php?type=RSS2&forumids=129";
+
+	public static final String SENCHA_FORUM_EXT5_BUGS = "http://www.sencha.com/forum/external.php?type=RSS2&forumids=130";
+
 	private final FeedCache feedCache;
 
 	private final Map<String, Feed> FEED_DB = new ConcurrentHashMap<>();
@@ -53,6 +57,16 @@ public class FeedService {
 
 		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forums",
 				"http://sencha.com/forum/external.php?type=RSS2");
+		FEED_DB.put(feed.getId(), feed);
+		feedCache.add(feed.getUrl());
+
+		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forum - Ext 5: Bugs",
+				SENCHA_FORUM_EXT5_BUGS);
+		FEED_DB.put(feed.getId(), feed);
+		feedCache.add(feed.getUrl());
+
+		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forum - Ext 5: Q&A",
+				SENCHA_FORUM_EXT5_QA);
 		FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 	}

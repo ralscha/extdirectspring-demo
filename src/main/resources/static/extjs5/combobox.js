@@ -71,9 +71,8 @@ Ext.onReady(function() {
 	});
 
 	Ext.create('Ext.container.Container', {
-
 		width: 400,
-		height: 300,
+		height: 100,
 		layout: 'fit',
 		renderTo: Ext.getBody(),
 
@@ -98,5 +97,57 @@ Ext.onReady(function() {
 			}
 		} ]
 	});
+	
+	var forumStore = Ext.create('Ext.data.Store', {
+		fields: [ 'id', 'title', 'author', 'link', 'excerpt', 'pubDate' ],		
+		pageSize: 0,
+		proxy: {
+			type: 'direct',
+			directFn: deliveryTimeService.readSenchaForum
+		}
+	});	
+
+	Ext.create('Ext.panel.Panel', {	    
+	    title: 'Search the Ext Forums. Live search requires a minimum of 4 characters.',
+	    width: 700,
+	    layout: 'vbox',
+	    height: 500,
+	    renderTo: Ext.getBody(),
+
+	    items: [{
+	    	width: '100%',
+	        xtype: 'combo',
+	        store: forumStore,
+	        displayField: 'title',
+	        typeAhead: false,
+	        hideLabel: true,
+	        hideTrigger:true,
+
+	        listConfig: {
+	            loadingText: 'Searching...',
+	            emptyText: 'No matching posts found.',
+	            
+	            itemSelector: '.search-item',
+
+	            // Custom rendering template for each item
+	            itemTpl: [
+	                '<div class="search-item">',
+	                    '<h3><span>{[Ext.Date.format(values.pubDate, "M j, Y")]}<br />by {author}</span>{title}</h3>',
+	                    '{excerpt}',
+	                '</div>'
+	            ]
+	        }, 
+	        listeners: {
+	        	select: function(cb, records) {
+	        		cb.up('panel').down('uxiframe').load(records[0].data.link);
+	        	}
+	        }
+	    }, {
+	    	flex: 1,
+	    	width: '100%',
+	    	xtype: 'uxiframe'     
+	    }]
+	});
+	
 
 });
