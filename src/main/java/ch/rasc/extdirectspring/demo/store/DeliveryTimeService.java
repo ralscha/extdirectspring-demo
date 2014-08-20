@@ -28,6 +28,7 @@ import org.springframework.util.StringUtils;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
+import ch.ralscha.extdirectspring.filter.StringFilter;
 
 @Service
 public class DeliveryTimeService {
@@ -49,11 +50,19 @@ public class DeliveryTimeService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
 	public List<Map<String, String>> readActresses(ExtDirectStoreReadRequest request) {
 
+		StringFilter filter;
+
 		Stream<String> stream = actresses.stream();
 		if (StringUtils.hasText(request.getQuery())) {
-			stream = stream.filter(a->a.contains(request.getQuery()));
+			stream = stream.filter(a -> a.toLowerCase().contains(
+					request.getQuery().toLowerCase()));
+		}
+		else if ((filter = request.getFirstFilterForField("actress")) != null) {
+			stream = stream.filter(a -> a.toLowerCase().contains(
+					filter.getValue().toLowerCase()));
 		}
 
-		return stream.map(a->Collections.singletonMap("actress", a)).collect(Collectors.toList());
+		return stream.map(a -> Collections.singletonMap("actress", a)).collect(
+				Collectors.toList());
 	}
 }

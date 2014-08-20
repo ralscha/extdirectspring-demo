@@ -30,9 +30,10 @@ Ext.onReady(function() {
 		listeners: {
 			change: function(cb, newValue) {
 				if (!Ext.isEmpty(newValue)) {
-				   cb.getTrigger('clear').show();
-				} else {
-				   cb.getTrigger('clear').hide();
+					cb.getTrigger('clear').show();
+				}
+				else {
+					cb.getTrigger('clear').hide();
 				}
 			}
 		},
@@ -47,27 +48,55 @@ Ext.onReady(function() {
 			}
 		}
 	});
-	
-	
+
 	var actressStore = Ext.create('Ext.data.Store', {
-		autoFilter: true,
-		fields: ['actress'],
+		fields: [ 'actress' ],
 		pageSize: 0,
 		proxy: {
 			type: 'direct',
 			directFn: deliveryTimeService.readActresses
 		}
 	});
-	
+
 	Ext.create('Ext.form.field.ComboBox', {
 		fieldLabel: 'Select an actress  (queryMode: remote)',
 		renderTo: Ext.getBody(),
 		displayField: 'actress',
 		valueField: 'actress',
+		minChars: 1,
 		width: 500,
 		labelWidth: 130,
 		store: actressStore,
 		queryMode: 'remote'
+	});
+
+	Ext.create('Ext.container.Container', {
+
+		width: 400,
+		height: 300,
+		layout: 'fit',
+		renderTo: Ext.getBody(),
+
+		items: [ {
+			xtype: 'multiselector',
+			fieldLabel: 'Select an actress',
+			renderTo: Ext.getBody(),
+			fieldName: 'actress',
+			emptyText: 'No actresses selected',
+			search: {
+				field: 'actress',
+				store: {
+					remoteFilter: true,
+					autoLoad: false,
+					fields: [ 'actress' ],
+					pageSize: 0,
+					proxy: {
+						type: 'direct',
+						directFn: deliveryTimeService.readActresses
+					}
+	            }
+			}
+		} ]
 	});
 
 });
