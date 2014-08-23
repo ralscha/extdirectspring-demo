@@ -49,7 +49,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<tomcat.version>8.0.9</tomcat.version>
+		<tomcat.version>8.0.11</tomcat.version>
 		<h2.version>1.4.181</h2.version>
 		<jackson.version>2.4.2</jackson.version>
 		<httpclient.version>4.3.4</httpclient.version>
