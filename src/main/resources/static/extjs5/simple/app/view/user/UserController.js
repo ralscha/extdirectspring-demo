@@ -20,7 +20,8 @@ Ext.define('Simple.view.user.UserController', {
 						html: 'User deleted',
 						title: 'Info',
 						width: 200,
-						align: 't'
+						align: 't',
+						shadow: true
 					});
 					this.getStore('userStore').load();
 				},
