@@ -56,6 +56,9 @@ Ext.define('ExecDashboard.view.profitloss.ProfitLossController', {
 
 		// We want to tinker with the UI in batch so we don't trigger multiple layouts
 		Ext.batchLayouts(function() {
+			me.getReferences().quartersButton.menu.removeAll();
+			me.getReferences().regionsButton.menu.removeAll();
+			
 			me.getReferences().quartersButton.menu.add(menus.quarter.items);
 			me.getReferences().regionsButton.menu.add(menus.region.items);
 			me.getView().setColumns(columns);
