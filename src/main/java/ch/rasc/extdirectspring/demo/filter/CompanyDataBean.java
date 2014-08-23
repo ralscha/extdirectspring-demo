@@ -127,6 +127,12 @@ public class CompanyDataBean {
 					ld = LocalDate.parse(dateFilter.getValue(),
 							Constants.MMddYYYY_FORMATTER);
 				}
+				else if (filter instanceof StringFilter) {
+					StringFilter dateFilter = (StringFilter) filter;
+					comparison = dateFilter.getComparison();
+					ld = LocalDate.parse(dateFilter.getValue(),
+							Constants.MMddYYYY_FORMATTER);
+				}
 				else {
 					NumericFilter numericFilter = (NumericFilter) filter;
 					comparison = numericFilter.getComparison();
