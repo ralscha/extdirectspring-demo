@@ -45,7 +45,8 @@ Ext.onReady(function() {
 					            title: 'Server Response',
 					            html: value,
 					            align: 't',
-					            bodyPadding: 10
+					            bodyPadding: 10,
+					            shadow: true
 					        });
 
 					});
