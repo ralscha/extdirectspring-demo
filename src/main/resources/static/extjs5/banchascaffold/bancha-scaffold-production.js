@@ -12,7 +12,7 @@
  * @since         Bancha Scaffold v 0.3.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -67,11 +67,12 @@ Ext.define('Bancha.scaffold.data.override.Validations', {
     /**
      * @class Ext.data.validations
      *
+     * For Sencha Touch and Ext JS 4:
      * Bancha extends Ext.data.validations with two new validation rules:
      * *range* and *file*.
      *
-     * These custom validations are mapped from CakePHP.
-     *
+     * For Ext JS 5 see {@class Bancha.data.validator.File}
+     * 
      * @author Roland Schuetz <mail@rolandschuetz.at>
      * @docauthor Roland Schuetz <mail@rolandschuetz.at>
      */
@@ -171,7 +172,7 @@ Ext.define('Bancha.scaffold.data.override.Validations', {
  * @since         Bancha Scaffold v 0.3.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -184,7 +185,13 @@ if(Ext.versions.extjs.major === 4) {
 }
 
 /**
+ * @class Bancha.data.validator.File
+ * @extends Ext.data.validator.Validator
+ *
+ * For Ext JS 5:
  * Validates that the filename is one of given {@link #extension}.
+ *
+ * For Ext JS 4 see {@class Ext.data.validations}
  */
 Ext.define('Bancha.scaffold.data.validator.File', {
     extend: 'Ext.data.validator.Validator',
@@ -250,7 +257,7 @@ Ext.define('Bancha.scaffold.data.validator.File', {
  * @since         Bancha Scaffold v 0.3.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -261,6 +268,8 @@ Ext.define('Bancha.scaffold.data.validator.File', {
  * @private
  * @class Bancha.scaffold.data.Validators
  *
+ * This class adds additional validation rules used by Bancha.
+ * 
  * For Ext JS 5 it adds a File validation class,
  * for Ext JS 4 and Sencha Touch it adds a range and 
  * file validation rule to Ext.data.validations.
@@ -281,6 +290,9 @@ Ext.define('Bancha.scaffold.data.Validators', {
         Ext.syncRequire('Bancha.scaffold.data.validator.File');
 
         /**
+         * @private
+         * @class Bancha.data.validator.override.Bound
+         * 
          * Fixes issues with the current Range validator
          *
          * See http://www.sencha.com/forum/showthread.php?288168
@@ -288,8 +300,19 @@ Ext.define('Bancha.scaffold.data.Validators', {
          * @author Roland Schuetz <mail@rolandschuetz.at>
          * @docauthor Roland Schuetz <mail@rolandschuetz.at>
          */
-        Ext.define('Ext.data.validator.override.Bound', {
+        Ext.define('Bancha.data.validator.override.Bound', {
             override: 'Ext.data.validator.Bound',
+            /**
+             * @class Ext.data.validator.Bound
+             *
+             * To normalize the CakePHP, Ext JS 4 and Ext JS 5 validation
+             * handling Bancha adds an additional check to the Ext JS 5
+             * Bound validation rules.
+             *
+             * The effect is that non-numeric values are invalid using
+             * the Range validation rule. For the error message an 
+             * additional config is introduced.
+             */
             config: {
                 /**
                  * @cfg {String} nanMessage
@@ -335,7 +358,7 @@ Ext.define('Bancha.scaffold.data.Validators', {
  * @since         Bancha Scaffold v 0.2.5
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -418,7 +441,7 @@ Ext.define('Bancha.scaffold.form.field.override.VTypes', {
  * @since         Bancha Scaffold v 1.0.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -604,7 +627,7 @@ Ext.define('Bancha.scaffold.form.Config', {
      * This function can be overwritten by any custom function.
      * @param {Object} fieldConfig the field config to transform
      * @param {String} modelType A standard model field type like 'string'
-     * (also supports 'file' for compability with http://banchaproject.org)
+     * (also supports 'file' for compability with http://bancha.io)
      * @return {Object} Returns an Ext.form.field.* configuration object
      */
     transformFieldConfig: function (fieldConfig, modelType) {
@@ -621,21 +644,58 @@ Ext.define('Bancha.scaffold.form.Config', {
      *  - this.getForm() to get the basic form
      */
     onSave: function () {
-        var form = this.getForm(),
-            msg;
-        if (form.isValid()) {
-            msg = form.hasUpload() ? 'Uploading files...' : 'Saving data..';
-            form.submit({
-                waitMsg: msg,
-                success: function (form, action) {
-                    Ext.MessageBox.alert('Success', action.result.msg || 'Successfully saved data.');
-                },
-                failure: function (form, action) {
+        var me = this,
+            form = me.getForm(),
+            config = me.getPanel().scaffold;
+
+        form.submit({
+            waitMsg: form.hasUpload() ? 'Uploading files...' : 'Saving data..',
+            success: function (form, action) {
+                Ext.MessageBox.alert('Success', action.result.msg || 'Successfully saved data.');
+
+                // load result as record into form
+                var rec = Ext.create(config.target.getName(), action.result.data);
+                form.loadRecord(rec);
+
+                if(config.onSaved) {
+                    config.onSaved.call(me, me, true, action);
+                }
+            },
+            failure: function (form, action) {
+                if(action.result.msg || !action.result.errors) {
+                    // if there is a server-side message or no server-side validation errors are send,
+                    // show a warning alert. Otherwise the errors are rendered in the form and no alert
+                    // is necessary.
                     Ext.MessageBox.alert('Failed', action.result.msg || 'Could not save data, unknown error.');
                 }
-            });
-        }
+
+                if(config.onSaved) {
+                    config.onSaved.call(me, me, false, action);
+                }
+            }
+        });
     },
+    /**
+     * @cfg
+     * Editable function to be called when the record was saved to the server.
+     * To change the default scaffolding behaviour just replace this function.
+     *
+     * The arguments are:
+     * 
+     *  - this: The scope described below
+     *  - success: True if successfully saved
+     *  - action: The request action
+     *  
+     * The default scope provides two functions:
+     *
+     *  - this.getPanel() to get the form panel
+     *  - this.getForm() to get the basic form
+     *
+     * Note: 
+     * This function is called by onSave, so if you override onSave this function
+     * might note be called anymore.
+     */
+    onSaved: Ext.emptyFn,
     /**
      * @cfg
      * Editable function to be called when the reset button is pressed.
@@ -745,7 +805,7 @@ Ext.define('Bancha.scaffold.form.Config', {
     beforeBuild: function (model, config, initialPanelConfig) {},
     /**
      * @cfg {Function}
-     * This function will be executed after acaffolding as interceptor.
+     * This function will be executed after scaffolding as interceptor.
      * @param {Object} formConfig the just build form panel config
      * @param {Ext.data.Model} model the model used for scaffolding
      * @param {Bancha.scaffold.form.Config} config the scaffold full config for this call
@@ -768,7 +828,7 @@ Ext.define('Bancha.scaffold.form.Config', {
  * @since         Bancha Scaffold v 1.0.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -966,7 +1026,7 @@ Ext.define('Bancha.scaffold.grid.Config', {
      * This function can be overwritten by any custom function.
      * @param {Object} columnConfig the column config to transform
      * @param {String} modelType A standard model field type like 'string'
-     * (also supports 'file' for compability with http://banchaproject.org)
+     * (also supports 'file' for compability with http://bancha.io)
      * @return {Object} Returns an Ext.grid.column.* configuration object
      */
     transformColumnConfig: function (columnConfig, modelType) {
@@ -1244,7 +1304,7 @@ Ext.define('Bancha.scaffold.grid.Config', {
  * @since         Bancha Scaffold v 0.0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -1624,7 +1684,7 @@ Ext.define('Bancha.scaffold.Util', {
  * @since         Bancha Scaffold v 0.3.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -1820,7 +1880,7 @@ Ext.define('Bancha.scaffold.form.override.Panel', {
              * This function just hides id columns and makes it uneditable.
              * @param {Object} fieldConfig the field config to transform
              * @param {String} modelType A standard model field type like 'string'
-             * (also supports 'file' for compability with http://banchaproject.org)
+             * (also supports 'file' for compability with http://bancha.io)
              * @return {Object} Returns an Ext.form.field.* configuration object
              */
             internalTransformFieldConfig: function (fieldConfig, modelType) {
@@ -2157,6 +2217,7 @@ Ext.define('Bancha.scaffold.form.override.Panel', {
                     model = Bancha.scaffold.Util.getModel(config.target),
                     me = this,
                     formConfig,
+                    prototypeFieldKeys,
                     fieldNames,
                     validations,
                     isExtJS5,
@@ -2168,9 +2229,12 @@ Ext.define('Bancha.scaffold.form.override.Panel', {
                 // build initial config
                 formConfig = config.beforeBuild(model, config, initialPanelConfig) || {};
 
+                // in Firefox fields.keys is a native function with Ext JS 4
+                prototypeFieldKeys = typeof model.prototype.fields.keys === 'function' ? false : model.prototype.fields.keys;
+
                 // if there is a fields config, use this for ordering
                 // Otherwise use fields.keys for Sencha Touch and Ext JS 4
-                fieldNames = config.fields || model.prototype.fields.keys || Ext.Object.getKeys(model.fieldsMap);
+                fieldNames = config.fields || prototypeFieldKeys || Ext.Object.getKeys(model.fieldsMap);
 
                 // build all columns
                 validations = model.prototype.validations || model.validators; // ST & Ext JS 4 || Ext JS 5
@@ -2269,7 +2333,7 @@ Ext.define('Bancha.scaffold.form.override.Panel', {
  * @since         Bancha Scaffold v 0.3.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
@@ -2444,7 +2508,7 @@ Ext.define('Bancha.scaffold.grid.override.Panel', {
              * This function just hides id columns and makes it uneditable.
              * @param {Object} columnConfig the column config to transform
              * @param {String} modelType A standard model field type like 'string'
-             * (also supports 'file' for compability with http://banchaproject.org)
+             * (also supports 'file' for compability with http://bancha.io)
              * @return {Object} Returns an Ext.grid.column.* configuration object
              */
             internalTransformColumnConfig: function (columnConfig, modelType) {
@@ -2569,6 +2633,7 @@ Ext.define('Bancha.scaffold.grid.override.Panel', {
                 var columns = [],
                     model = config.target,
                     me = this,
+                    prototypeFieldKeys,
                     fieldNames,
                     validations,
                     isExtJS5,
@@ -2579,9 +2644,12 @@ Ext.define('Bancha.scaffold.grid.override.Panel', {
                     config.exclude = [];
                 }
 
+                // in Firefox fields.keys is a native function with Ext JS 4
+                prototypeFieldKeys = typeof model.prototype.fields.keys === 'function' ? false : model.prototype.fields.keys;
+
                 // if there is a fields config, use this for ordering
                 // Otherwise use fields.keys for Sencha Touch and Ext JS 4
-                fieldNames = config.fields || model.prototype.fields.keys || Ext.Object.getKeys(model.fieldsMap);
+                fieldNames = config.fields || prototypeFieldKeys || Ext.Object.getKeys(model.fieldsMap);
 
                 // build all columns
                 validations = model.prototype.validations || model.validators; // ST & Ext JS 4 || Ext JS 5
@@ -2708,13 +2776,15 @@ Ext.define('Bancha.scaffold.grid.override.Panel', {
  * @since         Bancha Scaffold v 0.5.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @author        Roland Schuetz <mail@rolandschuetz.at>
- * @version       Bancha Scaffold v 2.0.1
+ * @version       Bancha Scaffold v 2.0.2
  *
  * For more information go to http://scaffold.bancha.io
  */
 
 /**
  * @class Bancha.scaffold.grid.ManagementPanel
+ * @extends Ext.tab.Panel
+ * 
  * **This is only available inside Ext JS.**
  *
  * This will create a TabPanel with one tab per model.
