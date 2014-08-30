@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.4.2</version>
+	<version>1.4.3</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -214,7 +214,8 @@
 									presidentsService,notesService,touchTestAction,blogService,profile,sseMessageHandler,
 									groupAction,carService,testAction,console,reportService,extJsBookService,Example,
 									myTreeLoader,Deft,restaurantService,namedService,carouselService,bancha,Task,taskService,
-									feedService,readCookie,Feed</predef>
+									feedService,readCookie,Feed,todoServiceExt,todoService,SimpleTasks,simpleTaskService,
+									sessionService</predef>
 							</options>
 						</configuration>
 					</execution>
