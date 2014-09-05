@@ -2,18 +2,30 @@ Ext.require([
     'Ext.direct.*'
 ]);
 
+Ext.define('Direct.model.Turnover', {
+    extend: 'Ext.data.Model',
+
+    config: {
+        fields: ['name', 'turnover'],
+        //setup the proxy for the store to use an ajax proxy and give it a url to load
+        //the local contacts.json file
+        proxy: {
+            type: 'direct',
+            directFn: 'touchTestAction.getGrid'
+        }
+    }
+});
+
 //define the application
 Ext.application({
-    //define the startupscreens for tablet and phone, as well as the icon
-    tabletStartupScreen: 'tablet_startup.png',
-    phoneStartupScreen: 'phone_startup.png',
-    icon: 'icon.png',
-    glossOnIcon: false,
+    name: 'Direct',
 
     //require any components/classes what we will use in our example
     requires: [
-        'Ext.data.DirectStore',
+        'Ext.data.Store',
         'Ext.List',
+        'Ext.Panel',
+        'Ext.Toolbar',
         'Ext.plugin.PullRefresh'
     ],
 
@@ -69,9 +81,8 @@ Ext.application({
      */
     getListConfiguration: function() {
         //create a store instance
-        var store = Ext.create('Ext.data.DirectStore', {
-            //give the store some fields
-            fields: ['name', 'turnover'],
+        var store = Ext.create('Ext.data.Store', {
+            model : 'Direct.model.Turnover',
 
             //filter the data using the firstName field
             sorters: {
@@ -81,13 +92,7 @@ Ext.application({
             remoteSort: true,
 
             //autoload the data from the server
-            autoLoad: true,
-
-            //setup the proxy for the store to use an ajax proxy and give it a url to load
-            //the local contacts.json file
-            proxy: {
-                directFn: touchTestAction.getGrid
-            }
+            autoLoad: true
         });
 
         return {
