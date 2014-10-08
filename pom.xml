@@ -12,8 +12,8 @@
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.1.6.RELEASE </version>
+		<artifactId>spring-boot-starter-parent</artifactId>		
+		<version>1.2.0.BUILD-SNAPSHOT</version>		
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -49,9 +49,9 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<tomcat.version>8.0.12</tomcat.version>
+		<tomcat.version>8.0.14</tomcat.version>
 		<h2.version>1.4.181</h2.version>
-		<jackson.version>2.4.2</jackson.version>
+		<jackson.version>2.4.3</jackson.version>
 		<httpclient.version>4.3.4</httpclient.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -127,8 +127,9 @@
 
 	</dependencies>
 
-<!--	
-	<repositories>	
+
+	<repositories>
+<!--
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -140,7 +141,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
+-->
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -149,10 +150,17 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
--->	
-<!--
+
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
@@ -162,8 +170,16 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
 	</pluginRepositories>
-    -->
+
 
 	<build>
 
