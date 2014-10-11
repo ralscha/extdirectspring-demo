@@ -35,7 +35,7 @@ Ext.onReady(function() {
 		valueField: 'list',
 		listeners: {
 			select: function(cmb, record, eOpts) {				
-				var id = record[0].id;
+				var id = record.id;
 				if (id === 1) {
 					directStore.setRemoteSort(false);
 					directStore.getProxy().setDirectFn(personAction.loadPersonFullName);

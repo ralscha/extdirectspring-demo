@@ -139,7 +139,7 @@ Ext.onReady(function() {
 	        }, 
 	        listeners: {
 	        	select: function(cb, records) {
-	        		cb.up('panel').down('uxiframe').load(records[0].data.link);
+	        		cb.up('panel').down('uxiframe').load(records.data.link);
 	        	}
 	        }
 	    }, {
