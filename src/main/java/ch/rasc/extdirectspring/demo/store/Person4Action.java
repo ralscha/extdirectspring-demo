@@ -73,13 +73,14 @@ public class Person4Action {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
 	public List<Person> create(List<Person> newPersons, @MetadataParam String table) {
+		System.out.println("table->" + table);
 		return newPersons.stream().map(p -> dataBean.insert(p))
 				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
 	public List<Person> update(List<Person> modifiedPersons, @MetadataParam String table) {
-
+		System.out.println("table->" + table);
 		return modifiedPersons.stream().map(person -> {
 			Person p = dataBean.findPerson(person.getId());
 			if (p != null) {
@@ -93,6 +94,7 @@ public class Person4Action {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
 	public void destroy(List<Person> destroyPersons, @MetadataParam String table) {
+		System.out.println("table->" + table);
 		for (Person person : destroyPersons) {
 			dataBean.deletePerson(person);
 		}
