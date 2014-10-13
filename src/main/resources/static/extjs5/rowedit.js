@@ -12,9 +12,17 @@ Ext.onReady(function() {
 				update: person4Action.update,
 				destroy: person4Action.destroy
 			},
-		    writer : {
-		        writeAllFields : true
-		    }
+			extraParams: {
+				test: true
+			},
+			metadata: {
+				table: 'person',
+				no: 1,
+				no2: 3
+			},
+			writer: {
+				writeAllFields: true
+			}
 		}
 	});
 

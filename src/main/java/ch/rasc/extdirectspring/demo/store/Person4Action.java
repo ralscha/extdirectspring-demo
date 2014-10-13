@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.ralscha.extdirectspring.annotation.MetadataParam;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
@@ -38,7 +39,12 @@ public class Person4Action {
 	private RandomDataBean dataBean;
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
-	public List<Person> load(ExtDirectStoreReadRequest request) {
+	public List<Person> load(ExtDirectStoreReadRequest request, Boolean test,
+			@MetadataParam String table, @MetadataParam Integer no, @MetadataParam(defaultValue="defaultValue") String optional) {
+		System.out.println("test->" + test);
+		System.out.println("table->" + table);
+		System.out.println("no->"+no);
+		System.out.println("optional->"+optional);
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		return persons.subList(0, Math.min(50, persons.size()));
 	}
@@ -66,13 +72,13 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public List<Person> create(List<Person> newPersons) {
+	public List<Person> create(List<Person> newPersons, @MetadataParam String table) {
 		return newPersons.stream().map(p -> dataBean.insert(p))
 				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public List<Person> update(List<Person> modifiedPersons) {
+	public List<Person> update(List<Person> modifiedPersons, @MetadataParam String table) {
 
 		return modifiedPersons.stream().map(person -> {
 			Person p = dataBean.findPerson(person.getId());
@@ -86,7 +92,7 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public void destroy(List<Person> destroyPersons) {
+	public void destroy(List<Person> destroyPersons, @MetadataParam String table) {
 		for (Person person : destroyPersons) {
 			dataBean.deletePerson(person);
 		}
