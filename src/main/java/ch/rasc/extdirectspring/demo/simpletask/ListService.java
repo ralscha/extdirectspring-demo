@@ -102,7 +102,7 @@ public class ListService {
 		li.setLoaded(null);
 
 		if (!li.isLeaf()) {
-			if ((li.getChildren() == null || li.getChildren().isEmpty())) {
+			if (li.getChildren() == null || li.getChildren().isEmpty()) {
 				li.setLoaded(true);
 			}
 			else {

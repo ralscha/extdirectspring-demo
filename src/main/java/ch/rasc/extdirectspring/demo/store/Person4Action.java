@@ -18,6 +18,7 @@ package ch.rasc.extdirectspring.demo.store;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,11 +41,12 @@ public class Person4Action {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
 	public List<Person> load(ExtDirectStoreReadRequest request, Boolean test,
-			@MetadataParam String table, @MetadataParam Integer no, @MetadataParam(defaultValue="defaultValue") String optional) {
+			@MetadataParam Optional<String> table, @MetadataParam Optional<Integer> no,
+			@MetadataParam(defaultValue = "defaultValue") String optional) {
 		System.out.println("test->" + test);
-		System.out.println("table->" + table);
-		System.out.println("no->"+no);
-		System.out.println("optional->"+optional);
+		System.out.println("table->" + table.orElse(null));
+		System.out.println("no->" + no.orElse(null));
+		System.out.println("optional->" + optional);
 		List<Person> persons = dataBean.findPersons(request.getQuery());
 		return persons.subList(0, Math.min(50, persons.size()));
 	}
@@ -72,14 +74,16 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public List<Person> create(List<Person> newPersons, @MetadataParam String table) {
+	public List<Person> create(List<Person> newPersons,
+			@MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
 		return newPersons.stream().map(p -> dataBean.insert(p))
 				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public List<Person> update(List<Person> modifiedPersons, @MetadataParam String table) {
+	public List<Person> update(List<Person> modifiedPersons,
+			@MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
 		return modifiedPersons.stream().map(person -> {
 			Person p = dataBean.findPerson(person.getId());
@@ -93,7 +97,7 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public void destroy(List<Person> destroyPersons, @MetadataParam String table) {
+	public void destroy(List<Person> destroyPersons, @MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
 		for (Person person : destroyPersons) {
 			dataBean.deletePerson(person);

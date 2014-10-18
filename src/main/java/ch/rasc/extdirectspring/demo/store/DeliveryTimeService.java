@@ -28,14 +28,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.rometools.rome.feed.synd.SyndEntry;
-
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extdirectspring.demo.FeedCache;
 import ch.rasc.extdirectspring.demo.feed.FeedService;
+
+import com.rometools.rome.feed.synd.SyndEntry;
 
 @Service
 public class DeliveryTimeService {

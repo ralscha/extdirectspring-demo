@@ -32,10 +32,10 @@ public class NamedService {
 		bo.forEach(System.out::println);
 		return String.format("Hi %s %s, you are %d years old.", firstName, lastName, age);
 	}
-	
+
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "named")
-	public boolean nonStrict(Map<String,Object> parameters) {
-		parameters.forEach((k,v)->System.out.println(k+"-->"+v));
+	public boolean nonStrict(Map<String, Object> parameters) {
+		parameters.forEach((k, v) -> System.out.println(k + "-->" + v));
 		return true;
 	}
 }
