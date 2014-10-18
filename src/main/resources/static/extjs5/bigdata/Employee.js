@@ -43,7 +43,7 @@ Ext.define('Employee', {
 	}, {
 		name: 'avatar'
 	} ],
-	idProperty: 'employeeNo',
+    idField: 'employeeNo',
 
     // Override set to update dependent fields
     set: function(data, value) {
@@ -66,7 +66,7 @@ Ext.define('Employee', {
             data.forename = names[0];
             data.surname = names[1];
         }
-        return this.callParent([data, value]);
+        return this.callParent([data]);
     },
     
     convertName: function(name) {

@@ -68,10 +68,7 @@ Ext.onReady(function() {
 		}, {
 			dataIndex: 'size',
 			text: 'Size',
-			filter: {
-				type: 'list',
-				options: [ 'small', 'medium', 'large', 'extra large' ]
-			}
+			filter: 'list'
 		}, {
 			xtype: 'datecolumn',
 			dataIndex: 'date',
