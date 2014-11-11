@@ -12,6 +12,9 @@ Ext.onReady(function() {
 		fields: [ 'lastName', 'firstName', 'id', 'street', 'city', 'state', 'zip' ],
 		proxy: {
 			type: 'direct',
+			extraParams: {
+				test: true
+			},			
 			api: {
 				read: person4Action.load,
 				create: person4Action.create,
