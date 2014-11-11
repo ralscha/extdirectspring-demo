@@ -81,8 +81,7 @@ public class DeliveryTimeService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
-	public List<ForumPost> readSenchaForum(ExtDirectStoreReadRequest request)
-			throws MalformedURLException {
+	public List<ForumPost> readSenchaForum() throws MalformedURLException {
 
 		List<SyndEntry> bugs = feedCache.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_BUGS)
 				.getSyndFeed().getEntries();
@@ -93,20 +92,5 @@ public class DeliveryTimeService {
 		all.addAll(qas);
 
 		return all.stream().map(ForumPost::new).collect(Collectors.toList());
-		// for (SyndEntry entry : ) {
-		//
-		// Ext.define('KitchenSink.model.form.ForumPost', {
-		// extend: 'KitchenSink.model.Base',
-		// idProperty: 'post_id',
-		// fields: [
-		// {name: 'postId', mapping: 'post_id'},
-		// {name: 'title', mapping: 'topic_title'},
-		// {name: 'topicId', mapping: 'topic_id'},
-		// {name: 'author', mapping: 'author'},
-		// {name: 'lastPost', mapping: 'post_time', type: 'date', dateFormat:
-		// 'timestamp'},
-		// {name: 'excerpt', mapping: 'post_text'}
-		// ]
-		// });
 	}
 }
