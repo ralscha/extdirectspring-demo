@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.5.0-SNAPSHOT</version>
+	<version>1.5.0</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>		
-		<version>1.1.8.RELEASE</version>		
+		<version>1.2.0.BUILD-SNAPSHOT</version>		
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -49,12 +49,12 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<tomcat.version>8.0.14</tomcat.version>
+        <tomcat.version>8.0.15</tomcat.version>
 		<h2.version>1.4.182</h2.version>
 		<jackson.version>2.4.3</jackson.version>
 		<httpclient.version>4.3.4</httpclient.version>
-		<spring.version>4.1.1.RELEASE</spring.version>
-
+		<spring.version>4.1.2.RELEASE</spring.version>
+ 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 		<start-class>ch.rasc.extdirectspring.demo.Main</start-class>
@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.9</version>
+			<version>1.10</version>
 		</dependency>
 
 		<dependency>
@@ -151,6 +151,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
