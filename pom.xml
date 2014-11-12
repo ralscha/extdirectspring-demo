@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>		
-		<version>1.2.0.BUILD-SNAPSHOT</version>		
+		<version>1.2.0.RC1</version>		
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -48,13 +48,7 @@
 	</scm>
 
 	<properties>
-		<java.version>1.8</java.version>
-        <tomcat.version>8.0.15</tomcat.version>
-		<h2.version>1.4.182</h2.version>
-		<jackson.version>2.4.3</jackson.version>
-		<httpclient.version>4.3.4</httpclient.version>
-		<spring.version>4.1.2.RELEASE</spring.version>
- 
+		<java.version>1.8</java.version>		 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 		<start-class>ch.rasc.extdirectspring.demo.Main</start-class>
@@ -76,7 +70,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.5.0-SNAPSHOT</version>
+			<version>1.5.0</version>
 		</dependency>
 
 		<dependency>
@@ -130,7 +124,7 @@
 
 
 	<repositories>
-
+        <!-- 
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -142,7 +136,8 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
+        -->
+        
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -152,6 +147,7 @@
 			</snapshots>
 		</repository>
 		
+		<!-- 
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
@@ -160,6 +156,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		-->
 	</repositories>
 
 
@@ -172,6 +169,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
+		<!--
 		<pluginRepository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
@@ -180,6 +178,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
+		-->
 	</pluginRepositories>
 
 
