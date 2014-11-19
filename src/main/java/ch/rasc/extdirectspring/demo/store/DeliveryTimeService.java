@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ import org.springframework.util.StringUtils;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
+import ch.ralscha.extdirectspring.filter.NumericFilter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extdirectspring.demo.FeedCache;
 import ch.rasc.extdirectspring.demo.feed.FeedService;
@@ -93,4 +95,47 @@ public class DeliveryTimeService {
 
 		return all.stream().map(ForumPost::new).collect(Collectors.toList());
 	}
+
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
+	public List<Map<String, Object>> readCategory() {
+		List<Map<String, Object>> result = new ArrayList<>();
+
+		result.add(createMap(1, "Animals"));
+		result.add(createMap(2, "Sports"));
+		result.add(createMap(3, "Food"));
+
+		return result;
+	}
+
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
+	public List<Map<String, Object>> readDependant(ExtDirectStoreReadRequest request) {
+		List<Map<String, Object>> result = new ArrayList<>();
+
+		NumericFilter nf = request.getFirstFilterForField("categoryId");
+		if (nf.getValue().intValue() == 1) {
+			result.add(createMap(1, "Dog"));
+			result.add(createMap(2, "Cat"));
+			result.add(createMap(3, "Horse"));
+		}
+		else if (nf.getValue().intValue() == 2) {
+			result.add(createMap(1, "Tennis"));
+			result.add(createMap(2, "Swimming"));
+			result.add(createMap(3, "Basketball"));
+		}
+		else if (nf.getValue().intValue() == 3) {
+			result.add(createMap(1, "Pancakes"));
+			result.add(createMap(2, "Pizza"));
+			result.add(createMap(3, "Chinese"));
+		}
+
+		return result;
+	}
+
+	private static Map<String, Object> createMap(Integer id, String name) {
+		Map<String, Object> entry = new HashMap<>();
+		entry.put("id", id);
+		entry.put("name", name);
+		return entry;
+	}
+
 }

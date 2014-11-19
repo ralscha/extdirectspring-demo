@@ -69,6 +69,59 @@ Ext.onReady(function() {
 		store: actressStore,
 		queryMode: 'remote'
 	});
+	
+	var categoryStore = Ext.create('Ext.data.Store', {
+		fields: [ 'id', 'name' ],
+		pageSize: 0,	
+		autoLoad: true,
+		proxy: {
+			type: 'direct',
+			directFn: deliveryTimeService.readCategory
+		}
+	});	
+	
+	var dependantStore = Ext.create('Ext.data.Store', {
+		fields: [ 'id', 'name' ],
+		pageSize: 0,
+		autoLoad: false,
+		remoteFilter: true,
+		proxy: {
+			type: 'direct',
+			directFn: deliveryTimeService.readDependant
+		}
+	});		
+	
+	Ext.create('Ext.form.field.ComboBox', {
+		fieldLabel: 'Category',
+		renderTo: Ext.getBody(),
+		displayField: 'name',
+		valueField: 'id',
+		labelWidth: 130,
+		store: categoryStore,
+		queryMode: 'local',
+		listeners: {
+			change: function(cb, newValue) {
+				if (!Ext.isEmpty(newValue)) {
+					dependantStore.filter('categoryId', newValue);
+				}
+				else {
+					dependantStore.clearFilter();
+				}
+			}
+		},
+	});
+	
+	Ext.create('Ext.form.field.ComboBox', {
+		fieldLabel: 'Dependant',
+		renderTo: Ext.getBody(),
+		displayField: 'name',
+		valueField: 'id',
+		labelWidth: 130,
+		store: dependantStore,
+		queryMode: 'local'
+	});
+	
+	
 
 	Ext.create('Ext.container.Container', {
 		width: 400,
