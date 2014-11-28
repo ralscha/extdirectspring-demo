@@ -41,7 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class BbcService {
 
-	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36";
+	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36";
 
 	private final static ObjectMapper mapper = new ObjectMapper();
 
