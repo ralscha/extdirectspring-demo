@@ -1,15 +1,12 @@
-body
-{
+body {
     font-family:arial,tahoma,helvetica,sans-serif;
 }
 
-.x-grid-view
-{
+.x-grid-view {
     border-bottom-color: transparent !important;
 }
 
-.sch-event 
-{
+.sch-event {
 	background-image : -moz-linear-gradient(90deg, #ddd, #fff);
 	background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#ddd));
 	border-left-color:#ccc;
@@ -18,66 +15,51 @@ body
 	border-bottom-color:#ccc;
 }
 
-.sch-event-hover
-{
+.sch-event-hover {
 	border: 1px solid #555;
 }
 
-.startTime
-{
+.startTime {
 	color: #777;
 	font-weight:bold;
 }
 
-.programName
-{
+.programName {
 	font-weight:bold;
 	color:#15428B;
 	padding-left:5px;
 }
 
-.showtooltip{
-width: 250px
-}
-
-.radiotip
-{
+.radiotip {
 	font-weight:bold;
 	color:#15428B;
 }
 
-.duration
-{
+.duration {
 	color: #aaa;
 	display:block;
 }
 
-.x-grid-inner-locked .x-grid-row .x-grid-cell-first
-{
+.x-grid-inner-locked .x-grid-row .x-grid-cell-first {
 	background-image : -moz-linear-gradient(-45deg, #dde, #fff);
 	background: -webkit-gradient(linear, left top, right bottom, from(#dde), to(#fff));
-	border:1px solid Gray;
 }
 
-.x-grid-td-0 .x-grid-cell-inner
-{
+.x-grid-td-0 .x-grid-cell-inner {
 	position:relative;
 }
 
-.x-column-header-text
-{
+.x-column-header-text {
 	font-weight:bold;
 	font-size:12px;
 	color:#15428B;
 }
 
-.station-img
-{
+.station-img {
     width:105px;
 }
 
-.sch-timeline
-{
+.sch-timeline {
 	border-left:2px dotted red;
 }
 
@@ -91,13 +73,11 @@ width: 250px
 .sch-column-header,
 .x-column-header,
 .x-grid-header,
-.x-grid-header-ct
-{
+.x-grid-header-ct {
     background: none transparent;
 }
 
-.sch-schedulerpanel .x-grid-hd-inner
-{
+.sch-schedulerpanel .x-grid-hd-inner {
     font-size:14px;
     font-weight:bold;
     color:Navy;
@@ -108,8 +88,6 @@ width: 250px
 .x-grid-with-row-lines .x-grid-cell {
     border-color: transparent;
 }
-
-
 
 .x-grid-inner-locked .x-grid-view {
     border-right: none;

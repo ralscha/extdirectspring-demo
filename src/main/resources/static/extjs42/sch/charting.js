@@ -7,10 +7,12 @@ Ext.require([
 Ext.onReady(function(){
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 	
-    Ext.define('Resource', {
+    Ext.define('Car', {
         extend : 'Sch.model.Resource',
-        idProperty : 'Id',
-        fields: ['Id', 'Name', 'Seats'],
+        fields     : [
+            {name : 'Seats'},
+            {name : 'NextScheduledService', type : 'date', dateFormat: 'c' }
+        ],
          proxy: {
      		type: 'direct',
      		directFn: schCarService.readCars
@@ -36,7 +38,7 @@ Ext.onReady(function(){
     });    
 
     var carTpl = Ext.create('Ext.XTemplate', 
-        '<img class="carimg" src="http://rasc.ch/bryntum/scheduler-2.5.1-trial/examples/charting/{Id}.jpeg" />',
+        '<img class="carimg" src="//demo.rasc.ch/resources/bryntum/scheduler-2.5.1-trial/examples/charting/{Id}.jpeg" />',
         '<dl class="cardescr">',
             '<dt>{Name}</dt>',
             '<dd>{Seats} seats</dd>',
@@ -46,9 +48,9 @@ Ext.onReady(function(){
     var resourceStore = Ext.create('Sch.data.ResourceStore', {
         sorters:{
             property: 'Name', 
-            direction: "ASC"
+            direction: 'ASC'
         },
-        model : 'Resource',
+        model : 'Car',
         autoLoad : true
     });
         
@@ -77,7 +79,6 @@ Ext.onReady(function(){
         layout : { type : 'hbox', align : 'stretch' },
         renderTo: "somediv",
         height : 600,
-        width : 1200,
         border: false,
         items : [
             scheduler = Ext.create("Sch.panel.SchedulerGrid", {
@@ -89,12 +90,14 @@ Ext.onReady(function(){
                 startDate: start,
                 endDate: end,
                 eventBarTextField : 'Name',
+                multiSelect       : true,
 
                 onEventCreated : function(ev) { ev.set('Name', 'New booking'); },
 
                 // Setup static columns
                 columns : [
-                    { text : 'Car', width:170, align : 'center', dataIndex : 'Name', sortable : true, xtype : 'templatecolumn', tpl : carTpl}
+                    { text : 'Car', width : 170, align : 'center', dataIndex : 'Name', sortable : true, xtype : 'templatecolumn', tpl : carTpl},
+                    { text : 'Next Service Date', width : 140, dataIndex : 'NextScheduledService', position : 'right', xtype : 'datecolumn', format : 'M Y' }
                 ],
 
                 // Store holding all the resources

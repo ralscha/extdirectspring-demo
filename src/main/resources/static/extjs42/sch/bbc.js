@@ -3,8 +3,11 @@ Ext.require([ 'Sch.panel.SchedulerGrid', 'Sch.plugin.CurrentTimeLine' ]);
 Ext.onReady(function() {
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 
-	var programTemplate = new Ext.XTemplate('<span class="startTime">{[fm.date(values.StartDate, "G:i")]}</span>'
-			+ '<span class="programName">{text}</span>' + '<span class="duration">{[((values.duration / 60) + " min")]}</span>');
+    var programTemplate = new Ext.XTemplate(
+        '<span class="startTime">{[fm.date(values.StartDate, "G:i")]}</span>' +
+            '<span class="programName">{text}</span>' +
+            '<span class="duration">{[((values.duration / 60) + " min")]}</span>'
+    );
 
 	Ext.define('Station', {
 		extend: 'Sch.model.Resource',
@@ -70,11 +73,8 @@ Ext.onReady(function() {
 		headerConfig: {
 			middle: {
 				unit: "HOUR",
-				dateFormat: 'G:i'
-			},
-			top: {
-				unit: "DAY",
-				dateFormat: 'D d/m'
+                dateFormat : 'G:i',
+                align      : 'left'
 			}
 		}
 	});
@@ -88,9 +88,12 @@ Ext.onReady(function() {
 		eventStore: programStore,
 		eventBodyTemplate: programTemplate,
 		rowHeight: 70,
-		tooltipTpl: new Ext.XTemplate('<div class="showtooltip"><span class="radiotip">{[fm.date(values.StartDate, "G:i")]}</span> {synopsis}</div>').compile(),
+enableHdMenu      : false,
+        tooltipTpl        : new Ext.XTemplate('<span class="radiotip">{[fm.date(values.StartDate, "G:i")]}</span> {synopsis}'),
 		startDate: start,
 		endDate: end,
+        border            : false,
+        rowLines          : false,
 		viewPreset: 'hour',
 		columns: [ {
 			xtype: 'templatecolumn',
@@ -98,7 +101,7 @@ Ext.onReady(function() {
 			align: 'center',
 			width: 150,
 			dataIndex: 'Name',
-			tpl: '<img class="station-img" src="http://rasc.ch/bryntum/scheduler-2.5.1-trial/examples/bbc/images/{Id}.png" />'
+			tpl: '<img class="station-img" src="//demo.rasc.ch/resources/bryntum/scheduler-2.5.1-trial/examples/bbc/images/{Id}.png" />'
 		} ],
 		plugins: new Sch.plugin.CurrentTimeLine(),
 		viewConfig: {

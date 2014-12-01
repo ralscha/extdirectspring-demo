@@ -15,6 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.sch;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,9 +33,12 @@ public class CarService {
 
 	private final static AtomicInteger maxId = new AtomicInteger(7);
 
-	private final static List<Car> cars = Arrays.asList(new Car("c1", "BMW #1", 4),
-			new Car("c2", "BMW #2", 4), new Car("c3", "BMW #3", 2), new Car("c4",
-					"BMW #4", 2), new Car("c5", "BMW #5", 2), new Car("c6", "BMW #6", 4));
+	private final static List<Car> cars = Arrays.asList(new Car("c1", "BMW #1", 4,
+			LocalDate.now().plusDays(105)), new Car("c2", "BMW #2", 4, LocalDate.now()
+			.plusDays(70)), new Car("c3", "BMW #3", 2, LocalDate.now().plusDays(10)),
+			new Car("c4", "BMW #4", 2, LocalDate.now().plusDays(35)), new Car("c5",
+					"BMW #5", 2, LocalDate.now().plusDays(41)), new Car("c6", "BMW #6",
+					4, LocalDate.now().plusDays(11)));
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "sch")
 	public List<Car> readCars() {
