@@ -110,7 +110,7 @@ public class ExecDashboardService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "dashboard")
 	public List<StockOHLC> readStockOHLC(ExtDirectStoreReadRequest request) {
 		StringFilter filter = request.getFirstFilterForField("company");
-		if (filter != null) {
+		if (filter != null && filter.getValue() != null) {
 			if (filter.getValue().equals("AAPL")) {
 				return aapl;
 			}
