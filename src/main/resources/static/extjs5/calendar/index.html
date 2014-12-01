@@ -22,10 +22,8 @@
             }
         });
         Ext.Loader.loadScript(['DirectCalendarStore.js','DirectEventStore.js']);
-		Ext.syncRequire('Ext.util.AbstractMixedCollection');
         Ext.Loader.loadScript('AbstractCalendarOverride.js');
-        
-        
+                
         Ext.onReady(function() {
         	Ext.create('CalendarApp');	
 
