@@ -31,7 +31,7 @@ Ext.onReady(function() {
 		displayField: 'list',
 		forceSelection: true,
 		triggerAction: 'all',
-		width: 300,
+		width: 400,
 		valueField: 'list',
 		listeners: {
 			select: function(cmb, record, eOpts) {
