@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>		
-		<version>1.2.0.RC2</version>		
+		<version>1.2.0.RELEASE</version>		
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.5.0</version>
+			<version>1.5.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -122,9 +122,8 @@
 
 	</dependencies>
 
-
 	<repositories>
-        <!-- 
+
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -136,18 +135,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-        -->
-        
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		
-		<!-- 
+        <!-- 
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
