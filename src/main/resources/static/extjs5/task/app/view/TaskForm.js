@@ -6,7 +6,7 @@ Ext.define('Task.view.TaskForm', {
 		title: 'Edit Task: {detailTask.title}'
 	},
 	modal: true,
-	autoShow: true,
+	autoShow: false,
 
 	items: [ {
 		xtype: 'form',
@@ -29,8 +29,7 @@ Ext.define('Task.view.TaskForm', {
 			fieldLabel: 'Description',
 			labelAlign: 'right',
 			bind: '{detailTask.description}',
-			cols: 45,
-			rows: 3
+			height: 100
 		}, {
 			xtype: 'datefield',
 			margin: '0 0 10',
@@ -43,15 +42,16 @@ Ext.define('Task.view.TaskForm', {
 			fieldLabel: 'Priority',
 			labelAlign: 'right',
 			allowBlank: false,
+			forceSelection: true,
 			allowOnlyWhitespace: false,
 			emptyText: 'Select Priority',
 			editable: false,
-			displayField: 'priority',
 			bind: {
 				store: '{priorities}',
 				value: '{detailTask.priority}'
 			},
-			valueField: 'priority'
+			valueField: 'id',
+			displayField: 'priority'
 		}, {
 			xtype: 'container',
 			padding: '10 10 10 10',

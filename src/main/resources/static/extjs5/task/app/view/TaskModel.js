@@ -19,6 +19,7 @@ Ext.define('Task.view.TaskModel', {
 			pageSize: 0
 		},
 		priorities: {
+			autoLoad: true,
 			data: [ {
 				id: 'HIGH',
 				priority: 'HIGH'

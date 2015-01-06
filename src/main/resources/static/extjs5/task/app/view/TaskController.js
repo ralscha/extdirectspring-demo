@@ -11,11 +11,15 @@ Ext.define('Task.view.TaskController', {
 		this.getViewModel().set('detailTask', new Task.model.Task({
 			dueDate: new Date()
 		}));
-		new Task.view.TaskForm();
+		var taskForm = new Task.view.TaskForm();
+		this.getView().add(taskForm);
+		taskForm.show();
 	},
 
 	editTask: function() {
-		new Task.view.TaskForm();
+		var taskForm = new Task.view.TaskForm();
+		this.getView().add(taskForm);
+		taskForm.show();
 	},
 
 	saveTask: function(btn) {
@@ -47,8 +51,7 @@ Ext.define('Task.view.TaskController', {
 	},
 
 	deleteTask: function() {
-		Ext.Msg.confirm('Confirm', 'Are you sure you want to delete this task?',
-				this.deleteTaskConfirm, this);
+		Ext.Msg.confirm('Confirm', 'Are you sure you want to delete this task?', this.deleteTaskConfirm, this);
 	},
 
 	deleteTaskConfirm: function(btn) {
@@ -57,7 +60,7 @@ Ext.define('Task.view.TaskController', {
 			var store = me.getStore('tasks');
 			var record = me.getViewModel().get('selectedTask');
 			var index = store.indexOf(record);
-			
+
 			record.erase({
 				callback: function(records, operation) {
 					var success = operation.wasSuccessful();
@@ -69,8 +72,7 @@ Ext.define('Task.view.TaskController', {
 					else {
 						store.insert(index, record);
 						console.log('Failure to remove record: ', arguments);
-						Ext.Msg.alert('Server side Error',
-								'Unable to remove the record');
+						Ext.Msg.alert('Server side Error', 'Unable to remove the record');
 					}
 				}
 			});
