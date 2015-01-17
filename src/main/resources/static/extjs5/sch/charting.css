@@ -1,0 +1,29 @@
+.carimg {
+    float  : left;
+    width  : 50%;
+    border : 1px solid #ddd;
+}
+
+dl.cardescr {
+    float : right;
+}
+
+.cardescr dt {
+    font-size   : 13px;
+    font-weight : bold;
+    color       : Navy;
+    text-align  : right;
+}
+
+.cardescr dd {
+    color      : #999;
+    margin-top : 5px;
+}
+
+.dayShift {
+    background : url(sun.png) no-repeat 4px center;
+}
+
+.nightShift {
+    background : url(bluemoon.png) no-repeat 4px center;
+}
