@@ -54,19 +54,19 @@ public class SpreadsheetService {
 			sale.setNov(random.nextInt(210) - 10);
 			sale.setDec(random.nextInt(110) - 10);
 
-			sales.put(year, sale);
+			this.sales.put(year, sale);
 		}
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "spreadsheet")
 	public Collection<MonthlySales> read() {
-		return sales.values();
+		return this.sales.values();
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "spreadsheet")
 	public Collection<MonthlySales> update(List<MonthlySales> modifiedSales) {
-		modifiedSales.forEach(s -> sales.put(s.getYear(), s));
-		return sales.values();
+		modifiedSales.forEach(s -> this.sales.put(s.getYear(), s));
+		return this.sales.values();
 	}
 
 }

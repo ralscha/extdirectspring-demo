@@ -36,7 +36,7 @@ public class Company {
 	private SizeEnum size;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -44,7 +44,7 @@ public class Company {
 	}
 
 	public String getCompany() {
-		return company;
+		return this.company;
 	}
 
 	public void setCompany(String company) {
@@ -52,7 +52,7 @@ public class Company {
 	}
 
 	public BigDecimal getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -61,7 +61,7 @@ public class Company {
 
 	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
 	public LocalDate getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(LocalDate date) {
@@ -69,7 +69,7 @@ public class Company {
 	}
 
 	public boolean isVisible() {
-		return visible;
+		return this.visible;
 	}
 
 	public void setVisible(boolean visible) {
@@ -78,7 +78,7 @@ public class Company {
 
 	@JsonSerialize(using = SizeSerializer.class)
 	public SizeEnum getSize() {
-		return size;
+		return this.size;
 	}
 
 	public void setSize(SizeEnum size) {

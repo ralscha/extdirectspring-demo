@@ -52,7 +52,7 @@ public class Task {
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -60,7 +60,7 @@ public class Task {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -68,7 +68,7 @@ public class Task {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
@@ -76,7 +76,7 @@ public class Task {
 	}
 
 	public LocalDate getDueDate() {
-		return dueDate;
+		return this.dueDate;
 	}
 
 	public void setDueDate(LocalDate dueDate) {
@@ -84,7 +84,7 @@ public class Task {
 	}
 
 	public Priority getPriority() {
-		return priority;
+		return this.priority;
 	}
 
 	public void setPriority(Priority priority) {

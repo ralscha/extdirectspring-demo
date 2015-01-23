@@ -57,31 +57,31 @@ public class FeedItem {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getAuthor() {
-		return author;
+		return this.author;
 	}
 
 	public String getLink() {
-		return link;
+		return this.link;
 	}
 
 	public LocalDateTime getPubDate() {
-		return pubDate;
+		return this.pubDate;
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public String getContent() {
-		return content;
+		return this.content;
 	}
 
 }

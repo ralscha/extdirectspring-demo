@@ -32,7 +32,7 @@ public enum DeliveryTime implements LabelValue {
 
 	@Override
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	@Override

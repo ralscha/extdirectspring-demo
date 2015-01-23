@@ -57,7 +57,7 @@ public class Employee {
 	private String avatar;
 
 	public String getEmployeeNo() {
-		return employeeNo;
+		return this.employeeNo;
 	}
 
 	public void setEmployeeNo(String employeeNo) {
@@ -65,7 +65,7 @@ public class Employee {
 	}
 
 	public int[] getRating() {
-		return rating;
+		return this.rating;
 	}
 
 	public void setRating(int[] rating) {
@@ -73,7 +73,7 @@ public class Employee {
 	}
 
 	public BigDecimal getSalary() {
-		return salary;
+		return this.salary;
 	}
 
 	public void setSalary(BigDecimal salary) {
@@ -81,7 +81,7 @@ public class Employee {
 	}
 
 	public String getForename() {
-		return forename;
+		return this.forename;
 	}
 
 	public void setForename(String forename) {
@@ -89,7 +89,7 @@ public class Employee {
 	}
 
 	public String getSurname() {
-		return surname;
+		return this.surname;
 	}
 
 	public void setSurname(String surname) {
@@ -97,7 +97,7 @@ public class Employee {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -105,7 +105,7 @@ public class Employee {
 	}
 
 	public String getDepartment() {
-		return department;
+		return this.department;
 	}
 
 	public void setDepartment(String department) {
@@ -114,7 +114,7 @@ public class Employee {
 
 	@JsonSerialize(using = YMDLocalDateSerializer.class)
 	public LocalDate getDob() {
-		return dob;
+		return this.dob;
 	}
 
 	@JsonDeserialize(using = YMDLocalDateDeserializer.class)
@@ -124,7 +124,7 @@ public class Employee {
 
 	@JsonSerialize(using = YMDLocalDateSerializer.class)
 	public LocalDate getJoinDate() {
-		return joinDate;
+		return this.joinDate;
 	}
 
 	@JsonDeserialize(using = YMDLocalDateDeserializer.class)
@@ -133,7 +133,7 @@ public class Employee {
 	}
 
 	public String getNoticePeriod() {
-		return noticePeriod;
+		return this.noticePeriod;
 	}
 
 	public void setNoticePeriod(String noticePeriod) {
@@ -141,7 +141,7 @@ public class Employee {
 	}
 
 	public int getSickDays() {
-		return sickDays;
+		return this.sickDays;
 	}
 
 	public void setSickDays(int sickDays) {
@@ -149,7 +149,7 @@ public class Employee {
 	}
 
 	public int getHolidayDays() {
-		return holidayDays;
+		return this.holidayDays;
 	}
 
 	public void setHolidayDays(int holidayDays) {
@@ -157,7 +157,7 @@ public class Employee {
 	}
 
 	public int getHolidayAllowance() {
-		return holidayAllowance;
+		return this.holidayAllowance;
 	}
 
 	public void setHolidayAllowance(int holidayAllowance) {
@@ -165,7 +165,7 @@ public class Employee {
 	}
 
 	public String getAvatar() {
-		return avatar;
+		return this.avatar;
 	}
 
 	public void setAvatar(String avatar) {
@@ -173,19 +173,19 @@ public class Employee {
 	}
 
 	public void update(Employee modifiedEmployee) {
-		rating = modifiedEmployee.getRating();
-		salary = modifiedEmployee.getSalary();
-		forename = modifiedEmployee.getForename();
-		surname = modifiedEmployee.getSurname();
-		email = modifiedEmployee.getEmail();
-		department = modifiedEmployee.getDepartment();
-		dob = modifiedEmployee.getDob();
-		joinDate = modifiedEmployee.getJoinDate();
-		noticePeriod = modifiedEmployee.getNoticePeriod();
-		sickDays = modifiedEmployee.getSickDays();
-		holidayDays = modifiedEmployee.getHolidayDays();
-		holidayAllowance = modifiedEmployee.getHolidayAllowance();
-		avatar = modifiedEmployee.getAvatar();
+		this.rating = modifiedEmployee.getRating();
+		this.salary = modifiedEmployee.getSalary();
+		this.forename = modifiedEmployee.getForename();
+		this.surname = modifiedEmployee.getSurname();
+		this.email = modifiedEmployee.getEmail();
+		this.department = modifiedEmployee.getDepartment();
+		this.dob = modifiedEmployee.getDob();
+		this.joinDate = modifiedEmployee.getJoinDate();
+		this.noticePeriod = modifiedEmployee.getNoticePeriod();
+		this.sickDays = modifiedEmployee.getSickDays();
+		this.holidayDays = modifiedEmployee.getHolidayDays();
+		this.holidayAllowance = modifiedEmployee.getHolidayAllowance();
+		this.avatar = modifiedEmployee.getAvatar();
 	}
 
 }

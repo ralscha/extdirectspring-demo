@@ -26,7 +26,7 @@ public class State implements Comparable<State> {
 	}
 
 	public String getState() {
-		return state;
+		return this.state;
 	}
 
 	public void setState(String state) {
@@ -35,7 +35,7 @@ public class State implements Comparable<State> {
 
 	@Override
 	public int hashCode() {
-		return state.hashCode();
+		return this.state.hashCode();
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class State implements Comparable<State> {
 			return false;
 		}
 		State other = (State) o;
-		return Objects.equals(state, other.getState());
+		return Objects.equals(this.state, other.getState());
 	}
 
 	@Override
 	public int compareTo(State o) {
-		return state.compareTo(o.state);
+		return this.state.compareTo(o.state);
 	}
 
 }

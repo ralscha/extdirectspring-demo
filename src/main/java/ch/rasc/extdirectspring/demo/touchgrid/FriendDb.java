@@ -43,8 +43,8 @@ public class FriendDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		friendStore = new HashMap<>();
-		try (InputStream is = friends.getInputStream()) {
+		this.friendStore = new HashMap<>();
+		try (InputStream is = this.friends.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
 			List<Friend> fs = om.readValue(is, new TypeReference<List<Friend>>() {
@@ -52,19 +52,19 @@ public class FriendDb {
 			});
 
 			for (Friend friend : fs) {
-				friendStore.put(friend.getId(), friend);
+				this.friendStore.put(friend.getId(), friend);
 			}
 		}
 
-		totalSize = friendStore.size();
+		this.totalSize = this.friendStore.size();
 	}
 
 	public Collection<Friend> getAll() {
-		return friendStore.values();
+		return this.friendStore.values();
 	}
 
 	public int getTotalSize() {
-		return totalSize;
+		return this.totalSize;
 	}
 
 }

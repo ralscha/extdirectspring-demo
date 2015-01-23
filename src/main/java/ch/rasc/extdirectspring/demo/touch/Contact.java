@@ -23,7 +23,7 @@ public class Contact {
 	private String message;
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -31,7 +31,7 @@ public class Contact {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -39,7 +39,7 @@ public class Contact {
 	}
 
 	public String getMessage() {
-		return message;
+		return this.message;
 	}
 
 	public void setMessage(String message) {
@@ -48,8 +48,8 @@ public class Contact {
 
 	@Override
 	public String toString() {
-		return "Contact [name=" + name + ", email=" + email + ", message=" + message
-				+ "]";
+		return "Contact [name=" + this.name + ", email=" + this.email + ", message="
+				+ this.message + "]";
 	}
 
 }

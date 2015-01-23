@@ -23,7 +23,7 @@ public class Post {
 	private String content;
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -31,7 +31,7 @@ public class Post {
 	}
 
 	public boolean isLeaf() {
-		return leaf;
+		return this.leaf;
 	}
 
 	public void setLeaf(boolean leaf) {
@@ -39,7 +39,7 @@ public class Post {
 	}
 
 	public String getContent() {
-		return content;
+		return this.content;
 	}
 
 	public void setContent(String content) {

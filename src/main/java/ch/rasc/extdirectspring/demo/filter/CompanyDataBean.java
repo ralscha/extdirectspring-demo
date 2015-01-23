@@ -62,8 +62,8 @@ public class CompanyDataBean {
 	public void readData() throws IOException {
 		Random rand = new Random();
 
-		companies = new HashMap<>();
-		try (InputStream is = randomdata.getInputStream();
+		this.companies = new HashMap<>();
+		try (InputStream is = this.randomdata.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				CSVReader reader = new CSVReader(br, '|')) {
 
@@ -80,13 +80,13 @@ public class CompanyDataBean {
 				company.setSize(SizeEnum.values()[rand.nextInt(4)]);
 				company.setVisible(rand.nextBoolean());
 
-				companies.put(company.getId(), company);
+				this.companies.put(company.getId(), company);
 			}
 		}
 	}
 
 	public Collection<Company> findAllCompanies() {
-		return Collections.unmodifiableCollection(companies.values());
+		return Collections.unmodifiableCollection(this.companies.values());
 	}
 
 	public List<Company> findCompanies(Collection<Filter> filters) {
@@ -144,7 +144,7 @@ public class CompanyDataBean {
 			}
 		}
 
-		return companies.values().stream().filter(predicates)
+		return this.companies.values().stream().filter(predicates)
 				.collect(Collectors.toList());
 	}
 
@@ -161,13 +161,13 @@ public class CompanyDataBean {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
-				return company.getId() == value.intValue();
+				return company.getId() == this.value.intValue();
 			case GREATER_THAN:
-				return company.getId() > value.intValue();
+				return company.getId() > this.value.intValue();
 			case LESS_THAN:
-				return company.getId() < value.intValue();
+				return company.getId() < this.value.intValue();
 			}
 			return false;
 		}
@@ -186,18 +186,18 @@ public class CompanyDataBean {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
 				return company.getPrice().compareTo(
-						new BigDecimal(value.doubleValue()).setScale(2,
+						new BigDecimal(this.value.doubleValue()).setScale(2,
 								RoundingMode.HALF_UP)) == 0;
 			case GREATER_THAN:
 				return company.getPrice().compareTo(
-						new BigDecimal(value.doubleValue()).setScale(2,
+						new BigDecimal(this.value.doubleValue()).setScale(2,
 								RoundingMode.HALF_UP)) > 0;
 			case LESS_THAN:
 				return company.getPrice().compareTo(
-						new BigDecimal(value.doubleValue()).setScale(2,
+						new BigDecimal(this.value.doubleValue()).setScale(2,
 								RoundingMode.HALF_UP)) < 0;
 			}
 			return false;
@@ -217,13 +217,13 @@ public class CompanyDataBean {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
-				return company.getDate().compareTo(value) == 0;
+				return company.getDate().compareTo(this.value) == 0;
 			case GREATER_THAN:
-				return company.getDate().compareTo(value) > 0;
+				return company.getDate().compareTo(this.value) > 0;
 			case LESS_THAN:
-				return company.getDate().compareTo(value) < 0;
+				return company.getDate().compareTo(this.value) < 0;
 			}
 			return false;
 		}

@@ -46,28 +46,28 @@ public class SimpleUserDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		users = new ConcurrentHashMap<>();
-		try (InputStream is = userdata.getInputStream();
+		this.users = new ConcurrentHashMap<>();
+		try (InputStream is = this.userdata.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is,
 						StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				User u = new User(nextLine);
-				users.put(u.getId(), u);
-				maxId = Math.max(maxId, Integer.parseInt(u.getId()));
+				this.users.put(u.getId(), u);
+				this.maxId = Math.max(this.maxId, Integer.parseInt(u.getId()));
 			}
 		}
 	}
 
 	public Collection<User> getAll() {
-		return users.values();
+		return this.users.values();
 	}
 
 	public List<User> filter(String filter) {
 		String lowerCaseFilter = filter.toLowerCase();
 
-		return users
+		return this.users
 				.values()
 				.stream()
 				.filter(user -> user.getLastName().toLowerCase()
@@ -80,17 +80,17 @@ public class SimpleUserDb {
 	}
 
 	public User findUser(String id) {
-		return users.get(id);
+		return this.users.get(id);
 	}
 
 	public void deleteUser(User user) {
-		users.remove(user.getId());
+		this.users.remove(user.getId());
 	}
 
 	public User insert(User p) {
-		maxId = maxId + 1;
-		p.setId(String.valueOf(maxId));
-		users.put(String.valueOf(maxId), p);
+		this.maxId = this.maxId + 1;
+		p.setId(String.valueOf(this.maxId));
+		this.users.put(String.valueOf(this.maxId), p);
 		return p;
 	}
 

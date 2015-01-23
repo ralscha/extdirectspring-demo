@@ -38,7 +38,7 @@ public class Article {
 	private int user_id;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -46,7 +46,7 @@ public class Article {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -54,7 +54,7 @@ public class Article {
 	}
 
 	public String getBody() {
-		return body;
+		return this.body;
 	}
 
 	public void setBody(String body) {
@@ -63,7 +63,7 @@ public class Article {
 
 	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
 	public LocalDateTime getDate() {
-		return date;
+		return this.date;
 	}
 
 	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
@@ -72,7 +72,7 @@ public class Article {
 	}
 
 	public boolean isPublished() {
-		return published;
+		return this.published;
 	}
 
 	public void setPublished(boolean published) {
@@ -80,7 +80,7 @@ public class Article {
 	}
 
 	public int getUser_id() {
-		return user_id;
+		return this.user_id;
 	}
 
 	public void setUser_id(int user_id) {

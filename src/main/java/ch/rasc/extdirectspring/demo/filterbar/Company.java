@@ -60,40 +60,40 @@ public class Company {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getCompany() {
-		return company;
+		return this.company;
 	}
 
 	public BigDecimal getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public BigDecimal getChange() {
-		return change;
+		return this.change;
 	}
 
 	public BigDecimal getPctChange() {
-		return pctChange;
+		return this.pctChange;
 	}
 
 	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
 	public LocalDate getLastChange() {
-		return lastChange;
+		return this.lastChange;
 	}
 
 	public String getCategory() {
-		return category;
+		return this.category;
 	}
 
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public int getNot_delete() {
-		return not_delete;
+		return this.not_delete;
 	}
 
 }

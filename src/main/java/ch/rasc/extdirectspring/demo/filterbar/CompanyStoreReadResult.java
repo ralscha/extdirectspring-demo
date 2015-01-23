@@ -50,7 +50,7 @@ public class CompanyStoreReadResult extends ExtDirectStoreResult<Company> {
 	}
 
 	public Map<String, Collection<String>> getAutoStores() {
-		return autoStores;
+		return this.autoStores;
 	}
 
 	public void setAutoStores(Map<String, Collection<String>> autoStores) {

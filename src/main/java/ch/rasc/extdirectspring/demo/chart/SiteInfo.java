@@ -43,19 +43,19 @@ public class SiteInfo implements Serializable {
 
 	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
 	public LocalDate getDate() {
-		return date;
+		return this.date;
 	}
 
 	public int getVisits() {
-		return visits;
+		return this.visits;
 	}
 
 	public int getViews() {
-		return views;
+		return this.views;
 	}
 
 	public int getVeins() {
-		return veins;
+		return this.veins;
 	}
 
 }

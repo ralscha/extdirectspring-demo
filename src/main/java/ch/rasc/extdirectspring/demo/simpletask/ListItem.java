@@ -38,7 +38,7 @@ public class ListItem {
 	private List<ListItem> children;
 
 	public Integer getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
@@ -46,7 +46,7 @@ public class ListItem {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -54,7 +54,7 @@ public class ListItem {
 	}
 
 	public Boolean isExpanded() {
-		return expanded;
+		return this.expanded;
 	}
 
 	public void setExpanded(Boolean expanded) {
@@ -62,7 +62,7 @@ public class ListItem {
 	}
 
 	public Boolean isLeaf() {
-		return leaf;
+		return this.leaf;
 	}
 
 	public void setLeaf(Boolean leaf) {
@@ -70,7 +70,7 @@ public class ListItem {
 	}
 
 	public Boolean isLoaded() {
-		return loaded;
+		return this.loaded;
 	}
 
 	public void setLoaded(Boolean loaded) {
@@ -78,7 +78,7 @@ public class ListItem {
 	}
 
 	public List<ListItem> getChildren() {
-		return children;
+		return this.children;
 	}
 
 	public void setChildren(List<ListItem> children) {
@@ -86,7 +86,7 @@ public class ListItem {
 	}
 
 	public Integer getParentId() {
-		return parentId;
+		return this.parentId;
 	}
 
 	public void setParentId(Integer parentId) {
@@ -95,9 +95,9 @@ public class ListItem {
 
 	@Override
 	public String toString() {
-		return "ListItem [id=" + id + ", parentId=" + parentId + ", name=" + name
-				+ ", expanded=" + expanded + ", leaf=" + leaf + ", loaded=" + loaded
-				+ ", children=" + children + "]";
+		return "ListItem [id=" + this.id + ", parentId=" + this.parentId + ", name="
+				+ this.name + ", expanded=" + this.expanded + ", leaf=" + this.leaf
+				+ ", loaded=" + this.loaded + ", children=" + this.children + "]";
 	}
 
 }

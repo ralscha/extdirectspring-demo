@@ -44,7 +44,7 @@ public class StockOHLC {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -52,7 +52,7 @@ public class StockOHLC {
 	}
 
 	public String getCompany() {
-		return company;
+		return this.company;
 	}
 
 	public void setCompany(String company) {
@@ -60,7 +60,7 @@ public class StockOHLC {
 	}
 
 	public LocalDate getTime() {
-		return time;
+		return this.time;
 	}
 
 	public void setTime(LocalDate time) {
@@ -68,7 +68,7 @@ public class StockOHLC {
 	}
 
 	public BigDecimal getOpen() {
-		return open;
+		return this.open;
 	}
 
 	public void setOpen(BigDecimal open) {
@@ -76,7 +76,7 @@ public class StockOHLC {
 	}
 
 	public BigDecimal getHigh() {
-		return high;
+		return this.high;
 	}
 
 	public void setHigh(BigDecimal high) {
@@ -84,7 +84,7 @@ public class StockOHLC {
 	}
 
 	public BigDecimal getLow() {
-		return low;
+		return this.low;
 	}
 
 	public void setLow(BigDecimal low) {
@@ -92,7 +92,7 @@ public class StockOHLC {
 	}
 
 	public BigDecimal getClose() {
-		return close;
+		return this.close;
 	}
 
 	public void setClose(BigDecimal close) {

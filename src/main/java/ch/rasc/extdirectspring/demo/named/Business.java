@@ -21,7 +21,7 @@ public class Business {
 	private String name;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -29,7 +29,7 @@ public class Business {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -38,7 +38,7 @@ public class Business {
 
 	@Override
 	public String toString() {
-		return "Business [id=" + id + ", name=" + name + "]";
+		return "Business [id=" + this.id + ", name=" + this.name + "]";
 	}
 
 }

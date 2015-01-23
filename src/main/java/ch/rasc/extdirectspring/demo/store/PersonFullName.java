@@ -23,7 +23,7 @@ public class PersonFullName {
 	}
 
 	public String getFullName() {
-		return fullName;
+		return this.fullName;
 	}
 
 }

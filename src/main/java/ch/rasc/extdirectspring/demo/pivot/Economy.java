@@ -39,27 +39,27 @@ public class Economy {
 
 	@JsonProperty("e")
 	public String getEconomy() {
-		return economy;
+		return this.economy;
 	}
 
 	@JsonProperty("r")
 	public String getRegion() {
-		return region;
+		return this.region;
 	}
 
 	@JsonProperty("y")
 	public int getYear() {
-		return year;
+		return this.year;
 	}
 
 	@JsonProperty("p")
 	public int getProcedures() {
-		return procedures;
+		return this.procedures;
 	}
 
 	@JsonProperty("t")
 	public int getTime() {
-		return time;
+		return this.time;
 	}
 
 }

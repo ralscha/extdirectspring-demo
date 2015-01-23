@@ -51,7 +51,7 @@ public class Task {
 	}
 
 	public int getProjectId() {
-		return projectId;
+		return this.projectId;
 	}
 
 	public void setProjectId(int projectId) {
@@ -59,7 +59,7 @@ public class Task {
 	}
 
 	public String getProject() {
-		return project;
+		return this.project;
 	}
 
 	public void setProject(String project) {
@@ -67,7 +67,7 @@ public class Task {
 	}
 
 	public int getTaskId() {
-		return taskId;
+		return this.taskId;
 	}
 
 	public void setTaskId(int taskId) {
@@ -75,7 +75,7 @@ public class Task {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
@@ -83,7 +83,7 @@ public class Task {
 	}
 
 	public BigDecimal getEstimate() {
-		return estimate;
+		return this.estimate;
 	}
 
 	public void setEstimate(BigDecimal estimate) {
@@ -91,7 +91,7 @@ public class Task {
 	}
 
 	public BigDecimal getRate() {
-		return rate;
+		return this.rate;
 	}
 
 	public void setRate(BigDecimal rate) {
@@ -100,7 +100,7 @@ public class Task {
 
 	@JsonSerialize(using = MDYLocalDateSerializer.class)
 	public LocalDate getDue() {
-		return due;
+		return this.due;
 	}
 
 	public void setDue(LocalDate due) {

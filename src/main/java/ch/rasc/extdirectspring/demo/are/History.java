@@ -54,24 +54,24 @@ public class History {
 	}
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
 	public LocalDateTime getDate() {
-		return date;
+		return this.date;
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public String getCompanyId() {
-		return companyId;
+		return this.companyId;
 	}
 
 	public Company getCompany() {
-		return company;
+		return this.company;
 	}
 
 }

@@ -31,7 +31,7 @@ public class Friend {
 	private Integer friendCount;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -39,7 +39,7 @@ public class Friend {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -47,7 +47,7 @@ public class Friend {
 	}
 
 	public String getRegistered() {
-		return registered;
+		return this.registered;
 	}
 
 	public void setRegistered(String registered) {
@@ -55,7 +55,7 @@ public class Friend {
 	}
 
 	public Integer getAge() {
-		return age;
+		return this.age;
 	}
 
 	public void setAge(Integer age) {
@@ -63,7 +63,7 @@ public class Friend {
 	}
 
 	public Integer getRating() {
-		return rating;
+		return this.rating;
 	}
 
 	public void setRating(Integer rating) {
@@ -71,7 +71,7 @@ public class Friend {
 	}
 
 	public Integer getPostCount() {
-		return postCount;
+		return this.postCount;
 	}
 
 	public void setPostCount(Integer postCount) {
@@ -79,7 +79,7 @@ public class Friend {
 	}
 
 	public Integer getFriendCount() {
-		return friendCount;
+		return this.friendCount;
 	}
 
 	public void setFriendCount(Integer friendCount) {

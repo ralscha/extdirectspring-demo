@@ -40,7 +40,7 @@ public class Book {
 	private String description;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -48,7 +48,7 @@ public class Book {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -56,7 +56,7 @@ public class Book {
 	}
 
 	public String getPublisher() {
-		return publisher;
+		return this.publisher;
 	}
 
 	public void setPublisher(String publisher) {
@@ -64,23 +64,23 @@ public class Book {
 	}
 
 	public String getISBN10() {
-		return ISBN10;
+		return this.ISBN10;
 	}
 
 	public void setISBN10(String iSBN10) {
-		ISBN10 = iSBN10;
+		this.ISBN10 = iSBN10;
 	}
 
 	public String getISBN13() {
-		return ISBN13;
+		return this.ISBN13;
 	}
 
 	public void setISBN13(String iSBN13) {
-		ISBN13 = iSBN13;
+		this.ISBN13 = iSBN13;
 	}
 
 	public String getLink() {
-		return link;
+		return this.link;
 	}
 
 	public void setLink(String link) {
@@ -88,7 +88,7 @@ public class Book {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {

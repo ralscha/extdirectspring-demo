@@ -54,7 +54,8 @@ public class CarouselService {
 
 		List<CarouselPicture> pictures = new ArrayList<>();
 
-		for (SyndEntry entry : feedCache.getFeedInfo(RSS_URL).getSyndFeed().getEntries()) {
+		for (SyndEntry entry : this.feedCache.getFeedInfo(RSS_URL).getSyndFeed()
+				.getEntries()) {
 			CarouselPicture pic = new CarouselPicture();
 			pic.setId(entry.getUri());
 			pic.setAuthor(entry.getAuthor());

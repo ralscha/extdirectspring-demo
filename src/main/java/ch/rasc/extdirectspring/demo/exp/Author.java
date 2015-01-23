@@ -30,7 +30,7 @@ public class Author {
 	private String lastName;
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -38,7 +38,7 @@ public class Author {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -46,7 +46,7 @@ public class Author {
 	}
 
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	public void setLastName(String lastName) {
@@ -54,7 +54,7 @@ public class Author {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 }

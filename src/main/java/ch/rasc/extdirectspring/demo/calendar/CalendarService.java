@@ -41,23 +41,25 @@ public class CalendarService {
 			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
 			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
-		return eventDb.getEvents(startDate, endDate);
+		return this.eventDb.getEvents(startDate, endDate);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")
 	public List<Event> create(List<Event> events) {
-		return events.stream().map(e -> eventDb.insert(e)).collect(Collectors.toList());
+		return events.stream().map(e -> this.eventDb.insert(e))
+				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")
 	public List<Event> update(List<Event> events) {
-		return events.stream().map(e -> eventDb.update(e)).collect(Collectors.toList());
+		return events.stream().map(e -> this.eventDb.update(e))
+				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "calendar")
 	public void destroy(List<Event> events) {
 		for (Event event : events) {
-			eventDb.delete(event);
+			this.eventDb.delete(event);
 		}
 	}
 

@@ -44,13 +44,13 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public List<Person> load(ExtDirectStoreReadRequest request) {
-		return dataBean.findPersons(request.getQuery());
+		return this.dataBean.findPersons(request.getQuery());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public ExtDirectStoreResult<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
 
-		List<Person> persons = dataBean.findPersons(request.getQuery());
+		List<Person> persons = this.dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
 
 		Comparator<Person> comparator = null;
@@ -96,7 +96,7 @@ public class PersonAction {
 		List<Person> insertedPersons = new ArrayList<>();
 
 		for (Person newPerson : newPersons) {
-			dataBean.insert(newPerson);
+			this.dataBean.insert(newPerson);
 			insertedPersons.add(newPerson);
 		}
 
@@ -109,7 +109,7 @@ public class PersonAction {
 		List<Person> updatedRecords = new ArrayList<>();
 
 		for (Person modifiedPerson : modifiedPersons) {
-			Person p = dataBean.findPerson(modifiedPerson.getId());
+			Person p = this.dataBean.findPerson(modifiedPerson.getId());
 			if (p != null) {
 				p.update(modifiedPerson);
 				updatedRecords.add(p);
@@ -124,7 +124,7 @@ public class PersonAction {
 		List<Integer> deletedPersonsId = new ArrayList<>();
 
 		for (Integer id : destroyIds) {
-			dataBean.deletePerson(id);
+			this.dataBean.deletePerson(id);
 			deletedPersonsId.add(id);
 		}
 
@@ -133,7 +133,7 @@ public class PersonAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
 	public Set<State> getStates() {
-		return dataBean.findPersons(null).stream().map(p -> new State(p.getState()))
+		return this.dataBean.findPersons(null).stream().map(p -> new State(p.getState()))
 				.collect(Collectors.toSet());
 	}
 
@@ -141,7 +141,7 @@ public class PersonAction {
 	public ExtDirectStoreResult<PersonFullName> loadPersonFullName(
 			ExtDirectStoreReadRequest request) {
 
-		List<Person> persons = dataBean.findPersons(null);
+		List<Person> persons = this.dataBean.findPersons(null);
 		int totalSize = persons.size();
 
 		Stream<Person> personsStream = persons.stream().sorted(
@@ -186,7 +186,7 @@ public class PersonAction {
 	public ExtDirectStoreResult<PersonFullNameCity> loadPersonFullNameCity(
 			ExtDirectStoreReadRequest request) {
 
-		List<Person> persons = dataBean.findPersons(null);
+		List<Person> persons = this.dataBean.findPersons(null);
 		int totalSize = persons.size();
 
 		Stream<Person> personsStream = persons.stream().sorted(
@@ -238,7 +238,7 @@ public class PersonAction {
 	public ExtDirectStoreResult<Person> loadPersonEverything(
 			ExtDirectStoreReadRequest request) {
 
-		List<Person> persons = dataBean.findPersons(request.getQuery());
+		List<Person> persons = this.dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
 
 		Comparator<Person> comparator;

@@ -47,14 +47,14 @@ public class Person4Action {
 		System.out.println("table->" + table.orElse(null));
 		System.out.println("no->" + no.orElse(null));
 		System.out.println("optional->" + optional);
-		List<Person> persons = dataBean.findPersons(request.getQuery());
+		List<Person> persons = this.dataBean.findPersons(request.getQuery());
 		return persons.subList(0, Math.min(50, persons.size()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
 	public ExtDirectStoreResult<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
 
-		List<Person> persons = dataBean.findPersons(request.getQuery());
+		List<Person> persons = this.dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
 
 		Stream<Person> personsStream = persons.stream();
@@ -77,7 +77,7 @@ public class Person4Action {
 	public List<Person> create(List<Person> newPersons,
 			@MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
-		return newPersons.stream().map(p -> dataBean.insert(p))
+		return newPersons.stream().map(p -> this.dataBean.insert(p))
 				.collect(Collectors.toList());
 	}
 
@@ -86,7 +86,7 @@ public class Person4Action {
 			@MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
 		return modifiedPersons.stream().map(person -> {
-			Person p = dataBean.findPerson(person.getId());
+			Person p = this.dataBean.findPerson(person.getId());
 			if (p != null) {
 				p.update(person);
 				return p;
@@ -100,14 +100,14 @@ public class Person4Action {
 	public void destroy(List<Person> destroyPersons, @MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
 		for (Person person : destroyPersons) {
-			dataBean.deletePerson(person);
+			this.dataBean.deletePerson(person);
 		}
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
 	public Set<State> getStates() {
-		return dataBean.findPersons(null).stream().map(Person::getState).map(State::new)
-				.collect(Collectors.toSet());
+		return this.dataBean.findPersons(null).stream().map(Person::getState)
+				.map(State::new).collect(Collectors.toSet());
 	}
 
 }

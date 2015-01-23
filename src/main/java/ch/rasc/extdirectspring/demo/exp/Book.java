@@ -46,11 +46,11 @@ public class Book {
 	private List<Author> authors;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -58,7 +58,7 @@ public class Book {
 	}
 
 	public String getPublisher() {
-		return publisher;
+		return this.publisher;
 	}
 
 	public void setPublisher(String publisher) {
@@ -66,7 +66,7 @@ public class Book {
 	}
 
 	public String getIsbn() {
-		return isbn;
+		return this.isbn;
 	}
 
 	public void setIsbn(String isbn) {
@@ -75,7 +75,7 @@ public class Book {
 
 	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
 	public LocalDate getPublishDate() {
-		return publishDate;
+		return this.publishDate;
 	}
 
 	public void setPublishDate(LocalDate publishDate) {
@@ -83,7 +83,7 @@ public class Book {
 	}
 
 	public int getNumberOfPages() {
-		return numberOfPages;
+		return this.numberOfPages;
 	}
 
 	public void setNumberOfPages(int numberOfPages) {
@@ -91,7 +91,7 @@ public class Book {
 	}
 
 	public boolean isRead() {
-		return read;
+		return this.read;
 	}
 
 	public void setRead(boolean read) {
@@ -99,7 +99,7 @@ public class Book {
 	}
 
 	public List<Author> getAuthors() {
-		return authors;
+		return this.authors;
 	}
 
 	public void setAuthors(List<Author> authors) {

@@ -49,7 +49,7 @@ public class Order {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -57,7 +57,7 @@ public class Order {
 	}
 
 	public LocalDate getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(LocalDate date) {
@@ -65,7 +65,7 @@ public class Order {
 	}
 
 	public Boolean getShipped() {
-		return shipped;
+		return this.shipped;
 	}
 
 	public void setShipped(Boolean shipped) {
@@ -73,7 +73,7 @@ public class Order {
 	}
 
 	public Integer getCustomerId() {
-		return customerId;
+		return this.customerId;
 	}
 
 	public void setCustomerId(Integer customerId) {
@@ -82,8 +82,8 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", date=" + date + ", shipped=" + shipped
-				+ ", customerId=" + customerId + "]";
+		return "Order [id=" + this.id + ", date=" + this.date + ", shipped="
+				+ this.shipped + ", customerId=" + this.customerId + "]";
 	}
 
 }

@@ -33,17 +33,17 @@ public class NotesDb {
 
 	public void addOrUpdate(Note note) {
 		if (note.getId() == null || note.getId() < 0) {
-			int id = lastId.incrementAndGet();
+			int id = this.lastId.incrementAndGet();
 			note.setId(id);
-			map.put(id, note);
+			this.map.put(id, note);
 		}
 		else {
-			map.put(note.getId(), note);
+			this.map.put(note.getId(), note);
 		}
 	}
 
 	public void delete(Note note) {
-		map.remove(note.getId());
+		this.map.remove(note.getId());
 	}
 
 	@PostConstruct
@@ -68,6 +68,6 @@ public class NotesDb {
 	}
 
 	public Collection<Note> readAll() {
-		return map.values();
+		return this.map.values();
 	}
 }

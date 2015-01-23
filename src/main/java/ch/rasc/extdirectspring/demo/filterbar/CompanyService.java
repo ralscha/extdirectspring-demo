@@ -221,15 +221,15 @@ public class CompanyService {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
-				return company.getId() == value.intValue();
+				return company.getId() == this.value.intValue();
 			case GREATER_THAN_OR_EQUAL:
-				return company.getId() >= value.intValue();
+				return company.getId() >= this.value.intValue();
 			case LESS_THAN_OR_EQUAL:
-				return company.getId() <= value.intValue();
+				return company.getId() <= this.value.intValue();
 			case NOT_EQUAL:
-				return company.getId() != value.intValue();
+				return company.getId() != this.value.intValue();
 			}
 			return false;
 		}
@@ -246,8 +246,8 @@ public class CompanyService {
 
 		@Override
 		public boolean test(Company company) {
-			return company.getCountry() == null && values.contains(empty)
-					|| values.contains(company.getCountry());
+			return company.getCountry() == null && this.values.contains(empty)
+					|| this.values.contains(company.getCountry());
 		}
 	}
 
@@ -262,8 +262,8 @@ public class CompanyService {
 
 		@Override
 		public boolean test(Company company) {
-			return company.getCategory() == null && values.contains(empty)
-					|| values.contains(company.getCategory());
+			return company.getCategory() == null && this.values.contains(empty)
+					|| this.values.contains(company.getCategory());
 		}
 	}
 
@@ -280,9 +280,9 @@ public class CompanyService {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			BigDecimal v = new BigDecimal(value.toString()).setScale(2,
+			BigDecimal v = new BigDecimal(this.value.toString()).setScale(2,
 					RoundingMode.HALF_UP);
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
 				return company.getPrice().compareTo(v) == 0;
 			case GREATER_THAN_OR_EQUAL:
@@ -311,9 +311,9 @@ public class CompanyService {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			BigDecimal v = new BigDecimal(value.toString()).setScale(2,
+			BigDecimal v = new BigDecimal(this.value.toString()).setScale(2,
 					RoundingMode.HALF_UP);
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
 				return company.getChange().compareTo(v) == 0;
 			case GREATER_THAN_OR_EQUAL:
@@ -340,9 +340,9 @@ public class CompanyService {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			BigDecimal v = new BigDecimal(value.toString()).setScale(2,
+			BigDecimal v = new BigDecimal(this.value.toString()).setScale(2,
 					RoundingMode.HALF_UP);
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
 				return company.getPctChange().compareTo(v) == 0;
 			case GREATER_THAN_OR_EQUAL:
@@ -369,15 +369,15 @@ public class CompanyService {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (comparison) {
+			switch (this.comparison) {
 			case EQUAL:
-				return company.getLastChange().compareTo(value) == 0;
+				return company.getLastChange().compareTo(this.value) == 0;
 			case GREATER_THAN_OR_EQUAL:
-				return company.getLastChange().compareTo(value) > 0;
+				return company.getLastChange().compareTo(this.value) > 0;
 			case LESS_THAN_OR_EQUAL:
-				return company.getLastChange().compareTo(value) < 0;
+				return company.getLastChange().compareTo(this.value) < 0;
 			case NOT_EQUAL:
-				return company.getLastChange().compareTo(value) != 0;
+				return company.getLastChange().compareTo(this.value) != 0;
 			}
 			return false;
 		}

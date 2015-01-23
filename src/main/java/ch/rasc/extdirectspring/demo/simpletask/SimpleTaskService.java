@@ -36,24 +36,24 @@ public class SimpleTaskService {
 
 	@ExtDirectMethod(group = "simple-task")
 	public void saveDefaultReminderTime(String value) {
-		defaultReminderTime = value;
+		this.defaultReminderTime = value;
 	}
 
 	@ExtDirectMethod(group = "simple-task")
 	public String readDefaultReminderTime() {
-		return defaultReminderTime;
+		return this.defaultReminderTime;
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "simple-task")
 	public Collection<Task> read() {
-		return DB.values();
+		return this.DB.values();
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simple-task")
 	public List<Task> create(List<Task> newTasks) {
 		newTasks.stream().forEach(newTask -> {
-			newTask.setId(MAX_ID.getAndIncrement());
-			DB.put(newTask.getId(), newTask);
+			newTask.setId(this.MAX_ID.getAndIncrement());
+			this.DB.put(newTask.getId(), newTask);
 		});
 		return newTasks;
 	}
@@ -61,7 +61,7 @@ public class SimpleTaskService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simple-task")
 	public List<Task> update(List<Task> updatedTasks) {
 		updatedTasks.stream().forEach(updatedTask -> {
-			Task li = DB.get(updatedTask.getId());
+			Task li = this.DB.get(updatedTask.getId());
 			if (updatedTask.getTitle() != null) {
 				li.setTitle(updatedTask.getTitle());
 			}
@@ -86,7 +86,7 @@ public class SimpleTaskService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simple-task")
 	public void destroy(List<Task> destroyedTasks) {
-		destroyedTasks.stream().map(Task::getId).forEach(DB::remove);
+		destroyedTasks.stream().map(Task::getId).forEach(this.DB::remove);
 	}
 
 }

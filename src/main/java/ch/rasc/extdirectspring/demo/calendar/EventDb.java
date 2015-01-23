@@ -38,7 +38,7 @@ public class EventDb {
 
 	@PostConstruct
 	public void populateData() {
-		events = new ConcurrentHashMap<>();
+		this.events = new ConcurrentHashMap<>();
 
 		Event event = new Event();
 		event.setId(1001);
@@ -49,7 +49,7 @@ public class EventDb {
 		event.setEndDate(LocalDateTime.now().minusDays(10).withHour(15).withMinute(0)
 				.withSecond(0));
 		event.setNotes("Have fun");
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1002);
@@ -61,7 +61,7 @@ public class EventDb {
 		event.setUrl("http://chuys.com");
 		event.setNotes("Order the queso");
 		event.setReminder("15");
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1003);
@@ -69,7 +69,7 @@ public class EventDb {
 		event.setTitle("Project due");
 		event.setStartDate(LocalDateTime.now().withHour(15).withMinute(0).withSecond(0));
 		event.setEndDate(LocalDateTime.now().withHour(15).withMinute(0).withSecond(0));
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1004);
@@ -79,7 +79,7 @@ public class EventDb {
 		event.setEndDate(event.getStartDate());
 		event.setNotes("Need to get a gift");
 		event.setAllDay(true);
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1005);
@@ -90,7 +90,7 @@ public class EventDb {
 		event.setEndDate(LocalDateTime.now().plusDays(10).withHour(0).withMinute(0)
 				.minusSeconds(0));
 		event.setAllDay(true);
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1006);
@@ -102,7 +102,7 @@ public class EventDb {
 				.minusSeconds(0));
 		event.setAllDay(true);
 		event.setReminder("2880");
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1007);
@@ -111,7 +111,7 @@ public class EventDb {
 		event.setStartDate(LocalDateTime.now().withHour(9).withMinute(0).withSecond(0));
 		event.setEndDate(LocalDateTime.now().withHour(9).withMinute(30).minusSeconds(0));
 		event.setNotes("Get cash on the way");
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1008);
@@ -122,7 +122,7 @@ public class EventDb {
 		event.setEndDate(LocalDateTime.now().minusDays(28).withHour(0).withMinute(0)
 				.minusSeconds(0));
 		event.setAllDay(true);
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1009);
@@ -134,7 +134,7 @@ public class EventDb {
 				.minusSeconds(0));
 		event.setLocation("ABC Inc.");
 		event.setReminder("60");
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1010);
@@ -145,7 +145,7 @@ public class EventDb {
 		event.setEndDate(LocalDateTime.now().plusDays(3).withHour(0).withMinute(0)
 				.minusSeconds(0));
 		event.setAllDay(true);
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1011);
@@ -157,15 +157,15 @@ public class EventDb {
 				.minusSeconds(0));
 		event.setNotes("Don't forget the tickets!");
 		event.setReminder("60");
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 
-		maxId = new AtomicInteger(1011);
+		this.maxId = new AtomicInteger(1011);
 	}
 
 	public Collection<Event> getEvents(LocalDate startDate, LocalDate endDate) {
 		if (startDate != null && endDate != null) {
 			List<Event> foundEvents = new ArrayList<>();
-			for (Event event : events.values()) {
+			for (Event event : this.events.values()) {
 				if (isOverlapping(startDate, endDate, event.getStartDate().toLocalDate(),
 						event.getEndDate().toLocalDate())) {
 					foundEvents.add(event);
@@ -173,7 +173,7 @@ public class EventDb {
 			}
 			return Collections.unmodifiableList(foundEvents);
 		}
-		return Collections.unmodifiableCollection(events.values());
+		return Collections.unmodifiableCollection(this.events.values());
 	}
 
 	private static boolean isOverlapping(LocalDate start1, LocalDate end1,
@@ -183,18 +183,18 @@ public class EventDb {
 
 	public Event update(Event event) {
 		event.trimToNull();
-		events.put(event.getId(), event);
+		this.events.put(event.getId(), event);
 		return event;
 	}
 
 	public void delete(Event event) {
-		events.remove(event.getId());
+		this.events.remove(event.getId());
 	}
 
 	public Event insert(Event event) {
 		event.trimToNull();
-		event.setId(maxId.incrementAndGet());
-		events.put(event.getId(), event);
+		event.setId(this.maxId.incrementAndGet());
+		this.events.put(event.getId(), event);
 		return event;
 	}
 

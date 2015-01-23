@@ -26,11 +26,11 @@ public class Restaurant {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getCuisine() {
-		return cuisine;
+		return this.cuisine;
 	}
 
 }

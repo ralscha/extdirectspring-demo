@@ -21,7 +21,7 @@ public class UserInfo {
 	private String email;
 
 	public String getFirstname() {
-		return firstname;
+		return this.firstname;
 	}
 
 	public void setFirstname(String firstname) {
@@ -29,7 +29,7 @@ public class UserInfo {
 	}
 
 	public String getLastname() {
-		return lastname;
+		return this.lastname;
 	}
 
 	public void setLastname(String lastname) {
@@ -37,7 +37,7 @@ public class UserInfo {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -46,8 +46,8 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		return "UserInfo [firstname=" + firstname + ", lastname=" + lastname + ", email="
-				+ email + "]";
+		return "UserInfo [firstname=" + this.firstname + ", lastname=" + this.lastname
+				+ ", email=" + this.email + "]";
 	}
 
 }

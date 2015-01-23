@@ -76,32 +76,32 @@ public class Company {
 	}
 
 	public String getCoId() {
-		return coId;
+		return this.coId;
 	}
 
 	public String getCompany() {
-		return company;
+		return this.company;
 	}
 
 	public BigDecimal getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public BigDecimal getChange() {
-		return change;
+		return this.change;
 	}
 
 	public BigDecimal getPctChange() {
-		return pctChange;
+		return this.pctChange;
 	}
 
 	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
 	public LocalDateTime getLastChange() {
-		return lastChange;
+		return this.lastChange;
 	}
 
 	public List<History> getHistory() {
-		return history;
+		return this.history;
 	}
 
 	public void addHistory(History h) {

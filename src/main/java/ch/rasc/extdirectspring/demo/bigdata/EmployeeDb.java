@@ -41,8 +41,8 @@ public class EmployeeDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		employeesStore = new HashMap<>();
-		try (InputStream is = employees.getInputStream()) {
+		this.employeesStore = new HashMap<>();
+		try (InputStream is = this.employees.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
 			List<Employee> emps = om.readValue(is, new TypeReference<List<Employee>>() {
@@ -50,17 +50,17 @@ public class EmployeeDb {
 			});
 
 			for (Employee employee : emps) {
-				employeesStore.put(employee.getEmployeeNo(), employee);
+				this.employeesStore.put(employee.getEmployeeNo(), employee);
 			}
 		}
 	}
 
 	public Stream<Employee> getAll() {
-		return employeesStore.values().stream();
+		return this.employeesStore.values().stream();
 	}
 
 	public Employee findEmployee(String employeeNo) {
-		return employeesStore.get(employeeNo);
+		return this.employeesStore.get(employeeNo);
 	}
 
 }

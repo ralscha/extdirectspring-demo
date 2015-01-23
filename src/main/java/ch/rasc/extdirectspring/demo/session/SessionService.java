@@ -40,95 +40,95 @@ public class SessionService {
 	private final AtomicInteger MAX_ORDER_ID = new AtomicInteger(1);
 
 	SessionService() {
-		Customer customer = new Customer(MAX_CUSTOMER_ID.getAndIncrement(), "Company A",
-				"540-111-1234");
-		CUSTOMER_DB.put(customer.getId(), customer);
+		Customer customer = new Customer(this.MAX_CUSTOMER_ID.getAndIncrement(),
+				"Company A", "540-111-1234");
+		this.CUSTOMER_DB.put(customer.getId(), customer);
 
-		customer = new Customer(MAX_CUSTOMER_ID.getAndIncrement(), "Company B",
+		customer = new Customer(this.MAX_CUSTOMER_ID.getAndIncrement(), "Company B",
 				"650-222-2345");
-		CUSTOMER_DB.put(customer.getId(), customer);
+		this.CUSTOMER_DB.put(customer.getId(), customer);
 
-		customer = new Customer(MAX_CUSTOMER_ID.getAndIncrement(), "Company C",
+		customer = new Customer(this.MAX_CUSTOMER_ID.getAndIncrement(), "Company C",
 				"412-333-3456");
-		CUSTOMER_DB.put(customer.getId(), customer);
+		this.CUSTOMER_DB.put(customer.getId(), customer);
 
-		customer = new Customer(MAX_CUSTOMER_ID.getAndIncrement(), "Company D",
+		customer = new Customer(this.MAX_CUSTOMER_ID.getAndIncrement(), "Company D",
 				"861-444-4567");
-		CUSTOMER_DB.put(customer.getId(), customer);
+		this.CUSTOMER_DB.put(customer.getId(), customer);
 
 		Order order;
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 2, LocalDate.of(2014, 7, 3),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 2,
+				LocalDate.of(2014, 7, 3), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 7, 5),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3,
+				LocalDate.of(2014, 7, 5), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 7, 6),
-				false);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3,
+				LocalDate.of(2014, 7, 6), false);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 7, 9),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1,
+				LocalDate.of(2014, 7, 9), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 7, 13),
-				false);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 7,
+				13), false);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 7, 19),
-				false);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 7,
+				19), false);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 8, 2),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,
+				LocalDate.of(2014, 8, 2), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 2, LocalDate.of(2014, 8, 6),
-				false);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 2,
+				LocalDate.of(2014, 8, 6), false);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 8, 10),
-				false);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 8,
+				10), false);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 8, 13),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 8,
+				13), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 8, 17),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 8,
+				17), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 8, 22),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 8,
+				22), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 8, 25),
-				false);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 8,
+				25), false);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 9, 1),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,
+				LocalDate.of(2014, 9, 1), true);
+		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(MAX_ORDER_ID.getAndIncrement(), 2, LocalDate.of(2014, 9, 5),
-				true);
-		ORDER_DB.put(order.getId(), order);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 2,
+				LocalDate.of(2014, 9, 5), true);
+		this.ORDER_DB.put(order.getId(), order);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "session")
 	public Collection<Customer> customerRead() {
-		return CUSTOMER_DB.values();
+		return this.CUSTOMER_DB.values();
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "session")
 	public List<Customer> customerCreate(List<Customer> newCustomers) {
 		newCustomers.stream().forEach(newCustomer -> {
 			System.out.println(newCustomer);
-			newCustomer.setId(MAX_CUSTOMER_ID.getAndIncrement());
-			CUSTOMER_DB.put(newCustomer.getId(), newCustomer);
+			newCustomer.setId(this.MAX_CUSTOMER_ID.getAndIncrement());
+			this.CUSTOMER_DB.put(newCustomer.getId(), newCustomer);
 		});
 		return newCustomers;
 	}
@@ -137,7 +137,7 @@ public class SessionService {
 	public List<Customer> customerUpdate(List<Customer> modifiedCustomers) {
 		modifiedCustomers.stream().forEach(modifiedCustomer -> {
 			System.out.println(modifiedCustomer);
-			Customer customer = CUSTOMER_DB.get(modifiedCustomer.getId());
+			Customer customer = this.CUSTOMER_DB.get(modifiedCustomer.getId());
 			if (modifiedCustomer.getName() != null) {
 				customer.setName(modifiedCustomer.getName());
 			}
@@ -150,14 +150,14 @@ public class SessionService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "session")
 	public void customerDestroy(List<Customer> destroyCustomers) {
-		destroyCustomers.stream().map(Customer::getId).forEach(CUSTOMER_DB::remove);
+		destroyCustomers.stream().map(Customer::getId).forEach(this.CUSTOMER_DB::remove);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "session")
 	public Collection<Order> orderRead(ExtDirectStoreReadRequest request) {
 		NumericFilter customerIdFilter = request.getFirstFilterForField("customerId");
 		Number customerId = customerIdFilter.getValue();
-		return ORDER_DB.values().stream()
+		return this.ORDER_DB.values().stream()
 				.filter(o -> o.getCustomerId().equals(customerId))
 				.collect(Collectors.toList());
 	}
@@ -166,8 +166,8 @@ public class SessionService {
 	public List<Order> orderCreate(List<Order> newOrders) {
 		newOrders.stream().forEach(newOrder -> {
 			System.out.println(newOrder);
-			newOrder.setId(MAX_ORDER_ID.getAndIncrement());
-			ORDER_DB.put(newOrder.getId(), newOrder);
+			newOrder.setId(this.MAX_ORDER_ID.getAndIncrement());
+			this.ORDER_DB.put(newOrder.getId(), newOrder);
 		});
 		return newOrders;
 	}
@@ -176,7 +176,7 @@ public class SessionService {
 	public List<Order> orderUpdate(List<Order> modifiedOrders) {
 		modifiedOrders.stream().forEach(modifiedOrder -> {
 			System.out.println(modifiedOrder);
-			Order order = ORDER_DB.get(modifiedOrder.getId());
+			Order order = this.ORDER_DB.get(modifiedOrder.getId());
 			if (modifiedOrder.getDate() != null) {
 				order.setDate(modifiedOrder.getDate());
 			}
@@ -189,7 +189,7 @@ public class SessionService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "session")
 	public void orderDestroy(List<Order> destroyOrders) {
-		destroyOrders.stream().map(Order::getId).forEach(ORDER_DB::remove);
+		destroyOrders.stream().map(Order::getId).forEach(this.ORDER_DB::remove);
 	}
 
 }

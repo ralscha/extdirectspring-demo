@@ -43,27 +43,27 @@ public class CarData {
 	}
 
 	public String getManufacturer() {
-		return manufacturer;
+		return this.manufacturer;
 	}
 
 	public String getModel() {
-		return model;
+		return this.model;
 	}
 
 	public int getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public String getWiki() {
-		return wiki;
+		return this.wiki;
 	}
 
 	public String getImg() {
-		return img;
+		return this.img;
 	}
 
 	public List<Quality> getQuality() {
-		return quality;
+		return this.quality;
 	}
 
 }

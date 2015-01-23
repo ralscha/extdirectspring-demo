@@ -47,7 +47,7 @@ public class User {
 	private int height;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -55,7 +55,7 @@ public class User {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -63,7 +63,7 @@ public class User {
 	}
 
 	public String getLogin() {
-		return login;
+		return this.login;
 	}
 
 	public void setLogin(String login) {
@@ -71,7 +71,7 @@ public class User {
 	}
 
 	public LocalDateTime getCreated() {
-		return created;
+		return this.created;
 	}
 
 	public void setCreated(LocalDateTime created) {
@@ -79,7 +79,7 @@ public class User {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -87,7 +87,7 @@ public class User {
 	}
 
 	public Object getAvatar() {
-		return avatar;
+		return this.avatar;
 	}
 
 	public void setAvatar(Object avatar) {
@@ -95,7 +95,7 @@ public class User {
 	}
 
 	public int getWeight() {
-		return weight;
+		return this.weight;
 	}
 
 	public void setWeight(int weight) {
@@ -103,7 +103,7 @@ public class User {
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(int height) {
@@ -112,9 +112,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", login=" + login + ", created="
-				+ created + ", email=" + email + ", avatar=" + avatar + ", weight="
-				+ weight + ", height=" + height + "]";
+		return "User [id=" + this.id + ", name=" + this.name + ", login=" + this.login
+				+ ", created=" + this.created + ", email=" + this.email + ", avatar="
+				+ this.avatar + ", weight=" + this.weight + ", height=" + this.height
+				+ "]";
 	}
 
 }

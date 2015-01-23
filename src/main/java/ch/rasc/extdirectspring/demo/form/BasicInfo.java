@@ -31,7 +31,7 @@ public class BasicInfo {
 	private String email;
 
 	public String getFoo() {
-		return foo;
+		return this.foo;
 	}
 
 	public void setFoo(String foo) {
@@ -39,7 +39,7 @@ public class BasicInfo {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -47,7 +47,7 @@ public class BasicInfo {
 	}
 
 	public String getCompany() {
-		return company;
+		return this.company;
 	}
 
 	public void setCompany(String company) {
@@ -55,7 +55,7 @@ public class BasicInfo {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -64,8 +64,8 @@ public class BasicInfo {
 
 	@Override
 	public String toString() {
-		return "BasicInfo [company=" + company + ", email=" + email + ", foo=" + foo
-				+ ", name=" + name + "]";
+		return "BasicInfo [company=" + this.company + ", email=" + this.email + ", foo="
+				+ this.foo + ", name=" + this.name + "]";
 	}
 
 }

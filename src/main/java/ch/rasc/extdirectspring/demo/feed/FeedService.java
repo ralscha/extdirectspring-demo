@@ -52,34 +52,35 @@ public class FeedService {
 
 		Feed feed = new Feed(UUID.randomUUID().toString(), "Sencha Blog",
 				"http://feeds.feedburner.com/extblog");
-		FEED_DB.put(feed.getId(), feed);
+		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 
 		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forums",
 				"http://sencha.com/forum/external.php?type=RSS2");
-		FEED_DB.put(feed.getId(), feed);
+		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 
 		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forum - Ext 5: Bugs",
 				SENCHA_FORUM_EXT5_BUGS);
-		FEED_DB.put(feed.getId(), feed);
+		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 
 		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forum - Ext 5: Q&A",
 				SENCHA_FORUM_EXT5_QA);
-		FEED_DB.put(feed.getId(), feed);
+		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "feed")
 	public List<Feed> read() {
-		return FEED_DB.values().stream().sorted(Comparator.comparing(Feed::getTitle))
+		return this.FEED_DB.values().stream()
+				.sorted(Comparator.comparing(Feed::getTitle))
 				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "feed")
 	public List<FeedItem> readFeedItem(String feedUrl) throws MalformedURLException {
-		SyndFeedInfo info = feedCache.getFeedInfo(feedUrl);
+		SyndFeedInfo info = this.feedCache.getFeedInfo(feedUrl);
 
 		List<FeedItem> items = new ArrayList<>();
 		int id = 0;
@@ -93,17 +94,17 @@ public class FeedService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "feed")
 	public void destroy(Feed destroyFeed) {
-		Feed feed = FEED_DB.remove(destroyFeed.getId());
-		feedCache.remove(feed.getUrl());
+		Feed feed = this.FEED_DB.remove(destroyFeed.getId());
+		this.feedCache.remove(feed.getUrl());
 	}
 
 	@ExtDirectMethod(group = "feed")
 	public boolean verifyUrl(String feedUrl) {
-		SyndFeed syndFeed = feedCache.add(feedUrl);
+		SyndFeed syndFeed = this.feedCache.add(feedUrl);
 		if (syndFeed != null) {
 			Feed newFeed = new Feed(UUID.randomUUID().toString(), syndFeed.getTitle(),
 					feedUrl);
-			FEED_DB.put(newFeed.getId(), newFeed);
+			this.FEED_DB.put(newFeed.getId(), newFeed);
 			return true;
 		}
 		return false;

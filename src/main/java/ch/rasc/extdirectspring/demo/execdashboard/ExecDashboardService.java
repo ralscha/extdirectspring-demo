@@ -68,21 +68,21 @@ public class ExecDashboardService {
 	private List<Kpi> kpi;
 
 	public ExecDashboardService() throws IOException {
-		readData("aapl", aapl);
-		readData("googl", googl);
-		readData("msft", msft);
+		readData("aapl", this.aapl);
+		readData("googl", this.googl);
+		readData("msft", this.msft);
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS);
 
 		try (InputStream is = new ClassPathResource("news.json").getInputStream()) {
 			List<List<Object>> newsLines = mapper.readValue(is, List.class);
-			news = newsLines.stream().map(News::new).collect(Collectors.toList());
+			this.news = newsLines.stream().map(News::new).collect(Collectors.toList());
 		}
 
 		try (InputStream is = new ClassPathResource("kpi.json").getInputStream()) {
 			List<List<Object>> kpiArrays = mapper.readValue(is, List.class);
-			kpi = kpiArrays.stream().map(Kpi::new).collect(Collectors.toList());
+			this.kpi = kpiArrays.stream().map(Kpi::new).collect(Collectors.toList());
 		}
 	}
 
@@ -112,13 +112,13 @@ public class ExecDashboardService {
 		StringFilter filter = request.getFirstFilterForField("company");
 		if (filter != null && filter.getValue() != null) {
 			if (filter.getValue().equals("AAPL")) {
-				return aapl;
+				return this.aapl;
 			}
 			else if (filter.getValue().equals("GOOGL")) {
-				return googl;
+				return this.googl;
 			}
 			else if (filter.getValue().equals("MSFT")) {
-				return msft;
+				return this.msft;
 			}
 		}
 
@@ -229,14 +229,15 @@ public class ExecDashboardService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "dashboard")
 	public List<News> readNews(ExtDirectStoreReadRequest request) {
 		ListFilter<String> typeFilter = request.getFirstFilterForField("type");
-		return news.stream().filter(n -> typeFilter.getValue().contains(n.getType()))
+		return this.news.stream()
+				.filter(n -> typeFilter.getValue().contains(n.getType()))
 				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "dashboard")
 	public List<Kpi> readKpi(ExtDirectStoreReadRequest request) {
 		StringFilter categoryFilter = request.getFirstFilterForField("category");
-		return kpi.stream()
+		return this.kpi.stream()
 				.filter(k -> categoryFilter.getValue().equals(k.getCategory()))
 				.collect(Collectors.toList());
 	}

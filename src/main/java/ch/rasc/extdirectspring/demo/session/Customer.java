@@ -37,7 +37,7 @@ public class Customer {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -45,7 +45,7 @@ public class Customer {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -53,7 +53,7 @@ public class Customer {
 	}
 
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 
 	public void setPhone(String phone) {
@@ -62,7 +62,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", phone=" + phone + "]";
+		return "Customer [id=" + this.id + ", name=" + this.name + ", phone="
+				+ this.phone + "]";
 	}
 
 }

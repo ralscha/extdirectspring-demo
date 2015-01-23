@@ -43,8 +43,8 @@ public class GridContactDb {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		gridContactStore = new HashMap<>();
-		try (InputStream is = contacts.getInputStream()) {
+		this.gridContactStore = new HashMap<>();
+		try (InputStream is = this.contacts.getInputStream()) {
 
 			ObjectMapper om = new ObjectMapper();
 			List<GridContact> ci = om.readValue(is,
@@ -53,33 +53,33 @@ public class GridContactDb {
 					});
 
 			for (GridContact contact : ci) {
-				gridContactStore.put(contact.getId(), contact);
+				this.gridContactStore.put(contact.getId(), contact);
 			}
 		}
 
-		totalSize = gridContactStore.size();
+		this.totalSize = this.gridContactStore.size();
 	}
 
 	public Stream<GridContact> getAll() {
-		return gridContactStore.values().stream();
+		return this.gridContactStore.values().stream();
 	}
 
 	public int getTotalSize() {
-		return totalSize;
+		return this.totalSize;
 	}
 
 	public void delete(GridContact contact) {
-		gridContactStore.remove(contact.getId());
+		this.gridContactStore.remove(contact.getId());
 	}
 
 	public void addOrUpdate(GridContact contact) {
 		if (contact.getId() <= 0) {
-			int id = gridContactStore.size() + 1;
+			int id = this.gridContactStore.size() + 1;
 			contact.setId(id);
-			gridContactStore.put(id, contact);
+			this.gridContactStore.put(id, contact);
 		}
 		else {
-			gridContactStore.put(contact.getId(), contact);
+			this.gridContactStore.put(contact.getId(), contact);
 		}
 	}
 

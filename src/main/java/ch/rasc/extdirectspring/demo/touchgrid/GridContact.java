@@ -48,7 +48,7 @@ public class GridContact {
 	private List<Friend> friends;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -56,7 +56,7 @@ public class GridContact {
 	}
 
 	public String getGuid() {
-		return guid;
+		return this.guid;
 	}
 
 	public void setGuid(String guid) {
@@ -64,7 +64,7 @@ public class GridContact {
 	}
 
 	public String getPicture() {
-		return picture;
+		return this.picture;
 	}
 
 	public void setPicture(String picture) {
@@ -72,7 +72,7 @@ public class GridContact {
 	}
 
 	public int getAge() {
-		return age;
+		return this.age;
 	}
 
 	public void setAge(int age) {
@@ -80,7 +80,7 @@ public class GridContact {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -88,7 +88,7 @@ public class GridContact {
 	}
 
 	public String getGender() {
-		return gender;
+		return this.gender;
 	}
 
 	public void setGender(String gender) {
@@ -96,7 +96,7 @@ public class GridContact {
 	}
 
 	public String getCompany() {
-		return company;
+		return this.company;
 	}
 
 	public void setCompany(String company) {
@@ -104,7 +104,7 @@ public class GridContact {
 	}
 
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 
 	public void setPhone(String phone) {
@@ -112,7 +112,7 @@ public class GridContact {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -120,7 +120,7 @@ public class GridContact {
 	}
 
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public void setAddress(String address) {
@@ -128,7 +128,7 @@ public class GridContact {
 	}
 
 	public String getAbout() {
-		return about;
+		return this.about;
 	}
 
 	public void setAbout(String about) {
@@ -136,7 +136,7 @@ public class GridContact {
 	}
 
 	public String getRegistered() {
-		return registered;
+		return this.registered;
 	}
 
 	public void setRegistered(String registered) {
@@ -144,7 +144,7 @@ public class GridContact {
 	}
 
 	public Set<String> getTags() {
-		return tags;
+		return this.tags;
 	}
 
 	public void setTags(Set<String> tags) {
@@ -152,7 +152,7 @@ public class GridContact {
 	}
 
 	public List<Friend> getFriends() {
-		return friends;
+		return this.friends;
 	}
 
 	public void setFriends(List<Friend> friends) {
@@ -165,7 +165,7 @@ public class GridContact {
 		private String name;
 
 		public int getId() {
-			return id;
+			return this.id;
 		}
 
 		public void setId(int id) {
@@ -173,7 +173,7 @@ public class GridContact {
 		}
 
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		public void setName(String name) {

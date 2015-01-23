@@ -44,55 +44,55 @@ public class AreaData {
 	public AreaData(String name) {
 		this.name = name;
 
-		data1 = rnd.nextInt(100) + 1;
-		data2 = rnd.nextInt(100) + 1;
-		data3 = rnd.nextInt(100) + 1;
-		data4 = rnd.nextInt(100) + 1;
-		data5 = rnd.nextInt(100) + 1;
-		data6 = rnd.nextInt(100) + 1;
-		data7 = rnd.nextInt(100) + 1;
-		data8 = rnd.nextInt(100) + 1;
-		data9 = rnd.nextInt(100) + 1;
+		this.data1 = rnd.nextInt(100) + 1;
+		this.data2 = rnd.nextInt(100) + 1;
+		this.data3 = rnd.nextInt(100) + 1;
+		this.data4 = rnd.nextInt(100) + 1;
+		this.data5 = rnd.nextInt(100) + 1;
+		this.data6 = rnd.nextInt(100) + 1;
+		this.data7 = rnd.nextInt(100) + 1;
+		this.data8 = rnd.nextInt(100) + 1;
+		this.data9 = rnd.nextInt(100) + 1;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public int getData1() {
-		return data1;
+		return this.data1;
 	}
 
 	public int getData2() {
-		return data2;
+		return this.data2;
 	}
 
 	public int getData3() {
-		return data3;
+		return this.data3;
 	}
 
 	public int getData4() {
-		return data4;
+		return this.data4;
 	}
 
 	public int getData5() {
-		return data5;
+		return this.data5;
 	}
 
 	public int getData6() {
-		return data6;
+		return this.data6;
 	}
 
 	public int getData7() {
-		return data7;
+		return this.data7;
 	}
 
 	public int getData8() {
-		return data8;
+		return this.data8;
 	}
 
 	public int getData9() {
-		return data9;
+		return this.data9;
 	}
 
 }

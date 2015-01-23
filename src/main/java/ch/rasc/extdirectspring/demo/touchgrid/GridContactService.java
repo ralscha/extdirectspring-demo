@@ -38,7 +38,7 @@ public class GridContactService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchgrid")
 	public ExtDirectStoreResult<GridContact> read(ExtDirectStoreReadRequest request) {
 
-		Stream<GridContact> contacts = gridContactDb.getAll();
+		Stream<GridContact> contacts = this.gridContactDb.getAll();
 		Comparator<GridContact> comparator = PropertyComparatorFactory
 				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
@@ -52,7 +52,7 @@ public class GridContactService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "touchgrid")
 	public List<GridContact> update(List<GridContact> updatedContacts) {
 		for (GridContact gridContact : updatedContacts) {
-			gridContactDb.addOrUpdate(gridContact);
+			this.gridContactDb.addOrUpdate(gridContact);
 		}
 		return updatedContacts;
 	}
@@ -60,7 +60,7 @@ public class GridContactService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "touchgrid")
 	public void destroy(List<GridContact> deletedContacts) {
 		for (GridContact gridContact : deletedContacts) {
-			gridContactDb.delete(gridContact);
+			this.gridContactDb.delete(gridContact);
 		}
 	}
 

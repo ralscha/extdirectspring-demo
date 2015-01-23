@@ -26,11 +26,11 @@ public class Quality {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public int getRating() {
-		return rating;
+		return this.rating;
 	}
 
 }

@@ -43,12 +43,12 @@ public class FilterActionImplementation implements FilterActionInterface {
 		int totalSize;
 
 		if (!request.getFilters().isEmpty()) {
-			List<Company> companies = dataBean.findCompanies(request.getFilters());
+			List<Company> companies = this.dataBean.findCompanies(request.getFilters());
 			totalSize = companies.size();
 			companiesStream = companies.stream();
 		}
 		else {
-			Collection<Company> companies = dataBean.findAllCompanies();
+			Collection<Company> companies = this.dataBean.findAllCompanies();
 			totalSize = companies.size();
 			companiesStream = companies.stream();
 		}

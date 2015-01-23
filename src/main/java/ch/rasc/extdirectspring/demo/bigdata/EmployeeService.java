@@ -38,7 +38,7 @@ public class EmployeeService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "bigdata")
 	public List<Employee> read(ExtDirectStoreReadRequest request) {
 
-		Stream<Employee> employees = employeeDb.getAll();
+		Stream<Employee> employees = this.employeeDb.getAll();
 		Comparator<Employee> comparator = PropertyComparatorFactory
 				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
@@ -53,7 +53,7 @@ public class EmployeeService {
 	public List<Employee> update(List<Employee> modifiedEmployees) {
 		List<Employee> updatedRecords = new ArrayList<>();
 		for (Employee modifiedEmployee : modifiedEmployees) {
-			Employee e = employeeDb.findEmployee(modifiedEmployee.getEmployeeNo());
+			Employee e = this.employeeDb.findEmployee(modifiedEmployee.getEmployeeNo());
 			if (e != null) {
 				e.update(modifiedEmployee);
 				updatedRecords.add(e);

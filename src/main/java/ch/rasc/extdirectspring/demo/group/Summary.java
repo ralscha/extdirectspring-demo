@@ -35,7 +35,7 @@ public class Summary {
 	private BigDecimal cost;
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
@@ -43,7 +43,7 @@ public class Summary {
 	}
 
 	public BigDecimal getEstimate() {
-		return estimate;
+		return this.estimate;
 	}
 
 	public void setEstimate(BigDecimal estimate) {
@@ -51,7 +51,7 @@ public class Summary {
 	}
 
 	public BigDecimal getRate() {
-		return rate;
+		return this.rate;
 	}
 
 	public void setRate(BigDecimal rate) {
@@ -60,7 +60,7 @@ public class Summary {
 
 	@JsonSerialize(using = MDYLocalDateSerializer.class)
 	public LocalDate getDue() {
-		return due;
+		return this.due;
 	}
 
 	public void setDue(LocalDate due) {
@@ -68,7 +68,7 @@ public class Summary {
 	}
 
 	public BigDecimal getCost() {
-		return cost;
+		return this.cost;
 	}
 
 	public void setCost(BigDecimal cost) {

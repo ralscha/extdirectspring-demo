@@ -47,16 +47,16 @@ public class RandomDataBean {
 
 	@PostConstruct
 	public void readData() throws IOException {
-		persons = new HashMap<>();
-		try (InputStream is = randomdata.getInputStream();
+		this.persons = new HashMap<>();
+		try (InputStream is = this.randomdata.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is,
 						StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				Person p = new Person(nextLine);
-				persons.put(Integer.valueOf(p.getId()), p);
-				maxId = Math.max(maxId, Integer.parseInt(p.getId()));
+				this.persons.put(Integer.valueOf(p.getId()), p);
+				this.maxId = Math.max(this.maxId, Integer.parseInt(p.getId()));
 			}
 		}
 
@@ -65,37 +65,37 @@ public class RandomDataBean {
 	public List<Person> findPersons(final String query) {
 		if (StringUtils.hasText(query)) {
 			String lowerCaseQuery = query.toLowerCase();
-			return persons
+			return this.persons
 					.values()
 					.stream()
 					.filter(p -> p.getLastName().toLowerCase().startsWith(lowerCaseQuery))
 					.collect(Collectors.toList());
 		}
 
-		return new ArrayList<>(persons.values());
+		return new ArrayList<>(this.persons.values());
 	}
 
 	public Person findPerson(String id) {
-		return persons.get(Integer.valueOf(id));
+		return this.persons.get(Integer.valueOf(id));
 	}
 
 	public void deletePerson(int personId) {
-		persons.remove(personId);
+		this.persons.remove(personId);
 	}
 
 	public void deletePerson(Person person) {
-		persons.remove(Integer.valueOf(person.getId()));
+		this.persons.remove(Integer.valueOf(person.getId()));
 	}
 
 	public Person insert(Person p) {
-		maxId = maxId + 1;
-		p.setId(String.valueOf(maxId));
-		persons.put(maxId, p);
+		this.maxId = this.maxId + 1;
+		p.setId(String.valueOf(this.maxId));
+		this.persons.put(this.maxId, p);
 		return p;
 	}
 
 	public int totalSize() {
-		return persons.size();
+		return this.persons.size();
 	}
 
 }

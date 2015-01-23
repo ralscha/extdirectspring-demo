@@ -52,7 +52,7 @@ public class Sale {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -60,7 +60,7 @@ public class Sale {
 	}
 
 	public String getProduct() {
-		return product;
+		return this.product;
 	}
 
 	public void setProduct(String product) {
@@ -68,7 +68,7 @@ public class Sale {
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city) {
@@ -76,7 +76,7 @@ public class Sale {
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(int quantity) {
@@ -84,7 +84,7 @@ public class Sale {
 	}
 
 	public int getValue() {
-		return value;
+		return this.value;
 	}
 
 	public void setValue(int value) {
@@ -92,7 +92,7 @@ public class Sale {
 	}
 
 	public int getMonth() {
-		return month;
+		return this.month;
 	}
 
 	public void setMonth(int month) {
@@ -100,7 +100,7 @@ public class Sale {
 	}
 
 	public int getQuarter() {
-		return quarter;
+		return this.quarter;
 	}
 
 	public void setQuarter(int quarter) {
@@ -108,7 +108,7 @@ public class Sale {
 	}
 
 	public int getYear() {
-		return year;
+		return this.year;
 	}
 
 	public void setYear(int year) {
@@ -116,7 +116,7 @@ public class Sale {
 	}
 
 	public String getPerson() {
-		return person;
+		return this.person;
 	}
 
 	public void setPerson(String person) {

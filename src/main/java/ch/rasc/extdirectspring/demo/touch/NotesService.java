@@ -43,7 +43,7 @@ public class NotesService {
 	public List<Note> updateNotes(List<Note> updatedNotes) {
 
 		for (Note note : updatedNotes) {
-			notesDb.addOrUpdate(note);
+			this.notesDb.addOrUpdate(note);
 		}
 
 		return updatedNotes;
@@ -51,13 +51,13 @@ public class NotesService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchnote")
 	public Collection<Note> readNotes() {
-		return notesDb.readAll();
+		return this.notesDb.readAll();
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "touchnote")
 	public void destroyNotes(List<Note> deleteIds) {
 		for (Note note : deleteIds) {
-			notesDb.delete(note);
+			this.notesDb.delete(note);
 		}
 	}
 

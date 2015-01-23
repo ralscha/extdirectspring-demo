@@ -47,23 +47,23 @@ public class President {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	public String getMiddleInitial() {
-		return middleInitial;
+		return this.middleInitial;
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getImageUrl() {
-		return imageUrl;
+		return this.imageUrl;
 	}
 
 }

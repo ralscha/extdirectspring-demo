@@ -40,15 +40,15 @@ public class MonthlySales {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public int getYear() {
-		return year;
+		return this.year;
 	}
 
 	public int getJan() {
-		return jan;
+		return this.jan;
 	}
 
 	public void setJan(int jan) {
@@ -56,7 +56,7 @@ public class MonthlySales {
 	}
 
 	public int getFeb() {
-		return feb;
+		return this.feb;
 	}
 
 	public void setFeb(int feb) {
@@ -64,7 +64,7 @@ public class MonthlySales {
 	}
 
 	public int getMar() {
-		return mar;
+		return this.mar;
 	}
 
 	public void setMar(int mar) {
@@ -72,7 +72,7 @@ public class MonthlySales {
 	}
 
 	public int getApr() {
-		return apr;
+		return this.apr;
 	}
 
 	public void setApr(int apr) {
@@ -80,7 +80,7 @@ public class MonthlySales {
 	}
 
 	public int getMay() {
-		return may;
+		return this.may;
 	}
 
 	public void setMay(int may) {
@@ -88,7 +88,7 @@ public class MonthlySales {
 	}
 
 	public int getJun() {
-		return jun;
+		return this.jun;
 	}
 
 	public void setJun(int jun) {
@@ -96,7 +96,7 @@ public class MonthlySales {
 	}
 
 	public int getJul() {
-		return jul;
+		return this.jul;
 	}
 
 	public void setJul(int jul) {
@@ -104,7 +104,7 @@ public class MonthlySales {
 	}
 
 	public int getAug() {
-		return aug;
+		return this.aug;
 	}
 
 	public void setAug(int aug) {
@@ -112,7 +112,7 @@ public class MonthlySales {
 	}
 
 	public int getSep() {
-		return sep;
+		return this.sep;
 	}
 
 	public void setSep(int sep) {
@@ -120,7 +120,7 @@ public class MonthlySales {
 	}
 
 	public int getOct() {
-		return oct;
+		return this.oct;
 	}
 
 	public void setOct(int oct) {
@@ -128,7 +128,7 @@ public class MonthlySales {
 	}
 
 	public int getNov() {
-		return nov;
+		return this.nov;
 	}
 
 	public void setNov(int nov) {
@@ -136,7 +136,7 @@ public class MonthlySales {
 	}
 
 	public int getDec() {
-		return dec;
+		return this.dec;
 	}
 
 	public void setDec(int dec) {

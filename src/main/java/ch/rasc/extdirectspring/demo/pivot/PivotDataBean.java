@@ -43,7 +43,7 @@ public class PivotDataBean {
 	public void readData() throws IOException {
 		List<Sale> builder = new ArrayList<>();
 
-		try (InputStream is = pivotdata.getInputStream();
+		try (InputStream is = this.pivotdata.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
@@ -52,11 +52,11 @@ public class PivotDataBean {
 			}
 		}
 
-		sales = Collections.unmodifiableList(builder);
+		this.sales = Collections.unmodifiableList(builder);
 	}
 
 	public List<Sale> getSalesData() {
-		return sales;
+		return this.sales;
 	}
 
 }

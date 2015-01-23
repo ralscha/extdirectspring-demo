@@ -31,9 +31,9 @@ public class Car extends Resource {
 
 	@JsonProperty("NextScheduledService")
 	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
-	@JsonDeserialize(using = ISO8601LocalDateDeserializer.class)	
+	@JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
 	private final LocalDate nextScheduledService;
-	
+
 	public Car(String id, String name, int seats, LocalDate next) {
 		super(id, name);
 		this.seats = seats;
@@ -41,11 +41,11 @@ public class Car extends Resource {
 	}
 
 	public int getSeats() {
-		return seats;
+		return this.seats;
 	}
 
 	public LocalDate getNextScheduledService() {
-		return nextScheduledService;
+		return this.nextScheduledService;
 	}
 
 }

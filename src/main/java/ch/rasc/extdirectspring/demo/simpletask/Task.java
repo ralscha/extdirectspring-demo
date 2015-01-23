@@ -46,7 +46,7 @@ public class Task {
 	private String note;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -54,7 +54,7 @@ public class Task {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -62,7 +62,7 @@ public class Task {
 	}
 
 	public Integer getList_id() {
-		return list_id;
+		return this.list_id;
 	}
 
 	public void setList_id(Integer list_id) {
@@ -70,7 +70,7 @@ public class Task {
 	}
 
 	public LocalDate getDue() {
-		return due;
+		return this.due;
 	}
 
 	public void setDue(LocalDate due) {
@@ -78,7 +78,7 @@ public class Task {
 	}
 
 	public ZonedDateTime getReminder() {
-		return reminder;
+		return this.reminder;
 	}
 
 	public void setReminder(ZonedDateTime reminder) {
@@ -86,7 +86,7 @@ public class Task {
 	}
 
 	public Boolean getDone() {
-		return done;
+		return this.done;
 	}
 
 	public void setDone(Boolean done) {
@@ -94,7 +94,7 @@ public class Task {
 	}
 
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(String note) {

@@ -68,7 +68,7 @@ public class DeliveryTimeService {
 
 		StringFilter filter;
 
-		Stream<String> stream = actresses.stream();
+		Stream<String> stream = this.actresses.stream();
 		if (StringUtils.hasText(request.getQuery())) {
 			stream = stream.filter(a -> a.toLowerCase().contains(
 					request.getQuery().toLowerCase()));
@@ -85,10 +85,11 @@ public class DeliveryTimeService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
 	public List<ForumPost> readSenchaForum() throws MalformedURLException {
 
-		List<SyndEntry> bugs = feedCache.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_BUGS)
-				.getSyndFeed().getEntries();
-		List<SyndEntry> qas = feedCache.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_QA)
-				.getSyndFeed().getEntries();
+		List<SyndEntry> bugs = this.feedCache
+				.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_BUGS).getSyndFeed()
+				.getEntries();
+		List<SyndEntry> qas = this.feedCache
+				.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_QA).getSyndFeed().getEntries();
 		List<SyndEntry> all = new ArrayList<>();
 		all.addAll(bugs);
 		all.addAll(qas);

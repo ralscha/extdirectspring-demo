@@ -43,7 +43,7 @@ public class TurnoverService {
 		builder.add(new Company("Ripped Gym", 88400));
 		builder.add(new Company("Smith Auto Mechanic", 222980));
 
-		companies = Collections.unmodifiableList(builder);
+		this.companies = Collections.unmodifiableList(builder);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "turnover")
@@ -52,10 +52,11 @@ public class TurnoverService {
 		Comparator<Company> comparator = PropertyComparatorFactory
 				.createComparatorFromSorters(request.getSorters());
 		if (comparator != null) {
-			return companies.stream().sorted(comparator).collect(Collectors.toList());
+			return this.companies.stream().sorted(comparator)
+					.collect(Collectors.toList());
 		}
 
-		return companies;
+		return this.companies;
 	}
 
 }

@@ -33,7 +33,7 @@ public class Note {
 	private String narrative;
 
 	public Integer getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
@@ -42,7 +42,7 @@ public class Note {
 
 	@JsonSerialize(using = DMYLocalDateSerializer.class)
 	public LocalDate getDateCreated() {
-		return dateCreated;
+		return this.dateCreated;
 	}
 
 	@JsonDeserialize(using = DMYLocalDateDeserializer.class)
@@ -51,7 +51,7 @@ public class Note {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -59,7 +59,7 @@ public class Note {
 	}
 
 	public String getNarrative() {
-		return narrative;
+		return this.narrative;
 	}
 
 	public void setNarrative(String narrative) {
@@ -70,7 +70,7 @@ public class Note {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + this.id;
 		return result;
 	}
 
@@ -86,7 +86,7 @@ public class Note {
 			return false;
 		}
 		Note other = (Note) obj;
-		if (id != other.id) {
+		if (this.id != other.id) {
 			return false;
 		}
 		return true;

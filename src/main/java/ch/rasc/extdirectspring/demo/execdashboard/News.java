@@ -30,51 +30,51 @@ public class News {
 
 	public News(List<Object> line) {
 		// id, type, date, time, author, group, image, title, paragraph
-		id = (Integer) line.get(0);
-		type = (String) line.get(1);
-		date = (String) line.get(2);
-		time = (String) line.get(3);
-		author = (String) line.get(4);
-		group = (String) line.get(5);
-		image = (String) line.get(6);
-		title = (String) line.get(7);
-		paragraph = (String) line.get(8);
+		this.id = (Integer) line.get(0);
+		this.type = (String) line.get(1);
+		this.date = (String) line.get(2);
+		this.time = (String) line.get(3);
+		this.author = (String) line.get(4);
+		this.group = (String) line.get(5);
+		this.image = (String) line.get(6);
+		this.title = (String) line.get(7);
+		this.paragraph = (String) line.get(8);
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
 	public String getDate() {
-		return date;
+		return this.date;
 	}
 
 	public String getTime() {
-		return time;
+		return this.time;
 	}
 
 	public String getAuthor() {
-		return author;
+		return this.author;
 	}
 
 	public String getGroup() {
-		return group;
+		return this.group;
 	}
 
 	public String getImage() {
-		return image;
+		return this.image;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getParagraph() {
-		return paragraph;
+		return this.paragraph;
 	}
 
 }

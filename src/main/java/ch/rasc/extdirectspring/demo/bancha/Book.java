@@ -26,7 +26,7 @@ public class Book {
 	private int user_id;
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -34,7 +34,7 @@ public class Book {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -42,7 +42,7 @@ public class Book {
 	}
 
 	public boolean isPublished() {
-		return published;
+		return this.published;
 	}
 
 	public void setPublished(boolean published) {
@@ -50,7 +50,7 @@ public class Book {
 	}
 
 	public int getUser_id() {
-		return user_id;
+		return this.user_id;
 	}
 
 	public void setUser_id(int user_id) {

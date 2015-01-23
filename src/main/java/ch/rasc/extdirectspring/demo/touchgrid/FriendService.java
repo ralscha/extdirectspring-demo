@@ -31,7 +31,7 @@ public class FriendService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchgrid")
 	public Collection<Friend> read() {
-		return friendDb.getAll();
+		return this.friendDb.getAll();
 	}
 
 }

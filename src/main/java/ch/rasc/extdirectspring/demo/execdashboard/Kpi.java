@@ -27,32 +27,32 @@ public class Kpi {
 
 	public Kpi(List<Object> line) {
 		// [0,"clicks", "May 2010", 53.34321776, 100.1152082 ],
-		id = (Integer) line.get(0);
-		category = (String) line.get(1);
-		name = (String) line.get(2);
-		data1 = (BigDecimal) line.get(3);
-		data2 = (BigDecimal) line.get(4);
+		this.id = (Integer) line.get(0);
+		this.category = (String) line.get(1);
+		this.name = (String) line.get(2);
+		this.data1 = (BigDecimal) line.get(3);
+		this.data2 = (BigDecimal) line.get(4);
 
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getCategory() {
-		return category;
+		return this.category;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public BigDecimal getData1() {
-		return data1;
+		return this.data1;
 	}
 
 	public BigDecimal getData2() {
-		return data2;
+		return this.data2;
 	}
 
 }

@@ -31,7 +31,7 @@ public class TodoItem {
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -39,7 +39,7 @@ public class TodoItem {
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public void setText(String text) {
@@ -47,7 +47,7 @@ public class TodoItem {
 	}
 
 	public boolean isComplete() {
-		return complete;
+		return this.complete;
 	}
 
 	public void setComplete(boolean complete) {

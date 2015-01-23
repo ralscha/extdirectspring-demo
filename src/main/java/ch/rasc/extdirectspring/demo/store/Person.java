@@ -64,7 +64,7 @@ public class Person {
 	}
 
 	public String getFullName() {
-		return fullName;
+		return this.fullName;
 	}
 
 	public void setFullName(String fullName) {
@@ -72,7 +72,7 @@ public class Person {
 	}
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id) {
@@ -80,7 +80,7 @@ public class Person {
 	}
 
 	public String getStreet() {
-		return street;
+		return this.street;
 	}
 
 	public void setStreet(String street) {
@@ -88,7 +88,7 @@ public class Person {
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city) {
@@ -96,7 +96,7 @@ public class Person {
 	}
 
 	public String getState() {
-		return state;
+		return this.state;
 	}
 
 	public void setState(String state) {
@@ -104,7 +104,7 @@ public class Person {
 	}
 
 	public String getZip() {
-		return zip;
+		return this.zip;
 	}
 
 	public void setZip(String zip) {
@@ -112,7 +112,7 @@ public class Person {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -120,7 +120,7 @@ public class Person {
 	}
 
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	public void setLastName(String lastName) {
@@ -128,7 +128,7 @@ public class Person {
 	}
 
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public void setCountry(String country) {
@@ -137,10 +137,10 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [fullName=" + fullName + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", id=" + id + ", street=" + street
-				+ ", city=" + city + ", state=" + state + ", zip=" + zip + ", country="
-				+ country + "]";
+		return "Person [fullName=" + this.fullName + ", firstName=" + this.firstName
+				+ ", lastName=" + this.lastName + ", id=" + this.id + ", street="
+				+ this.street + ", city=" + this.city + ", state=" + this.state
+				+ ", zip=" + this.zip + ", country=" + this.country + "]";
 	}
 
 }

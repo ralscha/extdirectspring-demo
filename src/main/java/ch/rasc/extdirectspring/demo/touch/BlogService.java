@@ -46,7 +46,8 @@ public class BlogService {
 	public List<Post> getBlogPosts() throws IllegalArgumentException, IOException {
 		List<Post> posts = new ArrayList<>();
 
-		for (SyndEntry entry : feedCache.getFeedInfo(FEED_URL).getSyndFeed().getEntries()) {
+		for (SyndEntry entry : this.feedCache.getFeedInfo(FEED_URL).getSyndFeed()
+				.getEntries()) {
 
 			Post post = new Post();
 			post.setTitle(entry.getTitle());

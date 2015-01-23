@@ -27,11 +27,11 @@ public class SeasonData {
 	}
 
 	public String getSeason() {
-		return season;
+		return this.season;
 	}
 
 	public int getTotal() {
-		return total;
+		return this.total;
 	}
 
 }

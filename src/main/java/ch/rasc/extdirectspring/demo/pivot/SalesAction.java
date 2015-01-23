@@ -31,7 +31,7 @@ public class SalesAction {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "pivot")
 	public List<Sale> load() {
-		return dataBean.getSalesData();
+		return this.dataBean.getSalesData();
 	}
 
 }

@@ -29,11 +29,11 @@ public class Turnover {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public BigDecimal getTurnover() {
-		return turnover;
+		return this.turnover;
 	}
 
 }

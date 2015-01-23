@@ -60,7 +60,7 @@ public class Event {
 	private String synopsis;
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id) {
@@ -68,7 +68,7 @@ public class Event {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -76,7 +76,7 @@ public class Event {
 	}
 
 	public LocalDateTime getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
 
 	public void setStartDate(LocalDateTime startDate) {
@@ -84,7 +84,7 @@ public class Event {
 	}
 
 	public LocalDateTime getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
 
 	public void setEndDate(LocalDateTime endDate) {
@@ -92,7 +92,7 @@ public class Event {
 	}
 
 	public String getResourceId() {
-		return resourceId;
+		return this.resourceId;
 	}
 
 	public void setResourceId(String resourceId) {
@@ -100,7 +100,7 @@ public class Event {
 	}
 
 	public boolean isResizable() {
-		return resizable;
+		return this.resizable;
 	}
 
 	public void setResizable(boolean resizable) {
@@ -108,7 +108,7 @@ public class Event {
 	}
 
 	public boolean isDraggable() {
-		return draggable;
+		return this.draggable;
 	}
 
 	public void setDraggable(boolean draggable) {
@@ -116,7 +116,7 @@ public class Event {
 	}
 
 	public String getCls() {
-		return cls;
+		return this.cls;
 	}
 
 	public void setCls(String cls) {
@@ -124,7 +124,7 @@ public class Event {
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public void setText(String text) {
@@ -132,7 +132,7 @@ public class Event {
 	}
 
 	public int getDuration() {
-		return duration;
+		return this.duration;
 	}
 
 	public void setDuration(int duration) {
@@ -140,7 +140,7 @@ public class Event {
 	}
 
 	public String getSynopsis() {
-		return synopsis;
+		return this.synopsis;
 	}
 
 	public void setSynopsis(String synopsis) {
@@ -149,10 +149,11 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", resourceId=" + resourceId + ", resizable="
-				+ resizable + ", draggable=" + draggable + ", cls=" + cls + ", text="
-				+ text + ", duration=" + duration + ", synopsis=" + synopsis + "]";
+		return "Event [id=" + this.id + ", name=" + this.name + ", startDate="
+				+ this.startDate + ", endDate=" + this.endDate + ", resourceId="
+				+ this.resourceId + ", resizable=" + this.resizable + ", draggable="
+				+ this.draggable + ", cls=" + this.cls + ", text=" + this.text
+				+ ", duration=" + this.duration + ", synopsis=" + this.synopsis + "]";
 	}
 
 }

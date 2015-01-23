@@ -46,12 +46,12 @@ public class UserService {
 		Stream<User> usersStream;
 		int totalSize;
 		if (filter == null || StringUtils.isEmpty(filter.getValue())) {
-			Collection<User> users = userDb.getAll();
+			Collection<User> users = this.userDb.getAll();
 			totalSize = users.size();
 			usersStream = users.stream();
 		}
 		else {
-			List<User> users = userDb.filter(filter.getValue());
+			List<User> users = this.userDb.filter(filter.getValue());
 			totalSize = users.size();
 			usersStream = users.stream();
 		}
@@ -75,7 +75,7 @@ public class UserService {
 		List<User> insertedUsers = new ArrayList<>();
 
 		for (User newUser : newUsers) {
-			userDb.insert(newUser);
+			this.userDb.insert(newUser);
 			insertedUsers.add(newUser);
 		}
 
@@ -86,7 +86,7 @@ public class UserService {
 	public List<User> update(List<User> modifiedUsers) {
 		List<User> updatedRecords = new ArrayList<>();
 		for (User modifiedUser : modifiedUsers) {
-			User u = userDb.findUser(modifiedUser.getId());
+			User u = this.userDb.findUser(modifiedUser.getId());
 			if (u != null) {
 				u.update(modifiedUser);
 				updatedRecords.add(u);
@@ -98,7 +98,7 @@ public class UserService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")
 	public void destroy(List<User> destroyUsers) {
 		for (User user : destroyUsers) {
-			userDb.deleteUser(user);
+			this.userDb.deleteUser(user);
 		}
 	}
 }

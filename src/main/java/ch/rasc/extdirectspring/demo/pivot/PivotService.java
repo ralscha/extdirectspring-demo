@@ -49,7 +49,7 @@ public class PivotService {
 	public void readData() throws IOException {
 		Map<String, String> builder = new HashMap<>();
 
-		try (InputStream is = countries.getInputStream();
+		try (InputStream is = this.countries.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
 				CSVReader reader = new CSVReader(br, ';')) {
 			String[] nextLine;
@@ -60,7 +60,7 @@ public class PivotService {
 			}
 		}
 
-		countriesMap = Collections.unmodifiableMap(builder);
+		this.countriesMap = Collections.unmodifiableMap(builder);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "pivot")
@@ -69,14 +69,14 @@ public class PivotService {
 
 		List<Economy> builder = new ArrayList<>();
 
-		for (String economy : countriesMap.keySet()) {
+		for (String economy : this.countriesMap.keySet()) {
 
 			for (int i = 0; i < ThreadLocalRandom.current().nextInt(1, 3); i++) {
 				for (int year = 2004; year <= currentYear; year++) {
 					int procedure = ThreadLocalRandom.current().nextInt(21);
 					int time = ThreadLocalRandom.current().nextInt(200);
-					builder.add(new Economy(economy, countriesMap.get(economy), year,
-							procedure, time));
+					builder.add(new Economy(economy, this.countriesMap.get(economy),
+							year, procedure, time));
 				}
 			}
 

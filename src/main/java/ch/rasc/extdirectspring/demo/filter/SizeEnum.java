@@ -25,7 +25,7 @@ public enum SizeEnum {
 	}
 
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	public static SizeEnum find(String label) {

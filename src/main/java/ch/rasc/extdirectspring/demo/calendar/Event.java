@@ -53,12 +53,12 @@ public class Event {
 	private String reminder;
 
 	public void trimToNull() {
-		title = trimToNull(title);
-		location = trimToNull(location);
-		notes = trimToNull(notes);
-		url = trimToNull(url);
-		recurRule = trimToNull(recurRule);
-		reminder = trimToNull(reminder);
+		this.title = trimToNull(this.title);
+		this.location = trimToNull(this.location);
+		this.notes = trimToNull(this.notes);
+		this.url = trimToNull(this.url);
+		this.recurRule = trimToNull(this.recurRule);
+		this.reminder = trimToNull(this.reminder);
 	}
 
 	private final static String trimToNull(String s) {
@@ -73,7 +73,7 @@ public class Event {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -81,7 +81,7 @@ public class Event {
 	}
 
 	public int getCalendarId() {
-		return calendarId;
+		return this.calendarId;
 	}
 
 	public void setCalendarId(int calendarId) {
@@ -89,7 +89,7 @@ public class Event {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -98,7 +98,7 @@ public class Event {
 
 	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
 	public LocalDateTime getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
 
 	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
@@ -108,7 +108,7 @@ public class Event {
 
 	@JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
 	public LocalDateTime getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
 
 	@JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
@@ -117,7 +117,7 @@ public class Event {
 	}
 
 	public String getLocation() {
-		return location;
+		return this.location;
 	}
 
 	public void setLocation(String location) {
@@ -125,7 +125,7 @@ public class Event {
 	}
 
 	public String getNotes() {
-		return notes;
+		return this.notes;
 	}
 
 	public void setNotes(String notes) {
@@ -133,7 +133,7 @@ public class Event {
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	public void setUrl(String url) {
@@ -141,7 +141,7 @@ public class Event {
 	}
 
 	public boolean isAllDay() {
-		return allDay;
+		return this.allDay;
 	}
 
 	public void setAllDay(boolean allDay) {
@@ -149,7 +149,7 @@ public class Event {
 	}
 
 	public String getReminder() {
-		return reminder;
+		return this.reminder;
 	}
 
 	public void setReminder(String reminder) {
@@ -157,7 +157,7 @@ public class Event {
 	}
 
 	public String getRecurRule() {
-		return recurRule;
+		return this.recurRule;
 	}
 
 	public void setRecurRule(String recurRule) {
@@ -166,10 +166,11 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", calendarId=" + calendarId + ", title=" + title
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", location="
-				+ location + ", notes=" + notes + ", url=" + url + ", recurRule="
-				+ recurRule + ", allDay=" + allDay + ", reminder=" + reminder + "]";
+		return "Event [id=" + this.id + ", calendarId=" + this.calendarId + ", title="
+				+ this.title + ", startDate=" + this.startDate + ", endDate="
+				+ this.endDate + ", location=" + this.location + ", notes=" + this.notes
+				+ ", url=" + this.url + ", recurRule=" + this.recurRule + ", allDay="
+				+ this.allDay + ", reminder=" + this.reminder + "]";
 	}
 
 }

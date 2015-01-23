@@ -26,11 +26,11 @@ public class Company {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public int getTurnover() {
-		return turnover;
+		return this.turnover;
 	}
 
 }

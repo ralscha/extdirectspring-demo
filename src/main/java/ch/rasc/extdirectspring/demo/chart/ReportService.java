@@ -36,16 +36,16 @@ public class ReportService {
 					value = "maxRandomValue", defaultValue = "250") int maxRandomValue) {
 
 		return Arrays.asList(
-				new SeasonData("Summer", randomGenerator.nextInt(maxRandomValue
+				new SeasonData("Summer", this.randomGenerator.nextInt(maxRandomValue
 						- minRandomValue)
 						+ minRandomValue),
-				new SeasonData("Fall", randomGenerator.nextInt(maxRandomValue
+				new SeasonData("Fall", this.randomGenerator.nextInt(maxRandomValue
 						- minRandomValue)
 						+ minRandomValue),
-				new SeasonData("Winter", randomGenerator.nextInt(maxRandomValue
+				new SeasonData("Winter", this.randomGenerator.nextInt(maxRandomValue
 						- minRandomValue)
 						+ minRandomValue),
-				new SeasonData("Spring", randomGenerator.nextInt(maxRandomValue
+				new SeasonData("Spring", this.randomGenerator.nextInt(maxRandomValue
 						- minRandomValue)
 						+ minRandomValue));
 	}

@@ -38,15 +38,15 @@ public class Calendar {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
@@ -54,7 +54,7 @@ public class Calendar {
 	}
 
 	public Integer getColor() {
-		return color;
+		return this.color;
 	}
 
 	public void setColor(Integer color) {
@@ -62,7 +62,7 @@ public class Calendar {
 	}
 
 	public Boolean isHidden() {
-		return hidden;
+		return this.hidden;
 	}
 
 	public void setHidden(Boolean hidden) {
