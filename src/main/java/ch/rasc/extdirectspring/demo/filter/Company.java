@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
+import ch.rasc.extdirectspring.demo.util.LocalDateYYSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -30,6 +31,8 @@ public class Company {
 	private BigDecimal price;
 
 	private LocalDate date;
+	
+	private LocalDate dateyy;
 
 	private boolean visible;
 
@@ -66,6 +69,15 @@ public class Company {
 
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+
+	@JsonSerialize(using = LocalDateYYSerializer.class)
+	public LocalDate getDateyy() {
+		return dateyy;
+	}
+
+	public void setDateyy(LocalDate dateyy) {
+		this.dateyy = dateyy;
 	}
 
 	public boolean isVisible() {
