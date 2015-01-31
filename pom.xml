@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.5.0</version>
+	<version>1.5.1</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.5.1-SNAPSHOT</version>
+			<version>1.5.1</version>
 		</dependency>
 
 		<dependency>
@@ -123,7 +123,7 @@
 	</dependencies>
 
 	<repositories>
-
+        <!-- 
 		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -135,7 +135,6 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-        <!-- 
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
