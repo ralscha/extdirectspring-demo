@@ -41,6 +41,9 @@ Ext.define('ChildSessionController', {
     createDialog: function(record) {
         var view = this.getView();
 
+        console.log(Ext.create('Order'));
+        console.log(Ext.create('Customer'));
+        
         this.isEdit = !!record;
         this.dialog = view.add({
             xclass: 'ChildSessionForm',
