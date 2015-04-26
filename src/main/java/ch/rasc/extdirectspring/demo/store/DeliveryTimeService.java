@@ -113,22 +113,23 @@ public class DeliveryTimeService {
 		List<Map<String, Object>> result = new ArrayList<>();
 
 		NumericFilter nf = request.getFirstFilterForField("categoryId");
-		if (nf.getValue().intValue() == 1) {
-			result.add(createMap(1, "Dog"));
-			result.add(createMap(2, "Cat"));
-			result.add(createMap(3, "Horse"));
+		if (nf != null) {
+			if (nf.getValue().intValue() == 1) {
+				result.add(createMap(1, "Dog"));
+				result.add(createMap(2, "Cat"));
+				result.add(createMap(3, "Horse"));
+			}
+			else if (nf.getValue().intValue() == 2) {
+				result.add(createMap(1, "Tennis"));
+				result.add(createMap(2, "Swimming"));
+				result.add(createMap(3, "Basketball"));
+			}
+			else if (nf.getValue().intValue() == 3) {
+				result.add(createMap(1, "Pancakes"));
+				result.add(createMap(2, "Pizza"));
+				result.add(createMap(3, "Chinese"));
+			}
 		}
-		else if (nf.getValue().intValue() == 2) {
-			result.add(createMap(1, "Tennis"));
-			result.add(createMap(2, "Swimming"));
-			result.add(createMap(3, "Basketball"));
-		}
-		else if (nf.getValue().intValue() == 3) {
-			result.add(createMap(1, "Pancakes"));
-			result.add(createMap(2, "Pizza"));
-			result.add(createMap(3, "Chinese"));
-		}
-
 		return result;
 	}
 

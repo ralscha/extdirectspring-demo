@@ -101,6 +101,7 @@ Ext.onReady(function() {
 		queryMode: 'local',
 		listeners: {
 			change: function(cb, newValue) {
+				dependantCB.clearValue();
 				if (!Ext.isEmpty(newValue)) {
 					dependantStore.filter('categoryId', newValue);
 				}
@@ -111,7 +112,7 @@ Ext.onReady(function() {
 		},
 	});
 	
-	Ext.create('Ext.form.field.ComboBox', {
+	var dependantCB = Ext.create('Ext.form.field.ComboBox', {
 		fieldLabel: 'Dependant',
 		renderTo: Ext.getBody(),
 		displayField: 'name',
@@ -139,7 +140,7 @@ Ext.onReady(function() {
 				field: 'actress',
 				store: {
 					remoteFilter: true,
-					autoLoad: false,
+					autoLoad: true,
 					fields: [ 'actress' ],
 					pageSize: 0,
 					proxy: {
