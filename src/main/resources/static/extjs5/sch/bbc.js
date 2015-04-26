@@ -73,8 +73,8 @@ Ext.onReady(function() {
 		headerConfig: {
 			middle: {
 				unit: "HOUR",
-                dateFormat : 'G:i',
-                align      : 'left'
+				dateFormat: 'G:i',
+				align: 'left'
 			}
 		}
 	});
@@ -88,12 +88,12 @@ Ext.onReady(function() {
 		eventStore: programStore,
 		eventBodyTemplate: programTemplate,
 		rowHeight: 70,
-enableHdMenu      : false,
-        tooltipTpl        : new Ext.XTemplate('<span class="radiotip">{[fm.date(values.StartDate, "G:i")]}</span> {synopsis}'),
+		enableHdMenu: false,
+		tooltipTpl: new Ext.XTemplate('<span class="radiotip">{[fm.date(values.StartDate, "G:i")]}</span> {synopsis}'),
 		startDate: start,
 		endDate: end,
-        border            : false,
-        rowLines          : false,
+		border: false,
+		rowLines: false,
 		viewPreset: 'hour',
 		columns: [ {
 			xtype: 'templatecolumn',
@@ -101,7 +101,7 @@ enableHdMenu      : false,
 			align: 'center',
 			width: 150,
 			dataIndex: 'Name',
-			tpl: '<img class="station-img" src="//demo.rasc.ch/resources/bryntum/scheduler-3.0.0-trial/examples/bbc/images/{Id}.png" />'
+			tpl: '<img class="station-img" src="//demo.rasc.ch/resources/bryntum/scheduler-3.0.3-trial/examples/bbc/images/{Id}.png" />'
 		} ],
 		plugins: new Sch.plugin.CurrentTimeLine(),
 		viewConfig: {
