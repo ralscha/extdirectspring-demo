@@ -52,14 +52,13 @@ Ext.onReady(function() {
 		}, {
 			dataIndex: 'company',
 			text: 'Company',
-			id: 'company',
 			flex: 1,
 			filter: {
-	            type: 'string',
-	            itemDefaults: {
-	                emptyText: 'Search for...'
-	            }
-	        }
+				type: 'string',
+				itemDefaults: {
+					emptyText: 'Search for...'
+				}
+			}
 		}, {
 			dataIndex: 'price',
 			text: 'Price',
@@ -68,17 +67,20 @@ Ext.onReady(function() {
 		}, {
 			dataIndex: 'size',
 			text: 'Size',
-			filter: 'list'
+			filter: {
+				type: 'list',				
+				options: [ 'extra small', 'small', 'medium', 'large', 'extra large' ]
+			}
 		}, {
 			xtype: 'datecolumn',
 			dataIndex: 'date',
 			text: 'Date',
 			format: 'Y-m-d',
 			filter: {
-	            type: 'date',
-	            dateFormat: 'm/d/Y',  
-	            active: true
-	        }
+				type: 'date',
+				dateFormat: 'm/d/Y',
+				active: true
+			}
 		}, {
 			dataIndex: 'visible',
 			text: 'Visible',
@@ -110,21 +112,21 @@ Ext.onReady(function() {
 		handler: function() {
 			var data = [];
 
-	        // The actual record filters are placed on the Store.
-	        grid.store.getFilters().each(function (filter) {
-	            data.push(filter.serialize());
-	        });
+			// The actual record filters are placed on the Store.
+			grid.store.getFilters().each(function(filter) {
+				data.push(filter.serialize());
+			});
 
-	        // Pretty it up for presentation
-	        data = Ext.JSON.encodeValue(data, '\n').replace(/^[ ]+/gm, function (s) {
-	            for (var r = '', i = s.length; i--; ) {
-	                r += '&#160;';
-	            }
-	            return r;
-	        });
-	        data = data.replace(/\n/g, '<br>');
+			// Pretty it up for presentation
+			data = Ext.JSON.encodeValue(data, '\n').replace(/^[ ]+/gm, function(s) {
+				for (var r = '', i = s.length; i--;) {
+					r += '&#160;';
+				}
+				return r;
+			});
+			data = data.replace(/\n/g, '<br>');
 
-	        Ext.Msg.alert('Filter Data', data);
+			Ext.Msg.alert('Filter Data', data);
 		}
 	}, {
 		text: 'Clear Filter Data',
