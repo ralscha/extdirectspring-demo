@@ -59,7 +59,7 @@ Ext.define('MonthlySales', {
 		api: {
 			//create: 'spreadsheetService.create',
 			read: 'spreadsheetService.read',
-			update: 'spreadsheetService.update',
+			update: 'spreadsheetService.update'
 			//destroy: 'spreadsheetService.destroy'
 		},
 		writer: {
