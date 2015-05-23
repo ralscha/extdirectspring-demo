@@ -38,9 +38,9 @@ import com.rometools.rome.feed.synd.SyndFeed;
 @Service
 public class FeedService {
 
-	public static final String SENCHA_FORUM_EXT5_QA = "http://www.sencha.com/forum/external.php?type=RSS2&forumids=129";
+	public static final String SENCHA_FORUM_EXT5_QA = "https://www.sencha.com/forum/external.php?type=RSS2&forumids=129";
 
-	public static final String SENCHA_FORUM_EXT5_BUGS = "http://www.sencha.com/forum/external.php?type=RSS2&forumids=130";
+	public static final String SENCHA_FORUM_EXT5_BUGS = "https://www.sencha.com/forum/external.php?type=RSS2&forumids=130";
 
 	private final FeedCache feedCache;
 
@@ -51,12 +51,12 @@ public class FeedService {
 		this.feedCache = feedCache;
 
 		Feed feed = new Feed(UUID.randomUUID().toString(), "Sencha Blog",
-				"http://feeds.feedburner.com/extblog");
+				"http://www.sencha.com/feed/");
 		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 
 		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forums",
-				"http://sencha.com/forum/external.php?type=RSS2");
+				"https://www.sencha.com/forum/external.php?type=RSS2");
 		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 
