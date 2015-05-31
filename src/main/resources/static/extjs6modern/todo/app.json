@@ -1,0 +1,54 @@
+{
+    "name": "Todo",
+
+    "js": [
+        {
+            "path": "//demo.rasc.ch/resources/touch-2.4.1/sencha-touch-all-debug.js"
+        },
+        {
+        	"path": "../../api.js?group=todo",
+        	"update": "delta"
+        },        
+        {
+            "path": "app.js",
+            "update": "delta"
+        }
+    ],
+
+    "css": [
+        {
+            "path": "//demo.rasc.ch/resources/ext-6.0.0.415/build/modern/theme-neptune/resources/theme-neptune-all.css",
+            "update": "delta"
+        },
+        {
+            "path": "resources/css/app.css",
+            "update": "delta"
+        }
+    ],
+
+    "appCache": {
+        "cache": [
+            "index.html"
+        ],
+        "network": [
+            "*"
+        ],
+        "fallback": []
+    },
+
+    /**
+     * Extra resources to be copied along when build
+     */
+    "resources": [
+        "resources/images",
+        "resources/icons",
+        "resources/startup"
+    ],
+
+    "archivePath": "archive",
+
+    "requires": [
+    ],
+
+    "id": "a1a2695d-8aa5-4efc-8cf4-d41cfe9ec6d3"
+}
