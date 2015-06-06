@@ -1,43 +1,42 @@
 Ext.define("Friend", {
 	extend: 'Ext.data.Model',
-	config: {
-		idProperty: 'id',
-		fields: [ {
-			name: 'id',
-			type: 'integer'
-		}, {
-			name: 'name',
-			type: 'string'
-		}, {
-			name: 'registered',
-			type: 'date',
-			dateFormat: 'F jS, Y'
-		}, {
-			name: 'age',
-			type: 'integer'
-		}, {
-			name: 'rating',
-			type: 'integer'
-		}, {
-			name: 'postCount',
-			type: 'integer'
-		}, {
-			name: 'friendCount',
-			type: 'integer'
-		} ],
-		proxy: {
-			type: 'direct',
-			api: {
-				read: 'friendService.read'
-			}
+
+	idProperty: 'id',
+	fields: [ {
+		name: 'id',
+		type: 'integer'
+	}, {
+		name: 'name',
+		type: 'string'
+	}, {
+		name: 'registered',
+		type: 'date',
+		dateFormat: 'F jS, Y'
+	}, {
+		name: 'age',
+		type: 'integer'
+	}, {
+		name: 'rating',
+		type: 'integer'
+	}, {
+		name: 'postCount',
+		type: 'integer'
+	}, {
+		name: 'friendCount',
+		type: 'integer'
+	} ],
+	proxy: {
+		type: 'direct',
+		api: {
+			read: 'friendService.read'
 		}
 	}
+
 });
 
 Ext.application({
 
-	requires: [ 'Ext.data.Store', 'Ext.grid.Grid', 'Ext.grid.HeaderGroup', 'Ext.grid.plugin.ViewOptions', 'Ext.grid.plugin.ColumnResizing',
-			'Ext.grid.plugin.SummaryRow', 'Ext.grid.plugin.PagingToolbar' ],
+	requires: [ 'Ext.data.Store', 'Ext.grid.Grid', 'Ext.grid.HeaderGroup', 'Ext.grid.plugin.ViewOptions', 'Ext.grid.plugin.ColumnResizing', 'Ext.grid.plugin.SummaryRow', 'Ext.grid.plugin.PagingToolbar' ],
 
 	launch: function() {
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);

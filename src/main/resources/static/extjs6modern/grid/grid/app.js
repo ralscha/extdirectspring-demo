@@ -1,69 +1,70 @@
 Ext.define("Contact", {
 	extend: 'Ext.data.Model',
-	config: {
-		idProperty: 'id',
-		fields: [ {
-			name: 'id',
-			type: 'integer'
-		}, {
-			name: 'guid',
-			type: 'string'
-		}, {
-			name: 'picture',
-			type: 'string'
-		}, {
-			name: 'name',
-			type: 'string'
-		}, {
-			name: 'gender',
-			type: 'string'
-		}, {
-			name: 'age',
-			type: 'integer'
-		}, {
-			name: 'company',
-			type: 'string'
-		}, {
-			name: 'email',
-			type: 'string'
-		}, {
-			name: 'address',
-			type: 'string'
-		}, {
-			name: 'about',
-			type: 'string'
-		}, {
-			name: 'registered',
-			type: 'date'
-		} ],
-		proxy: {
-			type: 'direct',
-			api: {
-				create: 'gridContactService.update',
-				read: 'gridContactService.read',
-				update: 'gridContactService.update',
-				destroy: 'gridContactService.destroy'
-			},
-			reader: {
-				rootProperty: 'records'
-			}
+
+	idProperty: 'id',
+	fields: [ {
+		name: 'id',
+		type: 'integer'
+	}, {
+		name: 'guid',
+		type: 'string'
+	}, {
+		name: 'picture',
+		type: 'string'
+	}, {
+		name: 'name',
+		type: 'string'
+	}, {
+		name: 'gender',
+		type: 'string'
+	}, {
+		name: 'age',
+		type: 'integer'
+	}, {
+		name: 'company',
+		type: 'string'
+	}, {
+		name: 'email',
+		type: 'string'
+	}, {
+		name: 'address',
+		type: 'string'
+	}, {
+		name: 'about',
+		type: 'string'
+	}, {
+		name: 'registered',
+		type: 'date'
+	} ],
+	proxy: {
+		type: 'direct',
+		api: {
+			create: 'gridContactService.update',
+			read: 'gridContactService.read',
+			update: 'gridContactService.update',
+			destroy: 'gridContactService.destroy'
+		},
+		reader: {
+			rootProperty: 'records'
 		}
 	}
+
 });
 
 // define the application
 Ext.application({
 
 	// require any components/classes what we will use in our example
-	requires: [ 'Ext.data.Store', 'Ext.grid.Grid', 'Ext.grid.HeaderGroup', 'Ext.grid.plugin.Editable', 'Ext.grid.plugin.ViewOptions',
-			'Ext.grid.plugin.MultiSelection', 'Ext.grid.plugin.PagingToolbar', 'Ext.grid.plugin.ColumnResizing', 'Ext.grid.plugin.SummaryRow' ],
+	requires: [ 'Ext.data.Store', 'Ext.grid.Grid', 'Ext.grid.HeaderGroup', 'Ext.grid.plugin.Editable', 'Ext.grid.plugin.ViewOptions', 'Ext.grid.plugin.MultiSelection', 'Ext.grid.plugin.PagingToolbar', 'Ext.grid.plugin.ColumnResizing', 'Ext.grid.plugin.SummaryRow' ],
 	/**
-	 * The launch method is called when the browser is ready, and the application can launch.
+	 * The launch method is called when the browser is ready, and the application can
+	 * launch.
 	 * 
-	 * Inside our launch method we create the list and show in in the viewport. We get the lists configuration using the getListConfiguration method
-	 * which we defined below.
+	 * Inside our launch method we create the list and show in in the viewport. We get the
+	 * lists configuration using the getListConfiguration method which we defined below.
 	 * 
-	 * If the user is not on a phone, we wrap the list inside a panel which is centered on the page.
+	 * If the user is not on a phone, we wrap the list inside a panel which is centered on
+	 * the page.
 	 */
 	launch: function() {
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
