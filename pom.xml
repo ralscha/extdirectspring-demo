@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>		
-		<version>1.2.3.RELEASE</version>		
+		<version>1.2.4.RELEASE</version>		
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -52,6 +52,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 		<start-class>ch.rasc.extdirectspring.demo.Main</start-class>
+		<jackson.version>2.5.3</jackson.version>
 	</properties>
 
 	<dependencies>
