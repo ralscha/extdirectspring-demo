@@ -2,12 +2,6 @@ Ext.require(['Ext.direct.Manager','Ext.direct.RemotingProvider', 'Ext.data.proxy
 	Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 });
 
-/**
- * This is the output of the Sencha Touch 2.0 Getting Started Guide. It sets up a simple application
- * with Sencha Touch, creating a Tab Panel with 3 tabs - home, blog and contact. The home page just
- * shows html, the blog page uses a nested list to display recent blog posts, and the contact page
- * uses a form to wire up user feedback.
- */
 Ext.application({
     name: 'Sencha',
     requires: ['Ext.tab.Panel','Ext.dataview.NestedList','Ext.TitleBar',
