@@ -32,7 +32,7 @@ import com.rometools.rome.feed.synd.SyndEntry;
 @Service
 public class BlogService {
 
-	private static final String FEED_URL = "http://feeds.feedburner.com/extblog";
+	private static final String FEED_URL = "http://www.sencha.com/feed/";
 
 	private final FeedCache feedCache;
 
