@@ -88,7 +88,9 @@ Ext.application({
 			// autoload the data from the server
 			autoLoad: true
 		});
-
+		
+		var order = 'ASC';
+		
 		return {
 			// give it an xtype of list for the list component
 			xtype: 'list',
@@ -100,7 +102,7 @@ Ext.application({
 			disclosure: true,
 
 			// enable the pull to refresh plugin
-			plugins: 'pullrefresh',
+			//plugins: 'pullrefresh',
 
 			// bind the store to this list
 			store: store,
@@ -112,9 +114,16 @@ Ext.application({
 					xtype: 'button',
 					text: 'Toggle Sort (Remote)',
 					handler: function() {
+					
 						var store = Ext.Viewport.down('list').getStore();
-						store.sort('name', null, 'append');
-						store.load();
+						store.sort('name', order);
+						if (order === 'ASC') {
+							order = 'DESC';
+						}
+						else {
+							order = 'ASC';
+						}
+						//store.load();
 					}
 				} ]
 			} ]
