@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="utf-8">
+<title>Spreadsheet</title>
+<script src="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/include-ext.js"></script>
+<script src="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/options-toolbar.js"></script>
+<script src="../../api-debug.js?group=spreadsheet"></script>
+<script src="MonthlySales.js"></script>
+<script src="SpreadsheetModel.js"></script>
+<script src="SpreadsheetController.js"></script>
+<script src="Spreadsheet.js"></script>
+<script>
+  Ext.onReady(function() {
+    Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+    Ext.create('Spreadsheet', {renderTo: Ext.getBody()});
+  });
+</script>
+</head>
+<body></body>
+</html>

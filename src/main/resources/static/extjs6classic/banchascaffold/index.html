@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="utf-8">
+<title>Bancha Scaffold - Easy ExtJS 5 Prototyping</title>
+<link rel="stylesheet" href="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/example.css" />
+<script src="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/include-ext.js"></script>
+<script src="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/options-toolbar.js"></script>
+<style type="text/css">
+      .icon-add { background-image:url(img/icons/add.png) ! important; }
+      .icon-save { background-image:url(img/icons/disk.png) ! important; }
+      .icon-reset { background-image:url(img/icons/arrow_undo.png) ! important; }
+      .icon-destroy { background-image:url(img/icons/delete.png) ! important; }
+      .icon-upload { background-image:url(img/icons/image_add.png) ! important; }
+      .icon-edit { background-image:url(img/icons/user_edit.png) ! important; }
+</style>
+<script src="../../api-debug.js?group=bancha&actionNs=bancha.remoteStubs&apiNs=Bancha&remotingApiVar=REMOTE_API"></script>
+<script src="bancha-scaffold-production.js"></script>
+<script src="models.js"></script>
+<script src="samples.js"></script>
+	<!-- error handling -->
+	<script>
+	// catch every debug exception thrown from either Ext JS or Bancha
+	Ext.Error.handle = function(err) {
+	    Ext.Msg.alert('Error', err.msg);
+	};
+	</script>
+</head>
+<body>
+  <div id="gridpanel"></div>
+  <div id="paginated-gridpanel"></div>
+  <div id="formpanel"></div>
+  <div id="managementpanel"></div>
+</body>
+</html>

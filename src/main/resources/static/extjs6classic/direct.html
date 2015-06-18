@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ext Direct Generic Remoting</title>
+<link rel="stylesheet" href="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/example.css" />
+<script src="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/include-ext.js"></script>
+<script src="//demo.rasc.ch/resources/ext-6.0.0.415/build/examples/classic/shared/options-toolbar.js"></script>
+<style>
+#logger b {
+	color: #555;
+}
+
+#logger pre {
+	margin: 5px;
+}
+
+#logger p {
+	margin: 0;
+}
+</style>
+
+<script>
+	if (!window.EventSource) {
+		Ext.Loader.loadScript('../eventsource.min.js');
+	}
+</script>
+
+<script src="direct.js"></script>
+<script src="../api-debug.js?group=example"></script>
+
+</head>
+<body>
+	<h1>Ext Direct Generic Remoting</h1>
+
+	<p>
+		Source code: <a href="direct.js">direct.js</a>
+	</p>
+</body>
+</html>

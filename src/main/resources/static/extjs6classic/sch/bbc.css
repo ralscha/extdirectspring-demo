@@ -1,0 +1,98 @@
+body {
+    font-family:arial,tahoma,helvetica,sans-serif;
+}
+
+.x-grid-view {
+    border-bottom-color: transparent !important;
+}
+
+.sch-event {
+	background-image : -moz-linear-gradient(90deg, #ddd, #fff);
+	background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#ddd));
+	border-left-color:#ccc;
+	border-left-color:#ddd;
+	border-top-color:transparent;
+	border-bottom-color:#ccc;
+}
+
+.sch-event-hover {
+	border: 1px solid #555;
+}
+
+.startTime {
+	color: #777;
+	font-weight:bold;
+}
+
+.programName {
+	font-weight:bold;
+	color:#15428B;
+	padding-left:5px;
+}
+
+.radiotip {
+	font-weight:bold;
+	color:#15428B;
+}
+
+.duration {
+	color: #aaa;
+	display:block;
+}
+
+.x-grid-inner-locked .x-grid-row .x-grid-cell-first {
+	background-image : -moz-linear-gradient(-45deg, #dde, #fff);
+	background: -webkit-gradient(linear, left top, right bottom, from(#dde), to(#fff));
+}
+
+.x-grid-td-0 .x-grid-cell-inner {
+	position:relative;
+}
+
+.x-column-header-text {
+	font-weight:bold;
+	font-size:12px;
+	color:#15428B;
+}
+
+.station-img {
+    width:105px;
+}
+
+.sch-timeline {
+	border-left:2px dotted red;
+}
+
+.sch-column-header{
+    border-color: transparent !important;
+}
+
+.x-grid,
+.x-panel-body,
+.x-panel .x-grid-body,
+.sch-column-header,
+.x-column-header,
+.x-grid-header,
+.x-grid-header-ct {
+    background: none transparent;
+}
+
+.sch-schedulerpanel .x-grid-hd-inner {
+    font-size:14px;
+    font-weight:bold;
+    color:Navy;
+    background:transparent !important;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.x-grid-with-row-lines .x-grid-cell {
+    border-color: transparent;
+}
+
+.x-grid-inner-locked .x-grid-view {
+    border-right: none;
+}
+
+.sch-timelineview .x-grid-row td.sch-timetd {
+    border-bottom-color: transparent;
+}
