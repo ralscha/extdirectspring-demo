@@ -2,7 +2,7 @@ Ext.define('ExecDashboard.view.main.Main', {
 	extend: 'Ext.tab.Panel',
 	xtype: 'app-main',
 
-	requires: [ 'Ext.app.bindinspector.Inspector', 'ExecDashboard.view.kpi.Kpi', 'ExecDashboard.view.profitloss.ProfitLoss',
+	requires: [ 'ExecDashboard.view.kpi.Kpi', 'ExecDashboard.view.profitloss.ProfitLoss',
 	            'ExecDashboard.view.companynews.News','ExecDashboard.view.quarterly.Quarterly',
 	            'ExecDashboard.view.main.MainController', 'ExecDashboard.view.main.MainModel' ],
 
