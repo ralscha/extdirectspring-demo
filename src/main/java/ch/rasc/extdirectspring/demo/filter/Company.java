@@ -31,7 +31,7 @@ public class Company {
 	private BigDecimal price;
 
 	private LocalDate date;
-	
+
 	private LocalDate dateyy;
 
 	private boolean visible;
@@ -73,7 +73,7 @@ public class Company {
 
 	@JsonSerialize(using = LocalDateYYSerializer.class)
 	public LocalDate getDateyy() {
-		return dateyy;
+		return this.dateyy;
 	}
 
 	public void setDateyy(LocalDate dateyy) {

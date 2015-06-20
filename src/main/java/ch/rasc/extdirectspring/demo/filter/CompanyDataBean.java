@@ -76,7 +76,7 @@ public class CompanyDataBean {
 				company.setDate(LocalDate.of(rand.nextInt(55) + 1950,
 						rand.nextInt(12) + 1, rand.nextInt(27) + 1));
 				company.setDateyy(LocalDate.of(rand.nextInt(55) + 1950,
-						rand.nextInt(12) + 1, rand.nextInt(27) + 1));				
+						rand.nextInt(12) + 1, rand.nextInt(27) + 1));
 				company.setPrice(new BigDecimal(rand.nextFloat() * 100).setScale(2,
 						RoundingMode.HALF_EVEN));
 				company.setSize(SizeEnum.values()[rand.nextInt(4)]);

@@ -37,7 +37,8 @@ public class ModelController {
 		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS4);
 	}
 
-	@RequestMapping({"/extjs5/simple/app/model/User.js","/extjs6classic/simple/app/model/User.js"})
+	@RequestMapping({ "/extjs5/simple/app/model/User.js",
+			"/extjs6classic/simple/app/model/User.js" })
 	public void user5(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		ModelGenerator.writeModel(request, response, User.class, OutputFormat.EXTJS5,
