@@ -38,6 +38,7 @@ public class TodoService {
 	private final static LongAdder maxId = new LongAdder();
 
 	private final static Map<Long, TodoItem> db = new ConcurrentHashMap<>();
+
 	static {
 		db.put(1L, new TodoItem(1, "Set up alarm to 6am", true));
 		db.put(2L, new TodoItem(2, "Get some rest and sleep well", true));
@@ -59,11 +60,11 @@ public class TodoService {
 		Stream<TodoItem> stream = db.values().stream();
 		if (filter != null) {
 			String filterValue = ((StringFilter) filter).getValue();
-			stream = stream.filter(t -> t.getText().toLowerCase()
-					.contains(filterValue.toLowerCase()));
+			stream = stream.filter(
+					t -> t.getText().toLowerCase().contains(filterValue.toLowerCase()));
 		}
-		return stream.sorted(Comparator.comparing(TodoItem::getId).reversed()).collect(
-				Collectors.toList());
+		return stream.sorted(Comparator.comparing(TodoItem::getId).reversed())
+				.collect(Collectors.toList());
 
 	}
 

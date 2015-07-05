@@ -139,8 +139,8 @@ public class Person {
 	public String toString() {
 		return "Person [fullName=" + this.fullName + ", firstName=" + this.firstName
 				+ ", lastName=" + this.lastName + ", id=" + this.id + ", street="
-				+ this.street + ", city=" + this.city + ", state=" + this.state
-				+ ", zip=" + this.zip + ", country=" + this.country + "]";
+				+ this.street + ", city=" + this.city + ", state=" + this.state + ", zip="
+				+ this.zip + ", country=" + this.country + "]";
 	}
 
 }

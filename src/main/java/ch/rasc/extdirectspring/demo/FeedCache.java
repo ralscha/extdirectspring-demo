@@ -57,7 +57,8 @@ public class FeedCache {
 			FEEDS.put(url, syndFeed);
 			return syndFeed;
 		}
-		catch (FetcherException | IllegalArgumentException | IOException | FeedException e) {
+		catch (FetcherException | IllegalArgumentException | IOException
+				| FeedException e) {
 			e.printStackTrace();
 			return null;
 		}

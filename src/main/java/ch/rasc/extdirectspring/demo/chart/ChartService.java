@@ -56,8 +56,8 @@ public class ChartService {
 			session.setAttribute("siteInfos", siteInfo);
 
 			LocalDate ld = LocalDate.of(2011, 1, 1);
-			siteInfo.add(new SiteInfo(ld, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1, rnd
-					.nextInt(100) + 1));
+			siteInfo.add(new SiteInfo(ld, rnd.nextInt(100) + 1, rnd.nextInt(100) + 1,
+					rnd.nextInt(100) + 1));
 		}
 		else {
 			SiteInfo lastSiteInfo = siteInfo.get(siteInfo.size() - 1);
@@ -93,18 +93,12 @@ public class ChartService {
 		else {
 
 			LocalDate nextDate = lastSiteInfo.getDate().plusDays(1);
-			int nextVisits = Math.min(
-					100,
-					Math.max(lastSiteInfo.getVisits()
-							+ ThreadLocalRandom.current().nextInt(-20, 20), 0));
-			int nextViews = Math.min(
-					100,
-					Math.max(lastSiteInfo.getVisits()
-							+ ThreadLocalRandom.current().nextInt(-10, 10), 0));
-			int nextVeins = Math.min(
-					100,
-					Math.max(lastSiteInfo.getVisits()
-							+ ThreadLocalRandom.current().nextInt(-20, 20), 0));
+			int nextVisits = Math.min(100, Math.max(lastSiteInfo.getVisits()
+					+ ThreadLocalRandom.current().nextInt(-20, 20), 0));
+			int nextViews = Math.min(100, Math.max(lastSiteInfo.getVisits()
+					+ ThreadLocalRandom.current().nextInt(-10, 10), 0));
+			int nextVeins = Math.min(100, Math.max(lastSiteInfo.getVisits()
+					+ ThreadLocalRandom.current().nextInt(-20, 20), 0));
 
 			newSiteInfo = new SiteInfo(nextDate, nextVisits, nextViews, nextVeins);
 		}

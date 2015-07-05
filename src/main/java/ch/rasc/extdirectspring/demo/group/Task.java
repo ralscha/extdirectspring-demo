@@ -18,9 +18,9 @@ package ch.rasc.extdirectspring.demo.group;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import ch.rasc.extdirectspring.demo.util.MDYLocalDateSerializer;
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ch.rasc.extdirectspring.demo.util.MDYLocalDateSerializer;
 
 public class Task {
 

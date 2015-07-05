@@ -17,13 +17,13 @@ package ch.rasc.extdirectspring.demo.sch;
 
 import java.time.LocalDateTime;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 @JsonIgnoreProperties({ "id", "Cls" })
 public class Event {

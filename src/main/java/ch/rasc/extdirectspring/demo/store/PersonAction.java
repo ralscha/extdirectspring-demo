@@ -48,7 +48,8 @@ public class PersonAction {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store")
-	public ExtDirectStoreResult<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<Person> loadWithPaging(
+			ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = this.dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
@@ -83,12 +84,12 @@ public class PersonAction {
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(
-					request.getLimit());
+			personsStream = personsStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors
-				.toList()));
+		return new ExtDirectStoreResult<>(totalSize,
+				personsStream.collect(Collectors.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store")
@@ -144,12 +145,12 @@ public class PersonAction {
 		List<Person> persons = this.dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Stream<Person> personsStream = persons.stream().sorted(
-				Comparator.comparing(Person::getFullName).reversed());
+		Stream<Person> personsStream = persons.stream()
+				.sorted(Comparator.comparing(Person::getFullName).reversed());
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(
-					request.getLimit());
+			personsStream = personsStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 		else {
 			personsStream = personsStream.limit(100);
@@ -189,20 +190,20 @@ public class PersonAction {
 		List<Person> persons = this.dataBean.findPersons(null);
 		int totalSize = persons.size();
 
-		Stream<Person> personsStream = persons.stream().sorted(
-				Comparator.comparing(Person::getCity));
+		Stream<Person> personsStream = persons.stream()
+				.sorted(Comparator.comparing(Person::getCity));
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(
-					request.getLimit());
+			personsStream = personsStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 		else {
 			personsStream = personsStream.limit(50);
 		}
 
 		ExtDirectStoreResult<PersonFullNameCity> response = new ExtDirectStoreResult<>(
-				totalSize, personsStream.map(PersonFullNameCity::new).collect(
-						Collectors.toList()));
+				totalSize,
+				personsStream.map(PersonFullNameCity::new).collect(Collectors.toList()));
 
 		// Send metadata only the first time
 		if (request.getStart() == null || request.getStart() == 0) {
@@ -243,8 +244,8 @@ public class PersonAction {
 
 		Comparator<Person> comparator;
 		if (!request.getSorters().isEmpty()) {
-			comparator = PropertyComparatorFactory.createComparatorFromSorters(request
-					.getSorters());
+			comparator = PropertyComparatorFactory
+					.createComparatorFromSorters(request.getSorters());
 		}
 		else {
 			comparator = Comparator.comparing(Person::getLastName);
@@ -257,8 +258,8 @@ public class PersonAction {
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(
-					request.getLimit());
+			personsStream = personsStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 		else {
 			personsStream = personsStream.limit(60);

@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
-import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-import ch.rasc.extdirectspring.demo.FeedCache;
-
 import com.rometools.fetcher.impl.SyndFeedInfo;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
+
+import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
+import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.rasc.extdirectspring.demo.FeedCache;
 
 @Service
 public class FeedService {
@@ -73,8 +73,7 @@ public class FeedService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "feed")
 	public List<Feed> read() {
-		return this.FEED_DB.values().stream()
-				.sorted(Comparator.comparing(Feed::getTitle))
+		return this.FEED_DB.values().stream().sorted(Comparator.comparing(Feed::getTitle))
 				.collect(Collectors.toList());
 	}
 

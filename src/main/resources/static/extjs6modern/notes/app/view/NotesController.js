@@ -19,7 +19,7 @@ Ext.define('Notes.view.NotesController', {
 		this.showForm();
 	},
 	
-	showForm() {
+	showForm: function() {
 		this.getView().getLayout().getAnimation().setReverse(false);
 		this.getView().setActiveItem(1);
 	},

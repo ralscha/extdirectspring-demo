@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>		
-		<version>1.2.4.RELEASE</version>		
+		<version>1.2.5.RELEASE</version>		
 	</parent>
 
 	<inceptionYear>2010</inceptionYear>
@@ -52,7 +52,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 		<start-class>ch.rasc.extdirectspring.demo.Main</start-class>
-		<jackson.version>2.6.0-rc2</jackson.version>
+		<jackson.version>2.6.0-rc3</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.5.2-SNAPSHOT</version>
+			<version>1.5.2</version>
 		</dependency>
 
 		<dependency>

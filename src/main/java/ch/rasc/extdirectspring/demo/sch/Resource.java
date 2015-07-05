@@ -29,8 +29,8 @@ public class Resource {
 	private final String url;
 
 	public Resource(String id, String name) {
-		this(id, name, String.format("http://www.bbc.co.uk/%s/programmes/schedules.json",
-				id));
+		this(id, name,
+				String.format("http://www.bbc.co.uk/%s/programmes/schedules.json", id));
 	}
 
 	public Resource(String id, String name, String url) {

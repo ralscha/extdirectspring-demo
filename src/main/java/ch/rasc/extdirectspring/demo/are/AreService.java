@@ -91,6 +91,7 @@ public class AreService {
 	}
 
 	private static Map<String, Company> companyDb;
+
 	{
 		Map<String, Company> builder = new HashMap<>();
 
@@ -182,20 +183,20 @@ public class AreService {
 
 			String value = ((StringFilter) filter).getValue().trim().toLowerCase();
 			if (filter.getField().equals("company")) {
-				predicates = predicates.and(c -> c.getCompany().toLowerCase()
-						.startsWith(value));
+				predicates = predicates
+						.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			}
 			else if (filter.getField().equals("price")) {
-				predicates = predicates.and(c -> c.getPrice().compareTo(
-						new BigDecimal(value)) == 0);
+				predicates = predicates
+						.and(c -> c.getPrice().compareTo(new BigDecimal(value)) == 0);
 			}
 			else if (filter.getField().equals("change")) {
-				predicates = predicates.and(c -> c.getChange().compareTo(
-						new BigDecimal(value)) == 0);
+				predicates = predicates
+						.and(c -> c.getChange().compareTo(new BigDecimal(value)) == 0);
 			}
 			else if (filter.getField().equals("pctChange")) {
-				predicates = predicates.and(c -> c.getPctChange().compareTo(
-						new BigDecimal(value)) == 0);
+				predicates = predicates
+						.and(c -> c.getPctChange().compareTo(new BigDecimal(value)) == 0);
 			}
 			else if (filter.getField().equals("lastChange")) {
 				LocalDate localDateValue;

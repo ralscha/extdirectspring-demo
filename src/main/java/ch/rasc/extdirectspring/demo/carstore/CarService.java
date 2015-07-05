@@ -34,33 +34,33 @@ public class CarService {
 		cars.add(new CarData("Porsche", "911", 135000,
 				"//en.wikipedia.org/wiki/Porsche_911",
 				"2004_Porsche_911_Carrera_type_997.jpg", new Quality("overall", 1),
-				new Quality("mechanical", 4), new Quality("powertrain", 2), new Quality(
-						"body", 4), new Quality("interior", 3), new Quality(
-						"accessories", 2)));
+				new Quality("mechanical", 4), new Quality("powertrain", 2),
+				new Quality("body", 4), new Quality("interior", 3),
+				new Quality("accessories", 2)));
 
 		cars.add(new CarData("Nissan", "GT-R", 80000,
 				"//en.wikipedia.org/wiki/Nissan_Gt-r", "250px-Nissan_GT-R.jpg",
-				new Quality("overall", 2), new Quality("mechanical", 3), new Quality(
-						"powertrain", 5), new Quality("body", 4), new Quality("interior",
-						2), new Quality("accessories", 2)));
+				new Quality("overall", 2), new Quality("mechanical", 3),
+				new Quality("powertrain", 5), new Quality("body", 4),
+				new Quality("interior", 2), new Quality("accessories", 2)));
 
 		cars.add(new CarData("BMW", "M3", 60500, "//en.wikipedia.org/wiki/Bmw_m3",
-				"250px-BMW_M3_E92.jpg", new Quality("overall", 3), new Quality(
-						"mechanical", 5), new Quality("powertrain", 3), new Quality(
-						"body", 4), new Quality("interior", 5), new Quality(
-						"accessories", 3)));
+				"250px-BMW_M3_E92.jpg", new Quality("overall", 3),
+				new Quality("mechanical", 5), new Quality("powertrain", 3),
+				new Quality("body", 4), new Quality("interior", 5),
+				new Quality("accessories", 3)));
 
 		cars.add(new CarData("Audi", "S5", 53000,
 				"//en.wikipedia.org/wiki/Audi_S5#Audi_S5", "250px-Audi_S5.jpg",
-				new Quality("overall", 4), new Quality("mechanical", 1), new Quality(
-						"powertrain", 1), new Quality("body", 4), new Quality("interior",
-						1), new Quality("accessories", 5)));
+				new Quality("overall", 4), new Quality("mechanical", 1),
+				new Quality("powertrain", 1), new Quality("body", 4),
+				new Quality("interior", 1), new Quality("accessories", 5)));
 
 		cars.add(new CarData("Audi", "TT", 40000, "//en.wikipedia.org/wiki/Audi_TT",
-				"250px-2007_Audi_TT_Coupe.jpg", new Quality("overall", 5), new Quality(
-						"mechanical", 2), new Quality("powertrain", 2), new Quality(
-						"body", 3), new Quality("interior", 4), new Quality(
-						"accessories", 1)));
+				"250px-2007_Audi_TT_Coupe.jpg", new Quality("overall", 5),
+				new Quality("mechanical", 2), new Quality("powertrain", 2),
+				new Quality("body", 3), new Quality("interior", 4),
+				new Quality("accessories", 1)));
 
 		return Collections.unmodifiableList(cars);
 	}

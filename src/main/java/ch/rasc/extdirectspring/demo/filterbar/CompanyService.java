@@ -77,10 +77,10 @@ public class CompanyService {
 				"0.51", "1.28", "Category 1", "Country 9", 0));
 		builder.add(new Company(11, "Exxon Mobil Corp", "68.1", "-0.43", "-0.64",
 				"Category 1", "Country 1", 0));
-		builder.add(new Company(12, "General Electric Company", "34.14", "-0.08",
-				"-0.23", "Category 2", "Country 200", 0));
-		builder.add(new Company(13, "General Motors Corporation", "30.27", "1.09",
-				"3.74", "Category 1", "Country 1", 0));
+		builder.add(new Company(12, "General Electric Company", "34.14", "-0.08", "-0.23",
+				"Category 2", "Country 200", 0));
+		builder.add(new Company(13, "General Motors Corporation", "30.27", "1.09", "3.74",
+				"Category 1", "Country 1", 0));
 		builder.add(new Company(14, "Hewlett-Packard Co.", "36.53", "-0.03", "-0.08",
 				"Category 4", "Country 1", 1));
 		builder.add(new Company(15, "Honeywell Intl Inc", "38.77", "0.05", "0.13", null,
@@ -166,41 +166,41 @@ public class CompanyService {
 
 			if (filter.getField().equals("id")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates = predicates.and(new IdPredicate(
-						numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new IdPredicate(numericFilter.getComparison(),
+						numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("company")) {
 				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
-				predicates = predicates.and(c -> c.getCompany().toLowerCase()
-						.startsWith(value));
+				predicates = predicates
+						.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			}
 			else if (filter.getField().equals("country")) {
-				predicates = predicates.and(new CountryPredicate(
-						((ListFilter<String>) filter).getValue()));
+				predicates = predicates.and(
+						new CountryPredicate(((ListFilter<String>) filter).getValue()));
 			}
 			else if (filter.getField().equals("category")) {
-				predicates = predicates.and(new CategoryPredicate(
-						((ListFilter<String>) filter).getValue()));
+				predicates = predicates.and(
+						new CategoryPredicate(((ListFilter<String>) filter).getValue()));
 			}
 			else if (filter.getField().equals("price")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates = predicates.and(new PricePredicate(numericFilter
-						.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new PricePredicate(
+						numericFilter.getComparison(), numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("change")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates = predicates.and(new ChangePredicate(numericFilter
-						.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new ChangePredicate(
+						numericFilter.getComparison(), numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("pctChange")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates = predicates.and(new PctChangePredicate(numericFilter
-						.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new PctChangePredicate(
+						numericFilter.getComparison(), numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("lastChange")) {
 				DateFilter dateFilter = (DateFilter) filter;
-				predicates = predicates.and(new LastChangePredicate(dateFilter
-						.getComparison(), dateFilter.getValue()));
+				predicates = predicates.and(new LastChangePredicate(
+						dateFilter.getComparison(), dateFilter.getValue()));
 			}
 		}
 

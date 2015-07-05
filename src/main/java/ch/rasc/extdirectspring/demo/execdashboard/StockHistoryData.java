@@ -35,10 +35,9 @@ public class StockHistoryData {
 		urlVariables.put("type", "m"); // d for day, m for month, y for yearly
 
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate
-				.getForObject(
-						"http://real-chart.finance.yahoo.com/table.csv?s={ticker}&d={toMonth}&e={toDay}&f={toYear}&g={type}&a={fromMonth}&b={fromDay}&c={fromYear}&ignore=.csv",
-						String.class, urlVariables);
+		String result = restTemplate.getForObject(
+				"http://real-chart.finance.yahoo.com/table.csv?s={ticker}&d={toMonth}&e={toDay}&f={toYear}&g={type}&a={fromMonth}&b={fromDay}&c={fromYear}&ignore=.csv",
+				String.class, urlVariables);
 		System.out.println(result);
 
 	}

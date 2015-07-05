@@ -36,8 +36,8 @@ public class UploadController {
 		ExtDirectFormPostResult resp = new ExtDirectFormPostResult(true);
 
 		if (file != null && !file.isEmpty()) {
-			resp.addResultProperty("fileContents", new String(file.getBytes(),
-					StandardCharsets.ISO_8859_1));
+			resp.addResultProperty("fileContents",
+					new String(file.getBytes(), StandardCharsets.ISO_8859_1));
 		}
 		return resp;
 	}

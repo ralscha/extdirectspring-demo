@@ -60,12 +60,12 @@ public class FilterActionImplementation implements FilterActionInterface {
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			companiesStream = companiesStream.skip(request.getStart()).limit(
-					request.getLimit());
+			companiesStream = companiesStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, companiesStream.collect(Collectors
-				.toList()));
+		return new ExtDirectStoreResult<>(totalSize,
+				companiesStream.collect(Collectors.toList()));
 	}
 
 }

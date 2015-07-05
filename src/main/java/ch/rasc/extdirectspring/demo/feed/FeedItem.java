@@ -18,10 +18,10 @@ package ch.rasc.extdirectspring.demo.feed;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rometools.rome.feed.synd.SyndEntry;
+
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
 
 public class FeedItem {
 

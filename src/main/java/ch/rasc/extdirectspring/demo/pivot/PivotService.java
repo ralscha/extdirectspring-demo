@@ -75,8 +75,8 @@ public class PivotService {
 				for (int year = 2004; year <= currentYear; year++) {
 					int procedure = ThreadLocalRandom.current().nextInt(21);
 					int time = ThreadLocalRandom.current().nextInt(200);
-					builder.add(new Economy(economy, this.countriesMap.get(economy),
-							year, procedure, time));
+					builder.add(new Economy(economy, this.countriesMap.get(economy), year,
+							procedure, time));
 				}
 			}
 

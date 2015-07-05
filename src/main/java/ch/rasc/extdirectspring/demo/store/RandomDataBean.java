@@ -49,8 +49,8 @@ public class RandomDataBean {
 	public void readData() throws IOException {
 		this.persons = new HashMap<>();
 		try (InputStream is = this.randomdata.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is,
-						StandardCharsets.UTF_8));
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
@@ -65,9 +65,7 @@ public class RandomDataBean {
 	public List<Person> findPersons(final String query) {
 		if (StringUtils.hasText(query)) {
 			String lowerCaseQuery = query.toLowerCase();
-			return this.persons
-					.values()
-					.stream()
+			return this.persons.values().stream()
 					.filter(p -> p.getLastName().toLowerCase().startsWith(lowerCaseQuery))
 					.collect(Collectors.toList());
 		}

@@ -38,65 +38,46 @@ public class TaskService {
 	private final static LongAdder maxId = new LongAdder();
 
 	private final static Map<Long, Task> db = new ConcurrentHashMap<>();
+
 	static {
 		db.put(1L,
-				new Task(
-						1,
-						"Task 1",
+				new Task(1, "Task 1",
 						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						LocalDate.parse("2013-12-12"), Priority.HIGH));
 		db.put(2L,
-				new Task(
-						2,
-						"Task 2",
+				new Task(2, "Task 2",
 						"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 						LocalDate.parse("2013-12-13"), Priority.HIGH));
 		db.put(3L,
-				new Task(
-						3,
-						"Task 3",
+				new Task(3, "Task 3",
 						"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
 						LocalDate.parse("2013-12-14"), Priority.HIGH));
 		db.put(4L,
-				new Task(
-						4,
-						"Task 4",
+				new Task(4, "Task 4",
 						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						LocalDate.parse("2013-12-11"), Priority.NORMAL));
 		db.put(5L,
-				new Task(
-						5,
-						"Task 5",
+				new Task(5, "Task 5",
 						"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 						LocalDate.parse("2013-12-10"), Priority.NORMAL));
 		db.put(6L,
-				new Task(
-						6,
-						"Task 6",
+				new Task(6, "Task 6",
 						"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
 						LocalDate.parse("2013-12-23"), Priority.NORMAL));
 		db.put(7L,
-				new Task(
-						7,
-						"Task 7",
+				new Task(7, "Task 7",
 						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						LocalDate.parse("2013-12-01"), Priority.NORMAL));
 		db.put(8L,
-				new Task(
-						8,
-						"Task 8",
+				new Task(8, "Task 8",
 						"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 						LocalDate.parse("2013-12-27"), Priority.LOW));
 		db.put(9L,
-				new Task(
-						9,
-						"Task 9",
+				new Task(9, "Task 9",
 						"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
 						LocalDate.parse("2013-12-08"), Priority.LOW));
 		db.put(10L,
-				new Task(
-						10,
-						"Task 10",
+				new Task(10, "Task 10",
 						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						LocalDate.parse("2013-12-25"), Priority.LOW));
 		maxId.add(10);
@@ -113,8 +94,8 @@ public class TaskService {
 			stream = stream.filter(t -> t.getDescription().toLowerCase()
 					.contains(filterValue.toLowerCase()));
 		}
-		return stream.sorted(Comparator.comparing(Task::getId).reversed()).collect(
-				Collectors.toList());
+		return stream.sorted(Comparator.comparing(Task::getId).reversed())
+				.collect(Collectors.toList());
 	}
 
 	@ExtDirectMethod(group = "task", jsonView = JsonViews.ALL.class)

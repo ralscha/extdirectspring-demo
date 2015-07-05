@@ -17,11 +17,11 @@ package ch.rasc.extdirectspring.demo.touch;
 
 import java.time.LocalDate;
 
-import ch.rasc.extdirectspring.demo.util.DMYLocalDateDeserializer;
-import ch.rasc.extdirectspring.demo.util.DMYLocalDateSerializer;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ch.rasc.extdirectspring.demo.util.DMYLocalDateDeserializer;
+import ch.rasc.extdirectspring.demo.util.DMYLocalDateSerializer;
 
 public class Note {
 	private Integer id;

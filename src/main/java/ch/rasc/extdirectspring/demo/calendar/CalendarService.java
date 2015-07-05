@@ -38,8 +38,10 @@ public class CalendarService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "calendar")
 	public Collection<Event> read(
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+			@RequestParam(required = false) @DateTimeFormat(
+					pattern = "yyyy-MM-dd") LocalDate startDate,
+			@RequestParam(required = false) @DateTimeFormat(
+					pattern = "yyyy-MM-dd") LocalDate endDate) {
 
 		return this.eventDb.getEvents(startDate, endDate);
 	}

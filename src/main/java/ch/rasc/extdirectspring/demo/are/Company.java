@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelAssociation;
 import ch.rasc.extclassgenerator.ModelAssociationType;
 import ch.rasc.extclassgenerator.ModelField;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
-
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Model(value = "Are.Company", readMethod = "areService.read", idProperty = "coId")
 public class Company {
@@ -70,8 +70,8 @@ public class Company {
 
 		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(3600)),
 				"Test"));
-		addHistory(new History(this,
-				LocalDateTime.now().minusSeconds(rnd.nextInt(86400)), "Initial"));
+		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(86400)),
+				"Initial"));
 
 	}
 

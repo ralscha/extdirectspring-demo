@@ -73,12 +73,12 @@ public class SessionService {
 				LocalDate.of(2014, 7, 9), true);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 7,
-				13), false);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,
+				LocalDate.of(2014, 7, 13), false);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 7,
-				19), false);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,
+				LocalDate.of(2014, 7, 19), false);
 		this.ORDER_DB.put(order.getId(), order);
 
 		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,
@@ -89,24 +89,24 @@ public class SessionService {
 				LocalDate.of(2014, 8, 6), false);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 8,
-				10), false);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3,
+				LocalDate.of(2014, 8, 10), false);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4, LocalDate.of(2014, 8,
-				13), true);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,
+				LocalDate.of(2014, 8, 13), true);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 8,
-				17), true);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1,
+				LocalDate.of(2014, 8, 17), true);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1, LocalDate.of(2014, 8,
-				22), true);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 1,
+				LocalDate.of(2014, 8, 22), true);
 		this.ORDER_DB.put(order.getId(), order);
 
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3, LocalDate.of(2014, 8,
-				25), false);
+		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3,
+				LocalDate.of(2014, 8, 25), false);
 		this.ORDER_DB.put(order.getId(), order);
 
 		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 4,

@@ -48,8 +48,8 @@ public class SimpleUserDb {
 	public void readData() throws IOException {
 		this.users = new ConcurrentHashMap<>();
 		try (InputStream is = this.userdata.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is,
-						StandardCharsets.UTF_8));
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, '|')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
@@ -67,11 +67,8 @@ public class SimpleUserDb {
 	public List<User> filter(String filter) {
 		String lowerCaseFilter = filter.toLowerCase();
 
-		return this.users
-				.values()
-				.stream()
-				.filter(user -> user.getLastName().toLowerCase()
-						.contains(lowerCaseFilter)
+		return this.users.values().stream()
+				.filter(user -> user.getLastName().toLowerCase().contains(lowerCaseFilter)
 						|| user.getFirstName().toLowerCase().contains(lowerCaseFilter)
 						|| user.getEmail().toLowerCase().contains(lowerCaseFilter)
 						|| user.getCity().toLowerCase().contains(lowerCaseFilter))

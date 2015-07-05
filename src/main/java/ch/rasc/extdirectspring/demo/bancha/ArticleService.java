@@ -80,8 +80,8 @@ public class ArticleService {
 					.limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, resultStream.collect(Collectors
-				.toList()));
+		return new ExtDirectStoreResult<>(totalSize,
+				resultStream.collect(Collectors.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "bancha")

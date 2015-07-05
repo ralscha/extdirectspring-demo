@@ -18,10 +18,10 @@ package ch.rasc.extdirectspring.demo.filter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 import ch.rasc.extdirectspring.demo.util.LocalDateYYSerializer;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class Company {
 	private int id;

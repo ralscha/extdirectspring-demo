@@ -33,10 +33,10 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class BbcService {
@@ -45,12 +45,12 @@ public class BbcService {
 
 	private final static ObjectMapper mapper = new ObjectMapper();
 
-	private final static List<Resource> stations = Arrays.asList(new Resource("radio1",
-			"BBC Radio 1",
-			"http://www.bbc.co.uk/radio1/programmes/schedules/england.json"),
-			new Resource("1xtra", "BBC Radio 1 Xtra"), new Resource("radio2",
-					"BBC Radio 2"), new Resource("radio3", "BBC Radio 3"), new Resource(
-					"radio4", "BBC Radio 4",
+	private final static List<Resource> stations = Arrays.asList(
+			new Resource("radio1", "BBC Radio 1",
+					"http://www.bbc.co.uk/radio1/programmes/schedules/england.json"),
+			new Resource("1xtra", "BBC Radio 1 Xtra"),
+			new Resource("radio2", "BBC Radio 2"), new Resource("radio3", "BBC Radio 3"),
+			new Resource("radio4", "BBC Radio 4",
 					"http://www.bbc.co.uk/radio4/programmes/schedules/fm.json"),
 			new Resource("5live", "BBC Radio 5"));
 
@@ -85,7 +85,8 @@ public class BbcService {
 			Map<String, Object> day = (Map<String, Object>) schedule.get("day");
 			return ((List<Map<String, Object>>) day.get("broadcasts")).stream();
 		}
-		catch (ParseException | InterruptedException | ExecutionException | IOException e) {
+		catch (ParseException | InterruptedException | ExecutionException
+				| IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -100,10 +101,10 @@ public class BbcService {
 
 		Event event = new Event();
 		event.setResourceId(String.valueOf(service.get("key")));
-		event.setStartDate(ZonedDateTime.parse((String) broadcast.get("start"))
-				.toLocalDateTime());
-		event.setEndDate(ZonedDateTime.parse((String) broadcast.get("end"))
-				.toLocalDateTime());
+		event.setStartDate(
+				ZonedDateTime.parse((String) broadcast.get("start")).toLocalDateTime());
+		event.setEndDate(
+				ZonedDateTime.parse((String) broadcast.get("end")).toLocalDateTime());
 		event.setText(String.valueOf(displayTitles.get("title")));
 		event.setDuration((Integer) broadcast.get("duration"));
 		event.setId(String.valueOf(programme.get("pid")));

@@ -97,8 +97,8 @@ public class CompanyDataBean {
 		for (Filter filter : filters) {
 			if (filter.getField().equals("company")) {
 				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
-				predicates = predicates.and(c -> c.getCompany().toLowerCase()
-						.startsWith(value));
+				predicates = predicates
+						.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			}
 			else if (filter.getField().equals("visible")) {
 				boolean flag = ((BooleanFilter) filter).getValue();
@@ -106,19 +106,19 @@ public class CompanyDataBean {
 			}
 			else if (filter.getField().equals("id")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates = predicates.and(new IdPredicate(
-						numericFilter.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new IdPredicate(numericFilter.getComparison(),
+						numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("price")) {
 				NumericFilter numericFilter = (NumericFilter) filter;
-				predicates = predicates.and(new PricePredicate(numericFilter
-						.getComparison(), numericFilter.getValue()));
+				predicates = predicates.and(new PricePredicate(
+						numericFilter.getComparison(), numericFilter.getValue()));
 			}
 			else if (filter.getField().equals("size")) {
 				@SuppressWarnings("unchecked")
 				ListFilter<String> listFilter = (ListFilter<String>) filter;
-				predicates = predicates.and(c -> listFilter.getValue().contains(
-						c.getSize().getLabel()));
+				predicates = predicates
+						.and(c -> listFilter.getValue().contains(c.getSize().getLabel()));
 			}
 			else if (filter.getField().equals("date")) {
 				LocalDate ld;
@@ -190,16 +190,16 @@ public class CompanyDataBean {
 		public boolean test(Company company) {
 			switch (this.comparison) {
 			case EQUAL:
-				return company.getPrice().compareTo(
-						new BigDecimal(this.value.doubleValue()).setScale(2,
+				return company.getPrice()
+						.compareTo(new BigDecimal(this.value.doubleValue()).setScale(2,
 								RoundingMode.HALF_UP)) == 0;
 			case GREATER_THAN:
-				return company.getPrice().compareTo(
-						new BigDecimal(this.value.doubleValue()).setScale(2,
+				return company.getPrice()
+						.compareTo(new BigDecimal(this.value.doubleValue()).setScale(2,
 								RoundingMode.HALF_UP)) > 0;
 			case LESS_THAN:
-				return company.getPrice().compareTo(
-						new BigDecimal(this.value.doubleValue()).setScale(2,
+				return company.getPrice()
+						.compareTo(new BigDecimal(this.value.doubleValue()).setScale(2,
 								RoundingMode.HALF_UP)) < 0;
 			}
 			return false;

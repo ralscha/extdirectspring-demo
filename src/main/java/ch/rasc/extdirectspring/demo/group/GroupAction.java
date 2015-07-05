@@ -42,15 +42,15 @@ public class GroupAction {
 		builder.add(new Task(100, "Ext Forms: Field Anchoring", 112,
 				"Integrate 2.0 Forms with 2.0 Layouts", new BigDecimal(6),
 				new BigDecimal(150), 2010, 7, 24));
-		builder.add(new Task(100, "Ext Forms: Field Anchoring", 113,
-				"Implement AnchorLayout", new BigDecimal(4), new BigDecimal(150), 2010,
-				7, 25));
+		builder.add(
+				new Task(100, "Ext Forms: Field Anchoring", 113, "Implement AnchorLayout",
+						new BigDecimal(4), new BigDecimal(150), 2010, 7, 25));
 		builder.add(new Task(100, "Ext Forms: Field Anchoring", 114,
 				"Add support for multiple types of anchors", new BigDecimal(4),
 				new BigDecimal(150), 2010, 7, 27));
-		builder.add(new Task(100, "Ext Forms: Field Anchoring", 115,
-				"Testing and debugging", new BigDecimal(8), new BigDecimal(0), 2010, 7,
-				29));
+		builder.add(
+				new Task(100, "Ext Forms: Field Anchoring", 115, "Testing and debugging",
+						new BigDecimal(8), new BigDecimal(0), 2010, 7, 29));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 101,
 				"Add required rendering 'hooks' to GridView", new BigDecimal(6),
 				new BigDecimal(100), 2010, 8, 1));
@@ -61,7 +61,8 @@ public class GroupAction {
 				"Extend Store with grouping functionality", new BigDecimal(4),
 				new BigDecimal(100), 2010, 8, 4));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 121,
-				"Default CSS Styling", new BigDecimal(2), new BigDecimal(100), 2010, 8, 5));
+				"Default CSS Styling", new BigDecimal(2), new BigDecimal(100), 2010, 8,
+				5));
 		builder.add(new Task(101, "Ext Grid: Single-level Grouping", 104,
 				"Testing and debugging", new BigDecimal(6), new BigDecimal(100), 2010, 8,
 				6));
@@ -74,12 +75,12 @@ public class GroupAction {
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 107,
 				"Dynamic summary updates in editor grids", new BigDecimal(6),
 				new BigDecimal(125), 2010, 8, 5));
-		builder.add(new Task(102, "Ext Grid: Summary Rows", 108,
-				"Remote summary integration", new BigDecimal(4), new BigDecimal(125),
-				2010, 8, 5));
+		builder.add(
+				new Task(102, "Ext Grid: Summary Rows", 108, "Remote summary integration",
+						new BigDecimal(4), new BigDecimal(125), 2010, 8, 5));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 109,
-				"Summary renderers and calculators", new BigDecimal(4), new BigDecimal(
-						125), 2010, 8, 6));
+				"Summary renderers and calculators", new BigDecimal(4),
+				new BigDecimal(125), 2010, 8, 6));
 		builder.add(new Task(102, "Ext Grid: Summary Rows", 110,
 				"Integrate summaries with GroupingView", new BigDecimal(10),
 				new BigDecimal(125), 2010, 8, 11));
@@ -115,8 +116,8 @@ public class GroupAction {
 				}
 			}
 
-			comparator = PropertyComparatorFactory.createComparatorFromGroups(Collections
-					.singletonList(groupInfo));
+			comparator = PropertyComparatorFactory
+					.createComparatorFromGroups(Collections.singletonList(groupInfo));
 		}
 
 		Comparator<Task> sortComparator = PropertyComparatorFactory

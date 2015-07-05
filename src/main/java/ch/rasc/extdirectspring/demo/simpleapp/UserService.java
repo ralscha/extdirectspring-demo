@@ -66,8 +66,8 @@ public class UserService {
 			usersStream = usersStream.skip(request.getStart()).limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, usersStream.collect(Collectors
-				.toList()), Boolean.TRUE);
+		return new ExtDirectStoreResult<>(totalSize,
+				usersStream.collect(Collectors.toList()), Boolean.TRUE);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "simpleapp")

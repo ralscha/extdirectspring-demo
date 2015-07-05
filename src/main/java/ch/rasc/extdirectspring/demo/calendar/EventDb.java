@@ -96,8 +96,8 @@ public class EventDb {
 		event.setId(1006);
 		event.setCalendarId(3);
 		event.setTitle("School holiday");
-		event.setStartDate(LocalDateTime.now().plusDays(5).withHour(0).withMinute(0)
-				.withSecond(0));
+		event.setStartDate(
+				LocalDateTime.now().plusDays(5).withHour(0).withMinute(0).withSecond(0));
 		event.setEndDate(LocalDateTime.now().plusDays(7).withHour(0).withMinute(0)
 				.minusSeconds(0));
 		event.setAllDay(true);
@@ -140,8 +140,8 @@ public class EventDb {
 		event.setId(1010);
 		event.setCalendarId(3);
 		event.setTitle("Jenny's final exams");
-		event.setStartDate(LocalDateTime.now().minusDays(2).withHour(0).withMinute(0)
-				.withSecond(0));
+		event.setStartDate(
+				LocalDateTime.now().minusDays(2).withHour(0).withMinute(0).withSecond(0));
 		event.setEndDate(LocalDateTime.now().plusDays(3).withHour(0).withMinute(0)
 				.minusSeconds(0));
 		event.setAllDay(true);
@@ -151,8 +151,8 @@ public class EventDb {
 		event.setId(1011);
 		event.setCalendarId(1);
 		event.setTitle("Movie night");
-		event.setStartDate(LocalDateTime.now().plusDays(2).withHour(19).withMinute(0)
-				.withSecond(0));
+		event.setStartDate(
+				LocalDateTime.now().plusDays(2).withHour(19).withMinute(0).withSecond(0));
 		event.setEndDate(LocalDateTime.now().plusDays(3).withHour(23).withMinute(0)
 				.minusSeconds(0));
 		event.setNotes("Don't forget the tickets!");

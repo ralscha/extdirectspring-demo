@@ -19,10 +19,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 
 public class Book {
 

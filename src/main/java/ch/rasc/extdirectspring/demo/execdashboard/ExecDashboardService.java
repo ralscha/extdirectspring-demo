@@ -30,15 +30,15 @@ import java.util.stream.Collectors;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import au.com.bytecode.opencsv.CSVReader;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.filter.ListFilter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ExecDashboardService {
@@ -52,10 +52,9 @@ public class ExecDashboardService {
 			"Non Recurring", "Others", "Total Operating Expenses",
 			"Operating Income or Loss", "Other Income/Expenses", "Earnings",
 			"Interest Expense", "Income Before Tax", "Income Tax Expense",
-			"Minority Interest", "Net Income - Continuing Ops",
-			"Discontinued Operations", "Extraordinary Items", "Accounting Changes",
-			"Other Items", "Net Income", "Preferred Stock Adjustments",
-			"Net Income - Common Shares");
+			"Minority Interest", "Net Income - Continuing Ops", "Discontinued Operations",
+			"Extraordinary Items", "Accounting Changes", "Other Items", "Net Income",
+			"Preferred Stock Adjustments", "Net Income - Common Shares");
 
 	private static final List<String> REGIONS = Arrays.asList("Asia", "Australia",
 			"Central America", "Europe", "Middle East", "North America", "South America",
@@ -129,22 +128,22 @@ public class ExecDashboardService {
 	public List<Map<String, Object>> readStatements() {
 		List<Map<String, Object>> result = new ArrayList<>();
 
-		result.add(createStatement("q4", "QUARTERLY STATEMENT 4 2013",
-				"Q42013Report.pdf", "2013 STATEMENTS", "DECEMBER 20, 2013"));
-		result.add(createStatement("q3", "QUARTERLY STATEMENT 3 2013",
-				"Q32013Report.pdf", "2013 STATEMENTS", "SEPTEMBER 20, 2013"));
-		result.add(createStatement("q2", "QUARTERLY STATEMENT 2 2013",
-				"Q22013Report.pdf", "2013 STATEMENTS", "JUNE 20, 2013"));
-		result.add(createStatement("q1", "QUARTERLY STATEMENT 1 2013",
-				"Q12013Report.pdf", "2013 STATEMENTS", "MARCH 20, 2013"));
-		result.add(createStatement("q4", "QUARTERLY STATEMENT 4 2012",
-				"Q42012Report.pdf", "2012 STATEMENTS", "DECEMBER 20, 2012"));
-		result.add(createStatement("q3", "QUARTERLY STATEMENT 3 2012",
-				"Q32012Report.pdf", "2012 STATEMENTS", "SEPTEMBER 20, 2012"));
-		result.add(createStatement("q2", "QUARTERLY STATEMENT 2 2012",
-				"Q22012Report.pdf", "2012 STATEMENTS", "JUNE 20, 2012"));
-		result.add(createStatement("q1", "QUARTERLY STATEMENT 1 2012",
-				"Q12012Report.pdf", "2012 STATEMENTS", "MARCH 20, 2012"));
+		result.add(createStatement("q4", "QUARTERLY STATEMENT 4 2013", "Q42013Report.pdf",
+				"2013 STATEMENTS", "DECEMBER 20, 2013"));
+		result.add(createStatement("q3", "QUARTERLY STATEMENT 3 2013", "Q32013Report.pdf",
+				"2013 STATEMENTS", "SEPTEMBER 20, 2013"));
+		result.add(createStatement("q2", "QUARTERLY STATEMENT 2 2013", "Q22013Report.pdf",
+				"2013 STATEMENTS", "JUNE 20, 2013"));
+		result.add(createStatement("q1", "QUARTERLY STATEMENT 1 2013", "Q12013Report.pdf",
+				"2013 STATEMENTS", "MARCH 20, 2013"));
+		result.add(createStatement("q4", "QUARTERLY STATEMENT 4 2012", "Q42012Report.pdf",
+				"2012 STATEMENTS", "DECEMBER 20, 2012"));
+		result.add(createStatement("q3", "QUARTERLY STATEMENT 3 2012", "Q32012Report.pdf",
+				"2012 STATEMENTS", "SEPTEMBER 20, 2012"));
+		result.add(createStatement("q2", "QUARTERLY STATEMENT 2 2012", "Q22012Report.pdf",
+				"2012 STATEMENTS", "JUNE 20, 2012"));
+		result.add(createStatement("q1", "QUARTERLY STATEMENT 1 2012", "Q12012Report.pdf",
+				"2012 STATEMENTS", "MARCH 20, 2012"));
 
 		return result;
 	}
@@ -229,8 +228,7 @@ public class ExecDashboardService {
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "dashboard")
 	public List<News> readNews(ExtDirectStoreReadRequest request) {
 		ListFilter<String> typeFilter = request.getFirstFilterForField("type");
-		return this.news.stream()
-				.filter(n -> typeFilter.getValue().contains(n.getType()))
+		return this.news.stream().filter(n -> typeFilter.getValue().contains(n.getType()))
 				.collect(Collectors.toList());
 	}
 

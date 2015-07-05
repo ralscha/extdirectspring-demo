@@ -52,7 +52,8 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "store4")
-	public ExtDirectStoreResult<Person> loadWithPaging(ExtDirectStoreReadRequest request) {
+	public ExtDirectStoreResult<Person> loadWithPaging(
+			ExtDirectStoreReadRequest request) {
 
 		List<Person> persons = this.dataBean.findPersons(request.getQuery());
 		int totalSize = persons.size();
@@ -65,12 +66,12 @@ public class Person4Action {
 		}
 
 		if (request.getStart() != null && request.getLimit() != null) {
-			personsStream = personsStream.skip(request.getStart()).limit(
-					request.getLimit());
+			personsStream = personsStream.skip(request.getStart())
+					.limit(request.getLimit());
 		}
 
-		return new ExtDirectStoreResult<>(totalSize, personsStream.collect(Collectors
-				.toList()));
+		return new ExtDirectStoreResult<>(totalSize,
+				personsStream.collect(Collectors.toList()));
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
@@ -97,7 +98,8 @@ public class Person4Action {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY, group = "store4")
-	public void destroy(List<Person> destroyPersons, @MetadataParam Optional<String> table) {
+	public void destroy(List<Person> destroyPersons,
+			@MetadataParam Optional<String> table) {
 		System.out.println("table->" + table);
 		for (Person person : destroyPersons) {
 			this.dataBean.deletePerson(person);

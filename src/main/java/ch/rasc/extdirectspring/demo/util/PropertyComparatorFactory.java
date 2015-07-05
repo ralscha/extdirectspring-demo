@@ -59,8 +59,7 @@ public enum PropertyComparatorFactory {
 		Comparator<T> comparator = null;
 
 		if (sortInfos != null) {
-			comparator = sortInfos
-					.stream()
+			comparator = sortInfos.stream()
 					.map(a -> (Comparator<T>) createComparator(a.getProperty(),
 							a.getDirection()))
 					.reduce(comparator, (a, b) -> a != null ? a.thenComparing(b) : b);
@@ -75,8 +74,7 @@ public enum PropertyComparatorFactory {
 		Comparator<T> comparator = null;
 
 		if (groupInfos != null) {
-			comparator = groupInfos
-					.stream()
+			comparator = groupInfos.stream()
 					.map(a -> (Comparator<T>) createComparator(a.getProperty(),
 							a.getDirection()))
 					.reduce(comparator, (a, b) -> a != null ? a.thenComparing(b) : b);

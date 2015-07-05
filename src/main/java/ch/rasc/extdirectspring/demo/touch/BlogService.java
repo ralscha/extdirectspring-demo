@@ -22,12 +22,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rometools.rome.feed.synd.SyndContentImpl;
+import com.rometools.rome.feed.synd.SyndEntry;
+
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.rasc.extdirectspring.demo.FeedCache;
-
-import com.rometools.rome.feed.synd.SyndContentImpl;
-import com.rometools.rome.feed.synd.SyndEntry;
 
 @Service
 public class BlogService {
@@ -52,8 +52,8 @@ public class BlogService {
 			Post post = new Post();
 			post.setTitle(entry.getTitle());
 			post.setLeaf(true);
-			post.setContent(((SyndContentImpl) entry.getContents().iterator().next())
-					.getValue());
+			post.setContent(
+					((SyndContentImpl) entry.getContents().iterator().next()).getValue());
 			posts.add(post);
 		}
 

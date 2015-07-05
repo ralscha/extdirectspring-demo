@@ -19,9 +19,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 
 public class Company {
 
@@ -51,8 +51,8 @@ public class Company {
 		this.price = new BigDecimal(price);
 		this.change = new BigDecimal(change);
 		this.pctChange = new BigDecimal(pctChange);
-		this.lastChange = LocalDate.now().plusDays(
-				ThreadLocalRandom.current().nextInt(-10, 10));
+		this.lastChange = LocalDate.now()
+				.plusDays(ThreadLocalRandom.current().nextInt(-10, 10));
 		this.category = category;
 		this.country = country;
 		this.not_delete = not_delete;

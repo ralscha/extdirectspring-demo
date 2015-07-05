@@ -17,12 +17,12 @@ package ch.rasc.extdirectspring.demo.task;
 
 import java.time.LocalDate;
 
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateDeserializer;
-import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateDeserializer;
+import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
 
 public class Task {
 	private long id;

@@ -36,9 +36,9 @@ public class TreeProvider {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.TREE_LOAD, group = "tree")
-	public List<Node> getTree(
-			@RequestParam(value = "id", required = false) String id,
-			@RequestParam(value = "foo", required = false, defaultValue = "defaultValue") String foo) {
+	public List<Node> getTree(@RequestParam(value = "id", required = false) String id,
+			@RequestParam(value = "foo", required = false,
+					defaultValue = "defaultValue") String foo) {
 
 		List<Node> result = new ArrayList<>();
 		if (id == null || id.equals("root")) {

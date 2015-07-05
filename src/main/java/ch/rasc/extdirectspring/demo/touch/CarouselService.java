@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.rasc.extdirectspring.demo.FeedCache;
-
-import com.rometools.rome.feed.synd.SyndEntry;
 
 @Service
 public class CarouselService {
