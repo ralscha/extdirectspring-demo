@@ -39,6 +39,7 @@ public class FeedCache {
 	private final static Map<String, SyndFeed> FEEDS = new ConcurrentHashMap<>();
 
 	public FeedCache() {
+		System.setProperty("rome.allowDoctypes", "true");
 		((LinkedHashMapFeedInfoCache) LinkedHashMapFeedInfoCache.getInstance())
 				.setMaxEntries(2000);
 	}
