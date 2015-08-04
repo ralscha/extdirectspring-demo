@@ -46,7 +46,7 @@ Ext.onReady(function() {
 		}
 	});
 	
-	var es = new EventSource(Ext.app.SSE.poll.sse);
+	var es = new EventSource("../testsse");
 	es.addEventListener('message', function(event) {
 		updateMain('<i>' + event.data + '</i>');
 	}, false);

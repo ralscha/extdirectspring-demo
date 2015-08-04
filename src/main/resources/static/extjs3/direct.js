@@ -15,7 +15,7 @@ Ext.onReady(function() {
     }
   });
   
-  var es = new EventSource(Ext.app.SSE.poll.sse);
+  var es = new EventSource("../testsse");
   es.addEventListener('message', sseMessageHandler, false);
   
   var out = new Ext.form.DisplayField( {
@@ -78,7 +78,7 @@ Ext.onReady(function() {
       }
       b.disable();
       
-      es = new EventSource(Ext.app.SSE.poll.sse);
+      es = new EventSource("../testsse");
       es.addEventListener('message', sseMessageHandler, false);
       
       Ext.getCmp('disconnectButton').enable();
