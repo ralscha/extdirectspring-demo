@@ -43,13 +43,15 @@ public class Main extends SpringBootServletInitializer {
 		SpringApplication.run(Main.class, args);
 	}
 
-	/*
-	 * @Bean public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
-	 * ch.ralscha.extdirectspring.controller.Configuration config = new
-	 * ch.ralscha.extdirectspring.controller.Configuration();
-	 * config.setStreamResponse(true); config.setTimeout(12000); config.setMaxRetries(10);
-	 * config.setEnableBuffer(false); return config; }
-	 */
+//	@Bean
+//	public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
+//		ch.ralscha.extdirectspring.controller.Configuration config = new ch.ralscha.extdirectspring.controller.Configuration();
+//		config.setStreamResponse(true);
+//		config.setTimeout(12000);
+//		config.setMaxRetries(10);
+//		config.setEnableBuffer(false);
+//		return config;
+//	}
 
 	@Bean
 	@Lazy
