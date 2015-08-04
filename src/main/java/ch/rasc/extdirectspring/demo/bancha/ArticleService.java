@@ -27,7 +27,6 @@ import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -39,9 +38,6 @@ import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
 
 @Service
 public class ArticleService {
-
-	@Autowired
-	private UserService userService;
 
 	private final static Map<Integer, Article> articleDb = new ConcurrentHashMap<>();
 

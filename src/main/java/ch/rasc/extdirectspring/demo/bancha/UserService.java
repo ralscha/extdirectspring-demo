@@ -27,8 +27,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -42,9 +40,6 @@ public class UserService {
 	private final static Map<Integer, User> userDb = new ConcurrentHashMap<>();
 
 	private final static AtomicInteger maxId = new AtomicInteger(4);
-
-	@Autowired
-	private ConversionService conversionService;
 
 	@PostConstruct
 	public void init() {

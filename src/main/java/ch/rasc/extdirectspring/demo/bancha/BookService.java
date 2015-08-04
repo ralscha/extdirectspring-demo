@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -29,9 +28,6 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 
 @Service
 public class BookService {
-
-	@Autowired
-	private UserService userService;
 
 	private final static Map<Integer, Book> bookDb = new ConcurrentHashMap<>();
 
