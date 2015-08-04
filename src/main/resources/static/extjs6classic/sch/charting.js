@@ -173,7 +173,7 @@ Ext.onReady(function(){
                     insetPadding: 50,
                     series: [{
                         type: 'pie',
-                        field: 'usage',
+                        angleField: 'usage',
                         donut: true,
                         label: {
                             field: 'name',
