@@ -8,12 +8,12 @@ Ext.define('Feed.view.FeedModel', {
 	},
 
 	stores: {
-		feedStore: {
-			model: 'Feed.model.Feed',
-			autoLoad: true,
-			autoSync: true,
-			pageSize: 0
-		},
+//		feedStore: {
+//			model: 'Feed.model.Feed',
+//			autoLoad: true,
+//			autoSync: true,
+//			pageSize: 0
+//		},
 		feedItemStore: {
 			model: 'Feed.model.FeedItem',
 			autoLoad: false,

@@ -1,7 +1,7 @@
 Ext.define('Feed.view.FeedController', {
 	extend: 'Ext.app.ViewController',
 	requires: [ 'Feed.view.FeedWindow', 'Feed.view.FeedItems', 'Feed.view.FeedItem' ],
-
+	
 	feedSelected: function(view, record) {
 		this.getViewModel().set('selectedFeed', record);
 		this.getViewModel().set('selectedFeedItem', false);

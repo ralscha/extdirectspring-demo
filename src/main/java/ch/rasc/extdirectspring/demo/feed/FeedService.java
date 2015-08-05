@@ -51,7 +51,7 @@ public class FeedService {
 		this.feedCache = feedCache;
 
 		Feed feed = new Feed(UUID.randomUUID().toString(), "Sencha Blog",
-				"http://www.sencha.com/feed/");
+				"https://www.sencha.com/feed/");
 		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 
@@ -83,11 +83,12 @@ public class FeedService {
 
 		List<FeedItem> items = new ArrayList<>();
 		int id = 0;
-		for (SyndEntry entry : info.getSyndFeed().getEntries()) {
-			FeedItem item = new FeedItem(id++, entry);
-			items.add(item);
+		if (info.getSyndFeed() != null) {
+			for (SyndEntry entry : info.getSyndFeed().getEntries()) {
+				FeedItem item = new FeedItem(id++, entry);
+				items.add(item);
+			}
 		}
-
 		return items;
 	}
 
