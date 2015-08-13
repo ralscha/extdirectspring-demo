@@ -7,7 +7,7 @@ Ext.define('Todo.view.Main', {
 
 	items: [ {
 		title: 'Todo List',
-		iconCls: 'team',
+		iconCls: 'x-fa fa-users',
 		xtype: 'list',
 		items: [ {
 			xtype: 'titlebar',
@@ -20,10 +20,10 @@ Ext.define('Todo.view.Main', {
 				}
 			} ]
 		} ],
-//		plugins: [ {
-//			xclass: 'Ext.plugin.PullRefresh',
-//			pullText: 'Pull down to reload data'
-//		} ],
+		plugins: [ {
+			xclass: 'Ext.plugin.PullRefresh',
+			pullText: 'Pull down to reload data'
+		} ],
 		store: {
 			xclass: 'Todo.store.Todo'
 		},
@@ -32,7 +32,7 @@ Ext.define('Todo.view.Main', {
 		title: 'Form',
 		xtype: 'formpanel',
 		paramsAsHash: true,
-		iconCls: 'bookmarks',
+		iconCls: 'x-fa fa-inbox',
 		api: {
 			load: 'todoService.load',
 			submit: 'todoService.submit'

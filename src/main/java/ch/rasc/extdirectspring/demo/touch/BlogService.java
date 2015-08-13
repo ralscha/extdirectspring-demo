@@ -32,7 +32,7 @@ import ch.rasc.extdirectspring.demo.FeedCache;
 @Service
 public class BlogService {
 
-	private static final String FEED_URL = "http://www.sencha.com/feed/";
+	private static final String FEED_URL = "https://www.sencha.com/feed/";
 
 	private final FeedCache feedCache;
 
@@ -52,8 +52,14 @@ public class BlogService {
 			Post post = new Post();
 			post.setTitle(entry.getTitle());
 			post.setLeaf(true);
-			post.setContent(
-					((SyndContentImpl) entry.getContents().iterator().next()).getValue());
+			
+			if (!entry.getContents().isEmpty()) {
+				post.setContent(entry.getContents().iterator().next().getValue());
+			}
+			else {
+				post.setContent(entry.getDescription().getValue());
+			}
+			
 			posts.add(post);
 		}
 

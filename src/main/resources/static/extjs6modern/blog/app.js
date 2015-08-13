@@ -19,14 +19,14 @@ Ext.application({
                 // This is the home page, just some simple html
                 {
                     title: 'Home',
-                    iconCls: 'home',
+                    iconCls: 'x-fa fa-home',
                     cls: 'home',
                     scrollable: true,
                     html: [
-                        '<img height="291" src="https://demo.rasc.ch/resources/ext-6.0.1.122/examples/kitchensink/modern/resources/images/sencha.png" />',
+                        '<img height="291" src="https://demo.rasc.ch/resources/ext-6.0.1.139/examples/kitchensink/modern/resources/images/sencha.png" />',
                         '<h1>Welcome to Sencha Touch</h1>',
                         "<p>Building the Getting Started app</p>",
-                        '<h2>Sencha Touch (2.0.0)</h2>'
+                        '<h2>Ext JS 6 Modern</h2>'
                     ].join("")
                 },
 
@@ -34,7 +34,7 @@ Ext.application({
                 {
                     xtype: 'nestedlist',
                     title: 'Blog',
-                    iconCls: 'star',
+                    iconCls: 'x-fa fa-star',
                     cls: 'blog',
                     displayField: 'title',
 
@@ -73,7 +73,7 @@ Ext.application({
                 {
                     xtype: 'formpanel',
                     title: 'Contact Us',
-                    iconCls: 'user',
+                    iconCls: 'x-fa fa-user',
                     url: '../../postContact',
                     layout: 'vbox',
 
