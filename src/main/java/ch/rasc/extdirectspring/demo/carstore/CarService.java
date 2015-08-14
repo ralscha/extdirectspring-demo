@@ -27,7 +27,8 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 @Service
 public class CarService {
 
-	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "carstore")
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "carstore",
+			batched = false)
 	public List<CarData> read() {
 		List<CarData> cars = new ArrayList<>();
 
