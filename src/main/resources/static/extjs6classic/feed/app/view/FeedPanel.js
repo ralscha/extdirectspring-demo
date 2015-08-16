@@ -1,5 +1,5 @@
 Ext.define('Feed.view.FeedPanel', {
-	extend: 'Ext.panel.Panel',	
+	extend: 'Ext.panel.Panel',
 	animCollapse: true,
 	layout: 'fit',
 	title: 'Feeds',
@@ -7,10 +7,9 @@ Ext.define('Feed.view.FeedPanel', {
 	items: [ {
 		xtype: 'dataview',
 		autoScroll: true,
-		store: 'Feeds',
-		// bind: {
-		// store: '{feedStore}'
-		// },
+		bind: {
+			store: '{feedStore}'
+		},
 		trackOver: true,
 		cls: 'feed-list',
 		itemSelector: '.feed-list-item',
