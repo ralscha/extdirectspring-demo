@@ -17,9 +17,6 @@ Ext.define('carstore.controller.CarListingsViewController', {
 		carData: null
 	},
 
-	init: function() {
-	},
-
 	onViewReady: function() {
 		this.getCarData().load({
 			scope: this,
