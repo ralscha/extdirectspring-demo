@@ -15,6 +15,8 @@
  */
 package ch.rasc.extdirectspring.demo;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -33,6 +35,12 @@ public class TestAction {
 	@ExtDirectMethod(group = "example")
 	public String doEcho(String message) {
 		return message;
+	}
+	
+	@ExtDirectMethod(group = "example")
+	public int oneMinuteRunning(int a) throws InterruptedException {
+		TimeUnit.MINUTES.sleep(1);
+		return a+1;
 	}
 
 }
