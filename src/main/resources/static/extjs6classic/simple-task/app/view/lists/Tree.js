@@ -60,7 +60,7 @@ Ext.define('SimpleTasks.view.lists.Tree', {
             {
                 xtype: 'actioncolumn',
                 width: 24,
-                icon: '//demo.rasc.ch/resources/ext-6.0.1.180/examples/classic/simple-tasks/resources/images/delete.png',
+                icon: '//demo.rasc.ch/resources/ext-6.0.1.250/examples/classic/simple-tasks/resources/images/delete.png',
                 iconCls: 'x-hidden',
                 tooltip: 'Delete',
                 handler: Ext.bind(me.handleDeleteClick, me)
