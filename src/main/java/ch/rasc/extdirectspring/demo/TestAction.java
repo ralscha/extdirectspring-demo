@@ -38,8 +38,8 @@ public class TestAction {
 	}
 	
 	@ExtDirectMethod(group = "example")
-	public int oneMinuteRunning(int a) throws InterruptedException {
-		TimeUnit.MINUTES.sleep(1);
+	public int wait45seconds(int a) throws InterruptedException {
+		TimeUnit.SECONDS.sleep(45);
 		return a+1;
 	}
 
