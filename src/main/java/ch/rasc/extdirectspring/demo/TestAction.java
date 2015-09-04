@@ -20,6 +20,9 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
+import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
+import ch.rasc.extdirectspring.demo.todo.UserInfo;
 
 @Service
 public class TestAction {
@@ -41,6 +44,16 @@ public class TestAction {
 	public int wait45seconds(int a) throws InterruptedException {
 		TimeUnit.SECONDS.sleep(45);
 		return a+1;
+	}
+	
+	
+	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST)
+	public ExtDirectFormPostResult wait45secondsFormPost(String name) throws InterruptedException {
+		TimeUnit.SECONDS.sleep(45);
+
+		ExtDirectFormPostResult result = new ExtDirectFormPostResult(true);
+		result.addResultProperty("msg", name.toUpperCase());
+		return result;
 	}
 
 }
