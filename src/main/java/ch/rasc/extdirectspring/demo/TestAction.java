@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
-import ch.rasc.extdirectspring.demo.todo.UserInfo;
 
 @Service
 public class TestAction {
