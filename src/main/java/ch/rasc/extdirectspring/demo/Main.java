@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ import ch.ralscha.extdirectspring.ExtDirectSpring;
 
 @Configuration
 @ComponentScan(basePackageClasses = { ExtDirectSpring.class, Main.class })
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = SpringDataWebAutoConfiguration.class)
 @EnableScheduling
 public class Main extends SpringBootServletInitializer {
 

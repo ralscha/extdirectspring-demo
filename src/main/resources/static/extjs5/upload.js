@@ -16,7 +16,7 @@ Ext.onReady(function() {
 		frame: true,
 		fileUpload: true,
 		width: 700,
-		height: 400,
+		height: 500,
 		padding: 10,
 		defaults: {
 			width: 400
