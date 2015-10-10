@@ -87,7 +87,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
                             text: 'AAPL',
                             checked: true
                         },{
-                            text: 'GOOGL'
+                            text: 'GOOG'
                         },{
                             text: 'MSFT'
                         }]
@@ -208,7 +208,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
 
     validStates: {
         AAPL: 1,
-        GOOGL: 1,
+        GOOG: 1,
         MSFT: 1
     },
 

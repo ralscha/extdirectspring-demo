@@ -113,7 +113,7 @@ public class ExecDashboardService {
 			if (filter.getValue().equals("AAPL")) {
 				return this.aapl;
 			}
-			else if (filter.getValue().equals("GOOGL")) {
+			else if (filter.getValue().equals("GOOG")) {
 				return this.googl;
 			}
 			else if (filter.getValue().equals("MSFT")) {
@@ -172,8 +172,8 @@ public class ExecDashboardService {
 			result.put("volume", "154.4 m");
 			result.put("label", "APPLE, INC");
 		}
-		else if ("GOOGL".equals(company)) {
-			result.put("symbol", "GOOGL");
+		else if ("GOOG".equals(company)) {
+			result.put("symbol", "GOOG");
 			result.put("change", "+13.25");
 			result.put("changePercentage", "+2.40");
 			result.put("price", "565.95");

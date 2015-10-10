@@ -25,7 +25,7 @@ public class StockHistoryData {
 	public static void main(String[] args) {
 		Map<String, Object> urlVariables = new HashMap<>();
 
-		urlVariables.put("ticker", "GOOGL");
+		urlVariables.put("ticker", "GOOG");
 		urlVariables.put("toMonth", 6);
 		urlVariables.put("toDay", 31);
 		urlVariables.put("toYear", 2014);
