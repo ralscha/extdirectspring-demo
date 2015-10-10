@@ -1,12 +1,9 @@
 Ext.define('ExecDashboard.view.companynews.News', {
+    requires: ['ExecDashboard.view.companynews.NewsController', 'ExecDashboard.view.companynews.NewsModel'],
     extend: 'Ext.grid.Panel',
     xtype: 'news',
     itemId: 'news',
     cls: 'company-news-grid',
-
-    requires: [
-        'Ext.grid.plugin.RowExpander'
-    ],
 
     config: {
         activeState: null,
