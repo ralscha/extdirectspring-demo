@@ -1,11 +1,18 @@
 Ext.define('ExecDashboard.view.kpi.Kpi', {
-	requires: ['ExecDashboard.view.kpi.KpiController','ExecDashboard.view.kpi.KpiModel'],
     extend: 'Ext.panel.Panel',
     xtype: 'kpi',
     itemId: 'kpi', // for setActiveTab(id)
 
     cls: 'kpi-main',
 
+    requires: [
+        'Ext.chart.axis.Numeric',
+        'Ext.chart.axis.Category',
+        'Ext.chart.series.Area',
+        'Ext.chart.series.Pie',
+        'Ext.chart.interactions.PanZoom',
+        'Ext.chart.interactions.Rotate'
+    ],
 
     config: {
         activeState: null,
@@ -23,7 +30,8 @@ Ext.define('ExecDashboard.view.kpi.Kpi', {
         align: 'stretch'
     },
 
-    overflowY: 'auto',
+    scrollable: 'y',
+
     minWidth: 600,
 
     items: [{

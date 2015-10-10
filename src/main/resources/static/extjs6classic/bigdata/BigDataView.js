@@ -18,7 +18,7 @@ Ext.define('BigDataView', {
     width: 910,
     title: 'Editable Big Data Grid',
     multiColumnSort: true,
-    
+    syncRowHeight: false,
     controller: {
     	xclass: 'BigDataController'
     },
@@ -33,7 +33,14 @@ Ext.define('BigDataView', {
         dock: 'bottom'
     }],
 
-    selType: 'checkboxmodel',
+    selModel: {
+        type: 'checkboxmodel',
+        checkOnly: true
+    },
+    
+    listeners: {
+        headermenucreate: 'onHeaderMenuCreate'
+    },
 
     columns:[{
         xtype: 'rownumberer',
@@ -59,6 +66,19 @@ Ext.define('BigDataView', {
         renderer: 'concatNames',
         editor: {
             xtype: 'textfield'
+        },
+        // Sort prioritizing surname over forename as would be expected.
+        sorter: function(rec1, rec2) {
+            var rec1Name = rec1.get('surname') + rec1.get('forename'),
+                rec2Name = rec2.get('surname') + rec2.get('forename');
+
+            if (rec1Name > rec2Name) {
+                return 1;
+            }
+            if (rec1Name < rec2Name) {
+                return -1;
+            }
+            return 0;
         },
         items    : {
             xtype: 'textfield',
@@ -174,7 +194,7 @@ Ext.define('BigDataView', {
                 decimalPrecision: 0
             }
         }, {
-            text: 'Holday Allowance',
+            text: 'Holiday Allowance',
             dataIndex: 'holidayAllowance',
             // Size column to title text
             width: null,
@@ -209,6 +229,16 @@ Ext.define('BigDataView', {
     viewConfig: {
         stripeRows: true
     },
+    
+    header: {
+        itemPosition: 1, // after title before collapse tool
+        items: [{
+            ui: 'default-toolbar',
+            xtype: 'button',
+            text: 'Export to Excel',
+            handler: 'exportToExcel'
+        }]
+    },
 
     plugins: [{
         ptype: 'gridfilters'
@@ -218,5 +248,7 @@ Ext.define('BigDataView', {
         // dblclick invokes the row editor
         expandOnDblClick: false,
         rowBodyTpl: '<img src="{avatar}" height="100px" style="float:left;margin:0 10px 5px 0"><b>{name}<br></b>{dob:date}'
+    },{
+        ptype: 'gridexporter'
     }]
 });

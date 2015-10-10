@@ -2,7 +2,9 @@ Ext.define('ExecDashboard.view.companynews.NewsModel', {
 	extend: 'Ext.app.ViewModel',
 	alias: 'viewmodel.news',
 
-	requires: [ 'ExecDashboard.model.News' ],
+    requires: [
+        'ExecDashboard.model.News'
+    ],
 
 	formulas: {
 		typeFilter: function(get) {
@@ -29,6 +31,7 @@ Ext.define('ExecDashboard.view.companynews.NewsModel', {
 			} ],
 			filters: {
 				property: 'type',
+                operator: 'in',
 				value: '{typeFilter}'
 			},
 			proxy: {

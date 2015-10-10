@@ -31,6 +31,13 @@ Ext.define('BigDataController', {
         }
     },
 
+    exportToExcel: function(){
+        this.getView().saveDocumentAs({
+            title:      'Grid export demo',
+            fileName:   'excelExport.xml'
+        });
+    },
+
     init: function() {
         // RowEditing not appropriate for touch devices
         if (!Ext.supports.Touch) {
@@ -41,5 +48,21 @@ Ext.define('BigDataController', {
                 autoCancel: false
             }));
         }
+    },
+
+    // This method is called as a listener to the grid's headermenucreated event.
+    // This is a useful way to inject extra options into the grid's header menu.
+    onHeaderMenuCreate: function(grid, menu) {
+        menu.insert(menu.items.indexOfKey('columnItem') + 1, {
+            text: 'Header Borders',
+            xtype: 'menucheckitem',
+            checked: grid.headerBorders,
+            checkHandler: this.onShowHeadersToggle,
+            scope: this
+        });
+    },
+
+    onShowHeadersToggle: function(checkItem, checked) {
+        this.getView().setHeaderBorders(checked);
     }
 });

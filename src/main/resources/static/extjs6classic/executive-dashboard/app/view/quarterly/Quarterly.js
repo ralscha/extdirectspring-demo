@@ -24,7 +24,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
         align: 'stretch'
     },
 
-    overflowY: 'auto',
+    scrollable: 'y',
 
     items: [{
         xtype: 'chart',
@@ -65,6 +65,8 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
                     type: 'vbox'
                 },
 
+                padding: '0 0 0 15',
+
                 items:[{
                     xtype: 'cycle',
                     cls: 'quarterly-cycle',
@@ -75,7 +77,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
                         text: '{companyData.symbol}'
                     },
                     textAlign: 'right',
-                    width: 150,
+                    width: 135,
 
                     listeners: {
                         change: 'menuItemClick'
@@ -87,16 +89,14 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
                             text: 'AAPL',
                             checked: true
                         },{
-                            text: 'GOOGL'
-                        },{
-                            text: 'MSFT'
+                            text: 'GOOG'
                         }]
                     }
                 },{
                     xtype: 'displayfield',
                     cls: 'stock-picker-small',
                     textAlign: 'right',
-                    width: 120,
+                    width: 105,
                     bind: {
                         value: '{companyData.label}'
                     }
@@ -182,7 +182,9 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
     },{
         xtype: 'dataview',
         cls: 'quarterly-dataview',
+
         bind: '{statements}',
+
         itemSelector: 'div.thumb-wrap',
 
         tpl: [
@@ -193,7 +195,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
                 '</tpl>',
 
                 '<div class="thumb-wrap">',
-                    '<a class="thumb" href="//demo.rasc.ch/resources/ext-6.0.1.250/examples/classic/executive-dashboard/resources/reports/{url}" target="_blank">',
+                    '<a class="thumb" href="//demo.rasc.ch/resources/ext-6.0.2.67/examples/classic/executive-dashboard/resources/reports/{url}" target="_blank">',
                         '<div class="thumb-icon"></div>',
                         '<div class="thumb-title-container">',
                             '<div class="thumb-title">{title}</div>',
@@ -208,8 +210,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
 
     validStates: {
         AAPL: 1,
-        GOOGL: 1,
-        MSFT: 1
+        GOOG: 1
     },
 
     isValidState: function (state) {
