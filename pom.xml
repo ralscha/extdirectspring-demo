@@ -267,6 +267,8 @@
 						<exclude>**/*.launch</exclude>
 						<exclude>**/*.gitignore</exclude>
 						<exclude>**/fetcher.properties</exclude>
+						<exclude>.mvn/**/*</exclude>
+						<exclude>mvnw.cmd</exclude>						
 					</excludes>
 					<strictCheck>true</strictCheck>
 				</configuration>
