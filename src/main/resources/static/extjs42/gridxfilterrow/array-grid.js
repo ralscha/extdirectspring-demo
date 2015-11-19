@@ -116,7 +116,7 @@ Ext.onReady(function() {
                 width: 50,
                 noxfilter:true,
                 items: [{
-                    icon   : '//demo.rasc.ch/resources/ext-4.2.5.1747/examples/shared/icons/fam/delete.gif',  
+                    icon   : '//demo.rasc.ch/resources/ext-4.2.5.1767/examples/shared/icons/fam/delete.gif',  
                     tooltip: 'Sell stock',
                     handler: function(grid, rowIndex, colIndex) {
                         var rec = store.getAt(rowIndex);
