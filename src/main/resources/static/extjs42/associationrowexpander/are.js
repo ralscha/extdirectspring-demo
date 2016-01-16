@@ -1,6 +1,6 @@
 Ext.Loader.setConfig({	
 	paths: {
-		'Ext.ux': '//demo.rasc.ch/resources/ext-4.2.5.1767/examples/ux'
+		'Ext.ux': 'https://static.rasc.ch/ext-4.2.5.1767/examples/ux'
 	}
 });
 

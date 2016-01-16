@@ -101,7 +101,7 @@ enableHdMenu      : false,
 			align: 'center',
 			width: 150,
 			dataIndex: 'Name',
-			tpl: '<img class="station-img" src="//demo.rasc.ch/resources/bryntum/scheduler-2.5.1-trial/examples/bbc/images/{Id}.png" />'
+			tpl: '<img class="station-img" src="https://static.rasc.ch/bryntum/scheduler-2.5.1-trial/examples/bbc/images/{Id}.png" />'
 		} ],
 		plugins: new Sch.plugin.CurrentTimeLine(),
 		viewConfig: {
