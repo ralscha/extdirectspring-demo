@@ -18,18 +18,22 @@ Ext.define('SpreadsheetController', {
     onSelectionChange: function (grid, selection) {
         var status = this.lookupReference('status'),
             message = '??',
-            range, tl, br;
+            firstRowIndex,
+            firstColumnIndex,
+            lastRowIndex,
+            lastColumnIndex;
 
         if (!selection) {
             message = 'No selection';
         }
         else if (selection.isCells) {
-            range = selection.getRange();
-            tl = range[0];
-            br = range[1];
+            firstRowIndex = selection.getFirstRowIndex();
+            firstColumnIndex = selection.getFirstColumnIndex();
+            lastRowIndex = selection.getLastRowIndex();
+            lastColumnIndex = selection.getLastColumnIndex();
 
-            message = 'Selected cells: ' + (br[0] - tl[0] + 1) + 'x' + (br[1] - tl[1] + 1) +
-                ' at (' + tl[0] + ',' + tl[1] + ')';
+            message = 'Selected cells: ' + (lastColumnIndex - firstColumnIndex + 1) + 'x' + (lastRowIndex - firstRowIndex + 1) +
+                ' at (' + firstColumnIndex + ',' + firstRowIndex + ')';
         }
         else if (selection.isRows) {
             message = 'Selected rows: ' + selection.getCount();

@@ -29,7 +29,7 @@ Ext.application({
                     cls: 'home',
                     scrollable: true,
                     html: [
-                        '<img height="291" src="https:https://static.rasc.ch/ext-6.0.2.168/examples/kitchensink/modern/resources/images/sencha.png" />',
+                        '<img height="291" src="https:https://static.rasc.ch/ext-6.0.2.299/examples/kitchensink/modern/resources/images/sencha.png" />',
                         '<h1>Welcome to Sencha Touch</h1>',
                         "<p>Building the Getting Started app</p>",
                         '<h2>Sencha Touch (2.0.0)</h2>'

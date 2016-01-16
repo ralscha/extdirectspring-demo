@@ -75,15 +75,15 @@ Ext.define('ExecDashboard.view.companynews.News', {
         '<div class="text-wrapper">' +
             '<div class="news-icon {type}">&nbsp;</div>' +
             '<div class="news-data">' +
-                '<div class="news-picture"><img src="https://static.rasc.ch/ext-6.0.2.168/build/examples/classic/executive-dashboard/resources/icons/{image}"></div>' +
+                '<div class="news-picture"><img src="https://static.rasc.ch/ext-6.0.2.299/build/examples/classic/executive-dashboard/resources/icons/{image}"></div>' +
                 '<div class="news-content">' +
                     '<div class="news-title">{title}</div>' +
                     '<div class="news-small">by <span class="news-author">{author}</span>' +
-                    '<img src="https://static.rasc.ch/ext-6.0.2.168/build/examples/classic/executive-dashboard/resources/icons/cal-icon.png"/>{date}' +
-                    '<img src="https://static.rasc.ch/ext-6.0.2.168/build/examples/classic/executive-dashboard/resources/icons/clock-icon.png"/>{time}</div>' +
+                    '<img src="https://static.rasc.ch/ext-6.0.2.299/build/examples/classic/executive-dashboard/resources/icons/cal-icon.png"/>{date}' +
+                    '<img src="https://static.rasc.ch/ext-6.0.2.299/build/examples/classic/executive-dashboard/resources/icons/clock-icon.png"/>{time}</div>' +
                     '<div class="news-paragraph news-paragraph-simple" {expanded}>{paragraph:ellipsis(130, true)}</div>' +
                     '<div class="news-toggle expand" {expanded}><span>EXPAND</span>' +
-                    '<img src="https://static.rasc.ch/ext-6.0.2.168/build/examples/classic/executive-dashboard/resources/icons/expand-news.png"></div>' +
+                    '<img src="https://static.rasc.ch/ext-6.0.2.299/build/examples/classic/executive-dashboard/resources/icons/expand-news.png"></div>' +
                 '</div>' +
             '</div>' +
         '<div>',
