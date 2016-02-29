@@ -164,6 +164,7 @@ Ext.define('BigDataView', {
         }
     }, {
         text: 'Absences',
+        shrinkWrap: true,
         columns: [{
             text: 'Illness',
             dataIndex: 'sickDays',
