@@ -19,7 +19,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -44,16 +44,17 @@ public class Main extends SpringBootServletInitializer {
 		SpringApplication.run(Main.class, args);
 	}
 
-//	@Bean
-//	public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
-//		ch.ralscha.extdirectspring.controller.Configuration config = new ch.ralscha.extdirectspring.controller.Configuration();
-//		//config.setStreamResponse(true);
-//		config.setTimeout(12000);
-//		config.setMaxRetries(10);
-//		//config.setEnableBuffer(false);
-//		config.setBufferLimit(3);
-//		return config;
-//	}
+	// @Bean
+	// public ch.ralscha.extdirectspring.controller.Configuration edsConfig() {
+	// ch.ralscha.extdirectspring.controller.Configuration config = new
+	// ch.ralscha.extdirectspring.controller.Configuration();
+	// //config.setStreamResponse(true);
+	// config.setTimeout(12000);
+	// config.setMaxRetries(10);
+	// //config.setEnableBuffer(false);
+	// config.setBufferLimit(3);
+	// return config;
+	// }
 
 	@Bean
 	@Lazy
