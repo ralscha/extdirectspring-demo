@@ -33,7 +33,7 @@ Ext.define('Feed.view.FeedWindow', {
 			bind: '{newFeedUrl}',
 			store: [
 					[ 'http://rss.cnn.com/rss/edition.rss', 'CNN Top Stories' ],
-					[ 'http://sports.espn.go.com/espn/rss/news', 'ESPN Top Headlines' ],
+					[ 'http://espn.go.com/espn/rss/news', 'ESPN Top Headlines' ],
 					[ 'https://news.google.com/news/feeds?ned=us&topic=t&output=rss',
 							'Sci/Tech - Google News' ],
 					[ 'http://news.yahoo.com/rss/', 'Yahoo News' ] ]
