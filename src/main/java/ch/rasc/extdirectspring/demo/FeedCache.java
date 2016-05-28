@@ -16,22 +16,23 @@
 package ch.rasc.extdirectspring.demo;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.rometools.fetcher.FeedFetcher;
-import com.rometools.fetcher.FetcherException;
-import com.rometools.fetcher.impl.HttpURLFeedFetcher;
-import com.rometools.fetcher.impl.LinkedHashMapFeedInfoCache;
-import com.rometools.fetcher.impl.SyndFeedInfo;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 @Service
 public class FeedCache {
@@ -39,8 +40,6 @@ public class FeedCache {
 	private final static Map<String, SyndFeed> FEEDS = new ConcurrentHashMap<>();
 
 	public FeedCache() {
-		((LinkedHashMapFeedInfoCache) LinkedHashMapFeedInfoCache.getInstance())
-				.setMaxEntries(2000);
 	}
 
 	public SyndFeed add(String url) {
@@ -49,17 +48,25 @@ public class FeedCache {
 			return FEEDS.get(url);
 		}
 
-		try {
-			FeedFetcher feedFetcher = new HttpURLFeedFetcher(
-					LinkedHashMapFeedInfoCache.getInstance());
-			SyndFeed syndFeed = feedFetcher.retrieveFeed(new URL(url));
+		return fetchFeed(url);
+	}
 
-			FEEDS.put(url, syndFeed);
-			return syndFeed;
+	private static SyndFeed fetchFeed(String url) {
+		try (CloseableHttpClient client = HttpClients.createMinimal()) {
+			HttpUriRequest method = new HttpGet(url);
+			try (CloseableHttpResponse response = client.execute(method);
+					InputStream stream = response.getEntity().getContent()) {
+				SyndFeedInput input = new SyndFeedInput();
+				try (XmlReader reader = new XmlReader(stream)) {
+					SyndFeed syndFeed = input.build(reader);
+					FEEDS.put(url, syndFeed);
+					return syndFeed;
+				}
+			}
 		}
-		catch (FetcherException | IllegalArgumentException | IOException
-				| FeedException e) {
-			e.printStackTrace();
+
+		catch (IllegalArgumentException | IOException | FeedException e) {
+			LoggerFactory.getLogger(FeedCache.class).error("fetch rss feed", e);
 			return null;
 		}
 	}
@@ -70,21 +77,12 @@ public class FeedCache {
 
 	@Scheduled(initialDelay = 1000, fixedRate = 1000 * 60 * 60 * 24)
 	public void refreshFeeds() {
-		HttpURLFeedFetcher feedFetcher = new HttpURLFeedFetcher(
-				LinkedHashMapFeedInfoCache.getInstance());
-
 		for (String url : FEEDS.keySet()) {
-			try {
-				feedFetcher.retrieveFeed(new URL(url));
-			}
-			catch (IllegalArgumentException | IOException | FeedException
-					| FetcherException e) {
-				LoggerFactory.getLogger(FeedCache.class).error("refreshFeeds", e);
-			}
+			FEEDS.put(url, fetchFeed(url));
 		}
 	}
 
-	public SyndFeedInfo getFeedInfo(String feedUrl) throws MalformedURLException {
-		return LinkedHashMapFeedInfoCache.getInstance().getFeedInfo(new URL(feedUrl));
+	public SyndFeed getFeedInfo(String feedUrl) {
+		return FEEDS.get(feedUrl);
 	}
 }

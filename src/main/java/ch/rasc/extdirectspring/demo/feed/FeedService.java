@@ -15,7 +15,6 @@
  */
 package ch.rasc.extdirectspring.demo.feed;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rometools.fetcher.impl.SyndFeedInfo;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 
@@ -78,13 +76,13 @@ public class FeedService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "feed")
-	public List<FeedItem> readFeedItem(String feedUrl) throws MalformedURLException {
-		SyndFeedInfo info = this.feedCache.getFeedInfo(feedUrl);
+	public List<FeedItem> readFeedItem(String feedUrl) {
+		SyndFeed info = this.feedCache.getFeedInfo(feedUrl);
 
 		List<FeedItem> items = new ArrayList<>();
 		int id = 0;
-		if (info.getSyndFeed() != null) {
-			for (SyndEntry entry : info.getSyndFeed().getEntries()) {
+		if (info != null) {
+			for (SyndEntry entry : info.getEntries()) {
 				FeedItem item = new FeedItem(id++, entry);
 				items.add(item);
 			}
