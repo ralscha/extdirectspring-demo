@@ -15,7 +15,6 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,23 +41,22 @@ public class BlogService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "blog")
-	public List<Post> getBlogPosts() throws IllegalArgumentException, IOException {
+	public List<Post> getBlogPosts() throws IllegalArgumentException {
 		List<Post> posts = new ArrayList<>();
 
-		for (SyndEntry entry : this.feedCache.getFeedInfo(FEED_URL).getSyndFeed()
-				.getEntries()) {
+		for (SyndEntry entry : this.feedCache.getFeedInfo(FEED_URL).getEntries()) {
 
 			Post post = new Post();
 			post.setTitle(entry.getTitle());
 			post.setLeaf(true);
-			
+
 			if (!entry.getContents().isEmpty()) {
 				post.setContent(entry.getContents().iterator().next().getValue());
 			}
 			else {
 				post.setContent(entry.getDescription().getValue());
 			}
-			
+
 			posts.add(post);
 		}
 
