@@ -43,7 +43,7 @@ public class PictureResizer {
 			@RequestParam(value = "width", required = false) Integer width,
 			@RequestParam(value = "height", required = false) Integer height,
 			HttpServletRequest request, final HttpServletResponse response)
-					throws MalformedURLException, IOException {
+			throws MalformedURLException, IOException {
 
 		File servletTmpDir = (File) request.getServletContext()
 				.getAttribute("javax.servlet.context.tempdir");

@@ -15,7 +15,6 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,12 +49,11 @@ public class CarouselService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "touchcarousel")
 	public List<CarouselPicture> readPictures(HttpServletRequest request)
-			throws IllegalArgumentException, IOException {
+			throws IllegalArgumentException {
 
 		List<CarouselPicture> pictures = new ArrayList<>();
 
-		for (SyndEntry entry : this.feedCache.getFeedInfo(RSS_URL).getSyndFeed()
-				.getEntries()) {
+		for (SyndEntry entry : this.feedCache.getFeedInfo(RSS_URL).getEntries()) {
 			CarouselPicture pic = new CarouselPicture();
 			pic.setId(entry.getUri());
 			pic.setAuthor(entry.getAuthor());

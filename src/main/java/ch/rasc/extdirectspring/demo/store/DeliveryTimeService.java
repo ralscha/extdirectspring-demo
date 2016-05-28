@@ -15,7 +15,6 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -83,13 +82,12 @@ public class DeliveryTimeService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "combobox")
-	public List<ForumPost> readSenchaForum() throws MalformedURLException {
+	public List<ForumPost> readSenchaForum() {
 
 		List<SyndEntry> bugs = this.feedCache
-				.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_BUGS).getSyndFeed()
-				.getEntries();
+				.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_BUGS).getEntries();
 		List<SyndEntry> qas = this.feedCache.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_QA)
-				.getSyndFeed().getEntries();
+				.getEntries();
 		List<SyndEntry> all = new ArrayList<>();
 		all.addAll(bugs);
 		all.addAll(qas);

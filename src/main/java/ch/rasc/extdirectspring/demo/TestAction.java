@@ -38,16 +38,16 @@ public class TestAction {
 	public String doEcho(String message) {
 		return message;
 	}
-	
+
 	@ExtDirectMethod(group = "example")
 	public int wait45seconds(int a) throws InterruptedException {
 		TimeUnit.SECONDS.sleep(45);
-		return a+1;
+		return a + 1;
 	}
-	
-	
+
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST)
-	public ExtDirectFormPostResult wait45secondsFormPost(String name) throws InterruptedException {
+	public ExtDirectFormPostResult wait45secondsFormPost(String name)
+			throws InterruptedException {
 		TimeUnit.SECONDS.sleep(45);
 
 		ExtDirectFormPostResult result = new ExtDirectFormPostResult(true);
