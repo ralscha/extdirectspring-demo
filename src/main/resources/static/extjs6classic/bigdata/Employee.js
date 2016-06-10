@@ -46,14 +46,13 @@ Ext.define('Employee', {
     idField: 'employeeNo',
 
     // Override set to update dependent fields
-    set: function(data, value) {
-        var dataObj;
+    set: function (name, value) {
+        var data = name;
 
         // Convert 2 arg form to object form
-        if (Ext.isString(data)) {
-            dataObj = {};
-            dataObj[data] = value;
-            data = dataObj;
+        if (Ext.isString(name)) {
+            data = {};
+            data[name] = value;
         }
 
         // "name" is a calculated field, so update it on edit of "forename" or "surname".

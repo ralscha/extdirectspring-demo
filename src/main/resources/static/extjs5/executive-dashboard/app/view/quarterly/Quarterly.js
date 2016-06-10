@@ -193,7 +193,7 @@ Ext.define('ExecDashboard.view.quarterly.Quarterly', {
                 '</tpl>',
 
                 '<div class="thumb-wrap">',
-                    '<a class="thumb" href="https://static.rasc.ch/ext-5.1.3.144/examples/executive-dashboard/resources/reports/{url}" target="_blank">',
+                    '<a class="thumb" href="https://static.rasc.ch/ext-5.1.3/examples/executive-dashboard/resources/reports/{url}" target="_blank">',
                         '<div class="thumb-icon"></div>',
                         '<div class="thumb-title-container">',
                             '<div class="thumb-title">{title}</div>',

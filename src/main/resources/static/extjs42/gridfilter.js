@@ -1,7 +1,7 @@
 Ext.Loader.setConfig({
 	enabled: true
 });
-Ext.Loader.setPath('Ext.ux', 'https://static.rasc.ch/ext-4.2.6.1776/examples/ux');
+Ext.Loader.setPath('Ext.ux', 'https://static.rasc.ch/ext-4.2.6.1787/examples/ux');
 Ext.require([ 'Ext.grid.*', 'Ext.data.*', 'Ext.ux.grid.FiltersFeature', 'Ext.toolbar.Paging' ]);
 
 Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
