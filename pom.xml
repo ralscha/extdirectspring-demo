@@ -88,13 +88,13 @@
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome</artifactId>
-			<version>1.6.0</version>
+			<version>1.6.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome-fetcher</artifactId>
-			<version>1.6.0</version>
+			<version>1.6.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
