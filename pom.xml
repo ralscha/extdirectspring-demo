@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.M3</version>
+		<version>1.4.0.RC1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.7.0-SNAPSHOT</version>
+			<version>1.7.0</version>
 		</dependency>
 
 		<dependency>
@@ -122,6 +122,7 @@
 	</dependencies>
 
 	<repositories>
+	<!--
  		<repository>
 			<id>sonatype</id>
 			<name>sonatype</name>
@@ -133,7 +134,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		
+		-->
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
