@@ -83,8 +83,10 @@ public class FeedService {
 		int id = 0;
 		if (info != null) {
 			for (SyndEntry entry : info.getEntries()) {
-				FeedItem item = new FeedItem(id++, entry);
-				items.add(item);
+				if (entry != null) {
+					FeedItem item = new FeedItem(id++, entry);
+					items.add(item);
+				}
 			}
 		}
 		return items;

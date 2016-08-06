@@ -45,14 +45,30 @@ public class FeedItem {
 		this.title = entry.getTitle();
 		this.author = entry.getAuthor();
 		this.link = entry.getLink();
-		this.pubDate = LocalDateTime.ofInstant(entry.getPublishedDate().toInstant(),
-				ZoneOffset.UTC);
-		this.description = entry.getDescription().getValue();
+		
+		if (entry.getPublishedDate() != null) {
+			this.pubDate = LocalDateTime.ofInstant(entry.getPublishedDate().toInstant(),
+					ZoneOffset.UTC);
+		}
+		else {
+			this.pubDate = null;
+		}
+		
+		if (entry.getDescription() != null) {
+			this.description = entry.getDescription().getValue();
+		}
+		else {
+			this.description = null;
+		}
+		
 		if (!entry.getContents().isEmpty()) {
 			this.content = entry.getContents().iterator().next().getValue();
 		}
-		else {
+		else if (entry.getDescription() != null) {
 			this.content = entry.getDescription().getValue();
+		}
+		else {
+			this.content = null;
 		}
 	}
 
