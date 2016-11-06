@@ -12,6 +12,9 @@
  */
 Ext.define('BigDataView', {
     extend: 'Ext.grid.Panel',
+    requires: [
+        'Ext.grid.filters.Filters'
+    ],
     store: 'BigDataStore',
     columnLines: true,
     height: 400,
@@ -19,9 +22,7 @@ Ext.define('BigDataView', {
     title: 'Editable Big Data Grid',
     multiColumnSort: true,
     syncRowHeight: false,
-    controller: {
-    	xclass: 'BigDataController'
-    },
+    controller: 'bigdata',
 
     features: [{
         ftype : 'groupingsummary',
@@ -33,13 +34,25 @@ Ext.define('BigDataView', {
         dock: 'bottom'
     }],
 
+    lockedGridConfig: {
+        title: 'Employees',
+        header: false,
+        collapsible: true,
+        width: 325,
+        minWidth: 290,
+        forceFit: true
+    },
+
     selModel: {
         type: 'checkboxmodel',
         checkOnly: true
     },
     
     listeners: {
-        headermenucreate: 'onHeaderMenuCreate'
+        headermenucreate: 'onHeaderMenuCreate',
+        // this event notifies us when the document was saved
+        documentsave: 'onDocumentSave',
+        beforedocumentsave: 'onBeforeDocumentSave'
     },
 
     columns:[{
@@ -57,32 +70,24 @@ Ext.define('BigDataView', {
         editRenderer: 'bold'
     }, {
         text: 'Name (Filter)',
-        sortable: true,
         dataIndex: 'name',
-        groupable: false,
+        sortable: true,
+        sorter: {
+            sorterFn: 'nameSorter' // set controller
+        },
+
         width: 140,
+        groupable: false,
+
         layout: 'hbox',
         locked: true,
         renderer: 'concatNames',
         editor: {
             xtype: 'textfield'
         },
-        // Sort prioritizing surname over forename as would be expected.
-        sorter: function(rec1, rec2) {
-            var rec1Name = rec1.get('surname') + rec1.get('forename'),
-                rec2Name = rec2.get('surname') + rec2.get('forename');
-
-            if (rec1Name > rec2Name) {
-                return 1;
-            }
-            if (rec1Name < rec2Name) {
-                return -1;
-            }
-            return 0;
-        },
-        items    : {
+        items: {
             xtype: 'textfield',
-            reference: 'nameFilterField',  // So that the Controller can access it easily
+            reference: 'nameFilterField',
             flex : 1,
             margin: 2,
             enableKeyEvents: true,
@@ -112,6 +117,12 @@ Ext.define('BigDataView', {
         },
         editor: {
             xtype: 'datefield'
+        },
+        exportStyle: {
+            alignment: {
+                horizontal: 'Right'
+            },
+            format: 'Long Date'
         }
     }, {
         text: 'Join date',
@@ -124,6 +135,12 @@ Ext.define('BigDataView', {
         },
         editor: {
             xtype: 'datefield'
+        },
+        exportStyle: {
+            alignment: {
+                horizontal: 'Right'
+            },
+            format: 'Long Date'
         }
     }, {
         text: 'Notice<br>period',
@@ -135,24 +152,19 @@ Ext.define('BigDataView', {
         },
         editor: {
             xtype: 'combobox',
-            initComponent: function() {
-                this.store = this.column.up('tablepanel').store.collect(this.column.dataIndex, false, true);
-                Ext.form.field.ComboBox.prototype.initComponent.apply(this, arguments);
+            listeners: {
+                beforerender: 'onBeforeRenderNoticeEditor'
             }
         }
     }, {
         text: 'Email address',
         dataIndex: 'email',
+
         width: 200,
         groupable: false,
-        renderer: function(v) {
-            return '<a href="mailto:' + v + '">' + v + '</a>';
-        },
+        renderer: 'renderMailto',
         editor: {
             xtype: 'textfield'
-        },
-        filter: {
-
         }
     }, {
         text: 'Department',
@@ -182,8 +194,7 @@ Ext.define('BigDataView', {
         }, {
             text: 'Holidays',
             dataIndex: 'holidayDays',
-            // Size column to title text
-            width: null,
+            width: null, // Size column to title text
             groupable: false,
             summaryType: 'sum',
             summaryFormatter: 'number("0")',
@@ -197,9 +208,11 @@ Ext.define('BigDataView', {
         }, {
             text: 'Holiday Allowance',
             dataIndex: 'holidayAllowance',
-            // Size column to title text
-            width: null,
+            width: null, // Size column to title text
             groupable: false,
+            summaryType: 'sum',
+            summaryFormatter: 'number("0.00")',
+            formatter: 'number("0.00")',
             filter: {
 
             },
@@ -224,6 +237,12 @@ Ext.define('BigDataView', {
         editor: {
             xtype: 'numberfield',
             decimalPrecision: 2
+        },
+        exportStyle: {
+            alignment: {
+                horizontal: 'Right'
+            },
+            format: 'Currency'
         }
     }],
 
@@ -231,16 +250,6 @@ Ext.define('BigDataView', {
         stripeRows: true
     },
     
-    header: {
-        itemPosition: 1, // after title before collapse tool
-        items: [{
-            ui: 'default-toolbar',
-            xtype: 'button',
-            text: 'Export to Excel',
-            handler: 'exportToExcel'
-        }]
-    },
-
     plugins: [{
         ptype: 'gridfilters'
     }, {
@@ -249,7 +258,5 @@ Ext.define('BigDataView', {
         // dblclick invokes the row editor
         expandOnDblClick: false,
         rowBodyTpl: '<img src="{avatar}" height="100px" style="float:left;margin:0 10px 5px 0"><b>{name}<br></b>{dob:date}'
-    },{
-        ptype: 'gridexporter'
     }]
 });

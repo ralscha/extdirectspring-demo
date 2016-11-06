@@ -131,7 +131,7 @@ Ext.onReady(function() {
     var themeWidth = 300,
         themeHeight = 230;
 
-	switch (Ext.themeName) {
+	switch (Ext.themeName) {	
 	case 'neptune': {
 		themeWidth = 350;
 		themeHeight = 300;
@@ -142,6 +142,7 @@ Ext.onReady(function() {
 		themeHeight = 600;
 		break;
 	}
+	case 'modern':
 	case 'crisp':
 	case 'crisp-touch':
 	case 'neptune-touch': {
