@@ -23,7 +23,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -44,7 +43,6 @@ public class FeedService {
 
 	private final Map<String, Feed> FEED_DB = new ConcurrentHashMap<>();
 
-	@Autowired
 	public FeedService(FeedCache feedCache) {
 		this.feedCache = feedCache;
 

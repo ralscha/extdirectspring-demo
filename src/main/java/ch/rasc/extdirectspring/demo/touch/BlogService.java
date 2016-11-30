@@ -18,7 +18,6 @@ package ch.rasc.extdirectspring.demo.touch;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -34,7 +33,6 @@ public class BlogService {
 
 	private final FeedCache feedCache;
 
-	@Autowired
 	public BlogService(FeedCache feedCache) {
 		this.feedCache = feedCache;
 		feedCache.add(FEED_URL);

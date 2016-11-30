@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -41,7 +40,6 @@ public class CarouselService {
 
 	private final FeedCache feedCache;
 
-	@Autowired
 	public CarouselService(FeedCache feedCache) {
 		this.feedCache = feedCache;
 		feedCache.add(RSS_URL);

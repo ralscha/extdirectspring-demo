@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -43,7 +42,6 @@ public class DeliveryTimeService {
 
 	private final FeedCache feedCache;
 
-	@Autowired
 	public DeliveryTimeService(FeedCache feedCache) {
 		this.feedCache = feedCache;
 	}
