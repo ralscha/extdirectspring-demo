@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.7.0</version>
+	<version>1.7.1</version>
 	<packaging>jar</packaging>
 
 	<prerequisites>
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.7.0</version>
+			<version>1.7.1</version>
 		</dependency>
 
 		<dependency>
