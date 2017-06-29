@@ -60,39 +60,39 @@ public class Unemployment {
 	}
 
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	public int getSpan() {
-		return span;
+		return this.span;
 	}
 
 	public Double getY2007() {
-		return y2007;
+		return this.y2007;
 	}
 
 	public Double getY2008() {
-		return y2008;
+		return this.y2008;
 	}
 
 	public Double getY2009() {
-		return y2009;
+		return this.y2009;
 	}
 
 	public Double getY2010() {
-		return y2010;
+		return this.y2010;
 	}
 
 	public Double getY2011() {
-		return y2011;
+		return this.y2011;
 	}
 
 	public Double getY2012() {
-		return y2012;
+		return this.y2012;
 	}
 
 	public String getState() {
-		return state;
+		return this.state;
 	}
 
 }

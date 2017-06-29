@@ -45,7 +45,7 @@ public class FeedItem {
 		this.title = entry.getTitle();
 		this.author = entry.getAuthor();
 		this.link = entry.getLink();
-		
+
 		if (entry.getPublishedDate() != null) {
 			this.pubDate = LocalDateTime.ofInstant(entry.getPublishedDate().toInstant(),
 					ZoneOffset.UTC);
@@ -53,14 +53,14 @@ public class FeedItem {
 		else {
 			this.pubDate = null;
 		}
-		
+
 		if (entry.getDescription() != null) {
 			this.description = entry.getDescription().getValue();
 		}
 		else {
 			this.description = null;
 		}
-		
+
 		if (!entry.getContents().isEmpty()) {
 			this.content = entry.getContents().iterator().next().getValue();
 		}

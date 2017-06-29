@@ -79,7 +79,7 @@ public class SseController {
 
 	}
 
-	private static class Client {
+	static class Client {
 		String id = UUID.randomUUID().toString();
 		SseEmitter emitter;
 		int count = 0;
