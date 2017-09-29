@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.7.1</version>
+	<version>1.7.2</version>
 	<packaging>jar</packaging>
 
 
@@ -73,7 +73,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.7.1</version>
+			<version>1.7.2</version>
 		</dependency>
 
 		<dependency>
@@ -91,13 +91,13 @@
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome</artifactId>
-			<version>1.7.4</version>
+			<version>1.8.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome-fetcher</artifactId>
-			<version>1.7.4</version>
+			<version>1.8.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
