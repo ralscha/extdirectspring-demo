@@ -15,8 +15,8 @@
  */
 package ch.rasc.extdirectspring.demo.simpleapp;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import ch.rasc.extclassgenerator.Model;
 

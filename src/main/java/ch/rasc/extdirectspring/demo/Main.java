@@ -18,8 +18,6 @@ package ch.rasc.extdirectspring.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -33,12 +31,7 @@ import ch.ralscha.extdirectspring.ExtDirectSpring;
 @ComponentScan(basePackageClasses = { ExtDirectSpring.class, Main.class })
 @EnableAutoConfiguration(exclude = SpringDataWebAutoConfiguration.class)
 @EnableScheduling
-public class Main extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Main.class);
-	}
+public class Main {
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);

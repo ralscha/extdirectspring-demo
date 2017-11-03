@@ -29,7 +29,7 @@ public class PropertyComparator<T> implements Comparator<T> {
 		this.readPropertyExpression = parser.parseExpression(property);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "null" })
 	@Override
 	public int compare(T o1, T o2) {
 		Object left = this.readPropertyExpression.getValue(o1);

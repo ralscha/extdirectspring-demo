@@ -10,7 +10,7 @@ Ext.define('ExecDashboard.ux.plugin.RowExpander', {
         '<div class="text-wrapper">',
             '<div class="news-data">',
                 '<div class="news-paragraph">{paragraph}</div>',
-                '<div class="news-toggle collapse"><span>COLLAPSE</span><img src="https://static.rasc.ch/ext-6.2.1.130/build/examples/classic/executive-dashboard/resources/icons/collapse-news.png"></div>',
+                '<div class="news-toggle collapse"><span>COLLAPSE</span><img src="https://static.rasc.ch/ext-6.5.2/build/examples/classic/executive-dashboard/resources/icons/collapse-news.png"></div>',
             '</div>',
         '</div>'
     ],

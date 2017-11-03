@@ -49,7 +49,7 @@ public class ProfileService {
 
 		if (!result.hasErrors()) {
 			if (basicInfo.getEmail().equals("aaron@extjs.com")) {
-				result.rejectValue("email", null, "email already taken");
+				result.rejectValue("email", "", "email already taken");
 			}
 		}
 

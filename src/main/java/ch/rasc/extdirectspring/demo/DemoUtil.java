@@ -43,15 +43,13 @@ public class DemoUtil {
 		}
 
 		PropertyDescriptor[] descriptors = BeanUtils.getPropertyDescriptors(clazz);
-		if (descriptors != null) {
-			for (PropertyDescriptor descriptor : descriptors) {
-				if (!exclude.contains(descriptor.getName())) {
-					Field field = new Field(descriptor.getName());
-					field.setType(getDataType(descriptor.getPropertyType()));
-					field.addCustomProperty("header",
-							StringUtils.capitalize(descriptor.getName()));
-					fields.add(field);
-				}
+		for (PropertyDescriptor descriptor : descriptors) {
+			if (!exclude.contains(descriptor.getName())) {
+				Field field = new Field(descriptor.getName());
+				field.setType(getDataType(descriptor.getPropertyType()));
+				field.addCustomProperty("header",
+						StringUtils.capitalize(descriptor.getName()));
+				fields.add(field);
 			}
 		}
 
