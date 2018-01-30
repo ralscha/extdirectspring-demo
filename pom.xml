@@ -185,6 +185,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>				
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -256,7 +259,7 @@
 					<properties>
 						
 						<year>${project.inceptionYear}</year>
-						<currentYear>2017</currentYear>
+						<currentYear>2018</currentYear>
 						
 					</properties>
 					<excludes>
