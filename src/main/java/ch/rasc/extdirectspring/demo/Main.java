@@ -34,7 +34,6 @@ import ch.ralscha.extdirectspring.ExtDirectSpring;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		System.setProperty("spring.index.ignore", "true");
 		SpringApplication.run(Main.class, args);
 	}
 

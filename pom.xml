@@ -52,7 +52,13 @@
 	</properties>
 
 	<dependencies>
-
+	<!-- 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-indexer</artifactId>
+			<optional>true</optional>
+		</dependency>
+    -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -73,9 +79,15 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.8.0</version>
+			<version>1.8.1-SNAPSHOT</version>
 		</dependency>
-
+		<!-- 
+		<dependency>
+			<groupId>ch.ralscha</groupId>
+			<artifactId>extdirectspring-index</artifactId>
+			<version>1.8.1-SNAPSHOT</version>
+		</dependency>		
+        -->
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>extclassgenerator</artifactId>
