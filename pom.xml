@@ -79,13 +79,13 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>1.8.1</version>
 		</dependency>
 		<!-- 
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring-index</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>1.8.1</version>
 		</dependency>		
         -->
 		<dependency>
