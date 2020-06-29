@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
+		<version>2.3.1.RELEASE</version>
 		<relativePath/>
 	</parent>
 
@@ -76,7 +76,7 @@
 		<dependency>
 		    <groupId>org.eclipse.jdt</groupId>
 		    <artifactId>org.eclipse.jdt.annotation</artifactId>
-		    <version>2.2.400</version>
+		    <version>2.2.600</version>
 		</dependency>
 
 		<dependency>
@@ -112,13 +112,13 @@
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome</artifactId>
-			<version>1.12.2</version>
+			<version>1.13.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome-fetcher</artifactId>
-			<version>1.12.2</version>
+			<version>1.13.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
