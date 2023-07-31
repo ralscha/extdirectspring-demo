@@ -45,7 +45,7 @@ public class UserService {
 		StringFilter filter = request.getFirstFilterForField("filter");
 		Stream<User> usersStream;
 		int totalSize;
-		if (filter == null || StringUtils.isEmpty(filter.getValue())) {
+		if (filter == null || !StringUtils.hasText(filter.getValue())) {
 			Collection<User> users = this.userDb.getAll();
 			totalSize = users.size();
 			usersStream = users.stream();
