@@ -15,7 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

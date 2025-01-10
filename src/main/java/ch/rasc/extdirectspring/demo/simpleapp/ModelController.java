@@ -17,15 +17,14 @@ package ch.rasc.extdirectspring.demo.simpleapp;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ch.rasc.extclassgenerator.IncludeValidation;
 import ch.rasc.extclassgenerator.ModelGenerator;
 import ch.rasc.extclassgenerator.OutputFormat;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class ModelController {

@@ -26,14 +26,15 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class PictureResizer {
@@ -46,7 +47,7 @@ public class PictureResizer {
 			throws MalformedURLException, IOException {
 
 		File servletTmpDir = (File) request.getServletContext()
-				.getAttribute("javax.servlet.context.tempdir");
+				.getAttribute("jakarta.servlet.context.tempdir");
 		File picturesDir = new File(servletTmpDir, "pictures");
 		picturesDir.mkdirs();
 

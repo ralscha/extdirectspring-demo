@@ -29,7 +29,7 @@ import ch.rasc.extdirectspring.demo.FeedCache;
 @Service
 public class BlogService {
 
-	private static final String FEED_URL = "https://www.sencha.com/feed/";
+	private static final String FEED_URL = "https://feeds.arstechnica.com/arstechnica/technology-lab";
 
 	private final FeedCache feedCache;
 

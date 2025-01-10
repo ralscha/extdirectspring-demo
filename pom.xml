@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.rasc</groupId>
 	<artifactId>extdirectspring-demo</artifactId>
-	<version>1.8.1</version>
+	<version>2.1.0</version>
 	<packaging>jar</packaging>
 
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.15</version>
+		<version>3.4.1</version>
 		<relativePath/>
 	</parent>
 
@@ -82,19 +82,12 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.8.1</version>
+			<version>2.1.0-SNAPSHOT</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>ch.ralscha</groupId>
-			<artifactId>extdirectspring-index</artifactId>
-			<version>1.8.1</version>
-		</dependency>		
-        -->
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>extclassgenerator</artifactId>
-			<version>2.0.0</version>
+			<version>3.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

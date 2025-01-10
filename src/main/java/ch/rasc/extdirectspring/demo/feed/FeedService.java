@@ -46,23 +46,8 @@ public class FeedService {
 	public FeedService(FeedCache feedCache) {
 		this.feedCache = feedCache;
 
-		Feed feed = new Feed(UUID.randomUUID().toString(), "Sencha Blog",
-				"https://www.sencha.com/feed/");
-		this.FEED_DB.put(feed.getId(), feed);
-		feedCache.add(feed.getUrl());
-
-		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forums",
-				"https://www.sencha.com/forum/external.php?type=RSS2");
-		this.FEED_DB.put(feed.getId(), feed);
-		feedCache.add(feed.getUrl());
-
-		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forum - Ext 5: Bugs",
-				SENCHA_FORUM_EXT5_BUGS);
-		this.FEED_DB.put(feed.getId(), feed);
-		feedCache.add(feed.getUrl());
-
-		feed = new Feed(UUID.randomUUID().toString(), "Sencha Forum - Ext 5: Q&A",
-				SENCHA_FORUM_EXT5_QA);
+		Feed feed = new Feed(UUID.randomUUID().toString(), "ArsTechnica - Technology Lab",
+				"https://feeds.arstechnica.com/arstechnica/technology-lab");
 		this.FEED_DB.put(feed.getId(), feed);
 		feedCache.add(feed.getUrl());
 	}

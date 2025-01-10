@@ -18,7 +18,7 @@ package ch.rasc.extdirectspring.demo.form;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.annotation.PostConstruct;
-import javax.validation.Valid;
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

@@ -17,11 +17,10 @@ package ch.rasc.extdirectspring.demo.simple;
 
 import java.time.LocalDateTime;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service("simple")
 public class SimpleMethodProvider {
