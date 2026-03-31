@@ -25,7 +25,6 @@ public class CompanyStoreReadResult extends ExtDirectStoreResult<Company> {
 	private Map<String, Collection<String>> autoStores;
 
 	public CompanyStoreReadResult() {
-		super();
 	}
 
 	public CompanyStoreReadResult(Collection<Company> records) {

@@ -15,17 +15,14 @@
  */
 package ch.rasc.extdirectspring.demo.filter;
 
-import java.io.IOException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-
-public class SizeSerializer extends JsonSerializer<SizeEnum> {
+public class SizeSerializer extends ValueSerializer<SizeEnum> {
 	@Override
-	public void serialize(SizeEnum value, JsonGenerator jgen, SerializerProvider provider)
-			throws IOException, JsonProcessingException {
+	public void serialize(SizeEnum value, JsonGenerator jgen,
+			SerializationContext provider) {
 
 		jgen.writeString(value.getLabel());
 	}

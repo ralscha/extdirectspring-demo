@@ -18,9 +18,9 @@ package ch.rasc.extdirectspring.demo.filter;
 public enum SizeEnum {
 	SMALL("small"), MEDIUM("medium"), LARGE("large"), EXTRA_LARGE("extra large");
 
-	private String label;
+	private final String label;
 
-	private SizeEnum(String label) {
+	SizeEnum(String label) {
 		this.label = label;
 	}
 

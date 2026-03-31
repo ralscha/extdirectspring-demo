@@ -56,9 +56,8 @@ public class SessionService {
 				"861-444-4567");
 		this.CUSTOMER_DB.put(customer.getId(), customer);
 
-		Order order;
-		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 2,
-				LocalDate.of(2014, 7, 3), true);
+		Order order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 2,
+						LocalDate.of(2014, 7, 3), true);
 		this.ORDER_DB.put(order.getId(), order);
 
 		order = new Order(this.MAX_ORDER_ID.getAndIncrement(), 3,

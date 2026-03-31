@@ -25,13 +25,12 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ChartService {

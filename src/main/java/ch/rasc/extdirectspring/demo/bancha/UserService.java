@@ -24,15 +24,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.validation.Valid;
-
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 
 @Service("banchaUserService")
 public class UserService {
@@ -130,12 +129,11 @@ public class UserService {
 	public ExtDirectFormPostResult submit(@Valid User user, BindingResult result) {
 		if (!result.hasErrors()) {
 			if (user.getId() > 0) {
-				userDb.put(user.getId(), user);
 			}
 			else {
 				user.setId(maxId.incrementAndGet());
-				userDb.put(user.getId(), user);
 			}
+			userDb.put(user.getId(), user);
 		}
 		System.out.println(user);
 		user.setAvatar(null);

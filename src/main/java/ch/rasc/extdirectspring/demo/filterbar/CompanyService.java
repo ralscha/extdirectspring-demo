@@ -160,44 +160,44 @@ public class CompanyService {
 	@SuppressWarnings("unchecked")
 	public Predicate<Company> getPredicates(Collection<Filter> filters) {
 
-		Predicate<Company> predicates = c -> true;
+		Predicate<Company> predicates = _ -> true;
 
 		for (Filter filter : filters) {
 
-			if (filter.getField().equals("id")) {
+			if ("id".equals(filter.getField())) {
 				NumericFilter numericFilter = (NumericFilter) filter;
 				predicates = predicates.and(new IdPredicate(numericFilter.getComparison(),
 						numericFilter.getValue()));
 			}
-			else if (filter.getField().equals("company")) {
+			else if ("company".equals(filter.getField())) {
 				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
 				predicates = predicates
 						.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			}
-			else if (filter.getField().equals("country")) {
+			else if ("country".equals(filter.getField())) {
 				predicates = predicates.and(
 						new CountryPredicate(((ListFilter<String>) filter).getValue()));
 			}
-			else if (filter.getField().equals("category")) {
+			else if ("category".equals(filter.getField())) {
 				predicates = predicates.and(
 						new CategoryPredicate(((ListFilter<String>) filter).getValue()));
 			}
-			else if (filter.getField().equals("price")) {
+			else if ("price".equals(filter.getField())) {
 				NumericFilter numericFilter = (NumericFilter) filter;
 				predicates = predicates.and(new PricePredicate(
 						numericFilter.getComparison(), numericFilter.getValue()));
 			}
-			else if (filter.getField().equals("change")) {
+			else if ("change".equals(filter.getField())) {
 				NumericFilter numericFilter = (NumericFilter) filter;
 				predicates = predicates.and(new ChangePredicate(
 						numericFilter.getComparison(), numericFilter.getValue()));
 			}
-			else if (filter.getField().equals("pctChange")) {
+			else if ("pctChange".equals(filter.getField())) {
 				NumericFilter numericFilter = (NumericFilter) filter;
 				predicates = predicates.and(new PctChangePredicate(
 						numericFilter.getComparison(), numericFilter.getValue()));
 			}
-			else if (filter.getField().equals("lastChange")) {
+			else if ("lastChange".equals(filter.getField())) {
 				DateFilter dateFilter = (DateFilter) filter;
 				predicates = predicates.and(new LastChangePredicate(
 						dateFilter.getComparison(), dateFilter.getValue()));

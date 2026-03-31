@@ -18,9 +18,6 @@ package ch.rasc.extdirectspring.demo.todo;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +26,8 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 import ch.rasc.extdirectspring.demo.tree.TreeProvider.Node;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class TodoServiceExt {
@@ -74,7 +73,7 @@ public class TodoServiceExt {
 
 		List<Node> result = new ArrayList<>();
 
-		if (id == null || id.equals("root")) {
+		if (id == null || "root".equals(id)) {
 			for (int i = 1; i <= 5; ++i) {
 				Node node = new Node();
 				node.id = "n" + i;

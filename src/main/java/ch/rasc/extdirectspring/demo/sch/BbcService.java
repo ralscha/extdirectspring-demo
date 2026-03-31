@@ -33,10 +33,9 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import tools.jackson.databind.ObjectMapper;
 
 @Service
 public class BbcService {

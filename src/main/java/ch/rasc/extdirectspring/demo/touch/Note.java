@@ -16,12 +16,12 @@
 package ch.rasc.extdirectspring.demo.touch;
 
 import java.time.LocalDate;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Objects;
 
 import ch.rasc.extdirectspring.demo.util.DMYLocalDateDeserializer;
 import ch.rasc.extdirectspring.demo.util.DMYLocalDateSerializer;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 public class Note {
 	private Integer id;
@@ -68,10 +68,7 @@ public class Note {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + this.id;
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -79,10 +76,7 @@ public class Note {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
 		}
 		Note other = (Note) obj;

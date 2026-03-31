@@ -18,9 +18,8 @@ package ch.rasc.extdirectspring.demo.chart;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 public class SiteInfo implements Serializable {
 

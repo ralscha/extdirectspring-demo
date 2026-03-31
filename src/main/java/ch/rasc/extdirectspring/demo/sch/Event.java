@@ -19,11 +19,11 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonIgnoreProperties({ "id", "Cls" })
 public class Event {

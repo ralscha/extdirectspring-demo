@@ -18,11 +18,11 @@ package ch.rasc.extdirectspring.demo.sch;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateDeserializer;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 public class Car extends Resource {
 

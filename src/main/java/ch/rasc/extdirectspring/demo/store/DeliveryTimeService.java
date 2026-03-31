@@ -86,8 +86,7 @@ public class DeliveryTimeService {
 				.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_BUGS).getEntries();
 		List<SyndEntry> qas = this.feedCache.getFeedInfo(FeedService.SENCHA_FORUM_EXT5_QA)
 				.getEntries();
-		List<SyndEntry> all = new ArrayList<>();
-		all.addAll(bugs);
+		List<SyndEntry> all = new ArrayList<>(bugs);
 		all.addAll(qas);
 
 		return all.stream().map(ForumPost::new).collect(Collectors.toList());

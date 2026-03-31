@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.stereotype.Service;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class EventDb {

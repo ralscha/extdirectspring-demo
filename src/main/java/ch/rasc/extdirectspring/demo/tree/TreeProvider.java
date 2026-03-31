@@ -41,7 +41,7 @@ public class TreeProvider {
 					defaultValue = "defaultValue") String foo) {
 
 		List<Node> result = new ArrayList<>();
-		if (id == null || id.equals("root")) {
+		if (id == null || "root".equals(id)) {
 			for (int i = 1; i <= 5; ++i) {
 				Node node = new Node();
 				node.id = "n" + i;

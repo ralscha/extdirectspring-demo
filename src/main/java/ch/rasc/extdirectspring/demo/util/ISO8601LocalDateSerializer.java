@@ -15,19 +15,17 @@
  */
 package ch.rasc.extdirectspring.demo.util;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-public class ISO8601LocalDateSerializer extends JsonSerializer<LocalDate> {
+public class ISO8601LocalDateSerializer extends ValueSerializer<LocalDate> {
 
 	@Override
 	public void serialize(LocalDate value, JsonGenerator jgen,
-			SerializerProvider provider) throws IOException, JsonProcessingException {
+			SerializationContext provider) {
 		jgen.writeString(value.toString());
 	}
 }

@@ -16,7 +16,7 @@
 package ch.rasc.extdirectspring.demo.store;
 
 public interface LabelValue {
-	public String getLabel();
+	String getLabel();
 
-	public String getValue();
+	String getValue();
 }

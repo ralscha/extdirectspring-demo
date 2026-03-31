@@ -30,15 +30,15 @@ import java.util.stream.Collectors;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import au.com.bytecode.opencsv.CSVReader;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.filter.ListFilter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @Service
 public class ExecDashboardService {
@@ -71,8 +71,9 @@ public class ExecDashboardService {
 		readData("googl", this.googl);
 		readData("msft", this.msft);
 
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS);
+		ObjectMapper mapper = JsonMapper.builder()
+				.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
+				.build();
 
 		try (InputStream is = new ClassPathResource("news.json").getInputStream()) {
 			List<List<Object>> newsLines = mapper.readValue(is, List.class);
@@ -110,13 +111,13 @@ public class ExecDashboardService {
 	public List<StockOHLC> readStockOHLC(ExtDirectStoreReadRequest request) {
 		StringFilter filter = request.getFirstFilterForField("company");
 		if (filter != null && filter.getValue() != null) {
-			if (filter.getValue().equals("AAPL")) {
+			if ("AAPL".equals(filter.getValue())) {
 				return this.aapl;
 			}
-			else if (filter.getValue().equals("GOOG")) {
+			if ("GOOG".equals(filter.getValue())) {
 				return this.googl;
 			}
-			else if (filter.getValue().equals("MSFT")) {
+			else if ("MSFT".equals(filter.getValue())) {
 				return this.msft;
 			}
 		}

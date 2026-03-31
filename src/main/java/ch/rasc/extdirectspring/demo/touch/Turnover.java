@@ -23,7 +23,6 @@ public class Turnover {
 	private final BigDecimal turnover;
 
 	public Turnover(String name, BigDecimal turnover) {
-		super();
 		this.name = name;
 		this.turnover = turnover;
 	}

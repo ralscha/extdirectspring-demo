@@ -15,19 +15,16 @@
  */
 package ch.rasc.extdirectspring.demo.util;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
 
-public class ISO8601LocalDateDeserializer extends JsonDeserializer<LocalDate> {
+public class ISO8601LocalDateDeserializer extends ValueDeserializer<LocalDate> {
 
 	@Override
-	public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
-		return LocalDate.parse(jp.getText());
+	public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) {
+		return LocalDate.parse(jp.getString());
 	}
 }

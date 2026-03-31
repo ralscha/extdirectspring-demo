@@ -15,8 +15,6 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
-import jakarta.validation.Valid;
-
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +23,7 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 import ch.rasc.extdirectspring.demo.form.BasicInfo;
+import jakarta.validation.Valid;
 
 @Service
 public class ProfileService {
@@ -47,10 +46,8 @@ public class ProfileService {
 
 		System.out.println(basicInfo);
 
-		if (!result.hasErrors()) {
-			if (basicInfo.getEmail().equals("aaron@extjs.com")) {
-				result.rejectValue("email", "", "email already taken");
-			}
+		if (!result.hasErrors() && "aaron@extjs.com".equals(basicInfo.getEmail())) {
+			result.rejectValue("email", "", "email already taken");
 		}
 
 		return new ExtDirectFormPostResult(result);

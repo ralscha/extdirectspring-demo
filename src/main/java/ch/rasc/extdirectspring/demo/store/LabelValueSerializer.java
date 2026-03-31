@@ -15,25 +15,19 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
-import java.io.IOException;
+import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-public class LabelValueSerializer extends JsonSerializer<LabelValue> {
+public class LabelValueSerializer extends ValueSerializer<LabelValue> {
 
 	@Override
 	public void serialize(LabelValue value, JsonGenerator jgen,
-			SerializerProvider provider) throws IOException, JsonProcessingException {
-
-		jgen.writeStartObject();
-		jgen.writeFieldName("label");
-		jgen.writeString(value.getLabel());
-		jgen.writeFieldName("value");
-		jgen.writeString(value.getValue());
-		jgen.writeEndObject();
+			SerializationContext provider) {
+		provider.writeValue(jgen,
+				Map.of("label", value.getLabel(), "value", value.getValue()));
 
 	}
 

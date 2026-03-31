@@ -15,19 +15,16 @@
  */
 package ch.rasc.extdirectspring.demo.util;
 
-import java.io.IOException;
 import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
 
-public class ISO8601ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
+public class ISO8601ZonedDateTimeDeserializer extends ValueDeserializer<ZonedDateTime> {
 
 	@Override
-	public ZonedDateTime deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
-		return ZonedDateTime.parse(jp.getText());
+	public ZonedDateTime deserialize(JsonParser jp, DeserializationContext ctxt) {
+		return ZonedDateTime.parse(jp.getString());
 	}
 }

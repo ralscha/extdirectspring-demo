@@ -40,10 +40,9 @@ public class State implements Comparable<State> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof State)) {
+		if (!(o instanceof State other)) {
 			return false;
 		}
-		State other = (State) o;
 		return Objects.equals(this.state, other.getState());
 	}
 

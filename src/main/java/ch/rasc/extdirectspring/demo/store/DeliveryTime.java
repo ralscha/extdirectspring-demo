@@ -15,7 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo.store;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = LabelValueSerializer.class)
 public enum DeliveryTime implements LabelValue {
@@ -25,7 +25,7 @@ public enum DeliveryTime implements LabelValue {
 	MiddleOfMonth("Middle of Month"), MiddleToEndOfMonth("Middle to End of Month"),
 	EndOfMonth("End of Month"), Unknown("Unknown");
 
-	private String label;
+	private final String label;
 
 	DeliveryTime(String label) {
 		this.label = label;

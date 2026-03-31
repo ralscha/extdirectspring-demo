@@ -15,10 +15,9 @@
  */
 package ch.rasc.extdirectspring.demo.simpleapp;
 
+import ch.rasc.extclassgenerator.Model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
-import ch.rasc.extclassgenerator.Model;
 
 @Model(value = "Simple.model.User", paging = true, readMethod = "userService.load",
 		createMethod = "userService.create", updateMethod = "userService.update",

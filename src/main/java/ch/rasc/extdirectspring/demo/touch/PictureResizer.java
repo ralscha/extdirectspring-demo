@@ -21,7 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -44,7 +45,7 @@ public class PictureResizer {
 			@RequestParam(value = "width", required = false) Integer width,
 			@RequestParam(value = "height", required = false) Integer height,
 			HttpServletRequest request, final HttpServletResponse response)
-			throws MalformedURLException, IOException {
+			throws MalformedURLException, IOException, URISyntaxException {
 
 		File servletTmpDir = (File) request.getServletContext()
 				.getAttribute("jakarta.servlet.context.tempdir");
@@ -55,7 +56,7 @@ public class PictureResizer {
 		File pictureFile = new File(picturesDir, sha);
 
 		if (!pictureFile.exists()) {
-			try (InputStream input = new URL(url).openStream()) {
+			try (InputStream input = new URI(url).toURL().openStream()) {
 				Files.copy(input, pictureFile.toPath(),
 						StandardCopyOption.REPLACE_EXISTING);
 			}

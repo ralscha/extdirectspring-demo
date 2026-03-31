@@ -34,8 +34,6 @@ import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -49,6 +47,7 @@ import ch.ralscha.extdirectspring.filter.ListFilter;
 import ch.ralscha.extdirectspring.filter.NumericFilter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extdirectspring.demo.util.Constants;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class CompanyDataBean {
@@ -93,44 +92,42 @@ public class CompanyDataBean {
 
 	public List<Company> findCompanies(Collection<Filter> filters) {
 
-		Predicate<Company> predicates = c -> true;
+		Predicate<Company> predicates = _ -> true;
 		for (Filter filter : filters) {
-			if (filter.getField().equals("company")) {
+			if ("company".equals(filter.getField())) {
 				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
 				predicates = predicates
 						.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			}
-			else if (filter.getField().equals("visible")) {
+			else if ("visible".equals(filter.getField())) {
 				boolean flag = ((BooleanFilter) filter).getValue();
 				predicates = predicates.and(c -> c.isVisible() == flag);
 			}
-			else if (filter.getField().equals("id")) {
+			else if ("id".equals(filter.getField())) {
 				NumericFilter numericFilter = (NumericFilter) filter;
 				predicates = predicates.and(new IdPredicate(numericFilter.getComparison(),
 						numericFilter.getValue()));
 			}
-			else if (filter.getField().equals("price")) {
+			else if ("price".equals(filter.getField())) {
 				NumericFilter numericFilter = (NumericFilter) filter;
 				predicates = predicates.and(new PricePredicate(
 						numericFilter.getComparison(), numericFilter.getValue()));
 			}
-			else if (filter.getField().equals("size")) {
+			else if ("size".equals(filter.getField())) {
 				@SuppressWarnings("unchecked")
 				ListFilter<String> listFilter = (ListFilter<String>) filter;
 				predicates = predicates
 						.and(c -> listFilter.getValue().contains(c.getSize().getLabel()));
 			}
-			else if (filter.getField().equals("date")) {
+			else if ("date".equals(filter.getField())) {
 				LocalDate ld;
 				Comparison comparison;
-				if (filter instanceof DateFilter) {
-					DateFilter dateFilter = (DateFilter) filter;
+				if (filter instanceof DateFilter dateFilter) {
 					comparison = dateFilter.getComparison();
 					ld = LocalDate.parse(dateFilter.getValue(),
 							Constants.MMddYYYY_FORMATTER);
 				}
-				else if (filter instanceof StringFilter) {
-					StringFilter dateFilter = (StringFilter) filter;
+				else if (filter instanceof StringFilter dateFilter) {
 					comparison = dateFilter.getComparison();
 					ld = LocalDate.parse(dateFilter.getValue(),
 							Constants.MMddYYYY_FORMATTER);

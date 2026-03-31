@@ -58,10 +58,8 @@ public class PersonAction {
 
 		if (StringUtils.hasText(request.getGroupBy())) {
 			comparator = PropertyComparatorFactory.createComparator(request.getGroupBy());
-			if (comparator != null) {
-				if (request.isDescendingGroupSort()) {
-					comparator = comparator.reversed();
-				}
+			if ((comparator != null) && request.isDescendingGroupSort()) {
+				comparator = comparator.reversed();
 			}
 		}
 

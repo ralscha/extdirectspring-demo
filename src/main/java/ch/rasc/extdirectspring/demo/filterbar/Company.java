@@ -19,9 +19,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 public class Company {
 

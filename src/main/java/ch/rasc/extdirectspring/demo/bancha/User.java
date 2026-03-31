@@ -19,11 +19,10 @@ import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeDeserializer;
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateTimeSerializer;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 public class User {
 

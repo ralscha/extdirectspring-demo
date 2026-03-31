@@ -27,8 +27,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +39,7 @@ import ch.ralscha.extdirectspring.filter.StringFilter;
 import ch.rasc.extclassgenerator.ModelGenerator;
 import ch.rasc.extclassgenerator.OutputFormat;
 import ch.rasc.extdirectspring.demo.util.Constants;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class AreService {
@@ -177,28 +176,28 @@ public class AreService {
 
 	public Predicate<Company> getPredicates(Collection<Filter> filters) {
 
-		Predicate<Company> predicates = c -> true;
+		Predicate<Company> predicates = _ -> true;
 
 		for (Filter filter : filters) {
 
 			String value = ((StringFilter) filter).getValue().trim().toLowerCase();
-			if (filter.getField().equals("company")) {
+			if ("company".equals(filter.getField())) {
 				predicates = predicates
 						.and(c -> c.getCompany().toLowerCase().startsWith(value));
 			}
-			else if (filter.getField().equals("price")) {
+			else if ("price".equals(filter.getField())) {
 				predicates = predicates
 						.and(c -> c.getPrice().compareTo(new BigDecimal(value)) == 0);
 			}
-			else if (filter.getField().equals("change")) {
+			else if ("change".equals(filter.getField())) {
 				predicates = predicates
 						.and(c -> c.getChange().compareTo(new BigDecimal(value)) == 0);
 			}
-			else if (filter.getField().equals("pctChange")) {
+			else if ("pctChange".equals(filter.getField())) {
 				predicates = predicates
 						.and(c -> c.getPctChange().compareTo(new BigDecimal(value)) == 0);
 			}
-			else if (filter.getField().equals("lastChange")) {
+			else if ("lastChange".equals(filter.getField())) {
 				LocalDate localDateValue;
 				if (value.length() > 10) {
 					localDateValue = LocalDate.parse(value.substring(0, 10));

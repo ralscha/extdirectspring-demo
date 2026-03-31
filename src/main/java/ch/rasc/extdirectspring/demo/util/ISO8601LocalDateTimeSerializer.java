@@ -15,23 +15,21 @@
  */
 package ch.rasc.extdirectspring.demo.util;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-public class ISO8601LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
+public class ISO8601LocalDateTimeSerializer extends ValueSerializer<LocalDateTime> {
 
 	private static final DateTimeFormatter DT_PATTERN = DateTimeFormatter
 			.ofPattern("uuuu-MM-dd'T'HH:mm:ss");
 
 	@Override
 	public void serialize(LocalDateTime value, JsonGenerator jgen,
-			SerializerProvider provider) throws IOException, JsonProcessingException {
+			SerializationContext provider) {
 
 		jgen.writeString(value.format(DT_PATTERN));
 	}

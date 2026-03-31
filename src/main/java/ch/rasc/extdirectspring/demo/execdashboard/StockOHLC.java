@@ -18,9 +18,8 @@ package ch.rasc.extdirectspring.demo.execdashboard;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 public class StockOHLC {
 	private int id;

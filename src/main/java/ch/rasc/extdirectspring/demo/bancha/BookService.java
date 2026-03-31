@@ -19,12 +19,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class BookService {

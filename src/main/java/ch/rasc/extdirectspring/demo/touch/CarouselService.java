@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Service;
 
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -29,6 +27,7 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.rasc.extdirectspring.demo.FeedCache;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class CarouselService {

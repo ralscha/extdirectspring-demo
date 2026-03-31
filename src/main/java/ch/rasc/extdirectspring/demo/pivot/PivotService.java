@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -36,6 +34,7 @@ import org.springframework.stereotype.Service;
 import au.com.bytecode.opencsv.CSVReader;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class PivotService {

@@ -25,8 +25,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
@@ -35,6 +33,7 @@ import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.rasc.extdirectspring.demo.util.PropertyComparatorFactory;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class ArticleService {
