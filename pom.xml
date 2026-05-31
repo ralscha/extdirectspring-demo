@@ -1,184 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.rasc</groupId>
-	<artifactId>extdirectspring-demo</artifactId>
-	<version>2.1.0</version>
-	<packaging>jar</packaging>
+  <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.0.6</version>
+    <relativePath></relativePath>
+  </parent>
+  <groupId>ch.rasc</groupId>
+  <artifactId>extdirectspring-demo</artifactId>
+  <version>2.1.0</version>
+  <packaging>jar</packaging>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.6</version>
-		<relativePath/>
-	</parent>
+  <name>Ext Direct Spring Demo</name>
+  <description>Demoapplication for Ext Direct Spring</description>
 
-	<inceptionYear>2010</inceptionYear>
+  <inceptionYear>2010</inceptionYear>
 
-	<name>Ext Direct Spring Demo</name>
-	<description>Demoapplication for Ext Direct Spring</description>
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-	<developers>
-		<developer>
-			<name>Ralph Schaer</name>
-			<email>ralphschaer@gmail.com</email>
-		</developer>
-	</developers>
+  <developers>
+    <developer>
+      <name>Ralph Schaer</name>
+      <email>ralphschaer@gmail.com</email>
+    </developer>
+  </developers>
 
-	<licenses>
-		<license>
-			<name>Apache 2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+  <scm>
+    <connection>scm:git:git@github.com:ralscha/extdirectspring-demo.git</connection>
+    <developerConnection>scm:git:git@github.com:ralscha/extdirectspring-demo.git</developerConnection>
+    <url>https://github.com/ralscha/extdirectspring-demo.git</url>
+  </scm>
 
-	<issueManagement>
-		<system>GitHub</system>
-		<url>https://github.com/ralscha/extdirectspring/issues</url>
-	</issueManagement>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/ralscha/extdirectspring/issues</url>
+  </issueManagement>
 
-	<scm>
-		<connection>scm:git:git@github.com:ralscha/extdirectspring-demo.git</connection>
-		<developerConnection>scm:git:git@github.com:ralscha/extdirectspring-demo.git</developerConnection>
-		<url>https://github.com/ralscha/extdirectspring-demo.git</url>
-	</scm>
+  <properties>
+    <java.version>25</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <start-class>ch.rasc.extdirectspring.demo.Main</start-class>
+  </properties>
 
-	<properties>
-		<java.version>25</java.version>		 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>ch.rasc.extdirectspring.demo.Main</start-class>
-	</properties>
-
-	<dependencies>
-	<!-- 
+  <dependencies>
+    <!-- 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-indexer</artifactId>
 			<optional>true</optional>
 		</dependency>
     -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
 
-		<dependency>
-		    <groupId>org.eclipse.jdt</groupId>
-		    <artifactId>org.eclipse.jdt.annotation</artifactId>
-		    <version>2.4.100</version>
-		</dependency>
+    <dependency>
+      <groupId>org.eclipse.jdt</groupId>
+      <artifactId>org.eclipse.jdt.annotation</artifactId>
+      <version>2.4.100</version>
+    </dependency>
 
-		<dependency>
-			<groupId>ch.ralscha</groupId>
-			<artifactId>extdirectspring</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.rasc</groupId>
-			<artifactId>extclassgenerator</artifactId>
-			<version>4.0.0</version>
-		</dependency>
+    <dependency>
+      <groupId>ch.ralscha</groupId>
+      <artifactId>extdirectspring</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.rasc</groupId>
+      <artifactId>extclassgenerator</artifactId>
+      <version>4.0.0</version>
+    </dependency>
 
-		<dependency>
-			<groupId>net.sf.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>2.3</version>
-		</dependency>
+    <dependency>
+      <groupId>net.sf.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>2.3</version>
+    </dependency>
 
-		<dependency>
-			<groupId>com.rometools</groupId>
-			<artifactId>rome</artifactId>
-			<version>1.18.0</version>
-		</dependency>
+    <dependency>
+      <groupId>com.rometools</groupId>
+      <artifactId>rome</artifactId>
+      <version>1.18.0</version>
+    </dependency>
 
-		<dependency>
-			<groupId>com.rometools</groupId>
-			<artifactId>rome-fetcher</artifactId>
-			<version>1.19.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+    <dependency>
+      <groupId>com.rometools</groupId>
+      <artifactId>rome-fetcher</artifactId>
+      <version>1.19.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-		</dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
 
-		<dependency>
-			<groupId>org.imgscalr</groupId>
-			<artifactId>imgscalr-lib</artifactId>
-			<version>4.2</version>
-		</dependency>
+    <dependency>
+      <groupId>org.imgscalr</groupId>
+      <artifactId>imgscalr-lib</artifactId>
+      <version>4.2</version>
+    </dependency>
 
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpasyncclient</artifactId>
-		</dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpasyncclient</artifactId>
+    </dependency>
 
-	</dependencies>
- 
-	<build>
-        <finalName>extdirectspring-demo</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<debug>true</debug>
-					<release>${java.version}</release>
-					<parameters>true</parameters>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.googlecode.jslint4java</groupId>
-				<artifactId>jslint4java-maven-plugin</artifactId>
-				<version>2.0.5</version>
-				<executions>
-					<execution>
-						<id>lint</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>lint</goal>
-						</goals>
-						<configuration>
-							<failOnError>false</failOnError>
-							<sourceFolders>
-								<sourceFolder>${project.basedir}/src/main/resources/static</sourceFolder>
-							</sourceFolders>
+  </dependencies>
 
-							<excludes>
-								<exclude>deft-debug.js</exclude>
-								<exclude>eventsource.min.js</exclude>
-								<exclude>ux-validations.js</exclude>
-								<exclude>extjs3/highcharts/excanvas.compiled.js</exclude>
-								<exclude>extjs3/highcharts/Ext.ux.HighChart.js</exclude>
-								<exclude>extjs3/highcharts/adapter-extjs.js</exclude>
-								<exclude>extjs3/highcharts/highcharts.js</exclude>
-								<exclude>extjs42/banchascaffold/bancha-scaffold-production.js</exclude>
-								<exclude>extjs42/pivotgrid</exclude>
-							</excludes>
+  <build>
+    <finalName>extdirectspring-demo</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <debug>true</debug>
+          <release>${java.version}</release>
+          <parameters>true</parameters>
 
-							<options>
-								<browser>true</browser>
-								<sloppy>true</sloppy>
-								<white>true</white>
-								<vars>true</vars>
-								<unparam>true</unparam>
-								<plusplus>true</plusplus>
-								<predef>Ext,calendarService,deliveryTimeService,EventSource,turnoverService,chartService,
+          <fork>true</fork>
+          <compilerArgs>
+            <arg>-XDcompilePolicy=simple</arg>
+            <arg>--should-stop=ifError=FLOW</arg>
+            <arg>-Xplugin:ErrorProne</arg>
+            <arg>-XDaddTypeAnnotationsToSymbol=true</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+            <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+          </compilerArgs>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>com.google.errorprone</groupId>
+              <artifactId>error_prone_core</artifactId>
+              <version>2.49.0</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.googlecode.jslint4java</groupId>
+        <artifactId>jslint4java-maven-plugin</artifactId>
+        <version>2.0.5</version>
+        <executions>
+          <execution>
+            <id>lint</id>
+            <goals>
+              <goal>lint</goal>
+            </goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <failOnError>false</failOnError>
+              <sourceFolders>
+                <sourceFolder>${project.basedir}/src/main/resources/static</sourceFolder>
+              </sourceFolders>
+
+              <excludes>
+                <exclude>deft-debug.js</exclude>
+                <exclude>eventsource.min.js</exclude>
+                <exclude>ux-validations.js</exclude>
+                <exclude>extjs3/highcharts/excanvas.compiled.js</exclude>
+                <exclude>extjs3/highcharts/Ext.ux.HighChart.js</exclude>
+                <exclude>extjs3/highcharts/adapter-extjs.js</exclude>
+                <exclude>extjs3/highcharts/highcharts.js</exclude>
+                <exclude>extjs42/banchascaffold/bancha-scaffold-production.js</exclude>
+                <exclude>extjs42/pivotgrid</exclude>
+              </excludes>
+
+              <options>
+                <browser>true</browser>
+                <sloppy>true</sloppy>
+                <white>true</white>
+                <vars>true</vars>
+                <unparam>true</unparam>
+                <plusplus>true</plusplus>
+                <predef>Ext,calendarService,deliveryTimeService,EventSource,turnoverService,chartService,
 									personAction,salesAction,pivotService,person4Action,bbcService,Sch,schCarService,
 									treeProvider,uploadController,deliveryTimeService,filterActionImplementation,
 									presidentsService,notesService,touchTestAction,blogService,profile,sseMessageHandler,
@@ -186,51 +211,63 @@
 									myTreeLoader,Deft,restaurantService,namedService,carouselService,bancha,Task,taskService,
 									feedService,readCookie,Feed,todoServiceExt,todoService,SimpleTasks,simpleTaskService,
 									sessionService</predef>
-							</options>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+              </options>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-			<plugin>
-				<groupId>com.mycila</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>4.6</version>
-				<configuration>
-					<header>${basedir}/src/main/config/header.txt</header>
-					<properties>
-						<year>${project.inceptionYear}</year>
-						<currentYear>2018</currentYear>
-					</properties>
-					<excludes>
-						<exclude>**/*.md</exclude>
-						<exclude>**/*.csv</exclude>
-						<exclude>**/*.psd</exclude>
-						<exclude>**/*.xml</exclude>
-						<exclude>**/*.json</exclude>
-						<exclude>**/extjs/**</exclude>
-						<exclude>**/static/**</exclude>
-						<exclude>**/*.launch</exclude>
-						<exclude>**/*.gitignore</exclude>
-						<exclude>**/fetcher.properties</exclude>
-						<exclude>.mvn/**/*</exclude>
-						<exclude>mvnw.cmd</exclude>
-						<exclude>mvnw</exclude>
-						<exclude>LICENSE</exclude>
-                        <exclude>.editorconfig</exclude>						
-					</excludes>
-					<strictCheck>true</strictCheck>
-				</configuration>
-				<executions>
-					<execution>
-						<id>check-headers</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>4.6</version>
+        <configuration>
+          <header>${basedir}/src/main/config/header.txt</header>
+          <properties>
+            <year>${project.inceptionYear}</year>
+            <currentYear>2018</currentYear>
+          </properties>
+          <excludes>
+            <exclude>**/*.md</exclude>
+            <exclude>**/*.csv</exclude>
+            <exclude>**/*.psd</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.json</exclude>
+            <exclude>**/extjs/**</exclude>
+            <exclude>**/static/**</exclude>
+            <exclude>**/*.launch</exclude>
+            <exclude>**/*.gitignore</exclude>
+            <exclude>**/fetcher.properties</exclude>
+            <exclude>.mvn/**/*</exclude>
+            <exclude>mvnw.cmd</exclude>
+            <exclude>mvnw</exclude>
+            <exclude>LICENSE</exclude>
+            <exclude>.editorconfig</exclude>
+          </excludes>
+          <strictCheck>true</strictCheck>
+        </configuration>
+        <executions>
+          <execution>
+            <id>check-headers</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+        <version>4.0.0</version>
+        <configuration>
+          <createBackupFile>false</createBackupFile>
+          <nrOfIndentSpace>2</nrOfIndentSpace>
+          <sortProperties>false</sortProperties>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
 </project>

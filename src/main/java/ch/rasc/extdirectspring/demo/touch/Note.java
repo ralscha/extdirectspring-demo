@@ -80,10 +80,7 @@ public class Note {
 			return false;
 		}
 		Note other = (Note) obj;
-		if (this.id != other.id) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.id, other.id);
 	}
 
 }

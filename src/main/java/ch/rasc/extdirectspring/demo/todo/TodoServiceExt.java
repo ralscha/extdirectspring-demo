@@ -39,7 +39,7 @@ public class TodoServiceExt {
 
 	@ExtDirectMethod(group = "todo")
 	public int testException() {
-		return 1 / 0;
+		throw new ArithmeticException("Intentional test exception");
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST, group = "todo")
