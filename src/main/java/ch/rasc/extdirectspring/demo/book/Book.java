@@ -67,16 +67,16 @@ public class Book {
 		return this.ISBN10;
 	}
 
-	public void setISBN10(String iSBN10) {
-		this.ISBN10 = iSBN10;
+	public void setISBN10(String ISBN10) {
+		this.ISBN10 = ISBN10;
 	}
 
 	public String getISBN13() {
 		return this.ISBN13;
 	}
 
-	public void setISBN13(String iSBN13) {
-		this.ISBN13 = iSBN13;
+	public void setISBN13(String ISBN13) {
+		this.ISBN13 = ISBN13;
 	}
 
 	public String getLink() {

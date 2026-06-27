@@ -18,6 +18,7 @@ package ch.rasc.extdirectspring.demo.are;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,11 +67,16 @@ public class Company {
 				RoundingMode.HALF_DOWN);
 		this.pctChange = new BigDecimal(rnd.nextDouble(0.1, 9.9)).setScale(2,
 				RoundingMode.HALF_DOWN);
-		this.lastChange = LocalDateTime.now().minusSeconds(rnd.nextInt(86400));
+		this.lastChange = LocalDateTime.now(ZoneId.systemDefault())
+				.minusSeconds(rnd.nextInt(86400));
 
-		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(3600)),
+		addHistory(new History(this,
+				LocalDateTime.now(ZoneId.systemDefault())
+						.minusSeconds(rnd.nextInt(3600)),
 				"Test"));
-		addHistory(new History(this, LocalDateTime.now().minusSeconds(rnd.nextInt(86400)),
+		addHistory(new History(this,
+				LocalDateTime.now(ZoneId.systemDefault())
+						.minusSeconds(rnd.nextInt(86400)),
 				"Initial"));
 
 	}

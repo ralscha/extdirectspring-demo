@@ -19,7 +19,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +51,8 @@ public class PivotService {
 		Map<String, String> builder = new HashMap<>();
 
 		try (InputStream is = this.countries.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, ';')) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
@@ -64,7 +67,7 @@ public class PivotService {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_READ, group = "pivot")
 	public List<Economy> getEconomiesData() {
-		int currentYear = LocalDateTime.now().getYear();
+		int currentYear = LocalDateTime.now(ZoneId.systemDefault()).getYear();
 
 		List<Economy> builder = new ArrayList<>();
 

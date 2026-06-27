@@ -25,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
@@ -72,7 +73,7 @@ public class PictureResizer {
 							Scalr.OP_ANTIALIAS);
 
 					int pos = url.lastIndexOf(".");
-					String format = url.substring(pos + 1).toUpperCase();
+					String format = url.substring(pos + 1).toUpperCase(Locale.ROOT);
 
 					File tempFile = File.createTempFile("resized", format);
 					tempFile.deleteOnExit();

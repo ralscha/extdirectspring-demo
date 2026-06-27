@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.filterbar;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.rasc.extdirectspring.demo.util.ISO8601LocalDateSerializer;
@@ -50,7 +51,7 @@ public class Company {
 		this.price = new BigDecimal(price);
 		this.change = new BigDecimal(change);
 		this.pctChange = new BigDecimal(pctChange);
-		this.lastChange = LocalDate.now()
+		this.lastChange = LocalDate.now(ZoneId.systemDefault())
 				.plusDays(ThreadLocalRandom.current().nextInt(-10, 10));
 		this.category = category;
 		this.country = country;

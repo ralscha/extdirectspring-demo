@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.calendar;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,15 +40,14 @@ public class EventDb {
 	@PostConstruct
 	public void populateData() {
 		this.events = new ConcurrentHashMap<>();
+		LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
 
 		Event event = new Event();
 		event.setId(1001);
 		event.setCalendarId(1);
 		event.setTitle("Vacation");
-		event.setStartDate(LocalDateTime.now().minusDays(20).withHour(10).withMinute(0)
-				.withSecond(0));
-		event.setEndDate(LocalDateTime.now().minusDays(10).withHour(15).withMinute(0)
-				.withSecond(0));
+		event.setStartDate(now.minusDays(20).withHour(10).withMinute(0).withSecond(0));
+		event.setEndDate(now.minusDays(10).withHour(15).withMinute(0).withSecond(0));
 		event.setNotes("Have fun");
 		this.events.put(event.getId(), event);
 
@@ -55,8 +55,8 @@ public class EventDb {
 		event.setId(1002);
 		event.setCalendarId(2);
 		event.setTitle("Lunch with Matt");
-		event.setStartDate(LocalDateTime.now().withHour(11).withMinute(30).withSecond(0));
-		event.setEndDate(LocalDateTime.now().withHour(13).withMinute(0).withSecond(0));
+		event.setStartDate(now.withHour(11).withMinute(30).withSecond(0));
+		event.setEndDate(now.withHour(13).withMinute(0).withSecond(0));
 		event.setLocation("Chuy's!");
 		event.setUrl("http://chuys.com");
 		event.setNotes("Order the queso");
@@ -67,15 +67,15 @@ public class EventDb {
 		event.setId(1003);
 		event.setCalendarId(3);
 		event.setTitle("Project due");
-		event.setStartDate(LocalDateTime.now().withHour(15).withMinute(0).withSecond(0));
-		event.setEndDate(LocalDateTime.now().withHour(15).withMinute(0).withSecond(0));
+		event.setStartDate(now.withHour(15).withMinute(0).withSecond(0));
+		event.setEndDate(now.withHour(15).withMinute(0).withSecond(0));
 		this.events.put(event.getId(), event);
 
 		event = new Event();
 		event.setId(1004);
 		event.setCalendarId(1);
 		event.setTitle("Sarah's birthday");
-		event.setStartDate(LocalDateTime.now().withHour(0).withMinute(0).withSecond(0));
+		event.setStartDate(now.withHour(0).withMinute(0).withSecond(0));
 		event.setEndDate(event.getStartDate());
 		event.setNotes("Need to get a gift");
 		event.setAllDay(true);
@@ -85,10 +85,8 @@ public class EventDb {
 		event.setId(1005);
 		event.setCalendarId(2);
 		event.setTitle("A long one...");
-		event.setStartDate(LocalDateTime.now().minusDays(12).withHour(0).withMinute(0)
-				.withSecond(0));
-		event.setEndDate(LocalDateTime.now().plusDays(10).withHour(0).withMinute(0)
-				.minusSeconds(0));
+		event.setStartDate(now.minusDays(12).withHour(0).withMinute(0).withSecond(0));
+		event.setEndDate(now.plusDays(10).withHour(0).withMinute(0).minusSeconds(0));
 		event.setAllDay(true);
 		this.events.put(event.getId(), event);
 
@@ -96,10 +94,8 @@ public class EventDb {
 		event.setId(1006);
 		event.setCalendarId(3);
 		event.setTitle("School holiday");
-		event.setStartDate(
-				LocalDateTime.now().plusDays(5).withHour(0).withMinute(0).withSecond(0));
-		event.setEndDate(LocalDateTime.now().plusDays(7).withHour(0).withMinute(0)
-				.minusSeconds(0));
+		event.setStartDate(now.plusDays(5).withHour(0).withMinute(0).withSecond(0));
+		event.setEndDate(now.plusDays(7).withHour(0).withMinute(0).minusSeconds(0));
 		event.setAllDay(true);
 		event.setReminder("2880");
 		this.events.put(event.getId(), event);
@@ -108,8 +104,8 @@ public class EventDb {
 		event.setId(1007);
 		event.setCalendarId(1);
 		event.setTitle("Haircut");
-		event.setStartDate(LocalDateTime.now().withHour(9).withMinute(0).withSecond(0));
-		event.setEndDate(LocalDateTime.now().withHour(9).withMinute(30).minusSeconds(0));
+		event.setStartDate(now.withHour(9).withMinute(0).withSecond(0));
+		event.setEndDate(now.withHour(9).withMinute(30).minusSeconds(0));
 		event.setNotes("Get cash on the way");
 		this.events.put(event.getId(), event);
 
@@ -117,10 +113,8 @@ public class EventDb {
 		event.setId(1008);
 		event.setCalendarId(3);
 		event.setTitle("An old event");
-		event.setStartDate(LocalDateTime.now().minusDays(30).withHour(0).withMinute(0)
-				.withSecond(0));
-		event.setEndDate(LocalDateTime.now().minusDays(28).withHour(0).withMinute(0)
-				.minusSeconds(0));
+		event.setStartDate(now.minusDays(30).withHour(0).withMinute(0).withSecond(0));
+		event.setEndDate(now.minusDays(28).withHour(0).withMinute(0).minusSeconds(0));
 		event.setAllDay(true);
 		this.events.put(event.getId(), event);
 
@@ -128,10 +122,8 @@ public class EventDb {
 		event.setId(1009);
 		event.setCalendarId(2);
 		event.setTitle("Board meeting");
-		event.setStartDate(LocalDateTime.now().minusDays(2).withHour(13).withMinute(0)
-				.withSecond(0));
-		event.setEndDate(LocalDateTime.now().minusDays(2).withHour(18).withMinute(0)
-				.minusSeconds(0));
+		event.setStartDate(now.minusDays(2).withHour(13).withMinute(0).withSecond(0));
+		event.setEndDate(now.minusDays(2).withHour(18).withMinute(0).minusSeconds(0));
 		event.setLocation("ABC Inc.");
 		event.setReminder("60");
 		this.events.put(event.getId(), event);
@@ -140,10 +132,8 @@ public class EventDb {
 		event.setId(1010);
 		event.setCalendarId(3);
 		event.setTitle("Jenny's final exams");
-		event.setStartDate(
-				LocalDateTime.now().minusDays(2).withHour(0).withMinute(0).withSecond(0));
-		event.setEndDate(LocalDateTime.now().plusDays(3).withHour(0).withMinute(0)
-				.minusSeconds(0));
+		event.setStartDate(now.minusDays(2).withHour(0).withMinute(0).withSecond(0));
+		event.setEndDate(now.plusDays(3).withHour(0).withMinute(0).minusSeconds(0));
 		event.setAllDay(true);
 		this.events.put(event.getId(), event);
 
@@ -151,10 +141,8 @@ public class EventDb {
 		event.setId(1011);
 		event.setCalendarId(1);
 		event.setTitle("Movie night");
-		event.setStartDate(
-				LocalDateTime.now().plusDays(2).withHour(19).withMinute(0).withSecond(0));
-		event.setEndDate(LocalDateTime.now().plusDays(3).withHour(23).withMinute(0)
-				.minusSeconds(0));
+		event.setStartDate(now.plusDays(2).withHour(19).withMinute(0).withSecond(0));
+		event.setEndDate(now.plusDays(3).withHour(23).withMinute(0).minusSeconds(0));
 		event.setNotes("Don't forget the tickets!");
 		event.setReminder("60");
 		this.events.put(event.getId(), event);

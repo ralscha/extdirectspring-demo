@@ -16,6 +16,7 @@
 package ch.rasc.extdirectspring.demo.spreadsheet;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class SpreadsheetService {
 
 	public SpreadsheetService() {
 		int id = 0;
-		int currentYear = LocalDate.now().getYear();
+		int currentYear = LocalDate.now(ZoneId.systemDefault()).getYear();
 		for (int year = 1900; year <= currentYear; year++) {
 			MonthlySales sale = new MonthlySales();
 			sale.setId(id++);

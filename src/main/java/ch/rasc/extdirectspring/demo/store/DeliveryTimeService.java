@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,12 +68,14 @@ public class DeliveryTimeService {
 
 		Stream<String> stream = this.actresses.stream();
 		if (StringUtils.hasText(request.getQuery())) {
-			stream = stream.filter(
-					a -> a.toLowerCase().contains(request.getQuery().toLowerCase()));
+			String query = request.getQuery().toLowerCase(Locale.ROOT);
+			stream = stream
+					.filter(a -> a.toLowerCase(Locale.ROOT).contains(query));
 		}
 		else if ((filter = request.getFirstFilterForField("actress")) != null) {
+			String filterValue = filter.getValue().toLowerCase(Locale.ROOT);
 			stream = stream.filter(
-					a -> a.toLowerCase().contains(filter.getValue().toLowerCase()));
+					a -> a.toLowerCase(Locale.ROOT).contains(filterValue));
 		}
 
 		return stream.map(a -> Collections.singletonMap("actress", a))

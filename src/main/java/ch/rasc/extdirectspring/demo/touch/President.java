@@ -15,6 +15,8 @@
  */
 package ch.rasc.extdirectspring.demo.touch;
 
+import java.util.Locale;
+
 public class President {
 	private final int id;
 
@@ -41,8 +43,9 @@ public class President {
 			this.imageUrl = imageUrl;
 		}
 		else {
-			this.imageUrl = id + firstName.substring(0, 1).toLowerCase()
-					+ lastName.substring(0, 1).toLowerCase() + "_header_sm.jpg";
+			this.imageUrl = id + firstName.substring(0, 1).toLowerCase(Locale.ROOT)
+					+ lastName.substring(0, 1).toLowerCase(Locale.ROOT)
+					+ "_header_sm.jpg";
 		}
 	}
 

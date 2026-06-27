@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.group;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -145,7 +146,7 @@ public class GroupAction {
 		summary.setDescription("22");
 		summary.setEstimate(new BigDecimal(888));
 		summary.setRate(new BigDecimal(999));
-		summary.setDue(LocalDate.now());
+		summary.setDue(LocalDate.now(ZoneId.systemDefault()));
 		summary.setCost(new BigDecimal(8));
 		return summary;
 	}

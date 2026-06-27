@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -180,10 +181,11 @@ public class AreService {
 
 		for (Filter filter : filters) {
 
-			String value = ((StringFilter) filter).getValue().trim().toLowerCase();
+			String value = ((StringFilter) filter).getValue().trim()
+					.toLowerCase(Locale.ROOT);
 			if ("company".equals(filter.getField())) {
-				predicates = predicates
-						.and(c -> c.getCompany().toLowerCase().startsWith(value));
+				predicates = predicates.and(c -> c.getCompany().toLowerCase(Locale.ROOT)
+						.startsWith(value));
 			}
 			else if ("price".equals(filter.getField())) {
 				predicates = predicates

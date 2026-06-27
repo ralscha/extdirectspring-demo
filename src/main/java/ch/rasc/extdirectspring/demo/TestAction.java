@@ -15,6 +15,7 @@
  */
 package ch.rasc.extdirectspring.demo;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class TestAction {
 		TimeUnit.SECONDS.sleep(45);
 
 		ExtDirectFormPostResult result = new ExtDirectFormPostResult(true);
-		result.addResultProperty("msg", name.toUpperCase());
+		result.addResultProperty("msg", name.toUpperCase(Locale.ROOT));
 		return result;
 	}
 

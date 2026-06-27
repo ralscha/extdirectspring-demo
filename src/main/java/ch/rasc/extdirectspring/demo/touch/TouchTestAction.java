@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.touch;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,7 +53,8 @@ public class TouchTestAction {
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message",
 			group = "touchdirect")
 	public String handleMessagePoll() {
-		return "Successfully polled at: " + LocalDateTime.now().format(formatter);
+		return "Successfully polled at: "
+				+ LocalDateTime.now(ZoneId.systemDefault()).format(formatter);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.SIMPLE_NAMED, group = "touchdirect")

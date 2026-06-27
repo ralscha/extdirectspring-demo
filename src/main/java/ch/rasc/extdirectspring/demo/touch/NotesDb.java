@@ -16,6 +16,7 @@
 package ch.rasc.extdirectspring.demo.touch;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,19 +50,19 @@ public class NotesDb {
 	@PostConstruct
 	public void addTestData() {
 		Note n = new Note();
-		n.setDateCreated(LocalDate.now());
+		n.setDateCreated(LocalDate.now(ZoneId.systemDefault()));
 		n.setTitle("Test Note");
 		n.setNarrative("This is a simple test note");
 		addOrUpdate(n);
 
 		n = new Note();
-		n.setDateCreated(LocalDate.now().plusDays(1));
+		n.setDateCreated(LocalDate.now(ZoneId.systemDefault()).plusDays(1));
 		n.setTitle("Test Note 2 ");
 		n.setNarrative("This is a second test note");
 		addOrUpdate(n);
 
 		n = new Note();
-		n.setDateCreated(LocalDate.now().plusDays(2));
+		n.setDateCreated(LocalDate.now(ZoneId.systemDefault()).plusDays(2));
 		n.setTitle("Test Note 3 ");
 		n.setNarrative("This is a third test note");
 		addOrUpdate(n);

@@ -22,8 +22,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class SimpleUserDb {
 	@Autowired
 	private Resource userdata;
 
-	private volatile int maxId;
+	private final AtomicInteger maxId = new AtomicInteger();
 
 	private Map<String, User> users;
 
@@ -54,7 +56,7 @@ public class SimpleUserDb {
 			while ((nextLine = reader.readNext()) != null) {
 				User u = new User(nextLine);
 				this.users.put(u.getId(), u);
-				this.maxId = Math.max(this.maxId, Integer.parseInt(u.getId()));
+				this.maxId.updateAndGet(id -> Math.max(id, Integer.parseInt(u.getId())));
 			}
 		}
 	}
@@ -64,13 +66,17 @@ public class SimpleUserDb {
 	}
 
 	public List<User> filter(String filter) {
-		String lowerCaseFilter = filter.toLowerCase();
+		String lowerCaseFilter = filter.toLowerCase(Locale.ROOT);
 
 		return this.users.values().stream()
-				.filter(user -> user.getLastName().toLowerCase().contains(lowerCaseFilter)
-						|| user.getFirstName().toLowerCase().contains(lowerCaseFilter)
-						|| user.getEmail().toLowerCase().contains(lowerCaseFilter)
-						|| user.getCity().toLowerCase().contains(lowerCaseFilter))
+				.filter(user -> user.getLastName().toLowerCase(Locale.ROOT)
+						.contains(lowerCaseFilter)
+						|| user.getFirstName().toLowerCase(Locale.ROOT)
+								.contains(lowerCaseFilter)
+						|| user.getEmail().toLowerCase(Locale.ROOT)
+								.contains(lowerCaseFilter)
+						|| user.getCity().toLowerCase(Locale.ROOT)
+								.contains(lowerCaseFilter))
 				.collect(Collectors.toList());
 
 	}
@@ -84,9 +90,9 @@ public class SimpleUserDb {
 	}
 
 	public User insert(User p) {
-		this.maxId = this.maxId + 1;
-		p.setId(String.valueOf(this.maxId));
-		this.users.put(String.valueOf(this.maxId), p);
+		int id = this.maxId.incrementAndGet();
+		p.setId(String.valueOf(id));
+		this.users.put(String.valueOf(id), p);
 		return p;
 	}
 

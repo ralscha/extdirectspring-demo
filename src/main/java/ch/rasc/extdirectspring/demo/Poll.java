@@ -16,6 +16,7 @@
 package ch.rasc.extdirectspring.demo;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
@@ -33,7 +34,8 @@ public class Poll {
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "message",
 			group = "example")
 	public String handleMessagePoll() {
-		return "Successfully polled at: " + LocalDateTime.now().format(formatter);
+		return "Successfully polled at: "
+				+ LocalDateTime.now(ZoneId.systemDefault()).format(formatter);
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.POLL, event = "pollWithParams",

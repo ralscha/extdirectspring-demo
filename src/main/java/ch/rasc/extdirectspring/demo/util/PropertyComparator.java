@@ -45,8 +45,8 @@ public class PropertyComparator<T> implements Comparator<T> {
 			return 1;
 		}
 
-		if (left instanceof String) {
-			return ((String) left).compareToIgnoreCase((String) right);
+		if (left instanceof String string) {
+			return string.compareToIgnoreCase((String) right);
 		}
 
 		return ((Comparable<Object>) left).compareTo(right);

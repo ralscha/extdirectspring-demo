@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -90,7 +92,8 @@ public class ExecDashboardService {
 			throws IOException {
 		try (InputStream is = new ClassPathResource("stock_" + ticker + ".csv")
 				.getInputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVReader reader = new CSVReader(br, ',')) {
 
 			reader.readNext(); // ignore first line
@@ -99,7 +102,8 @@ public class ExecDashboardService {
 			int ix = 1;
 			while ((nextLine = reader.readNext()) != null) {
 				if (nextLine.length == 7) {
-					StockOHLC ohlc = new StockOHLC(ix++, ticker.toUpperCase(), nextLine);
+					StockOHLC ohlc = new StockOHLC(ix++,
+							ticker.toUpperCase(Locale.ROOT), nextLine);
 					result.add(ohlc);
 				}
 			}

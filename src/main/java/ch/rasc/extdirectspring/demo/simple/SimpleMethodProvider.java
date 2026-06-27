@@ -16,6 +16,8 @@
 package ch.rasc.extdirectspring.demo.simple;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
@@ -27,12 +29,12 @@ public class SimpleMethodProvider {
 
 	@ExtDirectMethod(group = "simple")
 	public String method1() {
-		return LocalDateTime.now().toString();
+		return LocalDateTime.now(ZoneId.systemDefault()).toString();
 	}
 
 	@ExtDirectMethod(group = "simple")
 	public String method2(String ping) {
-		return ping.toUpperCase();
+		return ping.toUpperCase(Locale.ROOT);
 	}
 
 	@ExtDirectMethod(group = "simple")

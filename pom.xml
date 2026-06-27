@@ -188,12 +188,12 @@
                 <exclude>deft-debug.js</exclude>
                 <exclude>eventsource.min.js</exclude>
                 <exclude>ux-validations.js</exclude>
-                <exclude>extjs3/highcharts/excanvas.compiled.js</exclude>
-                <exclude>extjs3/highcharts/Ext.ux.HighChart.js</exclude>
-                <exclude>extjs3/highcharts/adapter-extjs.js</exclude>
-                <exclude>extjs3/highcharts/highcharts.js</exclude>
-                <exclude>extjs42/banchascaffold/bancha-scaffold-production.js</exclude>
-                <exclude>extjs42/pivotgrid</exclude>
+                <exclude>extjs3/**</exclude>
+                <exclude>extjs42/**</exclude>
+                <exclude>extjs5/**</exclude>
+                <exclude>extjs6classic/**</exclude>
+                <exclude>extjs6modern/**</exclude>
+                <exclude>touch24/**</exclude>
               </excludes>
 
               <options>
@@ -222,28 +222,32 @@
         <artifactId>license-maven-plugin</artifactId>
         <version>4.6</version>
         <configuration>
-          <header>${basedir}/src/main/config/header.txt</header>
           <properties>
             <year>${project.inceptionYear}</year>
             <currentYear>2018</currentYear>
           </properties>
-          <excludes>
-            <exclude>**/*.md</exclude>
-            <exclude>**/*.csv</exclude>
-            <exclude>**/*.psd</exclude>
-            <exclude>**/*.xml</exclude>
-            <exclude>**/*.json</exclude>
-            <exclude>**/extjs/**</exclude>
-            <exclude>**/static/**</exclude>
-            <exclude>**/*.launch</exclude>
-            <exclude>**/*.gitignore</exclude>
-            <exclude>**/fetcher.properties</exclude>
-            <exclude>.mvn/**/*</exclude>
-            <exclude>mvnw.cmd</exclude>
-            <exclude>mvnw</exclude>
-            <exclude>LICENSE</exclude>
-            <exclude>.editorconfig</exclude>
-          </excludes>
+          <licenseSets>
+            <licenseSet>
+              <header>${basedir}/src/main/config/header.txt</header>
+              <excludes>
+                <exclude>**/*.md</exclude>
+                <exclude>**/*.csv</exclude>
+                <exclude>**/*.psd</exclude>
+                <exclude>**/*.xml</exclude>
+                <exclude>**/*.json</exclude>
+                <exclude>**/extjs/**</exclude>
+                <exclude>**/static/**</exclude>
+                <exclude>**/*.launch</exclude>
+                <exclude>**/*.gitignore</exclude>
+                <exclude>**/fetcher.properties</exclude>
+                <exclude>.mvn/**/*</exclude>
+                <exclude>mvnw.cmd</exclude>
+                <exclude>mvnw</exclude>
+                <exclude>LICENSE</exclude>
+                <exclude>.editorconfig</exclude>
+              </excludes>
+            </licenseSet>
+          </licenseSets>
           <strictCheck>true</strictCheck>
         </configuration>
         <executions>

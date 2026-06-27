@@ -77,7 +77,7 @@ public class FeedCache {
 
 	@Scheduled(initialDelay = 1000, fixedRate = 1000 * 60 * 60 * 24)
 	public void refreshFeeds() {
-		for (String url : FEEDS.keySet()) {
+		for (String url : FEEDS.keySet().toArray(String[]::new)) {
 			FEEDS.put(url, fetchFeed(url));
 		}
 	}

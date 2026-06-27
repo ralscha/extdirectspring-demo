@@ -17,6 +17,7 @@ package ch.rasc.extdirectspring.demo.todo;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.LongAdder;
@@ -60,8 +61,9 @@ public class TodoService {
 		Stream<TodoItem> stream = db.values().stream();
 		if (filter != null) {
 			String filterValue = ((StringFilter) filter).getValue();
-			stream = stream.filter(
-					t -> t.getText().toLowerCase().contains(filterValue.toLowerCase()));
+			String lowerCaseFilterValue = filterValue.toLowerCase(Locale.ROOT);
+			stream = stream.filter(t -> t.getText().toLowerCase(Locale.ROOT)
+					.contains(lowerCaseFilterValue));
 		}
 		return stream.sorted(Comparator.comparing(TodoItem::getId).reversed())
 				.collect(Collectors.toList());

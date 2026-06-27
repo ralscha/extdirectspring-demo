@@ -76,10 +76,9 @@ public class Note {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (!(obj instanceof Note other)) {
 			return false;
 		}
-		Note other = (Note) obj;
 		return Objects.equals(this.id, other.id);
 	}
 

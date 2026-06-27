@@ -42,10 +42,6 @@ public class History {
 	@ModelAssociation(value = ModelAssociationType.BELONGS_TO, foreignKey = "companyId")
 	private final Company company;
 
-	@JsonIgnore
-	@ModelAssociation(value = ModelAssociationType.HAS_ONE, foreignKey = "companyId")
-	private Company companyOne;
-
 	public History(Company company, LocalDateTime date, String text) {
 		this.company = company;
 		this.companyId = company.getCoId();

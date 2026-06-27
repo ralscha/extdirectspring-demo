@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -170,9 +171,11 @@ public class CompanyService {
 						numericFilter.getValue()));
 			}
 			else if ("company".equals(filter.getField())) {
-				String value = ((StringFilter) filter).getValue().trim().toLowerCase();
+				String value = ((StringFilter) filter).getValue().trim()
+						.toLowerCase(Locale.ROOT);
 				predicates = predicates
-						.and(c -> c.getCompany().toLowerCase().startsWith(value));
+						.and(c -> c.getCompany().toLowerCase(Locale.ROOT)
+								.startsWith(value));
 			}
 			else if ("country".equals(filter.getField())) {
 				predicates = predicates.and(
@@ -218,20 +221,15 @@ public class CompanyService {
 			this.value = value;
 		}
 
-		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (this.comparison) {
-			case EQUAL:
-				return company.getId() == this.value.intValue();
-			case GREATER_THAN_OR_EQUAL:
-				return company.getId() >= this.value.intValue();
-			case LESS_THAN_OR_EQUAL:
-				return company.getId() <= this.value.intValue();
-			case NOT_EQUAL:
-				return company.getId() != this.value.intValue();
-			}
-			return false;
+			return switch (this.comparison) {
+			case EQUAL -> company.getId() == this.value.intValue();
+			case GREATER_THAN_OR_EQUAL -> company.getId() >= this.value.intValue();
+			case LESS_THAN_OR_EQUAL -> company.getId() <= this.value.intValue();
+			case NOT_EQUAL -> company.getId() != this.value.intValue();
+			default -> false;
+			};
 		}
 	}
 
@@ -246,7 +244,7 @@ public class CompanyService {
 
 		@Override
 		public boolean test(Company company) {
-			return company.getCountry() == null && this.values.contains(empty)
+			return (company.getCountry() == null && this.values.contains(empty))
 					|| this.values.contains(company.getCountry());
 		}
 	}
@@ -262,7 +260,7 @@ public class CompanyService {
 
 		@Override
 		public boolean test(Company company) {
-			return company.getCategory() == null && this.values.contains(empty)
+			return (company.getCategory() == null && this.values.contains(empty))
 					|| this.values.contains(company.getCategory());
 		}
 	}
@@ -277,22 +275,17 @@ public class CompanyService {
 			this.value = value;
 		}
 
-		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
 			BigDecimal v = new BigDecimal(this.value.toString()).setScale(2,
 					RoundingMode.HALF_UP);
-			switch (this.comparison) {
-			case EQUAL:
-				return company.getPrice().compareTo(v) == 0;
-			case GREATER_THAN_OR_EQUAL:
-				return company.getPrice().compareTo(v) >= 0;
-			case LESS_THAN_OR_EQUAL:
-				return company.getPrice().compareTo(v) <= 0;
-			case NOT_EQUAL:
-				return company.getPrice().compareTo(v) != 0;
-			}
-			return false;
+			return switch (this.comparison) {
+			case EQUAL -> company.getPrice().compareTo(v) == 0;
+			case GREATER_THAN_OR_EQUAL -> company.getPrice().compareTo(v) >= 0;
+			case LESS_THAN_OR_EQUAL -> company.getPrice().compareTo(v) <= 0;
+			case NOT_EQUAL -> company.getPrice().compareTo(v) != 0;
+			default -> false;
+			};
 		}
 
 	}
@@ -308,22 +301,17 @@ public class CompanyService {
 			this.value = value;
 		}
 
-		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
 			BigDecimal v = new BigDecimal(this.value.toString()).setScale(2,
 					RoundingMode.HALF_UP);
-			switch (this.comparison) {
-			case EQUAL:
-				return company.getChange().compareTo(v) == 0;
-			case GREATER_THAN_OR_EQUAL:
-				return company.getChange().compareTo(v) >= 0;
-			case LESS_THAN_OR_EQUAL:
-				return company.getChange().compareTo(v) <= 0;
-			case NOT_EQUAL:
-				return company.getChange().compareTo(v) != 0;
-			}
-			return false;
+			return switch (this.comparison) {
+			case EQUAL -> company.getChange().compareTo(v) == 0;
+			case GREATER_THAN_OR_EQUAL -> company.getChange().compareTo(v) >= 0;
+			case LESS_THAN_OR_EQUAL -> company.getChange().compareTo(v) <= 0;
+			case NOT_EQUAL -> company.getChange().compareTo(v) != 0;
+			default -> false;
+			};
 		}
 	}
 
@@ -337,22 +325,17 @@ public class CompanyService {
 			this.value = value;
 		}
 
-		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
 			BigDecimal v = new BigDecimal(this.value.toString()).setScale(2,
 					RoundingMode.HALF_UP);
-			switch (this.comparison) {
-			case EQUAL:
-				return company.getPctChange().compareTo(v) == 0;
-			case GREATER_THAN_OR_EQUAL:
-				return company.getPctChange().compareTo(v) >= 0;
-			case LESS_THAN_OR_EQUAL:
-				return company.getPctChange().compareTo(v) <= 0;
-			case NOT_EQUAL:
-				return company.getPctChange().compareTo(v) != 0;
-			}
-			return false;
+			return switch (this.comparison) {
+			case EQUAL -> company.getPctChange().compareTo(v) == 0;
+			case GREATER_THAN_OR_EQUAL -> company.getPctChange().compareTo(v) >= 0;
+			case LESS_THAN_OR_EQUAL -> company.getPctChange().compareTo(v) <= 0;
+			case NOT_EQUAL -> company.getPctChange().compareTo(v) != 0;
+			default -> false;
+			};
 		}
 	}
 
@@ -366,20 +349,15 @@ public class CompanyService {
 			this.value = LocalDate.parse(value);
 		}
 
-		@SuppressWarnings("incomplete-switch")
 		@Override
 		public boolean test(Company company) {
-			switch (this.comparison) {
-			case EQUAL:
-				return company.getLastChange().compareTo(this.value) == 0;
-			case GREATER_THAN_OR_EQUAL:
-				return company.getLastChange().compareTo(this.value) > 0;
-			case LESS_THAN_OR_EQUAL:
-				return company.getLastChange().compareTo(this.value) < 0;
-			case NOT_EQUAL:
-				return company.getLastChange().compareTo(this.value) != 0;
-			}
-			return false;
+			return switch (this.comparison) {
+			case EQUAL -> company.getLastChange().compareTo(this.value) == 0;
+			case GREATER_THAN_OR_EQUAL -> company.getLastChange().compareTo(this.value) > 0;
+			case LESS_THAN_OR_EQUAL -> company.getLastChange().compareTo(this.value) < 0;
+			case NOT_EQUAL -> company.getLastChange().compareTo(this.value) != 0;
+			default -> false;
+			};
 		}
 	}
 }

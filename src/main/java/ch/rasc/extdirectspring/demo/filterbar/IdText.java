@@ -46,10 +46,9 @@ public class IdText implements Comparable<IdText> {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (getClass() != obj.getClass())) {
+		if (!(obj instanceof IdText other)) {
 			return false;
 		}
-		IdText other = (IdText) obj;
 		if (!Objects.equals(this.id, other.id)) {
 			return false;
 		}

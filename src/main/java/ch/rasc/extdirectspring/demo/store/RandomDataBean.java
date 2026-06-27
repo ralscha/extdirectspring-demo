@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -63,9 +64,10 @@ public class RandomDataBean {
 
 	public List<Person> findPersons(final String query) {
 		if (StringUtils.hasText(query)) {
-			String lowerCaseQuery = query.toLowerCase();
+			String lowerCaseQuery = query.toLowerCase(Locale.ROOT);
 			return this.persons.values().stream()
-					.filter(p -> p.getLastName().toLowerCase().startsWith(lowerCaseQuery))
+					.filter(p -> p.getLastName().toLowerCase(Locale.ROOT)
+							.startsWith(lowerCaseQuery))
 					.collect(Collectors.toList());
 		}
 

@@ -16,6 +16,7 @@
 package ch.rasc.extdirectspring.demo;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,12 +59,12 @@ public class SseController {
 
 				if (c.count < 20) {
 					c.emitter.send("Successfully polled with EventSource at: "
-							+ LocalDateTime.now().format(formatter));
+							+ LocalDateTime.now(ZoneId.systemDefault()).format(formatter));
 					c.count++;
 				}
 				else {
 					c.emitter.send("LAST: Successfully polled with EventSource at: "
-							+ LocalDateTime.now().format(formatter));
+							+ LocalDateTime.now(ZoneId.systemDefault()).format(formatter));
 					c.emitter.complete();
 					remove.add(c);
 				}
@@ -94,11 +95,11 @@ public class SseController {
 			if (this == other) {
 				return true;
 			}
-			if ((other == null) || (getClass() != other.getClass())) {
+			if (!(other instanceof Client client)) {
 				return false;
 			}
 
-			return this.id.equals(((Client) other).id);
+			return this.id.equals(client.id);
 		}
 
 	}

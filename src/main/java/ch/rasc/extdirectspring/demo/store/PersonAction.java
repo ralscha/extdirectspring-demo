@@ -171,9 +171,9 @@ public class PersonAction {
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "Full Name");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.FALSE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.FALSE);
+			field.addCustomProperty("sortable", false);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", false);
 			metaData.addField(field);
 
 			response.setMetaData(metaData);
@@ -214,18 +214,18 @@ public class PersonAction {
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "Full Name");
 			field.addCustomProperty("width", 120);
-			field.addCustomProperty("sortable", Boolean.FALSE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.FALSE);
+			field.addCustomProperty("sortable", false);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", false);
 			metaData.addField(field);
 
 			field = new Field("city");
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "City");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.FALSE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.TRUE);
+			field.addCustomProperty("sortable", false);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", true);
 			metaData.addField(field);
 
 			response.setMetaData(metaData);
@@ -277,45 +277,45 @@ public class PersonAction {
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "Last Name");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.TRUE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.FALSE);
+			field.addCustomProperty("sortable", true);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", false);
 			metaData.addField(field);
 
 			field = new Field("firstName");
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "First Name");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.TRUE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.FALSE);
+			field.addCustomProperty("sortable", true);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", false);
 			metaData.addField(field);
 
 			field = new Field("street");
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "Street");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.TRUE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.TRUE);
+			field.addCustomProperty("sortable", true);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", true);
 			metaData.addField(field);
 
 			field = new Field("city");
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "City");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.FALSE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.TRUE);
+			field.addCustomProperty("sortable", false);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", true);
 			metaData.addField(field);
 
 			field = new Field("country");
 			field.setType(DataType.STRING);
 			field.addCustomProperty("header", "Country");
 			field.addCustomProperty("width", 60);
-			field.addCustomProperty("sortable", Boolean.FALSE);
-			field.addCustomProperty("resizable", Boolean.TRUE);
-			field.addCustomProperty("hideable", Boolean.TRUE);
+			field.addCustomProperty("sortable", false);
+			field.addCustomProperty("resizable", true);
+			field.addCustomProperty("hideable", true);
 			metaData.addField(field);
 
 			response.setMetaData(metaData);
